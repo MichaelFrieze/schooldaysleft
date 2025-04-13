@@ -13,7 +13,7 @@
     "dev": "next dev --turbo",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
     "format:write": "prettier --write \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
-    "vercel-build": "prisma generate --no-engine && if [ \"$VERCEL_ENV\" = \"production\" ]; then npx prisma migrate deploy; elif [ \"$VERCEL_ENV\" = \"preview\" ]; then npx prisma db push; fi && next build",
+    "vercel-build": "npm install --legacy-peer-deps && prisma generate --no-engine && if [ \"$VERCEL_ENV\" = \"production\" ]; then npx prisma migrate deploy; elif [ \"$VERCEL_ENV\" = \"preview\" ]; then npx prisma db push; fi && next build",
     "postinstall": "prisma generate --no-engine",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
