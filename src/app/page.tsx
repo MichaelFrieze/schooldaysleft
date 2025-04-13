@@ -1,40 +1,61 @@
 import Link from "next/link";
+import { Button } from "~/components/ui/button";
+import { CalendarDays, School, GraduationCap } from "lucide-react";
 
-export default async function Home() {
+export default function LandingPage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-        <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-          Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
-        </h1>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
-            href="https://create.t3.gg/en/usage/first-steps"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">First Steps →</h3>
-            <div className="text-lg">
-              Just the basics - Everything you need to know to set up your
-              database and authentication.
-            </div>
-          </Link>
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
-            href="https://create.t3.gg/en/introduction"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">Documentation →</h3>
-            <div className="text-lg">
-              Learn more about Create T3 App, the libraries it uses, and how to
-              deploy it.
-            </div>
-          </Link>
+    <div className="container mx-auto px-4 py-12">
+      <div className="mx-auto flex max-w-3xl flex-col items-center space-y-8 text-center">
+        <div className="rounded-full bg-primary/10 p-3">
+          <CalendarDays className="h-12 w-12 text-primary" />
         </div>
-        <div className="flex flex-col items-center gap-2">
-          <p className="text-2xl text-white">Hello</p>
+
+        <h1 className="text-4xl font-bold tracking-tight md:text-6xl">
+          School Days Left
+        </h1>
+
+        <p className="text-xl text-muted-foreground">
+          The simple way for teachers to count down the days until summer break
+        </p>
+
+        <div className="flex w-full max-w-md flex-col gap-4 sm:flex-row">
+          <Button asChild size="lg" className="flex-1 gap-2">
+            <Link href="/countdown">
+              <School className="h-5 w-5" />
+              Teacher Countdown
+            </Link>
+          </Button>
+          <Button asChild size="lg" variant="outline" className="flex-1 gap-2">
+            <Link href="/student/countdown">
+              <GraduationCap className="h-5 w-5" />
+              Student Countdown
+            </Link>
+          </Button>
+        </div>
+
+        <div className="mt-12 grid w-full grid-cols-1 gap-8 md:grid-cols-3">
+          <div className="rounded-lg border bg-card p-6 shadow-sm">
+            <h3 className="mb-2 text-lg font-semibold">Separate Countdowns</h3>
+            <p className="text-muted-foreground">
+              Track both teacher and student days left until summer break.
+            </p>
+          </div>
+
+          <div className="rounded-lg border bg-card p-6 shadow-sm">
+            <h3 className="mb-2 text-lg font-semibold">Easy Setup</h3>
+            <p className="text-muted-foreground">
+              Set your start and end dates, then customize your days off.
+            </p>
+          </div>
+
+          <div className="rounded-lg border bg-card p-6 shadow-sm">
+            <h3 className="mb-2 text-lg font-semibold">Daily Motivation</h3>
+            <p className="text-muted-foreground">
+              Get a new inspirational quote each day to keep you going.
+            </p>
+          </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
