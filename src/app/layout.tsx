@@ -6,6 +6,8 @@ import { TRPCReactProvider } from "~/trpc/react";
 import { ThemeProvider } from "~/components/theme-provider";
 import { Navbar } from "~/components/navbar";
 
+import { ClerkProvider } from "@clerk/nextjs";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -19,15 +21,17 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${inter.className}`} suppressHydrationWarning>
-      <body>
-        <TRPCReactProvider>
-          <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-            <Navbar />
-            <main className="min-h-[calc(100vh-64px)]">{children}</main>
-          </ThemeProvider>
-        </TRPCReactProvider>
-      </body>
-    </html>
+    <ClerkProvider afterSignOutUrl={"/"}>
+      <html lang="en" className={`${inter.className}`} suppressHydrationWarning>
+        <body>
+          <TRPCReactProvider>
+            <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+              <Navbar />
+              <main className="min-h-[calc(100vh-64px)]">{children}</main>
+            </ThemeProvider>
+          </TRPCReactProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
