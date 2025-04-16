@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { CalendarDays } from "lucide-react";
 import { ModeToggle } from "~/components/mode-toggle";
-import { UserButton } from "~/components/user-button";
 import { TeacherStudentDropdown } from "~/components/teacher-student-dropdown";
+import { AuthButton } from "~/modules/auth/ui/components/auth-button";
 
 export function Navbar() {
   return (
@@ -20,7 +20,7 @@ export function Navbar() {
             <TeacherStudentDropdown />
           </div>
           <ModeToggle />
-          <UserButton />
+          <AuthButton />
         </nav>
       </div>
     </header>
