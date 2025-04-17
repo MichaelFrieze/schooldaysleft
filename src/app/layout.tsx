@@ -25,7 +25,13 @@ export default function RootLayout({
       <html lang="en" className={`${inter.className}`} suppressHydrationWarning>
         <body>
           <TRPCReactProvider>
-            <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+              enableColorScheme
+            >
               <Navbar />
               <main className="min-h-[calc(100vh-64px)]">{children}</main>
             </ThemeProvider>

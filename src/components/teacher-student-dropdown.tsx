@@ -18,7 +18,7 @@ export function TeacherStudentDropdown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm" className="gap-2">
+        <Button variant="outline" className="h-8 gap-2">
           {isTeacherSection ? (
             <>
               <School className="h-4 w-4" />

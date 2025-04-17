@@ -21,14 +21,14 @@ export const AuthButton = () => {
   }, []);
 
   if (!isMounted || !isLoaded) {
-    return <Skeleton className="h-9 w-9 rounded-full" />;
+    return <Skeleton className="h-8 w-8 rounded-full" />;
   }
 
   return (
     <>
       <SignedIn>
-        <div className="h-9 w-9">
-          <UserButton appearance={{ elements: { avatarBox: "h-9 w-9" } }} />
+        <div className="h-8 w-8">
+          <UserButton appearance={{ elements: { avatarBox: "h-8 w-8" } }} />
         </div>
       </SignedIn>
       <SignedOut>

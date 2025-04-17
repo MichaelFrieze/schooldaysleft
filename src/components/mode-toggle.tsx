@@ -1,33 +1,26 @@
 "use client";
 
-import { Moon, Sun } from "lucide-react";
 import * as React from "react";
+import { MoonIcon, SunIcon } from "lucide-react";
+import { useTheme } from "next-themes";
+
 import { Button } from "~/components/ui/button";
 
 export function ModeToggle() {
-  const [isDark, setIsDark] = React.useState(() => {
-    if (typeof window !== "undefined") {
-      if (localStorage.getItem("theme")) {
-        return localStorage.getItem("theme") === "dark";
-      } else {
-        return window.matchMedia("(prefers-color-scheme: dark)").matches;
-      }
-    }
-    return false;
-  });
+  const { setTheme, resolvedTheme } = useTheme();
 
-  const toggleTheme = () => {
-    const newIsDark = !isDark;
-    setIsDark(newIsDark);
-
-    document.documentElement.classList.toggle("dark", newIsDark);
-    localStorage.setItem("theme", newIsDark ? "dark" : "theme-light");
-  };
+  const toggleTheme = React.useCallback(() => {
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
+  }, [resolvedTheme, setTheme]);
 
   return (
-    <Button variant="outline" size="sm" onClick={toggleTheme}>
-      <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-      <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+    <Button
+      variant="ghost"
+      className="group/toggle h-8 w-8 px-0"
+      onClick={toggleTheme}
+    >
+      <SunIcon className="hidden [html.dark_&]:block" />
+      <MoonIcon className="hidden [html.light_&]:block" />
       <span className="sr-only">Toggle theme</span>
     </Button>
   );
