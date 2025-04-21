@@ -3,7 +3,7 @@ import { PrismaNeon } from "@prisma/adapter-neon";
 
 import { env } from "@/env";
 
-const connectionString = `${env.DATABASE_URL}`;
+const connectionString = env.DATABASE_URL;
 
 const adapter = new PrismaNeon({ connectionString });
 
