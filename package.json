@@ -14,7 +14,7 @@
     "dev": "next dev --turbo",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
     "format:write": "prettier --write \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
-    "vercel-build": "prisma generate && if [ \"$VERCEL_ENV\" = \"production\" ]; then npx prisma migrate deploy; elif [ \"$VERCEL_ENV\" = \"preview\" ]; then npx prisma db push; fi && next build",
+    "vercel-build": "prisma generate && npx prisma migrate deploy && next build",
     "postinstall": "prisma generate",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
