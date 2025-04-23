@@ -1,9 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-import { api } from "@/trpc/server";
+import { caller, trpc } from "@/trpc/server";
+import { Await } from "@/trpc/await";
+import { LatestPost } from "./_components/posts";
 
 export default async function Home() {
-  const hello = await api.post.hello({ text: "from tRPC" });
+  const hello = await caller.post.hello({ text: "from tRPC" });
 
   return (
     <div>
@@ -17,6 +19,13 @@ export default async function Home() {
         </Button>
       </SignedOut>
       <p>{hello ? hello.greeting : "Loading tRPC query..."}</p>
+      <Await
+        prefetch={[trpc.post.getLatest.queryOptions()]}
+        fallback={<p>Loading...</p>}
+        errorComponent={<p>Error</p>}
+      >
+        <LatestPost />
+      </Await>
     </div>
   );
 }
