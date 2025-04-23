@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useTRPC } from "@/trpc/react";
 import {
   useMutation,
+  useQuery,
   useQueryClient,
   useSuspenseQuery,
 } from "@tanstack/react-query";
@@ -14,11 +15,6 @@ import { Input } from "@/components/ui/input";
 export function LatestPost() {
   const trpc = useTRPC();
   const queryClient = useQueryClient();
-
-  const { data: latestPost } = useSuspenseQuery(
-    trpc.post.getLatest.queryOptions(),
-  );
-
   const [name, setName] = useState("");
 
   const createPostMutationOptions = trpc.post.create.mutationOptions({
@@ -30,6 +26,14 @@ export function LatestPost() {
     },
   });
   const createPost = useMutation(createPostMutationOptions);
+
+  const { data: latestPost, isLoading } = useSuspenseQuery(
+    trpc.post.getLatest.queryOptions(),
+  );
+
+  if (isLoading) {
+    return <p>Loading from client...</p>;
+  }
 
   return (
     <div className="w-full max-w-xs">

@@ -1,11 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-import { caller, trpc } from "@/trpc/server";
-import { Await } from "@/trpc/await";
+import { caller, HydrateClient, prefetch, trpc } from "@/trpc/server";
 import { LatestPost } from "./_components/posts";
+import { Suspense } from "react";
 
 export default async function Home() {
   const hello = await caller.post.hello({ text: "from tRPC" });
+
+  prefetch(trpc.post.getLatest.queryOptions());
 
   return (
     <div>
@@ -18,14 +20,12 @@ export default async function Home() {
           <SignInButton mode="modal">Sign In</SignInButton>
         </Button>
       </SignedOut>
-      <p>{hello ? hello.greeting : "Loading tRPC query..."}</p>
-      <Await
-        prefetch={[trpc.post.getLatest.queryOptions()]}
-        fallback={<p>Loading...</p>}
-        errorComponent={<p>Error</p>}
-      >
-        <LatestPost />
-      </Await>
+      <p>{hello.greeting}</p>
+      <HydrateClient>
+        <Suspense fallback={<p>Loading from RSC...</p>}>
+          <LatestPost />
+        </Suspense>
+      </HydrateClient>
     </div>
   );
 }
