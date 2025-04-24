@@ -1,13 +1,12 @@
 import { Button } from "@/components/ui/button";
+import { caller, trpc } from "@/trpc/server";
+import { TRPCPrefetch } from "@/trpc/trpc-prefetch";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-import { caller, HydrateClient, prefetch, trpc } from "@/trpc/server";
 import { LatestPost } from "./_components/posts";
-import { Suspense } from "react";
 
 export default async function Home() {
   const hello = await caller.post.hello({ text: "from tRPC" });
-
-  prefetch(trpc.post.getLatest.queryOptions());
+  const getLatestPostQueryOptions = trpc.post.getLatest.queryOptions();
 
   return (
     <div>
@@ -21,11 +20,15 @@ export default async function Home() {
         </Button>
       </SignedOut>
       <p>{hello.greeting}</p>
-      <HydrateClient>
-        <Suspense fallback={<p>Loading from RSC...</p>}>
-          <LatestPost />
-        </Suspense>
-      </HydrateClient>
+
+      <TRPCPrefetch
+        queryOptionsToPrefetch={[getLatestPostQueryOptions]}
+        suspenseFallback={<p>Loading from RSC...</p>}
+        errorFallback={<p>Error from RSC...</p>}
+        isSuspense={true}
+      >
+        <LatestPost />
+      </TRPCPrefetch>
     </div>
   );
 }

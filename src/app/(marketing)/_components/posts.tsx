@@ -1,16 +1,14 @@
 "use client";
 
-import { useState } from "react";
-
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useTRPC } from "@/trpc/react";
 import {
   useMutation,
-  useQuery,
   useQueryClient,
   useSuspenseQuery,
 } from "@tanstack/react-query";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { useState } from "react";
 
 export function LatestPost() {
   const trpc = useTRPC();
@@ -27,13 +25,26 @@ export function LatestPost() {
   });
   const createPost = useMutation(createPostMutationOptions);
 
-  const { data: latestPost, isLoading } = useSuspenseQuery(
+  const { data: latestPost } = useSuspenseQuery(
     trpc.post.getLatest.queryOptions(),
   );
 
-  if (isLoading) {
-    return <p>Loading from client...</p>;
-  }
+  // No suspense: useQuery()
+  // This works with or without prefetching
+  // const { data: latestPost, isLoading } = useQuery(
+  //   trpc.post.getLatest.queryOptions(),
+  // );
+  //
+  // if (isLoading) {
+  //   return <p>Loading...</p>;
+  // }
+
+  // You can also get initial data from RSC instead of prefetching
+  // Data fetching will need to be awaited in RSC
+  // const { data: latestPost } = useQuery({
+  //   ...trpc.post.getLatest.queryOptions(),
+  //   initialData: props.initialData
+  // });
 
   return (
     <div className="w-full max-w-xs">
