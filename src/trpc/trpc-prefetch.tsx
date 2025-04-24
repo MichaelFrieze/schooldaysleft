@@ -5,15 +5,6 @@ import { unstable_noStore } from "next/cache";
 import { Suspense, type ReactNode } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
-// type TRPCPrefetchProps = {
-//   children: ReactNode;
-//   suspenseFallback?: ReactNode;
-//   errorFallback?: ReactNode;
-//   // prefetch: ReturnType<TRPCQueryOptions<any>>[];
-//   prefetch: Array<Parameters<typeof prefetchTRPC>[0]>;
-//   isSuspense?: boolean;
-// };
-
 type TRPCPrefetchProps =
   | {
       isSuspense?: true;
@@ -59,7 +50,6 @@ export function TRPCPrefetch({
 
 type PrefetchAndHydrateProps = {
   queryOptionsToPrefetch: ReturnType<TRPCQueryOptions<any>>[];
-  // prefetch: Array<Parameters<typeof prefetchTRPC>[0]>;
   children: ReactNode;
 };
 
