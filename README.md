@@ -2,3 +2,9 @@
 - caching with drizzle and upstash
 - fix menu items in clerk user component
 - rate limit with upstash
+- full moon
+- chance of outside recess (weather)
+- not in the mood
+- countdown until next break
+- theme switcher
+- breaks are, thanksgiving, winter, spring
