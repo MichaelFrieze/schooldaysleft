@@ -74,6 +74,17 @@
   }
 }
 
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+  @media (width >= --theme(--breakpoint-sm)) {
+    max-width: none;
+  }
+  @media (width >= 1400px) {
+    max-width: 1400px;
+  }
+}
+
 :root {
   --background: oklch(0.97 0.01 286.15);
   --foreground: oklch(0.3 0.06 282.42);
@@ -200,7 +211,22 @@
   --shadow-2xl: 0px 4px 10px 0px hsl(240 30% 25% / 0.3);
 }
 
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
 @layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
   * {
     @apply border-border outline-ring/50;
   }
