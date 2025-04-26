@@ -12,13 +12,10 @@ export const MarketingNavbar = () => {
       <div className="container flex h-16 items-center">
         <Link href="/" className="flex items-center gap-2 font-semibold">
           <CalendarDays className="text-primary h-5 w-5" />
-          <span>SchoolDaysLeft</span>
+          <span>School Days Left</span>
         </Link>
 
         <nav className="ml-auto flex items-center gap-4">
-          <div className="hidden gap-2 md:flex">
-            {/* <TeacherStudentDropdown /> */}
-          </div>
           <ModeToggle />
           <AuthButton />
         </nav>
