@@ -5,8 +5,24 @@ import { MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 
 import { Button } from "@/components/ui/button";
+import type { VariantProps } from "class-variance-authority";
+import type { buttonVariants } from "@/components/ui/button";
 
-export function ModeToggle() {
+interface ModeToggleProps extends VariantProps<typeof buttonVariants> {
+  variant?:
+    | "default"
+    | "destructive"
+    | "outline"
+    | "secondary"
+    | "ghost"
+    | "link";
+  size?: "default" | "sm" | "lg" | "icon";
+}
+
+export function ModeToggle({
+  variant = "ghost",
+  size = "icon",
+}: ModeToggleProps) {
   const { setTheme, resolvedTheme } = useTheme();
 
   const toggleTheme = React.useCallback(() => {
@@ -15,10 +31,10 @@ export function ModeToggle() {
 
   return (
     <Button
-      variant="outline"
+      variant={variant}
       className="group/toggle"
       onClick={toggleTheme}
-      size={"icon"}
+      size={size}
     >
       <SunIcon className="hidden [html.dark_&]:block" />
       <MoonIcon className="hidden [html.light_&]:block" />

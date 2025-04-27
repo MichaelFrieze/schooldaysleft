@@ -5,27 +5,38 @@ import { Mail } from "lucide-react";
 export const MarketingFooter = () => {
   return (
     <footer className="bg-background border-t">
-      <div className="container mx-auto py-6">
-        <div className="flex flex-col-reverse items-center justify-between gap-2 sm:flex-row sm:gap-0">
-          <Button
+      <div className="container mx-auto py-4">
+        <div className="flex flex-col-reverse items-center justify-between gap-2 sm:flex-row">
+          {/* <Button
             variant={"link"}
             size={"sm"}
-            className="text-muted-foreground text-sm"
+            className="text-muted-foreground"
           >
             <a
               href="https://frieze.dev"
               target="_blank"
-              aria-label="Frieze Labs website"
+              aria-label="Frieze Dev website"
             >
               &copy; {new Date().getFullYear()} Frieze Dev
             </a>
-          </Button>
-          <div className="flex gap-2">
-            <Button
-              variant={"outline"}
-              className="text-muted-foreground"
-              asChild
+          </Button> */}
+          <p className="text-muted-foreground text-sm">
+            &copy; {new Date().getFullYear()} Frieze Labs. All rights reserved.
+          </p>
+          {/* <p className="text-muted-foreground text-sm">
+            &copy; {new Date().getFullYear()}{" "}
+            <a
+              href="https://frieze.dev"
+              target="_blank"
+              aria-label="Frieze Labs website"
+              className="hover:underline"
             >
+              Frieze Labs
+            </a>
+            . All rights reserved.
+          </p> */}
+          <div className="flex gap-2">
+            <Button variant={"ghost"} className="text-muted-foreground" asChild>
               <a
                 href="https://frieze.dev"
                 target="_blank"
@@ -35,7 +46,7 @@ export const MarketingFooter = () => {
               </a>
             </Button>
             <Button
-              variant={"outline"}
+              variant={"ghost"}
               size={"icon"}
               className="text-muted-foreground"
               asChild
@@ -49,7 +60,7 @@ export const MarketingFooter = () => {
               </a>
             </Button>
             <div className="text-muted-foreground">
-              <ModeToggle />
+              <ModeToggle variant={"ghost"} />
             </div>
           </div>
         </div>

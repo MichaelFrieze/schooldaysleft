@@ -17,3 +17,4 @@
 - change sign-in button colors
 - consider moving footer icons and links around and moving mode toggle back to navbar
 - look into how easy it is to use stripe in a small form component in drawer.
+- use drawer component in mobile view and dialog in desktop
