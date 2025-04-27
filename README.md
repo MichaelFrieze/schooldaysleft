@@ -1,12 +1,11 @@
-- Theme Switcher component: https://github.com/heywinit/colorswitchcn
-- Add footer to marketing page
-- Setup domain
-- caching with drizzle and upstash
-- fix menu items in clerk user component
-- rate limit with upstash
-- full moon
-- chance of outside recess (weather)
-- not in the mood
-- countdown until next break
-- theme switcher
-- breaks are, thanksgiving, winter, spring
+# schooldaysleft
+
+This project provides a set of features for a web application, including:
+
+- **Theme Switching:** Easily toggle between different visual themes.
+- **User Authentication:** Secure user management powered by Clerk.
+- **Caching:** Improved performance through caching mechanisms using Drizzle and Upstash.
+- **Rate Limiting:** Protect against abuse with rate limiting implemented via Upstash.
+- **Integrated Payments:** Support for processing payments, potentially using Stripe.
+- **UI Components:** Utilizes components like drawers for enhanced user interaction (e.g., contact, donate).
+- **Responsive Design:** Includes features like a footer and adaptable layout for various screen sizes.
