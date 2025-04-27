@@ -1,3 +1,4 @@
+import { MarketingFooter } from "../components/marketing-footer";
 import { MarketingNavbar } from "../components/marketing-navbar";
 
 interface MarketingLayoutProps {
@@ -9,6 +10,7 @@ export const MarketingLayout = ({ children }: MarketingLayoutProps) => {
     <>
       <MarketingNavbar />
       <main className="min-h-[calc(100vh-64px)]">{children}</main>
+      <MarketingFooter />
     </>
   );
 };
