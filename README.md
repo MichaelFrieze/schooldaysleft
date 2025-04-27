@@ -1,4 +1,6 @@
 - Theme Switcher component: https://github.com/heywinit/colorswitchcn
+- Add footer to marketing page
+- Setup domain
 - caching with drizzle and upstash
 - fix menu items in clerk user component
 - rate limit with upstash
