@@ -1,12 +1,8 @@
-- Theme Switcher component: https://github.com/heywinit/colorswitchcn
-- Add footer to marketing page
-- Setup domain
-- caching with drizzle and upstash
-- fix menu items in clerk user component
-- rate limit with upstash
-- full moon
-- chance of outside recess (weather)
-- not in the mood
-- countdown until next break
-- theme switcher
-- breaks are, thanksgiving, winter, spring
+# schooldaysleft
+
+This project provides a set of features for a web application, including:
+
+- **Separate Countdowns:** Track both teacher and student days left until summer break.
+- **Easy Setup:** Set your start and end dates, then customize your days off.
+- **Daily Motivation:** Optional daily inspirational quotes to brighten your day.
+- **Colorful Themes:** Make it yours with multiple color themes.
