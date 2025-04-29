@@ -1,8 +1,12 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { CalendarDays, School, GraduationCap } from "lucide-react";
+import { caller } from "@/trpc/server";
 
-export const MarketingView = () => {
+export const MarketingView = async () => {
+  const post = await caller.post.getLatest();
+  console.log({ post });
+
   return (
     <div className="container mx-auto px-4 py-12">
       <div className="mx-auto flex max-w-3xl flex-col items-center space-y-8 text-center">

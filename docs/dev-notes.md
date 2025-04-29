@@ -1,10 +1,10 @@
 # Current
 
 - Navbar logo icon
-- fix menu items in clerk user component
 - Setup domain
 - rate limit with upstash
 - start working on the app
+- fix sign-in button collors in marketing view navbar
 
 # Inbox
 
