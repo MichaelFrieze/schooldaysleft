@@ -1,15 +1,9 @@
-# Current
-
-- Navbar logo icon
-- fix menu items in clerk user component
-- Setup domain
-- rate limit with upstash
-- caching with drizzle and upstash
-- start working on the app
-
-# Inbox
-
 - Theme Switcher component: https://github.com/heywinit/colorswitchcn
+- Add footer to marketing page
+- Setup domain
+- caching with drizzle and upstash
+- fix menu items in clerk user component
+- rate limit with upstash
 - full moon
 - chance of outside recess (weather)
 - not in the mood
@@ -18,8 +12,9 @@
 - breaks are, thanksgiving, winter, spring
 - consider using drawer for contact button
 - consider using drawer for donate button
-- use drawer component in mobile view and dialog in desktop
 - consider new button variant for footer buttons to change outline after small breakpoint
 - consider making logo icon bigger
 - change sign-in button colors
+- consider moving footer icons and links around and moving mode toggle back to navbar
 - look into how easy it is to use stripe in a small form component in drawer.
+- use drawer component in mobile view and dialog in desktop
