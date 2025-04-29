@@ -1,11 +1,13 @@
+import { currentUser } from "@clerk/nextjs/server";
 import { z } from "zod";
 
+import { posts } from "@/db/schema";
 import {
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
 } from "@/trpc/init";
-import { posts } from "@/db/schema";
+import { TRPCError } from "@trpc/server";
 
 export const postRouter = createTRPCRouter({
   hello: publicProcedure
@@ -25,8 +27,15 @@ export const postRouter = createTRPCRouter({
     }),
 
   getLatest: protectedProcedure.query(async ({ ctx }) => {
-    const clerkUserId = ctx.session.userId;
-    console.log({ clerkUserId });
+    const user = await currentUser();
+
+    // You don't actually need to check this, it's for testing purposes
+    if (user?.id !== ctx.session.userId) {
+      throw new TRPCError({ code: "UNAUTHORIZED" });
+    }
+
+    console.log("This is the user object: ", { user });
+    console.log("This is the session object: ", { session: ctx.session });
 
     const post = await ctx.db.query.posts.findFirst({
       orderBy: (posts, { desc }) => [desc(posts.createdAt)],
