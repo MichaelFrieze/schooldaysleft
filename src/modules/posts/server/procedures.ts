@@ -1,11 +1,11 @@
 import { z } from "zod";
 
+import { posts } from "@/db/schema";
 import {
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
 } from "@/trpc/init";
-import { posts } from "@/db/schema";
 
 export const postRouter = createTRPCRouter({
   hello: publicProcedure

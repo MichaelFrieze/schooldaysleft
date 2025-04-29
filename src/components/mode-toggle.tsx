@@ -1,12 +1,12 @@
 "use client";
 
-import * as React from "react";
 import { MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
+import * as React from "react";
 
+import type { buttonVariants } from "@/components/ui/button";
 import { Button } from "@/components/ui/button";
 import type { VariantProps } from "class-variance-authority";
-import type { buttonVariants } from "@/components/ui/button";
 
 interface ModeToggleProps extends VariantProps<typeof buttonVariants> {
   variant?:

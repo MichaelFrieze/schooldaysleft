@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
-import { CalendarDays } from "lucide-react";
 import { AuthButton } from "@/modules/auth/ui/components/auth-button";
+import { CalendarDays } from "lucide-react";
+import Link from "next/link";
 
 export const MarketingNavbar = () => {
   return (

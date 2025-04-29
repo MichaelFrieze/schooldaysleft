@@ -1,7 +1,7 @@
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { CalendarDays, School, GraduationCap } from "lucide-react";
 import { caller } from "@/trpc/server";
+import { CalendarDays, GraduationCap, School } from "lucide-react";
+import Link from "next/link";
 
 export const MarketingView = async () => {
   const post = await caller.post.getLatest();

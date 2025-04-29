@@ -1,8 +1,8 @@
 import "@/styles/globals.css";
 
 import { TRPCReactProvider } from "@/trpc/react";
-import { type Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
+import { type Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 
 export const metadata: Metadata = {
