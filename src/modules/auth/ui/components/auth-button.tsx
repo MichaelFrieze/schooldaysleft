@@ -9,16 +9,7 @@ export const AuthButton = () => {
   return (
     <>
       <SignedIn>
-        <UserButton>
-          {/* <UserButton.MenuItems>
-            <UserButton.Link
-              label="Studio"
-              href="/studio"
-              labelIcon={<ClapperboardIcon className="size-4" />}
-            />
-            <UserButton.Action label="manageAccount" />
-          </UserButton.MenuItems> */}
-        </UserButton>
+        <UserButton />
       </SignedIn>
       <SignedOut>
         <SignInButton mode="modal">
