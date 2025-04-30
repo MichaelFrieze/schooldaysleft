@@ -1,15 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { CalendarDays, GraduationCap, School } from "lucide-react";
+import { GraduationCap, School } from "lucide-react";
 import Link from "next/link";
 
 export const MarketingView = async () => {
   return (
-    <div className="container mx-auto px-4 py-12">
+    <div className="container mx-auto px-4 py-12 sm:mt-16">
       <div className="mx-auto flex max-w-3xl flex-col items-center space-y-8 text-center">
-        <div className="bg-primary/10 rounded-full p-3">
-          <CalendarDays className="text-primary h-12 w-12" />
-        </div>
-
         <h1 className="text-4xl font-bold tracking-tight md:text-6xl">
           School Days Left
         </h1>
