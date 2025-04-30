@@ -4,8 +4,8 @@ import { CalendarDays, GraduationCap, School } from "lucide-react";
 import Link from "next/link";
 
 export const MarketingView = async () => {
-  const post = await caller.post.getLatest();
-  console.log({ post });
+  // const post = await caller.post.getLatest();
+  // console.log({ post });
 
   return (
     <div className="container mx-auto px-4 py-12">
