@@ -106,7 +106,7 @@ const rateLimitMiddleware = t.middleware(async ({ ctx, next }) => {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
 
-  const ratelimit = createRateLimiter(20, "10s");
+  const ratelimit = createRateLimiter(10, "10s");
 
   const { success } = await ratelimit.limit(ctx.session.userId);
 
