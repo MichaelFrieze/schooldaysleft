@@ -4,7 +4,7 @@
 - Setup domain
 - rate limit with upstash
 - start working on the app
-- fix sign-in button collors in marketing view navbar
+- fix sign-in button colors in marketing view navbar
 
 # Inbox
 

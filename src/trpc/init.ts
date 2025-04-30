@@ -12,6 +12,7 @@ import { ZodError } from "zod";
 
 import { db } from "@/db";
 import { auth } from "@clerk/nextjs/server";
+import { createRateLimiter } from "@/lib/ratelimit";
 
 /**
  * 1. CONTEXT
@@ -100,6 +101,22 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
   return result;
 });
 
+const rateLimitMiddleware = t.middleware(async ({ ctx, next }) => {
+  if (!ctx.session?.userId) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+
+  const ratelimit = createRateLimiter(20, "10s");
+
+  const { success } = await ratelimit.limit(ctx.session.userId);
+
+  if (!success) {
+    throw new TRPCError({ code: "TOO_MANY_REQUESTS" });
+  }
+
+  return next();
+});
+
 /**
  * Public (unauthenticated) procedure
  *
@@ -119,6 +136,7 @@ export const publicProcedure = t.procedure.use(timingMiddleware);
  */
 export const protectedProcedure = t.procedure
   .use(timingMiddleware)
+  .use(rateLimitMiddleware)
   .use(({ ctx, next }) => {
     if (!ctx.session?.userId) {
       throw new TRPCError({ code: "UNAUTHORIZED" });
