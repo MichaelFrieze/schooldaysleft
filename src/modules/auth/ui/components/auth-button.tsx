@@ -42,8 +42,8 @@ export const AuthButton = () => {
       <SignedOut>
         <SignInButton mode="modal">
           <Button
-            variant="outline"
-            className="rounded-full border-blue-500/20 px-4 py-2 text-sm font-medium text-blue-600 shadow-none hover:text-blue-500"
+            variant="default"
+            className="h-8 rounded-full text-sm font-medium shadow-none"
           >
             <UserCircleIcon />
             Sign in
