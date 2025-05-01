@@ -1,7 +1,6 @@
 # Current
 
-- Setup email
-- start working on the app
+- build user preferences page
 
 # Inbox
 
@@ -15,7 +14,5 @@
 - consider using drawer for contact button
 - consider using drawer for donate button
 - use drawer component in mobile view and dialog in desktop
-- consider new button variant for footer buttons to change outline after small breakpoint
 - consider making logo icon bigger
-- change sign-in button colors
 - look into how easy it is to use stripe in a small form component in drawer.
