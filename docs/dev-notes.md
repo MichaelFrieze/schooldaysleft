@@ -1,6 +1,5 @@
 # Current
 
-- Navbar logo icon
 - Setup domain
 - start working on the app
 - fix sign-in button colors in marketing view navbar
