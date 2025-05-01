@@ -1,8 +1,8 @@
 # Current
 
 - Setup domain
+- Setup email
 - start working on the app
-- fix sign-in button colors in marketing view navbar
 
 # Inbox
 
