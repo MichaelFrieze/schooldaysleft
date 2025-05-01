@@ -1,6 +1,5 @@
 # Current
 
-- Setup domain
 - Setup email
 - start working on the app
 
