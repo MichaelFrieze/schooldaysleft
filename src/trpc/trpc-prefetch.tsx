@@ -63,3 +63,8 @@ function PrefetchAndHydrate({
   });
   return <HydrateClient>{children}</HydrateClient>;
 }
+
+// This was inspired by a custom Await component created by Ravi: https://gist.github.com/perfectbase/ff9448774a8bb3608170d968faadc627
+
+// The <MaybeErrorBoundary fallback={<>{errorComponent}</>}> is pretty cool, but not needed in my TRPCPrefetch component:
+// const MaybeErrorBoundary = errorComponent ? ErrorBoundary : Fragment;
