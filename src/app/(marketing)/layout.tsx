@@ -1,10 +1,10 @@
 import { MarketingLayout } from "@/modules/marketing/ui/layouts/marketing-layout";
 
-interface MarketingLayoutProps {
+interface LayoutProps {
   children: React.ReactNode;
 }
 
-const Layout = ({ children }: MarketingLayoutProps) => {
+const Layout = ({ children }: LayoutProps) => {
   return <MarketingLayout>{children}</MarketingLayout>;
 };
 
