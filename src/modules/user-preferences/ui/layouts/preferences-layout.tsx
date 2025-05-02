@@ -1,5 +1,5 @@
-import { PreferencesFooter } from "../components/preferences-footer";
-import { PreferencesNavbar } from "../components/preferences-navbar";
+import { Footer } from "@/components/footer";
+import { Navbar } from "@/components/navbar";
 
 interface PreferencesLayoutProps {
   children: React.ReactNode;
@@ -8,9 +8,9 @@ interface PreferencesLayoutProps {
 export const PreferencesLayout = ({ children }: PreferencesLayoutProps) => {
   return (
     <>
-      <PreferencesNavbar />
+      <Navbar />
       <main className="min-h-[calc(100vh-64px)]">{children}</main>
-      <PreferencesFooter />
+      <Footer />
     </>
   );
 };

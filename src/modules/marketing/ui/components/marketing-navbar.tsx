@@ -1,5 +1,3 @@
-"use client";
-
 import { AuthButton } from "@/modules/auth/ui/components/auth-button";
 import { CalendarDays } from "lucide-react";
 import Link from "next/link";
