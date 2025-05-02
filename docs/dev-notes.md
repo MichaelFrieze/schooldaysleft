@@ -1,6 +1,6 @@
 # Current
 
-- build user preferences page
+- start working on countdown app
 
 # Inbox
 
