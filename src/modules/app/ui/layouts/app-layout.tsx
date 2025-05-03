@@ -1,14 +1,14 @@
 import { Footer } from "@/components/footer";
-import { Navbar } from "@/components/navbar";
+import { AppNavbar } from "@/modules/app/ui/components/app-navbar";
 
-interface CountdownLayoutProps {
+interface AppLayoutProps {
   children: React.ReactNode;
 }
 
-export const CountdownLayout = ({ children }: CountdownLayoutProps) => {
+export const AppLayout = ({ children }: AppLayoutProps) => {
   return (
     <>
-      <Navbar />
+      <AppNavbar />
       <main className="min-h-[calc(100vh-64px)]">{children}</main>
       <Footer />
     </>
