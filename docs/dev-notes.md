@@ -1,8 +1,4 @@
-# Current
-
-- start working on countdown app
-
-# Inbox
+# TODO
 
 - Theme Switcher component: https://github.com/heywinit/colorswitchcn
 - full moon
@@ -17,6 +13,9 @@
 - consider making logo icon bigger
 - look into how easy it is to use stripe in a small form component in drawer.
 - consider adding drizzle-kit push --force to preview branches:
+- dashboard content doesn't exactly align with navbar content.
+- Add countdown selection in the navbar using a dropdown
+- Move dashboard page contents to it's own module
 
 ```
     "vercel-build": "if [ \"$VERCEL_ENV\" = \"production\" ]; then drizzle-kit push; elif [ \"$VERCEL_ENV\" = \"preview\" ]; drizzle-kit push --force; fi && next build",

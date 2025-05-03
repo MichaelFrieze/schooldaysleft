@@ -79,7 +79,7 @@ export default async function CountdownDashboardPage() {
   ];
 
   return (
-    <div className="container mx-auto px-4 py-8 md:py-12">
+    <div className="container py-8 md:py-12">
       <div className="mb-8 flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
         <div className="grid gap-1">
           <h1 className="text-2xl font-bold tracking-tight md:text-3xl">
