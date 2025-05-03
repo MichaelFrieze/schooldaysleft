@@ -11,6 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { auth } from "@clerk/nextjs/server";
 
@@ -47,27 +48,33 @@ export default async function CountdownDashboardPage() {
   const countdowns = [
     {
       id: "clq1234567",
-      name: "New Year 2025",
-      endDate: new Date("2025-01-01"),
+      name: "Summer Break 2024",
+      endDate: new Date("2026-06-21"),
       createdAt: new Date("2023-12-25"),
     },
     {
       id: "clq2345678",
-      name: "Summer Vacation",
-      endDate: new Date("2024-06-15"),
-      createdAt: new Date("2023-12-26"),
+      name: "Spring Break",
+      endDate: new Date("2026-03-25"),
+      createdAt: new Date("2024-01-10"),
     },
     {
       id: "clq3456789",
-      name: "Wedding Day",
-      endDate: new Date("2024-09-30"),
-      createdAt: new Date("2023-12-27"),
+      name: "Winter Break",
+      endDate: new Date("2025-12-22"),
+      createdAt: new Date("2023-12-01"),
     },
     {
       id: "clq4567890",
-      name: "Project Deadline",
-      endDate: new Date("2024-03-31"),
-      createdAt: new Date("2023-12-28"),
+      name: "Teacher Planning Day",
+      endDate: new Date("2027-01-26"),
+      createdAt: new Date("2024-01-15"),
+    },
+    {
+      id: "clq5678901",
+      name: "Last Day of School",
+      endDate: new Date("2025-06-21"),
+      createdAt: new Date("2024-01-02"),
     },
   ];
 
@@ -103,57 +110,56 @@ export default async function CountdownDashboardPage() {
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {countdowns.map((countdown) => (
-            <Link
-              href={`/countdown/${countdown.id}`}
-              key={countdown.id}
-              className="block transition-transform duration-150 ease-in-out hover:scale-[1.02]"
-              aria-label={`View countdown: ${countdown.name}`}
-            >
-              <Card className="h-full overflow-hidden hover:shadow-md">
-                <CardHeader className="pb-2">
-                  <CardTitle className="truncate text-xl font-semibold">
-                    {countdown.name}
-                  </CardTitle>
-                  {countdown.endDate && (
-                    <CardDescription className="text-muted-foreground text-sm">
-                      Ends on: {formatDate(countdown.endDate)}
-                    </CardDescription>
-                  )}
-                </CardHeader>
-                <CardContent>
-                  <div className="mt-2 space-y-2">
-                    <div className="bg-primary/10 h-2 rounded-full">
-                      <div
-                        className="bg-primary h-full rounded-full"
-                        style={{
-                          width: `${Math.max(
-                            0,
-                            Math.min(
-                              100,
-                              ((new Date(countdown.endDate).getTime() -
-                                Date.now()) /
-                                (new Date(countdown.endDate).getTime() -
-                                  new Date(countdown.createdAt).getTime())) *
-                                100,
-                            ),
-                          )}%`,
-                        }}
-                      />
-                    </div>
-                    <p className="text-muted-foreground text-sm">
-                      Time remaining:{" "}
-                      {Math.ceil(
-                        (new Date(countdown.endDate).getTime() - Date.now()) /
-                          (1000 * 60 * 60 * 24),
-                      )}{" "}
-                      days
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
-          ))}
+          {countdowns.map((countdown) => {
+            const startDate = new Date(countdown.createdAt).getTime();
+            const endDate = new Date(countdown.endDate).getTime();
+            const now = Date.now();
+
+            let progressValue = 100; // Default to 100% (full progress)
+            const timeRemaining = endDate - now;
+            const totalDuration = endDate - startDate;
+
+            if (totalDuration > 0) {
+              // Calculate progress as percentage of time elapsed
+              progressValue =
+                100 -
+                Math.max(
+                  0, // Ensure progress doesn't go below 0
+                  Math.min(100, (timeRemaining / totalDuration) * 100), // Clamp at 100
+                );
+            }
+
+            // If past end date, show 100% progress
+            if (now > endDate) {
+              progressValue = 100;
+            }
+
+            return (
+              <Link
+                href={`/countdown/${countdown.id}`}
+                key={countdown.id}
+                className="block transition-transform duration-150 ease-in-out hover:scale-[1.02]"
+                aria-label={`View countdown: ${countdown.name}`}
+              >
+                <Card className="h-full overflow-hidden hover:shadow-md">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="truncate text-xl font-semibold">
+                      {countdown.name}
+                    </CardTitle>
+                    {countdown.endDate && (
+                      <CardDescription className="text-muted-foreground text-sm">
+                        Ends on: {formatDate(countdown.endDate)}
+                      </CardDescription>
+                    )}
+                  </CardHeader>
+                  <CardContent>
+                    {/* Progress bar shows percentage of time elapsed */}
+                    <Progress value={progressValue} className="mt-4 h-2" />
+                  </CardContent>
+                </Card>
+              </Link>
+            );
+          })}
         </div>
       )}
     </div>
