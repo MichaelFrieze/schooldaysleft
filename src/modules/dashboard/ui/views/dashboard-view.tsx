@@ -1,4 +1,4 @@
-import { Plus } from "lucide-react";
+import { Calendar, Plus } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -124,23 +124,23 @@ export const DashboardView = async () => {
               <Link
                 href={`/countdown/${countdown.id}`}
                 key={countdown.id}
-                className="block transition-transform duration-150 ease-in-out hover:scale-[1.02]"
+                className="transition-transform duration-150 ease-in-out hover:scale-[1.01]"
                 aria-label={`View countdown: ${countdown.name}`}
               >
                 <Card className="h-full overflow-hidden hover:shadow-md">
                   <CardHeader className="pb-2">
-                    <CardTitle className="truncate text-xl font-semibold">
+                    <CardTitle className="truncate text-lg font-medium">
                       {countdown.name}
                     </CardTitle>
                     {countdown.endDate && (
-                      <CardDescription className="text-muted-foreground text-sm">
+                      <CardDescription className="text-muted-foreground/90 flex items-center gap-1.5 text-sm font-medium">
+                        <Calendar className="h-4 w-4" />
                         Ends on: {formatDate(countdown.endDate)}
                       </CardDescription>
                     )}
                   </CardHeader>
                   <CardContent>
-                    {/* Progress bar shows percentage of time elapsed */}
-                    <Progress value={progressValue} className="mt-4 h-2" />
+                    <Progress value={progressValue} className="h-3" />
                   </CardContent>
                 </Card>
               </Link>
