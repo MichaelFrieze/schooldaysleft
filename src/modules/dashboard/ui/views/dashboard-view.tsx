@@ -1,4 +1,4 @@
-import { Calendar, Plus } from "lucide-react";
+import { Calendar, CalendarDays, Plus } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -82,14 +82,22 @@ export const DashboardView = async () => {
 
       <Separator className="mb-8" />
 
-      {false ? (
-        <div className="flex flex-col items-center justify-center rounded-lg border border-dashed p-12 text-center">
-          <p className="text-muted-foreground mt-2 mb-4 text-sm">
-            You haven&apos;t created any countdowns yet.
+      {true ? (
+        // <div className="rounded-lg border border-dashed p-12 text-center">
+        //   <p className="text-muted-foreground mt-2 mb-4">
+        //     You haven&apos;t created any countdowns yet.
+        //   </p>
+        // </div>
+        <div className="flex min-h-[300px] flex-col items-center justify-center rounded-lg border border-dashed p-12 text-center">
+          <CalendarDays className="text-muted-foreground mb-4 h-12 w-12" />
+          <h3 className="mb-2 text-lg font-medium">No Countdowns Yet</h3>
+          <p className="text-muted-foreground max-w-sm text-sm">
+            Create your first countdown to track the days left until your next
+            break or the end of the school year.
           </p>
-          <Button asChild variant="secondary">
+          <Button asChild variant="outline" className="mt-6">
             <Link href="/countdown/new">
-              <Plus className="mr-1 h-4 w-4" />
+              <Plus className="mr-2 h-4 w-4" />
               Create Your First Countdown
             </Link>
           </Button>
