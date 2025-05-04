@@ -26,19 +26,21 @@ export const AuthButton = () => {
   }
 
   return (
-    <div className="h-8 w-8">
-      <SignedIn>
-        <UserButton
-          appearance={{
-            elements: {
-              avatarBox: {
-                height: "2rem",
-                width: "2rem",
+    <>
+      <div className="h-8 w-8">
+        <SignedIn>
+          <UserButton
+            appearance={{
+              elements: {
+                avatarBox: {
+                  height: "2rem",
+                  width: "2rem",
+                },
               },
-            },
-          }}
-        />
-      </SignedIn>
+            }}
+          />
+        </SignedIn>
+      </div>
       <SignedOut>
         <SignInButton mode="modal">
           <Button
@@ -50,6 +52,6 @@ export const AuthButton = () => {
           </Button>
         </SignInButton>
       </SignedOut>
-    </div>
+    </>
   );
 };

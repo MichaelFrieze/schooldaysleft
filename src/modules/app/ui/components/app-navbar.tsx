@@ -54,8 +54,11 @@ export const AppNavbar = () => {
   return (
     <header className="bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 border-b backdrop-blur">
       <div className="container flex h-16 items-center">
-        <Link href="/dashboard">
-          <CalendarDays className="text-primary h-8 w-8" />
+        <Link href="/dashboard" className="group flex items-center gap-2">
+          <CalendarDays className="text-primary h-7 w-7 transition-transform group-hover:scale-110" />
+          <span className="hidden text-lg font-bold sm:inline-block">
+            SchooldaysLeft
+          </span>
         </Link>
 
         <nav className="ml-auto flex items-center gap-4">
