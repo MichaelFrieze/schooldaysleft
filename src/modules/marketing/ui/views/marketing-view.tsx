@@ -6,9 +6,12 @@ import Link from "next/link";
 export const MarketingView = async () => {
   return (
     <div className="container px-4 py-12 sm:py-24">
-      <div className="mx-auto flex max-w-3xl flex-col items-center space-y-6 text-center">
+      <div className="mx-auto flex max-w-3xl flex-col items-center space-y-8 text-center">
         <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
-          <span className="text-primary">School</span> Days Left
+          <span className="from-primary via-primary/80 to-primary bg-gradient-to-r bg-clip-text text-transparent">
+            School
+          </span>{" "}
+          Days Left
         </h1>
 
         <p className="text-muted-foreground max-w-xl text-lg sm:text-xl md:text-2xl">
@@ -30,8 +33,8 @@ export const MarketingView = async () => {
           </Button>
         </div>
 
-        <div className="mt-12 grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
-          <Card className="text-left">
+        <div className="mt-16 grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
+          <Card className="text-left transition-all hover:scale-[1.01] hover:shadow-md">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-lg font-medium">
                 Separate Countdowns
@@ -45,7 +48,7 @@ export const MarketingView = async () => {
             </CardContent>
           </Card>
 
-          <Card className="text-left">
+          <Card className="text-left transition-all hover:scale-[1.01] hover:shadow-md">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-lg font-medium">Easy Setup</CardTitle>
               <CalendarDays className="text-muted-foreground h-5 w-5" />
@@ -58,7 +61,7 @@ export const MarketingView = async () => {
             </CardContent>
           </Card>
 
-          <Card className="text-left">
+          <Card className="text-left transition-all hover:scale-[1.01] hover:shadow-md">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-lg font-medium">
                 Daily Motivation
@@ -72,7 +75,7 @@ export const MarketingView = async () => {
             </CardContent>
           </Card>
 
-          <Card className="text-left">
+          <Card className="text-left transition-all hover:scale-[1.01] hover:shadow-md">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-lg font-medium">
                 Colorful Themes
