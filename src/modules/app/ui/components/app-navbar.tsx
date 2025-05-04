@@ -25,12 +25,29 @@ export const AppNavbar = () => {
 
   // Get current page name based on pathname
   const getCurrentPageName = () => {
-    if (pathname === "/dashboard") return "Dashboard";
-    if (pathname === "/countdown/new") return "New Countdown";
+    if (pathname === "/dashboard")
+      return (
+        <>
+          <LayoutDashboard className="h-4 w-4" />
+          <span className="truncate">Dashboard</span>
+        </>
+      );
+    if (pathname === "/countdown/new")
+      return (
+        <>
+          <Plus className="h-4 w-4" />
+          <span className="truncate">New Countdown</span>
+        </>
+      );
 
     const countdownId = pathname.split("/").pop();
     const currentCountdown = countdowns.find((c) => c.id === countdownId);
-    return currentCountdown?.name ?? "Select Countdown";
+    // Wrap the countdown name or default text in a span with truncate
+    return (
+      <span className="truncate">
+        {currentCountdown?.name ?? "Select Countdown"}
+      </span>
+    );
   };
 
   return (
@@ -43,12 +60,12 @@ export const AppNavbar = () => {
         <nav className="ml-auto flex items-center gap-4">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="gap-2">
+              <Button variant="outline" className="w-45 gap-2">
                 {getCurrentPageName()}
                 <ChevronDown className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align="end" className="w-45">
               <DropdownMenuItem asChild>
                 <Link href="/dashboard" className="gap-2">
                   <LayoutDashboard className="h-4 w-4" />
