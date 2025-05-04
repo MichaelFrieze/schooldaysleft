@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { GraduationCap, School } from "lucide-react";
+import { School } from "lucide-react";
 import Link from "next/link";
 
 export const MarketingView = async () => {
@@ -14,27 +14,16 @@ export const MarketingView = async () => {
           The simple way for teachers to count down the days until summer break
         </p>
 
-        <div className="mt-4 mb-8 flex w-full max-w-md flex-col gap-3 sm:flex-row sm:gap-4">
+        <div className="mt-4 mb-8">
           <Button
             asChild
             size="lg"
             variant="default"
-            className="w-full gap-2 sm:flex-1"
+            className="min-w-[240px] gap-2"
           >
-            <Link href="/countdown" className="w-full">
+            <Link href="/dashboard">
               <School className="h-5 w-5" />
-              Teacher Countdown
-            </Link>
-          </Button>
-          <Button
-            asChild
-            size="lg"
-            variant="outline"
-            className="w-full gap-2 sm:flex-1"
-          >
-            <Link href="/student/countdown" className="w-full">
-              <GraduationCap className="h-5 w-5" />
-              Student Countdown
+              Start Your Countdown
             </Link>
           </Button>
         </div>
