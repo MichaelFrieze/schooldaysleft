@@ -12,6 +12,7 @@ import { AuthButton } from "@/modules/auth/ui/components/auth-button";
 import { CalendarDays, ChevronDown, LayoutDashboard, Plus } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 export const AppNavbar = () => {
   const pathname = usePathname();
@@ -60,14 +61,21 @@ export const AppNavbar = () => {
         <nav className="ml-auto flex items-center gap-4">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="w-45 gap-2">
+              <Button variant="ghost" className="w-45 gap-2">
                 {getCurrentPageName()}
                 <ChevronDown className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-45">
               <DropdownMenuItem asChild>
-                <Link href="/dashboard" className="gap-2">
+                <Link
+                  href="/dashboard"
+                  className={cn(
+                    "flex items-center gap-2",
+                    pathname === "/dashboard" &&
+                      "bg-accent text-accent-foreground",
+                  )}
+                >
                   <LayoutDashboard className="h-4 w-4" />
                   Dashboard
                 </Link>
@@ -75,14 +83,27 @@ export const AppNavbar = () => {
               <DropdownMenuSeparator />
               {countdowns.map((countdown) => (
                 <DropdownMenuItem key={countdown.id} asChild>
-                  <Link href={`/countdown/${countdown.id}`}>
+                  <Link
+                    href={`/countdown/${countdown.id}`}
+                    className={cn(
+                      pathname === `/countdown/${countdown.id}` &&
+                        "bg-accent text-accent-foreground",
+                    )}
+                  >
                     {countdown.name}
                   </Link>
                 </DropdownMenuItem>
               ))}
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
-                <Link href="/countdown/new" className="gap-2">
+                <Link
+                  href="/countdown/new"
+                  className={cn(
+                    "flex items-center gap-2",
+                    pathname === "/countdown/new" &&
+                      "bg-accent text-accent-foreground",
+                  )}
+                >
                   <Plus className="h-4 w-4" />
                   New Countdown
                 </Link>
