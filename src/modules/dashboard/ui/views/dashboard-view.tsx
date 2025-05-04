@@ -11,7 +11,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Separator } from "@/components/ui/separator";
 import { auth } from "@clerk/nextjs/server";
 
 function formatDate(date: Date | null | undefined): string {
