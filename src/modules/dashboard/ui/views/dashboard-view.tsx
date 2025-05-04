@@ -66,28 +66,26 @@ export const DashboardView = async () => {
 
   return (
     <div className="container py-8 md:py-12">
-      <div className="mb-8 flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
+      <div className="mb-8 flex flex-row items-start justify-between gap-4 md:flex-row md:items-center">
         <div className="grid gap-1">
-          <h1 className="text-2xl font-bold tracking-tight md:text-3xl">
-            My Countdowns
+          <h1 className="bg-clip-text text-2xl font-bold tracking-tight md:text-3xl">
+            Countdowns
           </h1>
+          {/* <p className="text-muted-foreground">
+            Your dashboard for all school-related countdowns.
+          </p> */}
         </div>
         <Button asChild>
           <Link href="/countdown/new">
-            <Plus className="mr-1 h-4 w-4" />
-            Create New Countdown
+            <Plus className="h-4 w-4" />
+            New Countdown
           </Link>
         </Button>
       </div>
 
-      <Separator className="mb-8" />
+      {/* <Separator className="mb-8" /> */}
 
-      {true ? (
-        // <div className="rounded-lg border border-dashed p-12 text-center">
-        //   <p className="text-muted-foreground mt-2 mb-4">
-        //     You haven&apos;t created any countdowns yet.
-        //   </p>
-        // </div>
+      {false ? (
         <div className="flex min-h-[300px] flex-col items-center justify-center rounded-lg border border-dashed p-12 text-center">
           <CalendarDays className="text-muted-foreground mb-4 h-12 w-12" />
           <h3 className="mb-2 text-lg font-medium">No Countdowns Yet</h3>
