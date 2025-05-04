@@ -34,7 +34,7 @@ export const MarketingView = async () => {
         </div>
 
         <div className="mt-16 grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
-          <Card className="text-left transition-all hover:scale-[1.01] hover:shadow-md">
+          <Card className="text-left">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-lg font-medium">
                 Separate Countdowns
@@ -48,7 +48,7 @@ export const MarketingView = async () => {
             </CardContent>
           </Card>
 
-          <Card className="text-left transition-all hover:scale-[1.01] hover:shadow-md">
+          <Card className="text-left">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-lg font-medium">Easy Setup</CardTitle>
               <CalendarDays className="text-muted-foreground h-5 w-5" />
@@ -61,7 +61,7 @@ export const MarketingView = async () => {
             </CardContent>
           </Card>
 
-          <Card className="text-left transition-all hover:scale-[1.01] hover:shadow-md">
+          <Card className="text-left">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-lg font-medium">
                 Daily Motivation
@@ -75,7 +75,7 @@ export const MarketingView = async () => {
             </CardContent>
           </Card>
 
-          <Card className="text-left transition-all hover:scale-[1.01] hover:shadow-md">
+          <Card className="text-left">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-lg font-medium">
                 Colorful Themes
