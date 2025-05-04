@@ -61,7 +61,10 @@ export const AppNavbar = () => {
         <nav className="ml-auto flex items-center gap-4">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="w-45 gap-2">
+              <Button
+                variant="ghost"
+                className="w-45 gap-2 focus-visible:ring-1"
+              >
                 {getCurrentPageName()}
                 <ChevronDown className="h-4 w-4" />
               </Button>
