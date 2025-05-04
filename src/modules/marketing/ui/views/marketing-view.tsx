@@ -8,15 +8,12 @@ export const MarketingView = async () => {
     <div className="container px-4 py-12 sm:py-24">
       <div className="mx-auto flex max-w-3xl flex-col items-center space-y-8 text-center">
         <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
-          <span className="from-primary via-primary/80 to-primary bg-gradient-to-r bg-clip-text text-transparent">
-            School
-          </span>{" "}
-          Days Left
+          Countdown to Your Next Break
         </h1>
 
         <p className="text-muted-foreground max-w-xl text-lg sm:text-xl md:text-2xl">
-          The simple, visual way for teachers to count down the days until
-          summer break.
+          Track the days remaining until holidays, summer vacation, or any time
+          off. Stay motivated and see the finish line.
         </p>
 
         <div className="mt-6 mb-10">
