@@ -1,18 +1,23 @@
-import { AuthButton } from "@/modules/auth/ui/components/auth-button";
-import { CalendarDays } from "lucide-react";
+import { MarketingNavItems } from "@/modules/marketing/ui/components/marketing-nav-items";
 import Link from "next/link";
+import { Suspense } from "react";
 
 export const MarketingNavbar = () => {
   return (
-    <header className="bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur">
+    <header>
       <div className="container flex h-16 items-center">
-        <Link href="/">
-          <CalendarDays className="text-primary h-8 w-8" />
+        <Link href="/" className="group flex items-center gap-1">
+          <span className="text-2xl font-bold">
+            <span className="text-primary bg-clip-text">School</span>
+            DaysLeft
+          </span>
         </Link>
 
-        <nav className="ml-auto flex items-center gap-4">
-          <AuthButton />
-        </nav>
+        <div className="ml-auto flex items-center">
+          <Suspense>
+            <MarketingNavItems />
+          </Suspense>
+        </div>
       </div>
     </header>
   );
