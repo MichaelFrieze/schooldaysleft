@@ -6,78 +6,136 @@ import {
   CardTitle,
   CardContent,
 } from "@/components/ui/card";
-import { Clock, PenLine, School, Settings, Sparkles, User } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import {
+  Calendar,
+  CalendarDays,
+  Clock,
+  PenLine,
+  School,
+  Settings,
+  Sparkles,
+  Sun,
+  User,
+} from "lucide-react";
 import Link from "next/link";
 
 export const MarketingView = async () => {
   return (
     <>
-      <section className="container py-16 md:py-24">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
-          <div className="flex flex-col justify-center">
-            <h1 className="mb-6 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
-              <span className="from-primary via-primary/80 to-primary bg-gradient-to-r bg-clip-text text-transparent">
+      <section className="container py-16 lg:py-24">
+        {/* Mobile */}
+        <div className="lg:hidden">
+          <div className="mx-auto flex max-w-xs flex-col justify-center sm:max-w-xl">
+            <h1 className="text-left text-4xl leading-tight font-bold tracking-tighter sm:text-center sm:text-6xl">
+              <span className="from-primary via-primary/70 to-primary/90 bg-gradient-to-r bg-clip-text text-transparent">
+                Countdown
+              </span>{" "}
+            </h1>
+            <h1 className="mb-6 text-left text-4xl leading-tight font-bold tracking-tighter sm:text-center sm:text-6xl">
+              To Your Next Break
+            </h1>
+
+            <p className="text-muted-foreground mb-8 text-lg sm:text-center">
+              Track the days remaining until holidays, summer vacation, or any
+              time off. Stay motivated and see the finish line.
+            </p>
+
+            <Button
+              asChild
+              size="lg"
+              variant="default"
+              className="gap-2 transition-transform duration-200 hover:scale-105 sm:mx-auto sm:w-sm"
+            >
+              <Link href="/dashboard">
+                <CalendarDays className="h-5 w-5" />
+                Start Your Countdown
+              </Link>
+            </Button>
+          </div>
+        </div>
+
+        {/* Desktop */}
+        <div className="hidden grid-cols-1 gap-12 lg:grid lg:grid-cols-2">
+          <div className="flex max-w-lg flex-col justify-center">
+            <h1 className="mb-6 text-6xl leading-tight font-bold tracking-tighter">
+              <span className="from-primary via-primary/70 to-primary/90 bg-gradient-to-r bg-clip-text text-transparent">
                 Countdown
               </span>{" "}
               to Your Next Break
             </h1>
-            <p className="text-muted-foreground mb-8 text-lg">
+
+            <p className="text-muted-foreground mb-8 max-w-xl text-lg">
               Track the days remaining until holidays, summer vacation, or any
               time off. Stay motivated and see the finish line.
             </p>
-            <div className="flex flex-col gap-4 sm:flex-row">
-              <Button
-                asChild
-                size="lg"
-                variant="default"
-                className="min-w-[240px] gap-2"
-              >
-                <Link href="/dashboard">
-                  <School className="h-5 w-5" />
-                  Start Your Countdown
-                </Link>
-              </Button>
-            </div>
-            {/* <div className="mt-8 flex items-center gap-2 text-sm text-slate-400">
-              <Clock className="h-4 w-4" />
-              <span>Set up in less than 2 minutes</span>
-            </div> */}
+
+            <Button
+              asChild
+              size="lg"
+              variant="default"
+              className="min-w-[240px] gap-2 transition-transform duration-200 hover:scale-105"
+            >
+              <Link href="/dashboard">
+                <CalendarDays className="h-5 w-5" />
+                Start Your Countdown
+              </Link>
+            </Button>
           </div>
-          <div className="flex items-center justify-center">
-            <div className="relative">
-              <div className="bg-card/10 absolute -top-6 -left-6 h-64 w-64 rounded-full blur-3xl"></div>
-              <div className="bg-secondary/10 absolute -right-8 -bottom-8 h-64 w-64 rounded-full blur-3xl"></div>
-              <div className="bg-card relative rounded-2xl border p-6 backdrop-blur-sm">
-                <div className="mb-6 flex items-center justify-between">
-                  <h3 className="text-xl font-bold">Summer Break</h3>
-                  <Settings className="text-muted-foreground h-5 w-5" />
+
+          <Card className="border-border/40 from-background to-muted/20 hidden overflow-hidden rounded-xl border bg-gradient-to-br shadow-lg transition-shadow hover:shadow-xl lg:block">
+            <CardContent className="p-6">
+              <div className="mb-6 flex items-start justify-between">
+                <div className="bg-primary/10 flex h-14 w-14 items-center justify-center rounded-full">
+                  <School className="text-primary h-8 w-8" />
                 </div>
-                <div className="mb-6 grid grid-cols-3 gap-4 text-center">
-                  <div className="bg-accent/80 rounded-lg p-3">
-                    <div className="text-primary text-3xl font-bold">42</div>
-                    <div className="text-muted-foreground text-xs">Days</div>
-                  </div>
-                  <div className="bg-accent/80 rounded-lg p-3">
-                    <div className="text-primary text-3xl font-bold">08</div>
-                    <div className="text-muted-foreground text-xs">Hours</div>
-                  </div>
-                  <div className="bg-accent/80 rounded-lg p-3">
-                    <div className="text-primary text-3xl font-bold">15</div>
-                    <div className="text-muted-foreground text-xs">Minutes</div>
-                  </div>
-                </div>
-                <div className="text-muted-foreground text-center text-sm">
-                  <span className="font-medium">21%</span> of the school year
-                  completed
-                </div>
-                <div className="bg-muted mt-3 h-2 w-full overflow-hidden rounded-full">
-                  <div className="from-primary/80 to-primary/100 h-full w-[21%] bg-gradient-to-r"></div>
+
+                <div className="text-muted-foreground hover:text-foreground h-8 w-8">
+                  <Settings className="h-4 w-4" />
                 </div>
               </div>
-            </div>
-          </div>
+
+              <div className="text-center">
+                <div className="from-primary via-primary/80 to-primary bg-gradient-to-r bg-clip-text text-8xl font-extrabold text-transparent tabular-nums md:text-9xl">
+                  15
+                </div>
+                <p className="text-muted-foreground mt-1 text-lg font-medium">
+                  days to go!
+                </p>
+              </div>
+
+              <div className="mt-8 flex justify-center space-x-6">
+                <div className="flex items-center gap-1.5">
+                  <Calendar className="h-4 w-4 text-green-500" />
+                  <span className="text-muted-foreground text-xs font-medium">
+                    Monday-Friday
+                  </span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <Sun className="h-4 w-4 text-amber-500" />
+                  <span className="text-muted-foreground text-xs font-medium">
+                    Weekends Off
+                  </span>
+                </div>
+              </div>
+
+              <div className="mt-8">
+                <Progress value={87} className="h-2.5" />
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
+
+      {/* <CardHeader className="pb-2">
+              <CardTitle className="truncate text-lg font-medium">
+                Summer Break 2025
+              </CardTitle>
+              <CardDescription className="text-muted-foreground/90 flex items-center gap-1.5 text-sm font-medium">
+                <Calendar className="h-4 w-4" />
+                Ends on: June 20, 2025
+              </CardDescription>
+            </CardHeader> */}
 
       <section className="container mx-auto px-4 py-16">
         <div className="mb-12 text-center">

@@ -5,10 +5,10 @@ import { Suspense } from "react";
 
 export const MarketingNavbar = () => {
   return (
-    <header className="bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full backdrop-blur">
+    <header className="bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur">
       <div className="container flex h-16 items-center">
-        <Link href="/" className="group flex items-center gap-2">
-          <CalendarDays className="text-primary h-6 w-6" />
+        <Link href="/" className="group flex items-center gap-1">
+          <CalendarDays className="text-primary h-6 w-6 stroke-[2.5]" />
 
           <span className="mt-2 text-xl font-bold">
             <span className="text-primary bg-clip-text">School</span>
@@ -16,7 +16,7 @@ export const MarketingNavbar = () => {
           </span>
         </Link>
 
-        <div className="ml-auto flex items-center">
+        <div className="ml-auto hidden items-center md:flex">
           <Suspense>
             <MarketingNavItems />
           </Suspense>

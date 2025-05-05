@@ -24,13 +24,13 @@ export const MarketingNavItems = async () => {
   }
 
   return (
-    <>
-      <Button asChild variant="ghost" size={"default"}>
+    <div className="flex items-center gap-1">
+      <Button asChild variant="ghost" size={"sm"}>
         <Link href="/dashboard">Dashboard</Link>
       </Button>
       <div className="h-9 w-9">
         <MarketingUserButton />
       </div>
-    </>
+    </div>
   );
 };
