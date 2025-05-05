@@ -14,7 +14,7 @@ export const MarketingView = async () => {
   return (
     <>
       {/* Hero Section */}
-      <section className="container py-16 lg:py-24">
+      <section className="container py-8 lg:py-24">
         {/* Mobile */}
         <div className="lg:hidden">
           <div className="mx-auto flex max-w-xs flex-col justify-center sm:max-w-xl">
@@ -34,7 +34,7 @@ export const MarketingView = async () => {
               asChild
               size="lg"
               variant="default"
-              className="gap-2 transition-transform duration-200 hover:scale-105 sm:mx-auto sm:w-sm"
+              className="gap-2 sm:mx-auto sm:w-sm"
             >
               <Link href="/dashboard">
                 <CalendarDays className="h-5 w-5" />
@@ -61,7 +61,7 @@ export const MarketingView = async () => {
               asChild
               size="lg"
               variant="default"
-              className="min-w-[240px] gap-2 transition-transform duration-200 hover:scale-105"
+              className="min-w-[240px] gap-2"
             >
               <Link href="/dashboard">
                 <CalendarDays className="h-5 w-5" />
@@ -75,7 +75,7 @@ export const MarketingView = async () => {
       </section>
 
       {/* Features Section */}
-      <section className="container mx-auto py-16">
+      <section className="container mx-auto py-8">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           <Card>
             <CardHeader className="pb-4">

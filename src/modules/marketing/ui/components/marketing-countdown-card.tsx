@@ -4,7 +4,7 @@ import { Calendar, School, Settings, Sun } from "lucide-react";
 
 export const MarketingCountdownCard = () => {
   return (
-    <Card className="border-border/40 from-background to-muted/20 hidden overflow-hidden rounded-xl border bg-gradient-to-br shadow-lg transition-shadow hover:shadow-xl lg:block">
+    <Card className="border-border/40 from-background to-muted/40 overflow-hidden rounded-xl border bg-gradient-to-br shadow-lg transition-shadow hover:shadow-xl">
       <CardContent className="p-6">
         <div className="mb-6 flex items-start justify-between">
           <div className="bg-primary/10 flex h-14 w-14 items-center justify-center rounded-full">
