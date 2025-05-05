@@ -81,64 +81,68 @@ export const MarketingView = async () => {
       {/* Features Section */}
       <section className="container mx-auto px-4 py-16">
         <div className="mb-12 text-center">
-          <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">
+          <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl">
             Key Features
           </h2>
-          <p className="mx-auto max-w-2xl text-slate-300">
+          <p className="text-muted-foreground mx-auto max-w-2xl">
             Everything you need to keep track of important school dates and stay
             motivated throughout the year.
           </p>
         </div>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          <Card className="border-slate-800 bg-slate-900/60 backdrop-blur-sm">
-            <CardHeader className="pb-2">
-              <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-purple-900/30 text-purple-400">
-                <User className="h-5 w-5" />
+          {/* Card 1 */}
+          <Card>
+            <CardHeader className="pb-4">
+              <div className="mb-2">
+                <User className="text-primary h-8 w-8" />
               </div>
-              <CardTitle className="text-white">Separate Countdowns</CardTitle>
+              <CardTitle>Separate Countdowns</CardTitle>
             </CardHeader>
             <CardContent>
-              <CardDescription className="text-slate-400">
+              <CardDescription>
                 Track both teacher workdays and student school days separately.
               </CardDescription>
             </CardContent>
           </Card>
-          <Card className="border-slate-800 bg-slate-900/60 backdrop-blur-sm">
-            <CardHeader className="pb-2">
-              <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-purple-900/30 text-purple-400">
-                <Settings className="h-5 w-5" />
+          {/* Card 2 */}
+          <Card>
+            <CardHeader className="pb-4">
+              <div className="mb-2">
+                <Settings className="text-primary h-8 w-8" />
               </div>
-              <CardTitle className="text-white">Easy Setup</CardTitle>
+              <CardTitle>Easy Setup</CardTitle>
             </CardHeader>
             <CardContent>
-              <CardDescription className="text-slate-400">
+              <CardDescription>
                 Set start/end dates, then easily mark off holidays and non-work
                 days.
               </CardDescription>
             </CardContent>
           </Card>
-          <Card className="border-slate-800 bg-slate-900/60 backdrop-blur-sm">
-            <CardHeader className="pb-2">
-              <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-purple-900/30 text-purple-400">
-                <Sparkles className="h-5 w-5" />
+          {/* Card 3 */}
+          <Card>
+            <CardHeader className="pb-4">
+              <div className="mb-2">
+                <Sparkles className="text-primary h-8 w-8" />
               </div>
-              <CardTitle className="text-white">Daily Motivation</CardTitle>
+              <CardTitle>Daily Motivation</CardTitle>
             </CardHeader>
             <CardContent>
-              <CardDescription className="text-slate-400">
+              <CardDescription>
                 Optional daily inspirational quotes to keep spirits high.
               </CardDescription>
             </CardContent>
           </Card>
-          <Card className="border-slate-800 bg-slate-900/60 backdrop-blur-sm">
-            <CardHeader className="pb-2">
-              <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-purple-900/30 text-purple-400">
-                <PenLine className="h-5 w-5" />
+          {/* Card 4 */}
+          <Card>
+            <CardHeader className="pb-4">
+              <div className="mb-2">
+                <PenLine className="text-primary h-8 w-8" />
               </div>
-              <CardTitle className="text-white">Colorful Themes</CardTitle>
+              <CardTitle>Colorful Themes</CardTitle>
             </CardHeader>
             <CardContent>
-              <CardDescription className="text-slate-400">
+              <CardDescription>
                 Personalize your countdown with multiple color themes.
               </CardDescription>
             </CardContent>
