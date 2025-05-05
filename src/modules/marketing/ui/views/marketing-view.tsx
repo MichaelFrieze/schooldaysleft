@@ -75,16 +75,12 @@ export const MarketingView = async () => {
       </section>
 
       {/* Features Section */}
-      <section className="container mx-auto px-4 py-16">
-        <div className="mb-12 text-center">
+      <section className="container mx-auto py-16">
+        {/* <div className="mb-12 text-center">
           <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl">
-            Key Features
+            Features
           </h2>
-          <p className="text-muted-foreground mx-auto max-w-2xl">
-            Everything you need to keep track of important school dates and stay
-            motivated throughout the year.
-          </p>
-        </div>
+        </div> */}
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {/* Card 1 */}
           <Card>
