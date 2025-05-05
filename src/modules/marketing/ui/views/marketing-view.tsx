@@ -1,28 +1,19 @@
 import { Button } from "@/components/ui/button";
 import {
   Card,
+  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-  CardContent,
 } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import {
-  Calendar,
-  CalendarDays,
-  Clock,
-  PenLine,
-  School,
-  Settings,
-  Sparkles,
-  Sun,
-  User,
-} from "lucide-react";
+import { CalendarDays, PenLine, Settings, Sparkles, User } from "lucide-react";
 import Link from "next/link";
+import { MarketingCountdownCard } from "../components/marketing-countdown-card";
 
 export const MarketingView = async () => {
   return (
     <>
+      {/* Hero Section */}
       <section className="container py-16 lg:py-24">
         {/* Mobile */}
         <div className="lg:hidden">
@@ -83,60 +74,11 @@ export const MarketingView = async () => {
             </Button>
           </div>
 
-          <Card className="border-border/40 from-background to-muted/20 hidden overflow-hidden rounded-xl border bg-gradient-to-br shadow-lg transition-shadow hover:shadow-xl lg:block">
-            <CardContent className="p-6">
-              <div className="mb-6 flex items-start justify-between">
-                <div className="bg-primary/10 flex h-14 w-14 items-center justify-center rounded-full">
-                  <School className="text-primary h-8 w-8" />
-                </div>
-
-                <div className="text-muted-foreground hover:text-foreground h-8 w-8">
-                  <Settings className="h-4 w-4" />
-                </div>
-              </div>
-
-              <div className="text-center">
-                <div className="from-primary via-primary/80 to-primary bg-gradient-to-r bg-clip-text text-8xl font-extrabold text-transparent tabular-nums md:text-9xl">
-                  15
-                </div>
-                <p className="text-muted-foreground mt-1 text-lg font-medium">
-                  days to go!
-                </p>
-              </div>
-
-              <div className="mt-8 flex justify-center space-x-6">
-                <div className="flex items-center gap-1.5">
-                  <Calendar className="h-4 w-4 text-green-500" />
-                  <span className="text-muted-foreground text-xs font-medium">
-                    Monday-Friday
-                  </span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <Sun className="h-4 w-4 text-amber-500" />
-                  <span className="text-muted-foreground text-xs font-medium">
-                    Weekends Off
-                  </span>
-                </div>
-              </div>
-
-              <div className="mt-8">
-                <Progress value={87} className="h-2.5" />
-              </div>
-            </CardContent>
-          </Card>
+          <MarketingCountdownCard />
         </div>
       </section>
 
-      {/* <CardHeader className="pb-2">
-              <CardTitle className="truncate text-lg font-medium">
-                Summer Break 2025
-              </CardTitle>
-              <CardDescription className="text-muted-foreground/90 flex items-center gap-1.5 text-sm font-medium">
-                <Calendar className="h-4 w-4" />
-                Ends on: June 20, 2025
-              </CardDescription>
-            </CardHeader> */}
-
+      {/* Features Section */}
       <section className="container mx-auto px-4 py-16">
         <div className="mb-12 text-center">
           <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">
