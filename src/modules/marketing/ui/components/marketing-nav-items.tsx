@@ -14,7 +14,7 @@ export const MarketingNavItems = async () => {
       <SignInButton mode="modal">
         <Button
           variant="default"
-          className="h-9 rounded-full text-sm font-medium shadow-none"
+          className="h-8 rounded-full text-sm font-medium shadow-none"
         >
           <UserCircleIcon />
           Sign in
@@ -25,10 +25,10 @@ export const MarketingNavItems = async () => {
 
   return (
     <div className="flex items-center gap-1">
-      <Button asChild variant="ghost" size={"sm"}>
+      <Button asChild variant="ghost" size={"sm"} className="hidden lg:flex">
         <Link href="/dashboard">Dashboard</Link>
       </Button>
-      <div className="h-9 w-9">
+      <div className="h-8 w-8">
         <MarketingUserButton />
       </div>
     </div>

@@ -14,7 +14,7 @@ export const MarketingUserButton = () => {
   }, []);
 
   if (!isMounted || !isLoaded) {
-    return <Skeleton className="h-9 w-9 rounded-full" />;
+    return <Skeleton className="h-8 w-8 rounded-full" />;
   }
 
   return (
@@ -22,8 +22,8 @@ export const MarketingUserButton = () => {
       appearance={{
         elements: {
           avatarBox: {
-            height: "2.25rem",
-            width: "2.25rem",
+            height: "2rem",
+            width: "2rem",
           },
         },
       }}
