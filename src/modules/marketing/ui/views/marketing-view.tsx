@@ -19,9 +19,7 @@ export const MarketingView = async () => {
         <div className="lg:hidden">
           <div className="mx-auto flex max-w-xs flex-col justify-center sm:max-w-xl">
             <h1 className="text-left text-4xl leading-tight font-bold tracking-tighter sm:text-center sm:text-6xl">
-              <span className="from-primary via-primary/70 to-primary/90 bg-gradient-to-r bg-clip-text text-transparent">
-                Countdown
-              </span>{" "}
+              <span className="text-primary bg-clip-text">Countdown</span>{" "}
             </h1>
             <h1 className="mb-6 text-left text-4xl leading-tight font-bold tracking-tighter sm:text-center sm:text-6xl">
               To Your Next Break
@@ -50,10 +48,8 @@ export const MarketingView = async () => {
         <div className="hidden grid-cols-1 gap-12 lg:grid lg:grid-cols-2">
           <div className="flex max-w-lg flex-col justify-center">
             <h1 className="mb-6 text-6xl leading-tight font-bold tracking-tighter">
-              <span className="from-primary via-primary/70 to-primary/90 bg-gradient-to-r bg-clip-text text-transparent">
-                Countdown
-              </span>{" "}
-              to Your Next Break
+              <span className="text-primary bg-clip-text">Countdown</span> to
+              Your Next Break
             </h1>
 
             <p className="text-muted-foreground mb-8 max-w-xl text-lg">
