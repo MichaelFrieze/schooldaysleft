@@ -9,7 +9,7 @@ export const AuthLayout = ({ children }: MarketingLayoutProps) => {
   return (
     <>
       <AuthNavbar />
-      <main className="flex min-h-screen items-center justify-center">
+      <main className="flex min-h-screen justify-center lg:items-center">
         {children}
       </main>
       <Footer />

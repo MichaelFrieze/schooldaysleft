@@ -20,6 +20,8 @@
 - look into tailwind v3 to be able to use theme switcher
 - go over file structure and make sure everything looks good so far
 - Check to see if I can get theme color data from the theme switcher components for clerk appearance
+- sign in page doesn't look good on mobile
+- iOS chrome browser bounces when scrolling to bottom and reverts to top. doesn't happen on other browsers, not even brave
 
 ```
     "vercel-build": "if [ \"$VERCEL_ENV\" = \"production\" ]; then drizzle-kit push; elif [ \"$VERCEL_ENV\" = \"preview\" ]; drizzle-kit push --force; fi && next build",
