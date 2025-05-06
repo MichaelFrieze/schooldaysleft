@@ -16,11 +16,9 @@
 - Add countdown selection in the navbar using a dropdown
 - Move dashboard page contents to it's own module
 - Clean up clerk appearance variables
-- check out min screen height in layouts
 - look into tailwind v3 to be able to use theme switcher
 - go over file structure and make sure everything looks good so far
 - Check to see if I can get theme color data from the theme switcher components for clerk appearance
-- sign in page doesn't look good on mobile
 - iOS chrome browser bounces when scrolling to bottom and reverts to top. doesn't happen on other browsers, not even brave
 
 ```
