@@ -6,7 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Home, LayoutDashboard } from "lucide-react";
 import { useEffect, useState } from "react";
 
-export const MarketingUserButton = () => {
+export const AppUserButton = () => {
   const [isMounted, setIsMounted] = useState(false);
   const { isLoaded } = useAuth();
 

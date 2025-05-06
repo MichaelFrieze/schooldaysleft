@@ -13,11 +13,11 @@ export const MarketingNavbar = () => {
           </span>
         </Link>
 
-        <div className="ml-auto flex items-center">
+        <nav className="ml-auto">
           <Suspense>
             <MarketingNavItems />
           </Suspense>
-        </div>
+        </nav>
       </div>
     </header>
   );
