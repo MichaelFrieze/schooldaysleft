@@ -1,5 +1,7 @@
-import { SignIn } from "@clerk/nextjs";
+import { AuthView } from "@/modules/auth/ui/views/auth-view";
 
-export default function Page() {
-  return <SignIn />;
-}
+const Page = () => {
+  return <AuthView />;
+};
+
+export default Page;
