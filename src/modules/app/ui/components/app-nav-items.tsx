@@ -1,7 +1,7 @@
+import { ClerkUserButton } from "@/modules/auth/ui/components/clerk-user-button";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { AppNavDropdown } from "./app-nav-dropdown";
-import { AppUserButton } from "./app-user-button";
 
 export const AppNavItems = async () => {
   const { userId } = await auth();
@@ -16,7 +16,7 @@ export const AppNavItems = async () => {
         <AppNavDropdown />
       </div>
       <div className="h-8 w-8">
-        <AppUserButton />
+        <ClerkUserButton />
       </div>
     </div>
   );
