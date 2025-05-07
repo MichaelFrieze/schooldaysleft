@@ -6,25 +6,26 @@ import { UserCircleIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 
 export const AuthSignInButton = () => {
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
 
   return (
     <SignInButton
       mode="modal"
       appearance={{
         variables: {
-          colorBackground: theme === "dark" ? "#1a1a2e" : "#ffffff",
-          colorNeutral: theme === "dark" ? "#e2e2f5" : "#2a2a4a",
-          colorText: theme === "dark" ? "#e2e2f5" : "#2a2a4a",
-          colorDanger: theme === "dark" ? "#ff5470" : "#ff5470",
-          colorSuccess: theme === "dark" ? "#4db6ac" : "#4db6ac",
-          colorPrimary: theme === "dark" ? "#a48fff" : "#6e56cf",
+          colorBackground: resolvedTheme === "dark" ? "#1a1a2e" : "#ffffff",
+          colorNeutral: resolvedTheme === "dark" ? "#e2e2f5" : "#2a2a4a",
+          colorText: resolvedTheme === "dark" ? "#e2e2f5" : "#2a2a4a",
+          colorDanger: resolvedTheme === "dark" ? "#ff5470" : "#ff5470",
+          colorSuccess: resolvedTheme === "dark" ? "#4db6ac" : "#4db6ac",
+          colorPrimary: resolvedTheme === "dark" ? "#a48fff" : "#6e56cf",
           borderRadius: "0.5rem",
-          colorTextSecondary: theme === "dark" ? "#e2e2f5" : "#2a2a4a",
+          colorTextSecondary: resolvedTheme === "dark" ? "#e2e2f5" : "#2a2a4a",
           colorTextOnPrimaryBackground:
-            theme === "dark" ? "#0f0f1a" : "#ffffff",
-          colorInputBackground: theme === "dark" ? "#303052" : "#e0e0f0",
-          colorInputText: theme === "dark" ? "#e2e2f5" : "#2a2a4a",
+            resolvedTheme === "dark" ? "#0f0f1a" : "#ffffff",
+          colorInputBackground:
+            resolvedTheme === "dark" ? "#303052" : "#e0e0f0",
+          colorInputText: resolvedTheme === "dark" ? "#e2e2f5" : "#2a2a4a",
         },
         elements: {
           header: {
