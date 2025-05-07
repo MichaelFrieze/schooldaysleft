@@ -15,6 +15,10 @@
 - consider adding drizzle-kit push --force to preview branches:
 - Add countdown selection in the navbar using a dropdown
 - Move dashboard page contents to it's own module
+- Clean up clerk appearance variables
+- look into tailwind v3 to be able to use theme switcher
+- Check to see if I can get theme color data from the theme switcher components for clerk appearance
+- iOS chrome browser bounces when scrolling to bottom and reverts to top. doesn't happen on other browsers, not even brave
 
 ```
     "vercel-build": "if [ \"$VERCEL_ENV\" = \"production\" ]; then drizzle-kit push; elif [ \"$VERCEL_ENV\" = \"preview\" ]; drizzle-kit push --force; fi && next build",

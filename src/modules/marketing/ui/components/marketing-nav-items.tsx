@@ -1,26 +1,14 @@
-import { SignInButton } from "@clerk/nextjs";
-import { UserCircleIcon } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
+import { AuthSignInButton } from "@/modules/auth/ui/components/auth-sign-in-button";
+import { ClerkUserButton } from "@/modules/auth/ui/components/clerk-user-button";
 import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
-import { MarketingUserButton } from "./marketing-user-button";
 
 export const MarketingNavItems = async () => {
   const { userId } = await auth();
 
   if (!userId) {
-    return (
-      <SignInButton mode="modal">
-        <Button
-          variant="default"
-          className="h-8 rounded-full text-sm font-medium shadow-none"
-        >
-          <UserCircleIcon />
-          Sign in
-        </Button>
-      </SignInButton>
-    );
+    return <AuthSignInButton />;
   }
 
   return (
@@ -29,7 +17,7 @@ export const MarketingNavItems = async () => {
         <Link href="/dashboard">Dashboard</Link>
       </Button>
       <div className="h-8 w-8">
-        <MarketingUserButton />
+        <ClerkUserButton />
       </div>
     </div>
   );
