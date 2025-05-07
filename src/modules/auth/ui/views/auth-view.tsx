@@ -24,6 +24,17 @@ export const AuthView = () => {
             colorInputBackground: theme === "dark" ? "#303052" : "#e0e0f0",
             colorInputText: theme === "dark" ? "#e2e2f5" : "#2a2a4a",
           },
+          layout: {
+            socialButtonsVariant: "blockButton",
+          },
+          elements: {
+            header: {
+              display: "none",
+            },
+            main: {
+              margin: "0.5rem",
+            },
+          },
         }}
       />
     </div>
