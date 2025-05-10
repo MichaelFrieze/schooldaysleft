@@ -1,9 +1,9 @@
-import "@/styles/globals.css";
-
+import { UserThemeProvider } from "@/modules/user/ui/components/user-theme-provider";
 import { TRPCReactProvider } from "@/trpc/react";
 import { ClerkProvider } from "@clerk/nextjs";
 import { type Metadata } from "next";
-import { ThemeProvider } from "next-themes";
+
+import "@/styles/globals.css";
 
 export const metadata: Metadata = {
   title: "School Days Left",
@@ -31,15 +31,7 @@ export default function RootLayout({
       <html lang="en" suppressHydrationWarning>
         <body>
           <TRPCReactProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-              enableColorScheme
-            >
-              {children}
-            </ThemeProvider>
+            <UserThemeProvider>{children}</UserThemeProvider>
           </TRPCReactProvider>
         </body>
       </html>
