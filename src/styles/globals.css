@@ -1,7 +1,20 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+/* Themes */
+@import "./themes/amber-minimal.css";
+@import "./themes/amethyst-haze.css";
+@import "./themes/black-and-white.css";
+@import "./themes/chirp.css";
+@import "./themes/claymorphism.css";
+@import "./themes/emerald-mint.css";
+@import "./themes/graphite.css";
+@import "./themes/modern-minimal.css";
+@import "./themes/neo-brutalism.css";
+@import "./themes/notebook.css";
+@import "./themes/pastel-dreams.css";
+@import "./themes/plum-nebula.css";
+@import "./themes/sunset-horizon.css";
 
 @theme inline {
   --color-background: var(--background);

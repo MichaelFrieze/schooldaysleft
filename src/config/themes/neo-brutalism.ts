@@ -1,0 +1,29 @@
+export const neoBrutalismLight = {
+  background: "#ffffff",
+  foreground: "#000000",
+  card: "#ffffff",
+  primary: "#ff3333",
+  secondary: "#ffff00",
+  muted: "#f0f0f0",
+  mutedForeground: "#333333",
+  destructive: "#000000",
+  border: "#000000",
+  input: "#000000",
+  fontSans: "DM Sans, sans-serif",
+  radius: "0px",
+};
+
+export const neoBrutalismDark = {
+  background: "#000000",
+  foreground: "#ffffff",
+  card: "#333333",
+  primary: "#ff6666",
+  secondary: "#ffff33",
+  muted: "#333333",
+  mutedForeground: "#cccccc",
+  destructive: "#ffffff",
+  border: "#ffffff",
+  input: "#ffffff",
+  fontSans: "DM Sans, sans-serif",
+  radius: "0px",
+};

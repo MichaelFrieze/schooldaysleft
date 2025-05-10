@@ -1,0 +1,29 @@
+export const emeraldMintLight = {
+  background: "#fcfcfc",
+  foreground: "#171717",
+  card: "#fcfcfc",
+  primary: "#72e3ad",
+  secondary: "#fdfdfd",
+  muted: "#ededed",
+  mutedForeground: "#202020",
+  destructive: "#ca3214",
+  border: "#dfdfdf",
+  input: "#f6f6f6",
+  fontSans: "Outfit, sans-serif",
+  radius: "0.5rem",
+};
+
+export const emeraldMintDark = {
+  background: "#121212",
+  foreground: "#e2e8f0",
+  card: "#171717",
+  primary: "#006239",
+  secondary: "#242424",
+  muted: "#1f1f1f",
+  mutedForeground: "#a2a2a2",
+  destructive: "#541c15",
+  border: "#292929",
+  input: "#242424",
+  fontSans: "Outfit, sans-serif",
+  radius: "0.5rem",
+};

@@ -1,6 +1,5 @@
 # TODO
 
-- Theme Switcher component: https://github.com/heywinit/colorswitchcn
 - full moon
 - chance of outside recess (weather)
 - not in the mood
@@ -19,6 +18,11 @@
 - look into tailwind v3 to be able to use theme switcher
 - Check to see if I can get theme color data from the theme switcher components for clerk appearance
 - iOS chrome browser bounces when scrolling to bottom and reverts to top. doesn't happen on other browsers, not even brave
+- Work on theme switcher
+  - Theme switching will be entirely client-side
+  - use a server action to set user theme choice to clerk publicMetadata sessionClaims
+  - Get the data from sessionClaims for user theme preference as the default theme in the ThemeProvider
+- Write docs on how to add new themes
 
 ```
     "vercel-build": "if [ \"$VERCEL_ENV\" = \"production\" ]; then drizzle-kit push; elif [ \"$VERCEL_ENV\" = \"preview\" ]; drizzle-kit push --force; fi && next build",
