@@ -28,7 +28,7 @@ export function ModeToggle({
 }: ModeToggleProps) {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme, resolvedTheme } = useTheme();
-  const { session } = useSession();
+  const { session, isSignedIn } = useSession();
 
   useEffect(() => setMounted(true), []);
 
@@ -47,12 +47,16 @@ export function ModeToggle({
 
     setTheme(baseChange);
 
-    const { success, error, themeSet } = await setUserThemeAction(
-      baseChange as ThemeKey,
-    );
-    console.log({ success, error, themeSet });
+    if (isSignedIn) {
+      const { success, error, themeSet } = await setUserThemeAction(
+        baseChange as ThemeKey,
+      );
+      console.log({ success, error, themeSet });
 
-    await session?.touch();
+      if (success) {
+        await session?.touch();
+      }
+    }
   };
 
   return (

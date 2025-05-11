@@ -8,7 +8,7 @@ export const AppNavbar = () => {
       <div className="container flex h-16 items-center">
         <Link href="/dashboard" className="group flex items-center gap-1">
           <span className="text-2xl font-bold">
-            <span className="text-primary bg-clip-text">School</span>
+            <span className="text-primary">School</span>
             DaysLeft
           </span>
         </Link>

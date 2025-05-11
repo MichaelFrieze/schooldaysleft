@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { allThemes, type ThemeKey } from "@/config/themes";
 import { SignInButton } from "@clerk/nextjs";
 import { UserCircleIcon } from "lucide-react";
 import { useTheme } from "next-themes";
@@ -8,24 +9,75 @@ import { useTheme } from "next-themes";
 export const AuthSignInButton = () => {
   const { resolvedTheme } = useTheme();
 
+  const themeKey = resolvedTheme;
+  const themeObject = allThemes[themeKey as ThemeKey] ?? allThemes.light;
+
+  const clerkAppearanceVariables = {
+    colorBackground: themeObject.card,
+    colorNeutral: themeObject.foreground,
+    colorText: themeObject.foreground,
+    colorDanger: themeObject.destructive,
+    colorPrimary: themeObject.primary,
+    borderRadius: themeObject.radius,
+    colorTextSecondary: themeObject.mutedForeground,
+    colorTextOnPrimaryBackground: themeObject.foreground,
+    colorInputBackground: themeObject.input,
+    colorInputText: themeObject.foreground,
+    colorSuccess: themeObject.primary,
+    // colorShimmer: themeObject.border,
+    colorWarning: themeObject.destructive,
+    fontFamily: themeObject.fontSans,
+  };
+
+  if (parseFloat(clerkAppearanceVariables.borderRadius) >= parseFloat("1rem")) {
+    return (
+      <SignInButton
+        mode="modal"
+        appearance={{
+          variables: {
+            ...clerkAppearanceVariables,
+          },
+          layout: {
+            socialButtonsVariant: "blockButton",
+          },
+          elements: {
+            header: {
+              display: "none",
+            },
+            main: {
+              margin: "0.5rem",
+            },
+            modalCloseButton: {
+              marginTop: "0.2rem",
+              marginRight: "0.3rem",
+            },
+            card: {
+              borderBottomLeftRadius: "0rem",
+              borderBottomRightRadius: "0rem",
+            },
+          },
+        }}
+      >
+        <Button
+          variant="default"
+          className="h-8 rounded-full text-sm font-medium shadow-none"
+        >
+          <UserCircleIcon />
+          Sign in
+        </Button>
+      </SignInButton>
+    );
+  }
+
   return (
     <SignInButton
       mode="modal"
       appearance={{
         variables: {
-          colorBackground: resolvedTheme === "dark" ? "#1a1a2e" : "#ffffff",
-          colorNeutral: resolvedTheme === "dark" ? "#e2e2f5" : "#2a2a4a",
-          colorText: resolvedTheme === "dark" ? "#e2e2f5" : "#2a2a4a",
-          colorDanger: resolvedTheme === "dark" ? "#ff5470" : "#ff5470",
-          colorSuccess: resolvedTheme === "dark" ? "#4db6ac" : "#4db6ac",
-          colorPrimary: resolvedTheme === "dark" ? "#a48fff" : "#6e56cf",
-          borderRadius: "0.5rem",
-          colorTextSecondary: resolvedTheme === "dark" ? "#e2e2f5" : "#2a2a4a",
-          colorTextOnPrimaryBackground:
-            resolvedTheme === "dark" ? "#0f0f1a" : "#ffffff",
-          colorInputBackground:
-            resolvedTheme === "dark" ? "#303052" : "#e0e0f0",
-          colorInputText: resolvedTheme === "dark" ? "#e2e2f5" : "#2a2a4a",
+          ...clerkAppearanceVariables,
+        },
+        layout: {
+          socialButtonsVariant: "blockButton",
         },
         elements: {
           header: {
@@ -33,6 +85,10 @@ export const AuthSignInButton = () => {
           },
           main: {
             margin: "0.5rem",
+          },
+          card: {
+            borderBottomLeftRadius: "0rem",
+            borderBottomRightRadius: "0rem",
           },
         },
       }}

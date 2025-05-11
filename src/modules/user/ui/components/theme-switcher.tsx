@@ -37,7 +37,7 @@ export const ThemeSwitcher = ({
     setTheme,
     resolvedTheme: currentResolvedThemeKey,
   } = useTheme();
-  const { session } = useSession();
+  const { session, isSignedIn } = useSession();
 
   useEffect(() => setMounted(true), []);
 
@@ -68,12 +68,16 @@ export const ThemeSwitcher = ({
 
     setTheme(baseChange);
 
-    const { success, error, themeSet } = await setUserThemeAction(
-      baseChange as ThemeKey,
-    );
-    console.log({ success, error, themeSet });
+    if (isSignedIn) {
+      const { success, error, themeSet } = await setUserThemeAction(
+        baseChange as ThemeKey,
+      );
+      console.log({ success, error, themeSet });
 
-    await session?.touch();
+      if (success) {
+        await session?.touch();
+      }
+    }
   };
 
   const currentBaseLabel =

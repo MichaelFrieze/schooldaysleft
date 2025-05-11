@@ -1,11 +1,11 @@
 "use client";
 
-import { UserButton, useAuth } from "@clerk/nextjs";
-
 import { Skeleton } from "@/components/ui/skeleton";
+import { allThemes, type ThemeKey } from "@/config/themes";
+import { UserButton, useAuth } from "@clerk/nextjs";
 import { Home, LayoutDashboard } from "lucide-react";
-import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 export const ClerkUserButton = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -20,6 +20,84 @@ export const ClerkUserButton = () => {
     return <Skeleton className="h-8 w-8 rounded-full" />;
   }
 
+  const themeKey = resolvedTheme;
+  const themeObject = allThemes[themeKey as ThemeKey] ?? allThemes.light;
+
+  const clerkAppearanceVariables = {
+    colorBackground: themeObject.card,
+    colorNeutral: themeObject.foreground,
+    colorText: themeObject.foreground,
+    colorDanger: themeObject.destructive,
+    colorPrimary: themeObject.primary,
+    borderRadius: themeObject.radius,
+    colorTextSecondary: themeObject.mutedForeground,
+    colorTextOnPrimaryBackground: themeObject.foreground,
+    colorInputBackground: themeObject.input,
+    colorInputText: themeObject.foreground,
+    colorSuccess: themeObject.primary,
+    // colorShimmer: themeObject.border,
+    colorWarning: themeObject.destructive,
+    fontFamily: themeObject.fontSans,
+  };
+
+  if (parseFloat(clerkAppearanceVariables.borderRadius) >= parseFloat("1rem")) {
+    return (
+      <UserButton
+        appearance={{
+          elements: {
+            avatarBox: {
+              height: "2rem",
+              width: "2rem",
+            },
+            userButtonPopoverMain: {
+              borderBottomLeftRadius: "0rem",
+              borderBottomRightRadius: "0rem",
+            },
+          },
+          variables: {
+            ...clerkAppearanceVariables,
+          },
+        }}
+        userProfileProps={{
+          appearance: {
+            variables: {
+              ...clerkAppearanceVariables,
+            },
+            elements: {
+              scrollBox: {
+                borderRadius: "0rem",
+              },
+              navbarMobileMenuRow: {
+                padding: "1rem",
+              },
+              navbar: {
+                borderRadius: "0rem",
+              },
+              modalCloseButton: {
+                marginTop: "0.5rem",
+                marginRight: "0.5rem",
+              },
+            },
+          },
+        }}
+      >
+        <UserButton.MenuItems>
+          <UserButton.Link
+            label="Dashboard"
+            href="/dashboard"
+            labelIcon={<LayoutDashboard className="size-4" />}
+          />
+          <UserButton.Link
+            label="Home"
+            href="/"
+            labelIcon={<Home className="size-4" />}
+          />
+          <UserButton.Action label="manageAccount" />
+        </UserButton.MenuItems>
+      </UserButton>
+    );
+  }
+
   return (
     <UserButton
       appearance={{
@@ -28,40 +106,27 @@ export const ClerkUserButton = () => {
             height: "2rem",
             width: "2rem",
           },
+          userButtonPopoverMain: {
+            borderBottomLeftRadius: "0rem",
+            borderBottomRightRadius: "0rem",
+          },
         },
         variables: {
-          colorBackground: resolvedTheme === "dark" ? "#1a1a2e" : "#ffffff",
-          colorNeutral: resolvedTheme === "dark" ? "#e2e2f5" : "#2a2a4a",
-          colorText: resolvedTheme === "dark" ? "#e2e2f5" : "#2a2a4a",
-          colorDanger: resolvedTheme === "dark" ? "#ff5470" : "#ff5470",
-          colorSuccess: resolvedTheme === "dark" ? "#4db6ac" : "#4db6ac",
-          colorPrimary: resolvedTheme === "dark" ? "#a48fff" : "#6e56cf",
-          borderRadius: "0.5rem",
-          colorTextSecondary: resolvedTheme === "dark" ? "#e2e2f5" : "#2a2a4a",
-          colorTextOnPrimaryBackground:
-            resolvedTheme === "dark" ? "#0f0f1a" : "#ffffff",
-          colorInputBackground:
-            resolvedTheme === "dark" ? "#303052" : "#e0e0f0",
-          colorInputText: resolvedTheme === "dark" ? "#e2e2f5" : "#2a2a4a",
+          ...clerkAppearanceVariables,
         },
       }}
       userProfileProps={{
         appearance: {
           variables: {
-            colorBackground: resolvedTheme === "dark" ? "#1a1a2e" : "#ffffff",
-            colorNeutral: resolvedTheme === "dark" ? "#e2e2f5" : "#2a2a4a",
-            colorText: resolvedTheme === "dark" ? "#e2e2f5" : "#2a2a4a",
-            colorDanger: resolvedTheme === "dark" ? "#ff5470" : "#ff5470",
-            colorSuccess: resolvedTheme === "dark" ? "#4db6ac" : "#4db6ac",
-            colorPrimary: resolvedTheme === "dark" ? "#a48fff" : "#6e56cf",
-            borderRadius: "0.5rem",
-            colorTextSecondary:
-              resolvedTheme === "dark" ? "#e2e2f5" : "#2a2a4a",
-            colorTextOnPrimaryBackground:
-              resolvedTheme === "dark" ? "#0f0f1a" : "#ffffff",
-            colorInputBackground:
-              resolvedTheme === "dark" ? "#303052" : "#e0e0f0",
-            colorInputText: resolvedTheme === "dark" ? "#e2e2f5" : "#2a2a4a",
+            ...clerkAppearanceVariables,
+          },
+          elements: {
+            scrollBox: {
+              borderRadius: "0rem",
+            },
+            navbar: {
+              borderRadius: "0rem",
+            },
           },
         },
       }}
