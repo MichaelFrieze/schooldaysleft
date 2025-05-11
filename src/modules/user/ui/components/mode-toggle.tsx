@@ -3,13 +3,13 @@
 import type { buttonVariants } from "@/components/ui/button";
 import { Button } from "@/components/ui/button";
 import { parseThemeKey } from "@/lib/utils";
+import type { ThemeKey } from "@/modules/user/config/themes";
+import { useSession } from "@clerk/nextjs";
 import type { VariantProps } from "class-variance-authority";
 import { MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { setUserThemeAction } from "../../server/set-user-theme-action";
-import type { ThemeKey } from "@/config/themes";
-import { useSession } from "@clerk/nextjs";
 
 interface ModeToggleProps extends VariantProps<typeof buttonVariants> {
   variant?:

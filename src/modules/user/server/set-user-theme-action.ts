@@ -1,8 +1,7 @@
 "use server";
 
-import type { ThemeKey } from "@/config/themes";
-import { allThemes } from "@/config/themes";
 import { tryCatch } from "@/lib/try-catch";
+import { allThemes, type ThemeKey } from "@/modules/user/config/themes";
 import { auth, clerkClient } from "@clerk/nextjs/server";
 import { z } from "zod";
 

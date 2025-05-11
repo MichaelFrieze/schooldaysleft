@@ -1,4 +1,4 @@
-import { allThemes } from "@/config/themes";
+import { allThemes } from "@/modules/user/config/themes";
 import { auth } from "@clerk/nextjs/server";
 import { ThemeProvider } from "next-themes";
 

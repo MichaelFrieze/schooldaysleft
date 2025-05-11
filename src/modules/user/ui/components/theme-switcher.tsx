@@ -8,19 +8,19 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { cn, parseThemeKey } from "@/lib/utils";
 import {
   allThemes,
   themeSwitcherBaseThemes,
   type BaseTheme,
   type ThemeKey,
-} from "@/config/themes";
-import { cn, parseThemeKey } from "@/lib/utils";
+} from "@/modules/user/config/themes";
+import { useSession } from "@clerk/nextjs";
 import type { VariantProps } from "class-variance-authority";
 import { CheckIcon, ChevronDown } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { setUserThemeAction } from "../../server/set-user-theme-action";
-import { useSession } from "@clerk/nextjs";
 
 interface ThemeSwitcherProps extends VariantProps<typeof buttonVariants> {
   dropdownVariant?: VariantProps<typeof buttonVariants>["variant"];
