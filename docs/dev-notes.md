@@ -23,6 +23,8 @@
   - use a server action to set user theme choice to clerk publicMetadata sessionClaims
   - Get the data from sessionClaims for user theme preference as the default theme in the ThemeProvider
 - Write docs on how to add new themes
+- @custom-variant dark (&:is(.dark \*)) is actually needed to prevent light themes from showing dark
+- Figure out how to apply .dark class to all dark themes
 
 ```
     "vercel-build": "if [ \"$VERCEL_ENV\" = \"production\" ]; then drizzle-kit push; elif [ \"$VERCEL_ENV\" = \"preview\" ]; drizzle-kit push --force; fi && next build",

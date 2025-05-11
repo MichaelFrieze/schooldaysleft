@@ -6,11 +6,12 @@ export const plumNebulaLight = {
   secondary: "#f1c4e6",
   muted: "#f6e5f3",
   mutedForeground: "#834588",
+  accent: "#f1c4e6",
+  accentForeground: "#77347c",
   destructive: "#ab4347",
   border: "#efbdeb",
   input: "#e7c1dc",
-  fontSans:
-    'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
+  fontSans: "ui-sans-serif, system-ui, Roboto, Arial, sans-serif",
   radius: "0.5rem",
 };
 
@@ -22,10 +23,11 @@ export const plumNebulaDark = {
   secondary: "#362d3d",
   muted: "#28222d",
   mutedForeground: "#c2b6cf",
+  accent: "#463753",
+  accentForeground: "#f8f1f5",
   destructive: "#301015",
   border: "#3b3237",
   input: "#3e343c",
-  fontSans:
-    'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
+  fontSans: "ui-sans-serif, system-ui, Roboto, Arial, sans-serif",
   radius: "0.5rem",
 };

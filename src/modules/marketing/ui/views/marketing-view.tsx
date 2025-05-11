@@ -9,6 +9,11 @@ import {
 import { CalendarDays, PenLine, Settings, Sparkles, User } from "lucide-react";
 import Link from "next/link";
 import { MarketingCountdownCard } from "../components/marketing-countdown-card";
+import {
+  ClearLocalStorageButton,
+  ThemeSwitcher,
+} from "@/modules/user/ui/components/theme-switcher";
+import { ModeToggle } from "@/components/mode-toggle";
 
 export const MarketingView = async () => {
   return (
@@ -68,6 +73,12 @@ export const MarketingView = async () => {
                 Start Your Countdown
               </Link>
             </Button>
+
+            <div className="mt-4 flex items-center gap-2">
+              <ThemeSwitcher />
+              <ModeToggle />
+              <ClearLocalStorageButton />
+            </div>
           </div>
 
           <MarketingCountdownCard />

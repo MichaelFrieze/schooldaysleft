@@ -51,6 +51,8 @@ export type Theme = {
   secondary: string;
   muted: string;
   mutedForeground: string;
+  accent: string;
+  accentForeground: string;
   destructive: string;
   border: string;
   input: string;
@@ -88,3 +90,29 @@ export const allThemes: Record<ThemeKey, Theme> = {
   "sunset-horizon-light": sunsetHorizonLight,
   "sunset-horizon-dark": sunsetHorizonDark,
 };
+
+export interface BaseTheme {
+  value: string;
+  label: string;
+}
+
+const generatedBaseThemes: BaseTheme[] = Array.from(
+  Object.entries(allThemes)
+    .filter(([key]) => key.endsWith("-light") || key.endsWith("-dark"))
+    .reduce((acc, [key]) => {
+      const value = key.replace(/-light|-dark$/, "");
+      const label = value
+        .split("-")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
+
+      acc.set(value, { value, label });
+      return acc;
+    }, new Map<string, BaseTheme>())
+    .values(),
+);
+
+export const themeSwitcherBaseThemes: BaseTheme[] = [
+  { value: "default", label: "Default" },
+  ...generatedBaseThemes,
+];

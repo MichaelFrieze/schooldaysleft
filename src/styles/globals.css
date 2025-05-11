@@ -16,6 +16,8 @@
 @import "./themes/plum-nebula.css";
 @import "./themes/sunset-horizon.css";
 
+@custom-variant dark (&:is(.dark *));
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
