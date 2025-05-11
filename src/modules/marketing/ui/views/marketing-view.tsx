@@ -13,7 +13,7 @@ import {
   ClearLocalStorageButton,
   ThemeSwitcher,
 } from "@/modules/user/ui/components/theme-switcher";
-import { ModeToggle } from "@/components/mode-toggle";
+import { ModeToggle } from "@/modules/user/ui/components/mode-toggle";
 
 export const MarketingView = async () => {
   return (
@@ -74,6 +74,7 @@ export const MarketingView = async () => {
               </Link>
             </Button>
 
+            {/* Theme Switcher for testing - TODO: Delete later */}
             <div className="mt-4 flex items-center gap-2">
               <ThemeSwitcher />
               <ModeToggle />

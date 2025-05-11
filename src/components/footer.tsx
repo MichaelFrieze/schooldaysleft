@@ -1,4 +1,4 @@
-import { ModeToggle } from "@/components/mode-toggle";
+import { ModeToggle } from "@/modules/user/ui/components/mode-toggle";
 import { Button } from "@/components/ui/button";
 import { Mail } from "lucide-react";
 
