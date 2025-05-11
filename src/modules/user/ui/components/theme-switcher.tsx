@@ -19,6 +19,8 @@ import type { VariantProps } from "class-variance-authority";
 import { CheckIcon, ChevronDown } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { setAppThemeAction } from "../../server/set-app-theme-action";
+import { useSession } from "@clerk/nextjs";
 
 interface ThemeSwitcherProps extends VariantProps<typeof buttonVariants> {
   dropdownVariant?: VariantProps<typeof buttonVariants>["variant"];
@@ -35,6 +37,7 @@ export const ThemeSwitcher = ({
     setTheme,
     resolvedTheme: currentResolvedThemeKey,
   } = useTheme();
+  const { session } = useSession();
 
   useEffect(() => setMounted(true), []);
 
@@ -59,10 +62,18 @@ export const ThemeSwitcher = ({
     currentResolvedThemeKey,
   );
 
-  const handleBaseChange = (newBase: string) => {
+  const handleBaseChange = async (newBase: string) => {
     const baseChange =
       newBase === "default" ? modeKey : `${newBase}-${modeKey}`;
+
     setTheme(baseChange);
+
+    const { success, error, themeSet } = await setAppThemeAction(
+      baseChange as ThemeKey,
+    );
+    console.log({ success, error, themeSet });
+
+    await session?.touch();
   };
 
   const currentBaseLabel =

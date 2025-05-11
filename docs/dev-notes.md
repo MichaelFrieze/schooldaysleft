@@ -11,7 +11,6 @@
 - iOS chrome browser bounces when scrolling to bottom and reverts to top. doesn't happen on other browsers, not even brave
 - Write docs on how to add new themes
 - Figure out how to apply .dark class to all dark themes
-- Update toggle mode button to work with theme switcher
 - Maybe use a server action to update session with user theme preference
 - Make Clerk appearnce variables work with new theme
 

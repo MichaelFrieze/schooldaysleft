@@ -7,6 +7,9 @@ import type { VariantProps } from "class-variance-authority";
 import { MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { setAppThemeAction } from "../../server/set-app-theme-action";
+import type { ThemeKey } from "@/config/themes";
+import { useSession } from "@clerk/nextjs";
 
 interface ModeToggleProps extends VariantProps<typeof buttonVariants> {
   variant?:
@@ -25,6 +28,7 @@ export function ModeToggle({
 }: ModeToggleProps) {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme, resolvedTheme } = useTheme();
+  const { session } = useSession();
 
   useEffect(() => setMounted(true), []);
 
@@ -36,9 +40,19 @@ export function ModeToggle({
 
   const { baseKey, modeKey } = parseThemeKey(theme, resolvedTheme);
 
-  const toggleTheme = () => {
+  const toggleTheme = async () => {
     const newMode: "light" | "dark" = modeKey === "dark" ? "light" : "dark";
-    setTheme(baseKey === "default" ? newMode : `${baseKey}-${newMode}`);
+    const baseChange =
+      baseKey === "default" ? newMode : `${baseKey}-${newMode}`;
+
+    setTheme(baseChange);
+
+    const { success, error, themeSet } = await setAppThemeAction(
+      baseChange as ThemeKey,
+    );
+    console.log({ success, error, themeSet });
+
+    await session?.touch();
   };
 
   return (
