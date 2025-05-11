@@ -1,33 +1,12 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { allThemes, type ThemeKey } from "@/config/themes";
+import { useClerkAppearanceVariables } from "@/modules/user/hooks/use-clerk-appearance-variables";
 import { SignInButton } from "@clerk/nextjs";
 import { UserCircleIcon } from "lucide-react";
-import { useTheme } from "next-themes";
 
 export const AuthSignInButton = () => {
-  const { resolvedTheme } = useTheme();
-
-  const themeKey = resolvedTheme;
-  const themeObject = allThemes[themeKey as ThemeKey] ?? allThemes.light;
-
-  const clerkAppearanceVariables = {
-    colorBackground: themeObject.card,
-    colorNeutral: themeObject.foreground,
-    colorText: themeObject.foreground,
-    colorDanger: themeObject.destructive,
-    colorPrimary: themeObject.primary,
-    borderRadius: themeObject.radius,
-    colorTextSecondary: themeObject.mutedForeground,
-    colorTextOnPrimaryBackground: themeObject.foreground,
-    colorInputBackground: themeObject.input,
-    colorInputText: themeObject.foreground,
-    colorSuccess: themeObject.primary,
-    // colorShimmer: themeObject.border,
-    colorWarning: themeObject.destructive,
-    fontFamily: themeObject.fontSans,
-  };
+  const clerkAppearanceVariables = useClerkAppearanceVariables();
 
   if (parseFloat(clerkAppearanceVariables.borderRadius) >= parseFloat("1rem")) {
     return (

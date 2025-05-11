@@ -13,6 +13,7 @@
 - Figure out how to apply .dark class to all dark themes
 - Make Clerk appearnce variables work with new theme
 - Get fonts working
+- move config themes to user module
 
 ```
     "vercel-build": "if [ \"$VERCEL_ENV\" = \"production\" ]; then drizzle-kit push; elif [ \"$VERCEL_ENV\" = \"preview\" ]; drizzle-kit push --force; fi && next build",
