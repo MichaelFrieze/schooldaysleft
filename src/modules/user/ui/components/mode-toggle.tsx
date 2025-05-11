@@ -7,7 +7,7 @@ import type { VariantProps } from "class-variance-authority";
 import { MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { setAppThemeAction } from "../../server/set-app-theme-action";
+import { setUserThemeAction } from "../../server/set-user-theme-action";
 import type { ThemeKey } from "@/config/themes";
 import { useSession } from "@clerk/nextjs";
 
@@ -47,7 +47,7 @@ export function ModeToggle({
 
     setTheme(baseChange);
 
-    const { success, error, themeSet } = await setAppThemeAction(
+    const { success, error, themeSet } = await setUserThemeAction(
       baseChange as ThemeKey,
     );
     console.log({ success, error, themeSet });

@@ -10,7 +10,7 @@ const ThemeKeySchema = z.enum(
   Object.keys(allThemes) as [ThemeKey, ...ThemeKey[]],
 );
 
-export async function setAppThemeAction(themeKey: ThemeKey) {
+export async function setUserThemeAction(themeKey: ThemeKey) {
   const { userId } = await auth();
 
   if (!userId) {

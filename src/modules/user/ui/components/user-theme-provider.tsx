@@ -15,15 +15,12 @@ export const UserThemeProvider = async ({
   let defaultTheme: string;
 
   const userThemeKey = sessionClaims?.userPreferences?.theme;
-  console.log({ userThemeKey });
 
   if (userThemeKey && allThemeKeys.includes(userThemeKey)) {
     defaultTheme = userThemeKey;
   } else {
     defaultTheme = "system";
   }
-
-  console.log({ defaultTheme });
 
   return (
     <ThemeProvider

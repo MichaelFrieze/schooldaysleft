@@ -19,7 +19,7 @@ import type { VariantProps } from "class-variance-authority";
 import { CheckIcon, ChevronDown } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { setAppThemeAction } from "../../server/set-app-theme-action";
+import { setUserThemeAction } from "../../server/set-user-theme-action";
 import { useSession } from "@clerk/nextjs";
 
 interface ThemeSwitcherProps extends VariantProps<typeof buttonVariants> {
@@ -68,7 +68,7 @@ export const ThemeSwitcher = ({
 
     setTheme(baseChange);
 
-    const { success, error, themeSet } = await setAppThemeAction(
+    const { success, error, themeSet } = await setUserThemeAction(
       baseChange as ThemeKey,
     );
     console.log({ success, error, themeSet });
