@@ -10,9 +10,8 @@
 - consider adding drizzle-kit push --force to preview branches:
 - iOS chrome browser bounces when scrolling to bottom and reverts to top. doesn't happen on other browsers, not even brave
 - Write docs on how to add new themes
-- Figure out how to apply .dark class to all dark themes
-- Get fonts working
 - Create user preferences page that includes theme switcher: https://colorswitchcn.heywinit.me/
+- Consider changing name of marketing to landing or home
 
 ```
     "vercel-build": "if [ \"$VERCEL_ENV\" = \"production\" ]; then drizzle-kit push; elif [ \"$VERCEL_ENV\" = \"preview\" ]; drizzle-kit push --force; fi && next build",

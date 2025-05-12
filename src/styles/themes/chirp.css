@@ -31,7 +31,7 @@ html.chirp-light {
   --sidebar-accent-foreground: #1e9df1;
   --sidebar-border: #e1e8ed;
   --sidebar-ring: #1da1f2;
-  --font-sans: Open Sans, sans-serif;
+  --font-sans: var(--font-open-sans), sans-serif;
   --font-serif: Georgia, serif;
   --font-mono: Menlo, monospace;
   --radius: 1.3rem;
@@ -88,7 +88,7 @@ html.chirp-dark {
   --sidebar-accent-foreground: #1c9cf0;
   --sidebar-border: #38444d;
   --sidebar-ring: #1da1f2;
-  --font-sans: Open Sans, sans-serif;
+  --font-sans: var(--font-open-sans), sans-serif;
   --font-serif: Georgia, serif;
   --font-mono: Menlo, monospace;
   --radius: 1.3rem;

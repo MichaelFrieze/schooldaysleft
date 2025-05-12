@@ -31,9 +31,9 @@ html.notebook-light {
   --sidebar-accent-foreground: #5d4037;
   --sidebar-border: #c0c0c0;
   --sidebar-ring: #a0a0a0;
-  --font-sans: Architects Daughter, sans-serif;
-  --font-serif: "Times New Roman", Times, serif;
-  --font-mono: "Courier New", Courier, monospace;
+  --font-sans: var(--font-architects-daughter), sans-serif;
+  --font-serif: Georgia, serif;
+  --font-mono: var(--font-fira-code), monospace;
   --radius: 0.625rem;
   --shadow-2xs: 1px 4px 5px 0px hsl(0 0% 0% / 0.01);
   --shadow-xs: 1px 4px 5px 0px hsl(0 0% 0% / 0.01);
@@ -84,9 +84,9 @@ html.notebook-dark {
   --sidebar-accent-foreground: #333333;
   --sidebar-border: #4f4f4f;
   --sidebar-ring: #c0c0c0;
-  --font-sans: Architects Daughter, sans-serif;
+  --font-sans: var(--font-architects-daughter), sans-serif;
   --font-serif: Georgia, serif;
-  --font-mono: "Fira Code", "Courier New", monospace;
+  --font-mono: var(--font-fira-code), monospace;
   --radius: 0.625rem;
   --shadow-2xs: 1px 4px 5px 0px hsl(0 0% 0% / 0.01);
   --shadow-xs: 1px 4px 5px 0px hsl(0 0% 0% / 0.01);

@@ -31,9 +31,9 @@ html.sunset-horizon-light {
   --sidebar-accent-foreground: #3d3436;
   --sidebar-border: #ffe0d6;
   --sidebar-ring: #ff7e5f;
-  --font-sans: Montserrat, sans-serif;
-  --font-serif: Merriweather, serif;
-  --font-mono: Ubuntu Mono, monospace;
+  --font-sans: var(--font-montserrat), sans-serif;
+  --font-serif: var(--font-merriweather), serif;
+  --font-mono: var(--font-ubuntu-mono), monospace;
   --radius: 0.625rem;
   --shadow-2xs: 0px 6px 12px -3px hsl(0 0% 0% / 0.04);
   --shadow-xs: 0px 6px 12px -3px hsl(0 0% 0% / 0.04);
@@ -83,9 +83,9 @@ html.sunset-horizon-dark {
   --sidebar-accent-foreground: #2a2024;
   --sidebar-border: #463a41;
   --sidebar-ring: #ff7e5f;
-  --font-sans: Montserrat, sans-serif;
-  --font-serif: Merriweather, serif;
-  --font-mono: Ubuntu Mono, monospace;
+  --font-sans: var(--font-montserrat), sans-serif;
+  --font-serif: var(--font-merriweather), serif;
+  --font-mono: var(--font-ubuntu-mono), monospace;
   --radius: 0.625rem;
   --shadow-2xs: 0px 6px 12px -3px hsl(0 0% 0% / 0.04);
   --shadow-xs: 0px 6px 12px -3px hsl(0 0% 0% / 0.04);

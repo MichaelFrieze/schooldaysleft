@@ -31,8 +31,8 @@ html.emerald-mint-light {
   --sidebar-accent-foreground: #202020;
   --sidebar-border: #dfdfdf;
   --sidebar-ring: #72e3ad;
-  --font-sans: Outfit, sans-serif;
-  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-sans: var(--font-outfit), sans-serif;
+  --font-serif: Georgia, Times, serif;
   --font-mono: monospace;
   --radius: 0.5rem;
   --shadow-2xs: 0px 1px 3px 0px hsl(0 0% 0% / 0.09);
@@ -84,8 +84,8 @@ html.emerald-mint-dark {
   --sidebar-accent-foreground: #fafafa;
   --sidebar-border: #292929;
   --sidebar-ring: #4ade80;
-  --font-sans: Outfit, sans-serif;
-  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-sans: var(--font-outfit), sans-serif;
+  --font-serif: Georgia, Times, serif;
   --font-mono: monospace;
   --radius: 0.5rem;
   --shadow-2xs: 0px 1px 3px 0px hsl(0 0% 0% / 0.09);

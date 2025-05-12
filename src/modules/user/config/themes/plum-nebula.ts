@@ -11,7 +11,7 @@ export const plumNebulaLight = {
   destructive: "#ab4347",
   border: "#efbdeb",
   input: "#e7c1dc",
-  fontSans: "ui-sans-serif, system-ui, Roboto, Arial, sans-serif",
+  fontSans: "Roboto, sans-serif",
   radius: "0.5rem",
 };
 
@@ -28,6 +28,6 @@ export const plumNebulaDark = {
   destructive: "#301015",
   border: "#3b3237",
   input: "#3e343c",
-  fontSans: "ui-sans-serif, system-ui, Roboto, Arial, sans-serif",
+  fontSans: "Roboto, sans-serif",
   radius: "0.5rem",
 };

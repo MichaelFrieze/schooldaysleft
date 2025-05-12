@@ -2,6 +2,7 @@ import { UserThemeProvider } from "@/modules/user/ui/components/user-theme-provi
 import { TRPCReactProvider } from "@/trpc/react";
 import { ClerkProvider } from "@clerk/nextjs";
 import { type Metadata } from "next";
+import { fontVariables } from "@/lib/root-layout-fonts";
 
 import "@/styles/globals.css";
 
@@ -28,7 +29,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <ClerkProvider afterSignOutUrl={"/"}>
-      <html lang="en" suppressHydrationWarning>
+      <html lang="en" className={fontVariables} suppressHydrationWarning>
         <body>
           <TRPCReactProvider>
             <UserThemeProvider>{children}</UserThemeProvider>

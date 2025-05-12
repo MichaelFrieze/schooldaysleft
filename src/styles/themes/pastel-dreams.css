@@ -31,9 +31,9 @@ html.pastel-dreams-light {
   --sidebar-accent-foreground: #374151;
   --sidebar-border: #e9d8fd;
   --sidebar-ring: #a78bfa;
-  --font-sans: Open Sans, sans-serif;
-  --font-serif: Source Serif 4, serif;
-  --font-mono: IBM Plex Mono, monospace;
+  --font-sans: var(--font-open-sans), sans-serif;
+  --font-serif: var(--font-source-serif-4), serif;
+  --font-mono: var(--font-ibm-plex-mono), monospace;
   --radius: 1.5rem;
   --shadow-2xs: 0px 8px 16px -4px hsl(0 0% 0% / 0.04);
   --shadow-xs: 0px 8px 16px -4px hsl(0 0% 0% / 0.04);
@@ -83,9 +83,9 @@ html.pastel-dreams-dark {
   --sidebar-accent-foreground: #d1d5db;
   --sidebar-border: #3f324a;
   --sidebar-ring: #c0aafd;
-  --font-sans: Open Sans, sans-serif;
-  --font-serif: Source Serif 4, serif;
-  --font-mono: IBM Plex Mono, monospace;
+  --font-sans: var(--font-open-sans), sans-serif;
+  --font-serif: var(--font-source-serif-4), serif;
+  --font-mono: var(--font-ibm-plex-mono), monospace;
   --radius: 1.5rem;
   --shadow-2xs: 0px 8px 16px -4px hsl(0 0% 0% / 0.04);
   --shadow-xs: 0px 8px 16px -4px hsl(0 0% 0% / 0.04);

@@ -31,9 +31,9 @@ html.black-and-white-light {
   --sidebar-accent-foreground: #000000;
   --sidebar-border: #ebebeb;
   --sidebar-ring: #000000;
-  --font-sans: Geist, sans-serif;
+  --font-sans: var(--font-geist), sans-serif;
   --font-serif: Georgia, serif;
-  --font-mono: Geist Mono, monospace;
+  --font-mono: var(--font-geist-mono), monospace;
   --radius: 0.5rem;
   --shadow-2xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
   --shadow-xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
@@ -83,9 +83,9 @@ html.black-and-white-dark {
   --sidebar-accent-foreground: #ffffff;
   --sidebar-border: #333333;
   --sidebar-ring: #a4a4a4;
-  --font-sans: Geist, sans-serif;
+  --font-sans: var(--font-geist), sans-serif;
   --font-serif: Georgia, serif;
-  --font-mono: Geist Mono, monospace;
+  --font-mono: var(--font-geist-mono), monospace;
   --radius: 0.5rem;
   --shadow-2xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);
   --shadow-xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.09);

@@ -31,9 +31,9 @@ html.neo-brutalism-light {
   --sidebar-accent-foreground: #ffffff;
   --sidebar-border: #000000;
   --sidebar-ring: #ff3333;
-  --font-sans: DM Sans, sans-serif;
-  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-  --font-mono: Space Mono, monospace;
+  --font-sans: var(--font-dm-sans), sans-serif;
+  --font-serif: Georgia, Times, serif;
+  --font-mono: var(--font-space-mono), monospace;
   --radius: 0px;
   --shadow-2xs: 4px 4px 0px 0px hsl(0 0% 0% / 0.5);
   --shadow-xs: 4px 4px 0px 0px hsl(0 0% 0% / 0.5);
@@ -82,9 +82,9 @@ html.neo-brutalism-dark {
   --sidebar-accent-foreground: #000000;
   --sidebar-border: #ffffff;
   --sidebar-ring: #ff6666;
-  --font-sans: DM Sans, sans-serif;
-  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-  --font-mono: Space Mono, monospace;
+  --font-sans: var(--font-dm-sans), sans-serif;
+  --font-serif: Georgia, Times, serif;
+  --font-mono: var(--font-space-mono), monospace;
   --radius: 0px;
   --shadow-2xs: 4px 4px 0px 0px hsl(0 0% 0% / 0.5);
   --shadow-xs: 4px 4px 0px 0px hsl(0 0% 0% / 0.5);

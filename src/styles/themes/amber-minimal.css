@@ -31,9 +31,9 @@ html.amber-minimal-light {
   --sidebar-accent-foreground: #92400e;
   --sidebar-border: #e5e7eb;
   --sidebar-ring: #f59e0b;
-  --font-sans: Inter, sans-serif;
-  --font-serif: Source Serif 4, serif;
-  --font-mono: JetBrains Mono, monospace;
+  --font-sans: var(--font-inter), sans-serif;
+  --font-serif: var(--font-source-serif-4), serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
   --radius: 0.375rem;
   --shadow-2xs: 0px 4px 8px -1px hsl(0 0% 0% / 0.05);
   --shadow-xs: 0px 4px 8px -1px hsl(0 0% 0% / 0.05);
@@ -83,9 +83,9 @@ html.amber-minimal-dark {
   --sidebar-accent-foreground: #fde68a;
   --sidebar-border: #404040;
   --sidebar-ring: #f59e0b;
-  --font-sans: Inter, sans-serif;
-  --font-serif: Source Serif 4, serif;
-  --font-mono: JetBrains Mono, monospace;
+  --font-sans: var(--font-inter), sans-serif;
+  --font-serif: var(--font-source-serif-4), serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
   --radius: 0.375rem;
   --shadow-2xs: 0px 4px 8px -1px hsl(0 0% 0% / 0.05);
   --shadow-xs: 0px 4px 8px -1px hsl(0 0% 0% / 0.05);

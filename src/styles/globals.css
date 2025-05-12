@@ -16,23 +16,6 @@
 @import "./themes/plum-nebula.css";
 @import "./themes/sunset-horizon.css";
 
-/* @custom-variant dark (&:is(.dark *)); */
-/* @custom-variant dark (&:is(
-  .dark *,
-  .pastel-dreams-dark *,
-  .plum-nebula-dark *,
-  .neo-brutalism-dark *,
-  .chirp-dark *,
-  .emerald-mint-dark *,
-  .notebook-dark *,
-  .modern-minimal-dark *,
-  .graphite-dark *,
-  .amethyst-haze-dark *,
-  .sunset-horizon-dark *,
-  .black-and-white-dark *,
-  .amber-minimal-dark *,
-  .claymorphism-dark *
-)); */
 @custom-variant dark (&:where(.dark, .dark *, [class*="-dark"], [class*="-dark"] *));
 
 @theme inline {
@@ -150,9 +133,9 @@
   --sidebar-accent-foreground: #2a2a4a;
   --sidebar-border: #e0e0f0;
   --sidebar-ring: #6e56cf;
-  --font-sans: Inter, sans-serif;
+  --font-sans: var(--font-inter), sans-serif;
   --font-serif: Georgia, serif;
-  --font-mono: JetBrains Mono, monospace;
+  --font-mono: var(--font-jetbrains-mono), monospace;
   --radius: 0.5rem;
   --shadow-2xs: 0px 4px 10px 0px hsl(240 30% 25% / 0.06);
   --shadow-xs: 0px 4px 10px 0px hsl(240 30% 25% / 0.06);
@@ -207,9 +190,9 @@
   --sidebar-accent-foreground: #e2e2f5;
   --sidebar-border: #303052;
   --sidebar-ring: #a48fff;
-  --font-sans: Inter, sans-serif;
+  --font-sans: var(--font-inter), sans-serif;
   --font-serif: Georgia, serif;
-  --font-mono: JetBrains Mono, monospace;
+  --font-mono: var(--font-jetbrains-mono), monospace;
   --radius: 0.5rem;
   --shadow-2xs: 0px 4px 10px 0px hsl(240 30% 25% / 0.06);
   --shadow-xs: 0px 4px 10px 0px hsl(240 30% 25% / 0.06);
