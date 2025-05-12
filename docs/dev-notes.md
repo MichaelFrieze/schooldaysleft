@@ -12,7 +12,6 @@
 - Write docs on how to add new themes
 - Figure out how to apply .dark class to all dark themes
 - Get fonts working
-- move config themes to user module
 - Create user preferences page that includes theme switcher: https://colorswitchcn.heywinit.me/
 
 ```

@@ -110,11 +110,7 @@ export const ThemeSwitcher = ({
     <div className="flex items-center gap-2">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button
-            variant={dropdownVariant}
-            size={dropdownSize}
-            className="min-w-[120px"
-          >
+          <Button variant={dropdownVariant} size={dropdownSize}>
             <div className="flex gap-1">
               <ColorSwatch color={currentTheme.primary} size="sm" />
               <ColorSwatch color={currentTheme.secondary} size="sm" />
