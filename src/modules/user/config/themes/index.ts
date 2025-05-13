@@ -7,6 +7,7 @@ import { modernMinimalDark, modernMinimalLight } from "./modern-minimal";
 import { notebookDark, notebookLight } from "./notebook";
 import { pastelDreamsDark, pastelDreamsLight } from "./pastel-dreams";
 import { plumNebulaDark, plumNebulaLight } from "./plum-nebula";
+import { lavenderGlowDark, lavenderGlowLight } from "./lavender-glow";
 
 export type ThemeKey =
   | "light"
@@ -26,7 +27,9 @@ export type ThemeKey =
   | "pastel-dreams-light"
   | "pastel-dreams-dark"
   | "plum-nebula-light"
-  | "plum-nebula-dark";
+  | "plum-nebula-dark"
+  | "lavender-glow-light"
+  | "lavender-glow-dark";
 
 export type Theme = {
   background: string;
@@ -64,6 +67,8 @@ export const allThemes: Record<ThemeKey, Theme> = {
   "pastel-dreams-dark": pastelDreamsDark,
   "plum-nebula-light": plumNebulaLight,
   "plum-nebula-dark": plumNebulaDark,
+  "lavender-glow-light": lavenderGlowLight,
+  "lavender-glow-dark": lavenderGlowDark,
 };
 
 export interface BaseTheme {

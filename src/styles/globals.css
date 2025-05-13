@@ -10,6 +10,7 @@
 @import "./themes/notebook.css";
 @import "./themes/pastel-dreams.css";
 @import "./themes/plum-nebula.css";
+@import "./themes/lavender-glow.css";
 
 @custom-variant dark (&:where(.dark, .dark *, [class*="-dark"], [class*="-dark"] *));
 
