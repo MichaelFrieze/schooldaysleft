@@ -2,16 +2,11 @@ import { amberMinimalDark, amberMinimalLight } from "./amber-minimal";
 import { amethystHazeDark, amethystHazeLight } from "./amethyst-haze";
 import { blackAndWhiteDark, blackAndWhiteLight } from "./black-and-white";
 import { chirpDark, chirpLight } from "./chirp";
-import { claymorphismDark, claymorphismLight } from "./claymorphism";
 import { defaultDark, defaultLight } from "./default";
-import { emeraldMintDark, emeraldMintLight } from "./emerald-mint";
-import { graphiteDark, graphiteLight } from "./graphite";
 import { modernMinimalDark, modernMinimalLight } from "./modern-minimal";
-import { neoBrutalismDark, neoBrutalismLight } from "./neo-brutalism";
 import { notebookDark, notebookLight } from "./notebook";
 import { pastelDreamsDark, pastelDreamsLight } from "./pastel-dreams";
 import { plumNebulaDark, plumNebulaLight } from "./plum-nebula";
-import { sunsetHorizonDark, sunsetHorizonLight } from "./sunset-horizon";
 
 export type ThemeKey =
   | "light"
@@ -24,24 +19,14 @@ export type ThemeKey =
   | "black-and-white-dark"
   | "chirp-light"
   | "chirp-dark"
-  | "claymorphism-light"
-  | "claymorphism-dark"
-  | "emerald-mint-light"
-  | "emerald-mint-dark"
-  | "graphite-light"
-  | "graphite-dark"
   | "modern-minimal-light"
   | "modern-minimal-dark"
-  | "neo-brutalism-light"
-  | "neo-brutalism-dark"
   | "notebook-light"
   | "notebook-dark"
   | "pastel-dreams-light"
   | "pastel-dreams-dark"
   | "plum-nebula-light"
-  | "plum-nebula-dark"
-  | "sunset-horizon-light"
-  | "sunset-horizon-dark";
+  | "plum-nebula-dark";
 
 export type Theme = {
   background: string;
@@ -71,24 +56,14 @@ export const allThemes: Record<ThemeKey, Theme> = {
   "black-and-white-dark": blackAndWhiteDark,
   "chirp-light": chirpLight,
   "chirp-dark": chirpDark,
-  "claymorphism-light": claymorphismLight,
-  "claymorphism-dark": claymorphismDark,
-  "emerald-mint-light": emeraldMintLight,
-  "emerald-mint-dark": emeraldMintDark,
-  "graphite-light": graphiteLight,
-  "graphite-dark": graphiteDark,
   "modern-minimal-light": modernMinimalLight,
   "modern-minimal-dark": modernMinimalDark,
-  "neo-brutalism-light": neoBrutalismLight,
-  "neo-brutalism-dark": neoBrutalismDark,
   "notebook-light": notebookLight,
   "notebook-dark": notebookDark,
   "pastel-dreams-light": pastelDreamsLight,
   "pastel-dreams-dark": pastelDreamsDark,
   "plum-nebula-light": plumNebulaLight,
   "plum-nebula-dark": plumNebulaDark,
-  "sunset-horizon-light": sunsetHorizonLight,
-  "sunset-horizon-dark": sunsetHorizonDark,
 };
 
 export interface BaseTheme {

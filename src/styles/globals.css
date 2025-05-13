@@ -6,33 +6,11 @@
 @import "./themes/amethyst-haze.css";
 @import "./themes/black-and-white.css";
 @import "./themes/chirp.css";
-@import "./themes/claymorphism.css";
-@import "./themes/emerald-mint.css";
-@import "./themes/graphite.css";
 @import "./themes/modern-minimal.css";
-@import "./themes/neo-brutalism.css";
 @import "./themes/notebook.css";
 @import "./themes/pastel-dreams.css";
 @import "./themes/plum-nebula.css";
-@import "./themes/sunset-horizon.css";
 
-/* @custom-variant dark (&:is(.dark *)); */
-/* @custom-variant dark (&:is(
-  .dark *,
-  .pastel-dreams-dark *,
-  .plum-nebula-dark *,
-  .neo-brutalism-dark *,
-  .chirp-dark *,
-  .emerald-mint-dark *,
-  .notebook-dark *,
-  .modern-minimal-dark *,
-  .graphite-dark *,
-  .amethyst-haze-dark *,
-  .sunset-horizon-dark *,
-  .black-and-white-dark *,
-  .amber-minimal-dark *,
-  .claymorphism-dark *
-)); */
 @custom-variant dark (&:where(.dark, .dark *, [class*="-dark"], [class*="-dark"] *));
 
 @theme inline {
