@@ -3,7 +3,7 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { useClerkAppearanceVariables } from "@/modules/user/hooks/use-clerk-appearance-variables";
 import { UserButton, useAuth } from "@clerk/nextjs";
-import { Home, LayoutDashboard } from "lucide-react";
+import { Home, LayoutDashboard, Settings } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export const ClerkUserButton = () => {
@@ -67,11 +67,16 @@ export const ClerkUserButton = () => {
             labelIcon={<LayoutDashboard className="size-4" />}
           />
           <UserButton.Link
+            label="Settings"
+            href="/settings"
+            labelIcon={<Settings className="size-4" />}
+          />
+          <UserButton.Action label="manageAccount" />
+          <UserButton.Link
             label="Home"
             href="/"
             labelIcon={<Home className="size-4" />}
           />
-          <UserButton.Action label="manageAccount" />
         </UserButton.MenuItems>
       </UserButton>
     );
@@ -117,11 +122,16 @@ export const ClerkUserButton = () => {
           labelIcon={<LayoutDashboard className="size-4" />}
         />
         <UserButton.Link
+          label="Settings"
+          href="/settings"
+          labelIcon={<Settings className="size-4" />}
+        />
+        <UserButton.Action label="manageAccount" />
+        <UserButton.Link
           label="Home"
           href="/"
           labelIcon={<Home className="size-4" />}
         />
-        <UserButton.Action label="manageAccount" />
       </UserButton.MenuItems>
     </UserButton>
   );

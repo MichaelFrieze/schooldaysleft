@@ -16,6 +16,23 @@
 @import "./themes/plum-nebula.css";
 @import "./themes/sunset-horizon.css";
 
+/* @custom-variant dark (&:is(.dark *)); */
+/* @custom-variant dark (&:is(
+  .dark *,
+  .pastel-dreams-dark *,
+  .plum-nebula-dark *,
+  .neo-brutalism-dark *,
+  .chirp-dark *,
+  .emerald-mint-dark *,
+  .notebook-dark *,
+  .modern-minimal-dark *,
+  .graphite-dark *,
+  .amethyst-haze-dark *,
+  .sunset-horizon-dark *,
+  .black-and-white-dark *,
+  .amber-minimal-dark *,
+  .claymorphism-dark *
+)); */
 @custom-variant dark (&:where(.dark, .dark *, [class*="-dark"], [class*="-dark"] *));
 
 @theme inline {

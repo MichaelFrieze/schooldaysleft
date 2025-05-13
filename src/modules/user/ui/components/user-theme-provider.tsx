@@ -14,7 +14,7 @@ export const UserThemeProvider = async ({
 
   let defaultTheme: string;
 
-  const userThemeKey = sessionClaims?.userPreferences?.theme;
+  const userThemeKey = sessionClaims?.userSettings?.theme;
 
   if (userThemeKey && allThemeKeys.includes(userThemeKey)) {
     defaultTheme = userThemeKey;

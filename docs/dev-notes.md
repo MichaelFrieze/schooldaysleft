@@ -11,7 +11,10 @@
 - iOS chrome browser bounces when scrolling to bottom and reverts to top. doesn't happen on other browsers, not even brave
 - Write docs on how to add new themes
 - Create user preferences page that includes theme switcher: https://colorswitchcn.heywinit.me/
-- Consider changing name of marketing to landing or home
+- Remove themes I don't like
+- Add new themes I like
+- refactor dashboard
+- consider removing border radius on clerk
 
 ```
     "vercel-build": "if [ \"$VERCEL_ENV\" = \"production\" ]; then drizzle-kit push; elif [ \"$VERCEL_ENV\" = \"preview\" ]; drizzle-kit push --force; fi && next build",

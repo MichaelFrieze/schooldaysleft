@@ -73,13 +73,6 @@ export const MarketingView = async () => {
                 Start Your Countdown
               </Link>
             </Button>
-
-            {/* Theme Switcher for testing - TODO: Delete later */}
-            <div className="mt-4 flex items-center gap-2">
-              <ThemeSwitcher />
-              <ModeToggle />
-              <ClearLocalStorageButton />
-            </div>
           </div>
 
           <MarketingCountdownCard />

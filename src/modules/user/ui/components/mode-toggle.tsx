@@ -48,10 +48,7 @@ export function ModeToggle({
     setTheme(baseChange);
 
     if (isSignedIn) {
-      const { success, error, themeSet } = await setUserThemeAction(
-        baseChange as ThemeKey,
-      );
-      console.log({ success, error, themeSet });
+      const { success } = await setUserThemeAction(baseChange as ThemeKey);
 
       if (success) {
         await session?.touch();
