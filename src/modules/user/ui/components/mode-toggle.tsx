@@ -3,13 +3,10 @@
 import type { buttonVariants } from "@/components/ui/button";
 import { Button } from "@/components/ui/button";
 import { parseThemeKey } from "@/lib/utils";
-import type { ThemeKey } from "@/modules/user/config/themes";
-import { useSession } from "@clerk/nextjs";
 import type { VariantProps } from "class-variance-authority";
 import { MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { setUserThemeAction } from "../../server/set-user-theme-action";
 
 interface ModeToggleProps extends VariantProps<typeof buttonVariants> {
   variant?:
@@ -28,7 +25,6 @@ export function ModeToggle({
 }: ModeToggleProps) {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme, resolvedTheme } = useTheme();
-  const { session, isSignedIn } = useSession();
 
   useEffect(() => setMounted(true), []);
 
@@ -46,14 +42,6 @@ export function ModeToggle({
       baseKey === "default" ? newMode : `${baseKey}-${newMode}`;
 
     setTheme(baseChange);
-
-    if (isSignedIn) {
-      const { success } = await setUserThemeAction(baseChange as ThemeKey);
-
-      if (success) {
-        await session?.touch();
-      }
-    }
   };
 
   return (

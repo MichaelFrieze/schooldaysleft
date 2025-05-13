@@ -13,7 +13,8 @@
 - Remove themes I don't like
 - Add new themes I like
 - refactor dashboard
-- consider removing border radius on clerk
+- Consider Convex
+- maybe add more space in the footer to be able to click buttons on mobile easily
 
 ```
     "vercel-build": "if [ \"$VERCEL_ENV\" = \"production\" ]; then drizzle-kit push; elif [ \"$VERCEL_ENV\" = \"preview\" ]; drizzle-kit push --force; fi && next build",

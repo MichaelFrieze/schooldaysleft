@@ -1,5 +1,4 @@
 import { allThemes } from "@/modules/user/config/themes";
-import { auth } from "@clerk/nextjs/server";
 import { ThemeProvider } from "next-themes";
 
 interface UserThemeProviderProps {
@@ -9,23 +8,12 @@ interface UserThemeProviderProps {
 export const UserThemeProvider = async ({
   children,
 }: UserThemeProviderProps) => {
-  const { sessionClaims } = await auth();
   const allThemeKeys = Object.keys(allThemes);
-
-  let defaultTheme: string;
-
-  const userThemeKey = sessionClaims?.userSettings?.theme;
-
-  if (userThemeKey && allThemeKeys.includes(userThemeKey)) {
-    defaultTheme = userThemeKey;
-  } else {
-    defaultTheme = "system";
-  }
 
   return (
     <ThemeProvider
       attribute="class"
-      defaultTheme={defaultTheme}
+      defaultTheme={"system"}
       enableSystem
       disableTransitionOnChange
       enableColorScheme
