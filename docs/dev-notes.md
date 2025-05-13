@@ -13,6 +13,9 @@
 - refactor dashboard
 - support button in footer isn't aligned correctly
 
+- northern lights
+- ocean breeze
+
 ```
     "vercel-build": "if [ \"$VERCEL_ENV\" = \"production\" ]; then drizzle-kit push; elif [ \"$VERCEL_ENV\" = \"preview\" ]; drizzle-kit push --force; fi && next build",
 ```

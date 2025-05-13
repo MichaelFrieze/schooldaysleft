@@ -1,4 +1,6 @@
-export const amberMinimalLight = {
+import type { Theme } from ".";
+
+export const amberMinimalLight: Theme = {
   background: "#ffffff",
   foreground: "#262626",
   card: "#ffffff",
@@ -15,7 +17,7 @@ export const amberMinimalLight = {
   radius: "0.375rem",
 };
 
-export const amberMinimalDark = {
+export const amberMinimalDark: Theme = {
   background: "#171717",
   foreground: "#e5e5e5",
   card: "#262626",
