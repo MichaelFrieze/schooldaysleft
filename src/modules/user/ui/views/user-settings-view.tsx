@@ -29,7 +29,7 @@ export const UserSettingsView = async () => {
             </p>
           </CardHeader>
           <CardContent>
-            <div className="mb-6 flex flex-col items-center justify-between rounded-md border p-4">
+            <div className="mb-6 flex flex-col items-center justify-between rounded-md sm:border sm:p-4">
               <div className="flex items-center gap-2">
                 <ModeToggle variant="outline" />
                 <ThemeSwitcher />
@@ -37,18 +37,9 @@ export const UserSettingsView = async () => {
             </div>
 
             {/* Color Palette */}
-            <div className="mb-6 space-y-2 text-center">
-              <div className="from-primary via-secondary via-accent via-muted to-background h-24 w-full rounded-xl bg-gradient-to-r"></div>
-              {/* <div className="text-muted-foreground grid grid-cols-5 gap-2 text-xs">
-                  <div>Primary</div>
-                  <div>Secondary</div>
-                  <div>Accent</div>
-                  <div>Muted</div>
-                  <div>Background</div>
-                </div> */}
-            </div>
+            <div className="from-primary via-secondary via-accent via-muted to-background mb-6 h-24 w-full rounded-xl border bg-gradient-to-r shadow-sm"></div>
 
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            <div className="mb-6 grid grid-cols-1 gap-6 md:grid-cols-2">
               <Button className="w-full">Primary Button</Button>
 
               <Button variant="secondary" className="w-full">
@@ -56,13 +47,13 @@ export const UserSettingsView = async () => {
               </Button>
 
               <Card>
-                <CardContent className="flex h-24 items-center justify-center p-6">
+                <CardContent className="flex items-center justify-center">
                   <p>Card Background</p>
                 </CardContent>
               </Card>
 
               <Card className="bg-muted">
-                <CardContent className="flex h-24 items-center justify-center p-6">
+                <CardContent className="flex items-center justify-center">
                   <p>Muted Background</p>
                 </CardContent>
               </Card>

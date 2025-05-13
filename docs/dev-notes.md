@@ -10,7 +10,6 @@
 - consider adding drizzle-kit push --force to preview branches:
 - iOS chrome browser bounces when scrolling to bottom and reverts to top. doesn't happen on other browsers, not even brave
 - Write docs on how to add new themes
-- Create user preferences page that includes theme switcher: https://colorswitchcn.heywinit.me/
 - Remove themes I don't like
 - Add new themes I like
 - refactor dashboard
