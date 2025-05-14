@@ -5,7 +5,7 @@ import { Mail } from "lucide-react";
 export const Footer = () => {
   return (
     <footer className="bg-background border-t">
-      <div className="container mx-auto py-4">
+      <div className="container mx-auto py-6 sm:py-4">
         <div className="flex flex-col-reverse items-center justify-between gap-2 sm:flex-row">
           <p className="text-muted-foreground text-sm">
             &copy; {new Date().getFullYear()} Frieze Labs. All rights reserved.
@@ -14,7 +14,6 @@ export const Footer = () => {
           <div className="flex gap-2">
             <Button
               variant={"outline"}
-              size={"sm"}
               className="text-muted-foreground"
               asChild
             >
