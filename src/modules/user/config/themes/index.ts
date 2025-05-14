@@ -176,21 +176,21 @@ export interface BaseTheme {
 // ================================
 
 // This is another regex approach and it's working with the northern-lights theme.
-const generatedBaseThemes: BaseTheme[] = Array.from(
-  Object.entries(allThemes)
-    .filter(([key]) => key.endsWith("-light") || key.endsWith("-dark"))
-    .reduce((acc, [key]) => {
-      const value = key.replace(/-(?:light|dark)$/, ""); // Corrected regex
-      const label = value
-        .split("-")
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(" ");
+// const generatedBaseThemes: BaseTheme[] = Array.from(
+//   Object.entries(allThemes)
+//     .filter(([key]) => key.endsWith("-light") || key.endsWith("-dark"))
+//     .reduce((acc, [key]) => {
+//       const value = key.replace(/-(?:light|dark)$/, ""); // Corrected regex
+//       const label = value
+//         .split("-")
+//         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+//         .join(" ");
 
-      acc.set(value, { value, label });
-      return acc;
-    }, new Map<string, BaseTheme>())
-    .values(),
-);
+//       acc.set(value, { value, label });
+//       return acc;
+//     }, new Map<string, BaseTheme>())
+//     .values(),
+// );
 
 // ================================
 // ================================
@@ -204,30 +204,30 @@ const generatedBaseThemes: BaseTheme[] = Array.from(
 // ================================
 
 // This is using a substring approach and it's working with the northern-lights theme.
-// const generatedBaseThemes: BaseTheme[] = Array.from(
-//   Object.entries(allThemes)
-//     .filter(([key]) => key.endsWith("-light") || key.endsWith("-dark"))
-//     .reduce((acc, [key]) => {
-//       let value;
-//       if (key.endsWith("-light")) {
-//         value = key.substring(0, key.length - "-light".length);
-//       } else if (key.endsWith("-dark")) {
-//         value = key.substring(0, key.length - "-dark".length);
-//       } else {
-//         // This path should ideally not be taken due to the filter
-//         value = key;
-//       }
+const generatedBaseThemes: BaseTheme[] = Array.from(
+  Object.entries(allThemes)
+    .filter(([key]) => key.endsWith("-light") || key.endsWith("-dark"))
+    .reduce((acc, [key]) => {
+      let value;
+      if (key.endsWith("-light")) {
+        value = key.substring(0, key.length - "-light".length);
+      } else if (key.endsWith("-dark")) {
+        value = key.substring(0, key.length - "-dark".length);
+      } else {
+        // This path should ideally not be taken due to the filter
+        value = key;
+      }
 
-//       const label = value
-//         .split("-")
-//         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-//         .join(" ");
+      const label = value
+        .split("-")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
 
-//       acc.set(value, { value, label });
-//       return acc;
-//     }, new Map<string, BaseTheme>())
-//     .values(),
-// );
+      acc.set(value, { value, label });
+      return acc;
+    }, new Map<string, BaseTheme>())
+    .values(),
+);
 
 export const themeSwitcherBaseThemes: BaseTheme[] = [
   { value: "default", label: "Default" },
