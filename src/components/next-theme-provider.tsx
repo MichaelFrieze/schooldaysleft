@@ -1,13 +1,13 @@
-import { allThemes } from "@/modules/user/config/themes";
+import { allThemes } from "@/modules/settings/config/themes";
 import { ThemeProvider } from "next-themes";
 
-interface UserThemeProviderProps {
+interface NextThemeProviderProps {
   children: React.ReactNode;
 }
 
-export const UserThemeProvider = async ({
+export const NextThemeProvider = async ({
   children,
-}: UserThemeProviderProps) => {
+}: NextThemeProviderProps) => {
   const allThemeKeys = Object.keys(allThemes);
 
   return (

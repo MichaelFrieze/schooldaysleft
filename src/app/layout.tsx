@@ -1,8 +1,8 @@
-import { UserThemeProvider } from "@/modules/user/ui/components/user-theme-provider";
+import { NextThemeProvider } from "@/components/next-theme-provider";
+import { fontVariables } from "@/lib/root-layout-fonts";
 import { TRPCReactProvider } from "@/trpc/react";
 import { ClerkProvider } from "@clerk/nextjs";
 import { type Metadata } from "next";
-import { fontVariables } from "@/lib/root-layout-fonts";
 
 import "@/styles/globals.css";
 
@@ -32,7 +32,7 @@ export default function RootLayout({
       <html lang="en" className={fontVariables} suppressHydrationWarning>
         <body>
           <TRPCReactProvider>
-            <UserThemeProvider>{children}</UserThemeProvider>
+            <NextThemeProvider>{children}</NextThemeProvider>
           </TRPCReactProvider>
         </body>
       </html>

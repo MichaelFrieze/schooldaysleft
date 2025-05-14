@@ -1,5 +1,5 @@
-import { ModeToggle } from "@/modules/user/ui/components/mode-toggle";
 import { Button } from "@/components/ui/button";
+import { ModeToggle } from "@/modules/settings/ui/components/mode-toggle";
 import { Mail } from "lucide-react";
 
 export const Footer = () => {
@@ -12,11 +12,7 @@ export const Footer = () => {
           </p>
 
           <div className="flex gap-2">
-            <Button
-              variant={"outline"}
-              className="text-muted-foreground"
-              asChild
-            >
+            <Button variant={"ghost"} className="text-muted-foreground" asChild>
               <a
                 href="https://frieze.dev"
                 target="_blank"

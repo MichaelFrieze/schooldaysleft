@@ -1,23 +1,24 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ModeToggle } from "@/modules/user/ui/components/mode-toggle";
-import { ThemeSwitcher } from "@/modules/user/ui/components/theme-switcher";
+import { ModeToggle } from "@/modules/settings/ui/components/mode-toggle";
+import { ThemeSwitcher } from "@/modules/settings/ui/components/theme-switcher";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
-export const UserSettingsView = async () => {
+export const SettingsView = async () => {
   const { userId } = await auth();
 
   if (!userId) {
     redirect("/sign-in");
   }
+
   return (
     <div className="container py-8 md:py-12">
-      <div className="mb-12">
+      {/* <div className="mb-8">
         <div className="">
-          <h1 className="text-2xl font-bold md:text-3xl">User Settings</h1>
+          <h1 className="text-2xl font-bold">User Settings</h1>
         </div>
-      </div>
+      </div> */}
 
       {/* Theme Preview Section */}
       <div className="mb-12">

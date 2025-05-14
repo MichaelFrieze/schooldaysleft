@@ -1,4 +1,4 @@
-import { allThemes, type ThemeKey } from "@/modules/user/config/themes";
+import { allThemes, type ThemeKey } from "@/modules/settings/config/themes";
 import { useTheme } from "next-themes";
 
 export const useClerkAppearanceVariables = () => {

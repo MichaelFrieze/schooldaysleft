@@ -14,7 +14,7 @@ import {
   themeSwitcherBaseThemes,
   type BaseTheme,
   type ThemeKey,
-} from "@/modules/user/config/themes";
+} from "@/modules/settings/config/themes";
 import type { VariantProps } from "class-variance-authority";
 import { CheckIcon, ChevronDown } from "lucide-react";
 import { useTheme } from "next-themes";

@@ -1,6 +1,6 @@
 "use client";
 
-import { useClerkAppearanceVariables } from "@/modules/user/hooks/use-clerk-appearance-variables";
+import { useClerkAppearanceVariables } from "@/modules/settings/hooks/use-clerk-appearance-variables";
 import { SignIn } from "@clerk/nextjs";
 
 export const AuthView = () => {

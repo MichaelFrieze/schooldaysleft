@@ -1,7 +1,7 @@
 "use client";
 
 import { Skeleton } from "@/components/ui/skeleton";
-import { useClerkAppearanceVariables } from "@/modules/user/hooks/use-clerk-appearance-variables";
+import { useClerkAppearanceVariables } from "@/modules/settings/hooks/use-clerk-appearance-variables";
 import { UserButton, useAuth } from "@clerk/nextjs";
 import { Home, LayoutDashboard, Settings } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -74,7 +74,7 @@ export const ClerkUserButton = () => {
           <UserButton.Action label="manageAccount" />
           <UserButton.Link
             label="Home"
-            href="/"
+            href="/home"
             labelIcon={<Home className="size-4" />}
           />
         </UserButton.MenuItems>
@@ -129,7 +129,7 @@ export const ClerkUserButton = () => {
         <UserButton.Action label="manageAccount" />
         <UserButton.Link
           label="Home"
-          href="/"
+          href="/home"
           labelIcon={<Home className="size-4" />}
         />
       </UserButton.MenuItems>
