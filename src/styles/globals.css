@@ -1,7 +1,22 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+/* Themes */
+@import "./themes/amber-minimal.css";
+@import "./themes/amethyst-haze.css";
+@import "./themes/black-and-white.css";
+@import "./themes/chirp.css";
+@import "./themes/kodama-grove.css";
+@import "./themes/lavender-glow.css";
+@import "./themes/modern-minimal.css";
+@import "./themes/notebook.css";
+@import "./themes/ocean-breeze.css";
+@import "./themes/pastel-dreams.css";
+@import "./themes/plum-nebula.css";
+@import "./themes/quantum-rose.css";
+@import "./themes/tangerine.css";
+
+@custom-variant dark (&:where(.dark, .dark *, [class*="-dark"], [class*="-dark"] *));
 
 @theme inline {
   --color-background: var(--background);
@@ -118,9 +133,9 @@
   --sidebar-accent-foreground: #2a2a4a;
   --sidebar-border: #e0e0f0;
   --sidebar-ring: #6e56cf;
-  --font-sans: Inter, sans-serif;
+  --font-sans: var(--font-inter), sans-serif;
   --font-serif: Georgia, serif;
-  --font-mono: JetBrains Mono, monospace;
+  --font-mono: var(--font-jetbrains-mono), monospace;
   --radius: 0.5rem;
   --shadow-2xs: 0px 4px 10px 0px hsl(240 30% 25% / 0.06);
   --shadow-xs: 0px 4px 10px 0px hsl(240 30% 25% / 0.06);
@@ -175,9 +190,9 @@
   --sidebar-accent-foreground: #e2e2f5;
   --sidebar-border: #303052;
   --sidebar-ring: #a48fff;
-  --font-sans: Inter, sans-serif;
+  --font-sans: var(--font-inter), sans-serif;
   --font-serif: Georgia, serif;
-  --font-mono: JetBrains Mono, monospace;
+  --font-mono: var(--font-jetbrains-mono), monospace;
   --radius: 0.5rem;
   --shadow-2xs: 0px 4px 10px 0px hsl(240 30% 25% / 0.06);
   --shadow-xs: 0px 4px 10px 0px hsl(240 30% 25% / 0.06);

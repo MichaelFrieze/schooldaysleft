@@ -9,6 +9,11 @@ import {
 import { CalendarDays, PenLine, Settings, Sparkles, User } from "lucide-react";
 import Link from "next/link";
 import { MarketingCountdownCard } from "../components/marketing-countdown-card";
+import {
+  ClearLocalStorageButton,
+  ThemeSwitcher,
+} from "@/modules/user/ui/components/theme-switcher";
+import { ModeToggle } from "@/modules/user/ui/components/mode-toggle";
 
 export const MarketingView = async () => {
   return (
