@@ -8,9 +8,7 @@
 - use drawer component in mobile view and dialog in desktop
 - look into how easy it is to use stripe in a small form component in drawer.
 - consider adding drizzle-kit push --force to preview branches:
-- iOS chrome browser bounces when scrolling to bottom and reverts to top. doesn't happen on other browsers, not even brave
 - refactor dashboard
-- support button in footer isn't aligned correctly
 - fix notebook dark theme
 - consider having 2 separate landing pages. They will be the same, but one will be for logged in users and the other can be static
 - remove border from palette

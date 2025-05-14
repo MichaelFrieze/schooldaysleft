@@ -37,7 +37,7 @@ export const UserSettingsView = async () => {
             </div>
 
             {/* Color Palette */}
-            <div className="from-primary via-secondary via-accent via-muted to-background mb-6 h-24 w-full rounded-xl border bg-gradient-to-r shadow-sm"></div>
+            <div className="from-primary via-secondary via-accent via-muted to-background mb-6 h-24 w-full rounded-xl bg-gradient-to-r shadow-sm"></div>
 
             <div className="mb-6 grid grid-cols-1 gap-6 md:grid-cols-2">
               <Button className="w-full">Primary Button</Button>
