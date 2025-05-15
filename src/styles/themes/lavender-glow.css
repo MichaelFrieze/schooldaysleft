@@ -31,9 +31,9 @@ html.lavender-glow-light {
   --sidebar-accent-foreground: #4a2a4a;
   --sidebar-border: #f0e0f0;
   --sidebar-ring: #cf56b7;
-  --font-sans: Inter, sans-serif;
+  --font-sans: var(--font-inter), sans-serif;
   --font-serif: Georgia, serif;
-  --font-mono: JetBrains Mono, monospace;
+  --font-mono: var(--font-jetbrains-mono), monospace;
   --radius: 0.5rem;
   --shadow-2xs: 0px 4px 10px 0px hsl(300 29.69% 25.1% / 0.06);
   --shadow-xs: 0px 4px 10px 0px hsl(300 29.69% 25.1% / 0.06);
@@ -88,9 +88,9 @@ html.lavender-glow-dark {
   --sidebar-accent-foreground: #f5e2f5;
   --sidebar-border: #523052;
   --sidebar-ring: #ff8fea;
-  --font-sans: Inter, sans-serif;
+  --font-sans: var(--font-inter), sans-serif;
   --font-serif: Georgia, serif;
-  --font-mono: JetBrains Mono, monospace;
+  --font-mono: var(--font-jetbrains-mono), monospace;
   --radius: 0.5rem;
   --shadow-2xs: 0px 4px 10px 0px hsl(300 29.69% 25.1% / 0.06);
   --shadow-xs: 0px 4px 10px 0px hsl(300 29.69% 25.1% / 0.06);

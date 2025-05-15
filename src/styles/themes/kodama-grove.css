@@ -31,9 +31,9 @@ html.kodama-grove-light {
   --sidebar-accent-foreground: #5c4b3e;
   --sidebar-border: #e5e0d4;
   --sidebar-ring: #9db18c;
-  --font-sans: Merriweather, serif;
-  --font-serif: Source Serif 4, serif;
-  --font-mono: JetBrains Mono, monospace;
+  --font-sans: var(--font-merriweather), serif;
+  --font-serif: var(--font-source-serif-4), serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
   --radius: 0.425rem;
   --shadow-2xs: 3px 3px 2px 0px hsl(88 22% 35% / 0.07);
   --shadow-xs: 3px 3px 2px 0px hsl(88 22% 35% / 0.07);
@@ -88,9 +88,9 @@ html.kodama-grove-dark {
   --sidebar-accent-foreground: #2a2521;
   --sidebar-border: #5a5345;
   --sidebar-ring: #8a9f7b;
-  --font-sans: Merriweather, serif;
-  --font-serif: Source Serif 4, serif;
-  --font-mono: JetBrains Mono, monospace;
+  --font-sans: var(--font-merriweather), serif;
+  --font-serif: var(--font-source-serif-4), serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
   --radius: 0.425rem;
   --shadow-2xs: 3px 3px 2px 0px hsl(88 22% 35% / 0.07);
   --shadow-xs: 3px 3px 2px 0px hsl(88 22% 35% / 0.07);

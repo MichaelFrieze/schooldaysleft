@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useClerkAppearanceVariables } from "@/modules/user/hooks/use-clerk-appearance-variables";
+import { useClerkAppearanceVariables } from "@/modules/settings/hooks/use-clerk-appearance-variables";
 import { SignInButton } from "@clerk/nextjs";
 import { UserCircleIcon } from "lucide-react";
 
