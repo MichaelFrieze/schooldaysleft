@@ -9,7 +9,6 @@
 - look into how easy it is to use stripe in a small form component in drawer.
 - consider adding drizzle-kit push --force to preview branches:
 - refactor dashboard
-- add gear icon to footer for settings
 - update fonts
 
 ```

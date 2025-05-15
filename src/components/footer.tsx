@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/modules/settings/ui/components/mode-toggle";
-import { Mail } from "lucide-react";
+import { Mail, Settings, Settings2 } from "lucide-react";
+import Link from "next/link";
 
 export const Footer = () => {
   return (
@@ -34,6 +35,16 @@ export const Footer = () => {
               >
                 <Mail />
               </a>
+            </Button>
+            <Button
+              variant={"ghost"}
+              size={"icon"}
+              className="text-muted-foreground"
+              asChild
+            >
+              <Link href="/settings">
+                <Settings2 />
+              </Link>
             </Button>
             <div className="text-muted-foreground">
               <ModeToggle variant={"ghost"} />
