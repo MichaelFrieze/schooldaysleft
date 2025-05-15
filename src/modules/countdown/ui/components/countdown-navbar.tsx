@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { Suspense } from "react";
-import { AppNavItems } from "./app-nav-items";
+import { CountdownNavItems } from "./countdown-nav-items";
 
-export const AppNavbar = () => {
+export const CountdownNavbar = () => {
   return (
     <header className="bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 border-b backdrop-blur">
       <div className="container flex h-16 items-center">
@@ -15,7 +15,7 @@ export const AppNavbar = () => {
 
         <nav className="ml-auto">
           <Suspense>
-            <AppNavItems />
+            <CountdownNavItems />
           </Suspense>
         </nav>
       </div>

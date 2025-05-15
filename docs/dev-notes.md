@@ -9,7 +9,6 @@
 - look into how easy it is to use stripe in a small form component in drawer.
 - consider adding drizzle-kit push --force to preview branches:
 - refactor dashboard
-- consider having 2 separate landing pages. They will be the same, but one will be for logged in users and the other can be static
 - add gear icon to footer for settings
 - update fonts
 
