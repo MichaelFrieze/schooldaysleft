@@ -9,7 +9,6 @@
 - look into how easy it is to use stripe in a small form component in drawer.
 - consider adding drizzle-kit push --force to preview branches:
 - refactor dashboard
-- update fonts
 
 ```
     "vercel-build": "if [ \"$VERCEL_ENV\" = \"production\" ]; then drizzle-kit push; elif [ \"$VERCEL_ENV\" = \"preview\" ]; drizzle-kit push --force; fi && next build",
