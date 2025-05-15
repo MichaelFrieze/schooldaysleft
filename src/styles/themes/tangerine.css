@@ -31,9 +31,9 @@ html.tangerine-light {
   --sidebar-accent-foreground: #1e3a8a;
   --sidebar-border: #e5e7eb;
   --sidebar-ring: #e05d38;
-  --font-sans: Inter, sans-serif;
-  --font-serif: Source Serif 4, serif;
-  --font-mono: JetBrains Mono, monospace;
+  --font-sans: var(--font-inter), sans-serif;
+  --font-serif: var(--font-source-serif-4), serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
   --radius: 0.75rem;
   --shadow-2xs: 0px 1px 3px 0px hsl(0 0% 0% / 0.05);
   --shadow-xs: 0px 1px 3px 0px hsl(0 0% 0% / 0.05);
@@ -83,9 +83,9 @@ html.tangerine-dark {
   --sidebar-accent-foreground: #bfdbfe;
   --sidebar-border: #3d4354;
   --sidebar-ring: #e05d38;
-  --font-sans: Inter, sans-serif;
-  --font-serif: Source Serif 4, serif;
-  --font-mono: JetBrains Mono, monospace;
+  --font-sans: var(--font-inter), sans-serif;
+  --font-serif: var(--font-source-serif-4), serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
   --radius: 0.75rem;
   --shadow-2xs: 0px 1px 3px 0px hsl(0 0% 0% / 0.05);
   --shadow-xs: 0px 1px 3px 0px hsl(0 0% 0% / 0.05);

@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/modules/settings/ui/components/mode-toggle";
-import { Mail, Settings, Settings2 } from "lucide-react";
+import { Mail, Settings2 } from "lucide-react";
 import Link from "next/link";
 
 export const Footer = () => {

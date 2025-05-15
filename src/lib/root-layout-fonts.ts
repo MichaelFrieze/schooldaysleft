@@ -1,23 +1,26 @@
 import {
-  Open_Sans,
-  DM_Sans,
-  Outfit,
   Architects_Daughter,
-  Inter,
+  DM_Sans,
+  Fira_Code,
   Geist,
   Geist_Mono,
-  Montserrat,
-  Plus_Jakarta_Sans,
-  Source_Serif_4,
+  IBM_Plex_Mono,
+  Inter,
+  JetBrains_Mono,
   Lora,
   Merriweather,
-  IBM_Plex_Mono,
-  Space_Mono,
-  Fira_Code,
-  JetBrains_Mono,
-  Ubuntu_Mono,
-  Roboto_Mono,
+  Montserrat,
+  Open_Sans,
+  Outfit,
+  Playfair_Display,
+  Plus_Jakarta_Sans,
+  Poppins,
+  Quicksand,
   Roboto,
+  Roboto_Mono,
+  Source_Serif_4,
+  Space_Mono,
+  Ubuntu_Mono,
 } from "next/font/google";
 
 // --- Sans Serif Fonts ---
@@ -73,6 +76,25 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 const roboto = Roboto({
   subsets: ["latin"],
   variable: "--font-roboto",
+  display: "swap",
+});
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  variable: "--font-poppins",
+  display: "swap",
+  weight: "400",
+});
+
+const playfairDisplay = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair-display",
+  display: "swap",
+});
+
+const quicksand = Quicksand({
+  subsets: ["latin"],
+  variable: "--font-quicksand",
   display: "swap",
 });
 
@@ -150,7 +172,10 @@ export const fontVariables = [
   inter.variable,
   montserrat.variable,
   geist.variable,
+  playfairDisplay.variable,
   plusJakartaSans.variable,
+  poppins.variable,
+  quicksand.variable,
   sourceSerif4.variable,
   lora.variable,
   merriweather.variable,
