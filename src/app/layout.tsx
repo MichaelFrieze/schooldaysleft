@@ -1,9 +1,10 @@
-import "@/styles/globals.css";
-
+import { NextThemeProvider } from "@/components/next-theme-provider";
+import { fontVariables } from "@/lib/root-layout-fonts";
 import { TRPCReactProvider } from "@/trpc/react";
 import { ClerkProvider } from "@clerk/nextjs";
 import { type Metadata } from "next";
-import { ThemeProvider } from "next-themes";
+
+import "@/styles/globals.css";
 
 export const metadata: Metadata = {
   title: "School Days Left",
@@ -28,18 +29,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <ClerkProvider afterSignOutUrl={"/"}>
-      <html lang="en" suppressHydrationWarning>
+      <html lang="en" className={fontVariables} suppressHydrationWarning>
         <body>
           <TRPCReactProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-              enableColorScheme
-            >
-              {children}
-            </ThemeProvider>
+            <NextThemeProvider>{children}</NextThemeProvider>
           </TRPCReactProvider>
         </body>
       </html>

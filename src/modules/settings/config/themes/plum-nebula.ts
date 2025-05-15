@@ -1,0 +1,33 @@
+export const plumNebulaLight = {
+  background: "#faf5fa",
+  foreground: "#501854",
+  card: "#faf5fa",
+  primary: "#a84370",
+  secondary: "#f1c4e6",
+  muted: "#f6e5f3",
+  mutedForeground: "#834588",
+  accent: "#f1c4e6",
+  accentForeground: "#77347c",
+  destructive: "#ab4347",
+  border: "#efbdeb",
+  input: "#e7c1dc",
+  fontSans: "Roboto, sans-serif",
+  radius: "0.5rem",
+};
+
+export const plumNebulaDark = {
+  background: "#221d27",
+  foreground: "#d2c4de",
+  card: "#2c2632",
+  primary: "#a3004c",
+  secondary: "#362d3d",
+  muted: "#28222d",
+  mutedForeground: "#c2b6cf",
+  accent: "#463753",
+  accentForeground: "#f8f1f5",
+  destructive: "#301015",
+  border: "#3b3237",
+  input: "#3e343c",
+  fontSans: "Roboto, sans-serif",
+  radius: "0.5rem",
+};
