@@ -1,6 +1,5 @@
 "use client";
 
-import { Skeleton } from "@/components/ui/skeleton";
 import { useClerkAppearanceVariables } from "@/modules/settings/hooks/use-clerk-appearance-variables";
 import { UserProfile as ClerkUserProfile } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
@@ -14,9 +13,7 @@ export const UserProfile = () => {
   }, []);
 
   if (!isMounted) {
-    return (
-      <Skeleton className="h-[44rem] w-[55rem] max-w-[calc(-4rem+100vw)] rounded-lg" />
-    );
+    return <div className="h-[44rem] w-[55rem] max-w-[calc(-7rem+100vw)]" />;
   }
 
   if (parseFloat(clerkAppearanceVariables.borderRadius) >= parseFloat("1rem")) {
@@ -28,7 +25,7 @@ export const UserProfile = () => {
           },
           elements: {
             cardBox: {
-              maxWidth: "calc(-4rem + 100vw)",
+              maxWidth: "calc(-7rem + 100vw)",
             },
             scrollBox: {
               borderRadius: "0rem",
@@ -53,7 +50,7 @@ export const UserProfile = () => {
         },
         elements: {
           cardBox: {
-            maxWidth: "calc(-4rem + 100vw)",
+            maxWidth: "calc(-7rem + 100vw)",
           },
           scrollBox: {
             borderRadius: "0rem",

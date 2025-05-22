@@ -13,6 +13,9 @@
 - Create a single component for home and landing page to share
 - look for some tailwind classes that are not needed in the landing page
 - noticing some layout shift in the footer
+- Consider using clerk sign-in button on landing page for modal
+- make the sign-in and account pages look better
+- use section instead of div on view pages
 
 ```
     "vercel-build": "if [ \"$VERCEL_ENV\" = \"production\" ]; then drizzle-kit push; elif [ \"$VERCEL_ENV\" = \"preview\" ]; drizzle-kit push --force; fi && next build",
