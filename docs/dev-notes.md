@@ -16,6 +16,8 @@
 - Consider using clerk sign-in button on landing page for modal
 - make the sign-in and account pages look better
 - use section instead of div on view pages
+- consider using middleware to switch routes if not logged in, instead of page.
+- consider removing different fonts because on iOS Chrome browser it can cause text to shift on reload
 
 ```
     "vercel-build": "if [ \"$VERCEL_ENV\" = \"production\" ]; then drizzle-kit push; elif [ \"$VERCEL_ENV\" = \"preview\" ]; drizzle-kit push --force; fi && next build",

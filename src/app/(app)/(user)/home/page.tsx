@@ -1,14 +1,6 @@
 import { HomeView } from "@/modules/home/ui/views/home-view";
-import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
 
 const Page = async () => {
-  const { userId } = await auth();
-
-  if (!userId) {
-    redirect("/sign-in");
-  }
-
   return <HomeView />;
 };
 

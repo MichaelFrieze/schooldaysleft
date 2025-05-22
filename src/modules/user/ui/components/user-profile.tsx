@@ -13,7 +13,7 @@ export const UserProfile = () => {
   }, []);
 
   if (!isMounted) {
-    return <div className="h-[44rem] w-[55rem] max-w-[calc(-7rem+100vw)]" />;
+    return <div className="h-[44rem] w-[55rem] max-w-[calc(-4rem+100vw)]" />;
   }
 
   if (parseFloat(clerkAppearanceVariables.borderRadius) >= parseFloat("1rem")) {
@@ -25,7 +25,7 @@ export const UserProfile = () => {
           },
           elements: {
             cardBox: {
-              maxWidth: "calc(-7rem + 100vw)",
+              maxWidth: "calc(-4rem + 100vw)",
             },
             scrollBox: {
               borderRadius: "0rem",
@@ -50,7 +50,7 @@ export const UserProfile = () => {
         },
         elements: {
           cardBox: {
-            maxWidth: "calc(-7rem + 100vw)",
+            maxWidth: "calc(-4rem + 100vw)",
           },
           scrollBox: {
             borderRadius: "0rem",
