@@ -1,60 +1,45 @@
-import { Calendar, CalendarDays, Plus } from "lucide-react";
+import { CalendarDays, Plus } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
+import { Separator } from "@/components/ui/separator";
+import { DashboardCountdownCard } from "../components/dashboard-countdown-card";
 
-function formatDate(date: Date | null | undefined): string {
-  if (!date) return "N/A";
-  return new Intl.DateTimeFormat("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  }).format(date);
-}
+// Temporary mock data until DB is connected
+const countdowns = [
+  {
+    id: "clq1234567",
+    name: "Summer Break 2024",
+    endDate: new Date("2026-06-21"),
+    createdAt: new Date("2023-12-25"),
+  },
+  {
+    id: "clq2345678",
+    name: "Spring Break",
+    endDate: new Date("2026-03-25"),
+    createdAt: new Date("2024-01-10"),
+  },
+  {
+    id: "clq3456789",
+    name: "Winter Break",
+    endDate: new Date("2025-12-22"),
+    createdAt: new Date("2023-12-01"),
+  },
+  {
+    id: "clq4567890",
+    name: "Teacher Planning Day",
+    endDate: new Date("2027-01-26"),
+    createdAt: new Date("2024-01-15"),
+  },
+  {
+    id: "clq5678901",
+    name: "Last Day of School",
+    endDate: new Date("2025-06-21"),
+    createdAt: new Date("2024-01-02"),
+  },
+];
 
 export const DashboardView = async () => {
-  // Temporary mock data until DB is connected
-  const countdowns = [
-    {
-      id: "clq1234567",
-      name: "Summer Break 2024",
-      endDate: new Date("2026-06-21"),
-      createdAt: new Date("2023-12-25"),
-    },
-    {
-      id: "clq2345678",
-      name: "Spring Break",
-      endDate: new Date("2026-03-25"),
-      createdAt: new Date("2024-01-10"),
-    },
-    {
-      id: "clq3456789",
-      name: "Winter Break",
-      endDate: new Date("2025-12-22"),
-      createdAt: new Date("2023-12-01"),
-    },
-    {
-      id: "clq4567890",
-      name: "Teacher Planning Day",
-      endDate: new Date("2027-01-26"),
-      createdAt: new Date("2024-01-15"),
-    },
-    {
-      id: "clq5678901",
-      name: "Last Day of School",
-      endDate: new Date("2025-06-21"),
-      createdAt: new Date("2024-01-02"),
-    },
-  ];
-
   return (
     <div className="container py-8 md:py-12">
       <div className="mb-8 flex flex-row items-start justify-between gap-4 md:flex-row md:items-center">
@@ -74,7 +59,9 @@ export const DashboardView = async () => {
         </Button>
       </div>
 
-      {/* <Separator className="mb-8" /> */}
+      <div className="pb-8">
+        <Separator />
+      </div>
 
       {false ? (
         <div className="flex min-h-[300px] flex-col items-center justify-center rounded-lg border border-dashed p-12 text-center">
@@ -118,29 +105,13 @@ export const DashboardView = async () => {
             }
 
             return (
-              <Link
-                href={`/countdown/${countdown.id}`}
+              <DashboardCountdownCard
                 key={countdown.id}
-                className="transition-transform duration-150 ease-in-out hover:scale-[1.01]"
-                aria-label={`View countdown: ${countdown.name}`}
-              >
-                <Card className="h-full overflow-hidden hover:shadow-md">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="truncate text-lg font-medium">
-                      {countdown.name}
-                    </CardTitle>
-                    {countdown.endDate && (
-                      <CardDescription className="text-muted-foreground/90 flex items-center gap-1.5 text-sm font-medium">
-                        <Calendar className="h-4 w-4" />
-                        Ends on: {formatDate(countdown.endDate)}
-                      </CardDescription>
-                    )}
-                  </CardHeader>
-                  <CardContent>
-                    <Progress value={progressValue} className="h-3" />
-                  </CardContent>
-                </Card>
-              </Link>
+                id={countdown.id}
+                name={countdown.name}
+                endDate={countdown.endDate}
+                progressValue={progressValue}
+              />
             );
           })}
         </div>

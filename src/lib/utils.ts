@@ -32,3 +32,12 @@ export function parseThemeKey(
   const modeKey: "light" | "dark" = modeRaw === "dark" ? "dark" : "light";
   return { baseKey, modeKey };
 }
+
+export function formatDate(date: Date | null | undefined): string {
+  if (!date) return "N/A";
+  return new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(date);
+}
