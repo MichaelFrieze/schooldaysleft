@@ -12,11 +12,7 @@
 - Use a webhook to update user button full name after a change
 - Create a single component for home and landing page to share
 - look for some tailwind classes that are not needed in the landing page
-- noticing some layout shift in the footer
-- Consider using clerk sign-in button on landing page for modal
-- make the sign-in and account pages look better
 - use section instead of div on view pages
-- consider using middleware to switch routes if not logged in, instead of page.
 - consider removing different fonts because on iOS Chrome browser it can cause text to shift on reload
 
 ```

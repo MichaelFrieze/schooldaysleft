@@ -2,6 +2,7 @@
 
 import type { buttonVariants } from "@/components/ui/button";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { parseThemeKey } from "@/lib/utils";
 import type { VariantProps } from "class-variance-authority";
 import { MoonIcon, SunIcon } from "lucide-react";
@@ -30,7 +31,9 @@ export function ModeToggle({
 
   if (!mounted) {
     return (
-      <Button variant={variant} size={size} disabled className="h-9 w-9" />
+      <div className="flex h-9 w-9 items-center justify-center">
+        <Skeleton className="h-4 w-4 rounded-full" />
+      </div>
     );
   }
 
