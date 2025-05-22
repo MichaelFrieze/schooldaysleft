@@ -1,4 +1,4 @@
-import { HomeView } from "@/modules/home/ui/views/home-view";
+import { AccountView } from "@/modules/account/ui/views/account-view";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
@@ -9,7 +9,7 @@ const Page = async () => {
     redirect("/sign-in");
   }
 
-  return <HomeView />;
+  return <AccountView />;
 };
 
 export default Page;

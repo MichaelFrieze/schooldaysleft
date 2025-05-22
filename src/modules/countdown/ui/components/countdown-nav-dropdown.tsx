@@ -60,11 +60,10 @@ export const CountdownNavDropdown = () => {
           <Link
             href="/dashboard"
             className={cn(
-              "flex items-center gap-2",
               pathname === "/dashboard" && "bg-accent text-accent-foreground",
             )}
           >
-            <LayoutDashboard className="h-4 w-4" />
+            <LayoutDashboard />
             Dashboard
           </Link>
         </DropdownMenuItem>
@@ -87,12 +86,11 @@ export const CountdownNavDropdown = () => {
           <Link
             href="/countdown/new"
             className={cn(
-              "flex items-center gap-2",
               pathname === "/countdown/new" &&
                 "bg-accent text-accent-foreground",
             )}
           >
-            <Plus className="h-4 w-4" />
+            <Plus />
             New Countdown
           </Link>
         </DropdownMenuItem>

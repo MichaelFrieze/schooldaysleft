@@ -1,6 +1,5 @@
 import { Calendar, CalendarDays, Plus } from "lucide-react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -11,7 +10,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { auth } from "@clerk/nextjs/server";
 
 function formatDate(date: Date | null | undefined): string {
   if (!date) return "N/A";
@@ -23,12 +21,6 @@ function formatDate(date: Date | null | undefined): string {
 }
 
 export const DashboardView = async () => {
-  const { userId } = await auth();
-
-  if (!userId) {
-    redirect("/sign-in");
-  }
-
   // Temporary mock data until DB is connected
   const countdowns = [
     {

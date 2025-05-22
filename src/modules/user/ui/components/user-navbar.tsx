@@ -1,8 +1,11 @@
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { trpc } from "@/trpc/server";
+import { TRPCPrefetch } from "@/trpc/trpc-prefetch";
 import Link from "next/link";
-import { Suspense } from "react";
-import { UserNavItems } from "./user-nav-items";
+import { UserButton } from "./user-button";
 
-export const UserNavbar = () => {
+export const UserNavbar = async () => {
   return (
     <header className="bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 border-b backdrop-blur">
       <div className="container flex h-16 items-center">
@@ -13,10 +16,22 @@ export const UserNavbar = () => {
           </span>
         </Link>
 
-        <nav className="ml-auto">
-          <Suspense>
-            <UserNavItems />
-          </Suspense>
+        <nav className="ml-auto flex items-center gap-1">
+          <Button asChild variant="ghost" className="hidden lg:flex">
+            <Link href="/dashboard">Dashboard</Link>
+          </Button>
+          <TRPCPrefetch
+            isSuspense={true}
+            suspenseFallback={<Skeleton className="h-8 w-8 rounded-full" />}
+            errorFallback={
+              <Skeleton className="h-8 w-8 rounded-full bg-red-500" />
+            }
+            queryOptionsToPrefetch={[
+              trpc.user.getUserButtonData.queryOptions(),
+            ]}
+          >
+            <UserButton />
+          </TRPCPrefetch>
         </nav>
       </div>
     </header>

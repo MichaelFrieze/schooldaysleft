@@ -1,35 +1,11 @@
-"use client";
-
-import { useClerkAppearanceVariables } from "@/modules/settings/hooks/use-clerk-appearance-variables";
-import { SignIn } from "@clerk/nextjs";
+import { AuthSignIn } from "../components/auth-sign-in";
 
 export const AuthView = () => {
-  const clerkAppearanceVariables = useClerkAppearanceVariables();
-
   return (
-    <div className="mt-16 lg:mt-0">
-      <SignIn
-        appearance={{
-          variables: {
-            ...clerkAppearanceVariables,
-          },
-          layout: {
-            socialButtonsVariant: "blockButton",
-          },
-          elements: {
-            header: {
-              display: "none",
-            },
-            main: {
-              margin: "0.5rem",
-            },
-            card: {
-              borderBottomLeftRadius: "0rem",
-              borderBottomRightRadius: "0rem",
-            },
-          },
-        }}
-      />
-    </div>
+    <section className="container flex min-h-[calc(100vh-64px)] justify-center md:items-center">
+      <div className="py-8 md:pb-24">
+        <AuthSignIn />
+      </div>
+    </section>
   );
 };
