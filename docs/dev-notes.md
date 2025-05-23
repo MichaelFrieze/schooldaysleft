@@ -8,11 +8,9 @@
 - use drawer component in mobile view and dialog in desktop
 - look into how easy it is to use stripe in a small form component in drawer.
 - consider adding drizzle-kit push --force to preview branches:
-- refactor dashboard
 - Use a webhook to update user button full name after a change
 - Create a single component for home and landing page to share
 - look for some tailwind classes that are not needed in the landing page
-- use section instead of div on view pages
 - consider removing different fonts because on iOS Chrome browser it can cause text to shift on reload
 
 ```

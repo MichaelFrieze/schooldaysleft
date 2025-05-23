@@ -2,7 +2,6 @@ import { CalendarDays, Plus } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { DashboardCountdownCard } from "../components/dashboard-countdown-card";
 
 // Temporary mock data until DB is connected
@@ -41,7 +40,7 @@ const countdowns = [
 
 export const DashboardView = async () => {
   return (
-    <div className="container py-8 md:py-12">
+    <section className="container py-8 md:py-12">
       <div className="mb-8 flex flex-row items-start justify-between gap-4 md:flex-row md:items-center">
         <div className="grid gap-1">
           <h1 className="text-2xl font-bold tracking-tight md:text-3xl">
@@ -57,10 +56,6 @@ export const DashboardView = async () => {
             New Countdown
           </Link>
         </Button>
-      </div>
-
-      <div className="pb-8">
-        <Separator />
       </div>
 
       {false ? (
@@ -116,6 +111,6 @@ export const DashboardView = async () => {
           })}
         </div>
       )}
-    </div>
+    </section>
   );
 };
