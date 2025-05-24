@@ -323,8 +323,9 @@ export const NewCountdownMockForm = () => {
                         disabled={(date) =>
                           !isSameMonth(date, month) ||
                           isWeeklyDayOff(date) ||
-                          (formData.startDate && date < formData.startDate) ||
-                          (formData.endDate && date > formData.endDate)
+                          (formData.startDate != null &&
+                            date < formData.startDate) ||
+                          (formData.endDate != null && date > formData.endDate)
                         }
                         modifiers={{
                           weeklyOff: isWeeklyDayOff,
