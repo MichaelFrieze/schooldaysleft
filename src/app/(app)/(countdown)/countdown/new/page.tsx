@@ -1,9 +1,7 @@
+import { NewCountdownView } from "@/modules/new-countdown/ui/views/new-countdown-view";
+
 const Page = async () => {
-  return (
-    <div>
-      <h1>New Countdown Page</h1>
-    </div>
-  );
+  return <NewCountdownView />;
 };
 
 export default Page;
