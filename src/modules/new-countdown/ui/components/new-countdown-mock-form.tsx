@@ -1,31 +1,24 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { addMonths, format, isSameMonth, startOfMonth, getDay } from "date-fns";
+import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import {
-  addMonths,
-  format,
-  getDay,
-  isSameMonth,
-  startOfMonth,
-  parse,
-  isValid,
-} from "date-fns";
-import { CalendarIcon } from "lucide-react";
-import { useState } from "react";
-import {
-  calculateSchoolDaysRemaining,
   createCountdown,
+  calculateSchoolDaysRemaining,
 } from "../server/mock-data";
 
 interface CountdownFormData {
@@ -57,45 +50,6 @@ export const NewCountdownMockForm = () => {
 
   const [startDateOpen, setStartDateOpen] = useState(false);
   const [endDateOpen, setEndDateOpen] = useState(false);
-  const [startDateText, setStartDateText] = useState("");
-  const [endDateText, setEndDateText] = useState("");
-
-  // Helper function to parse date from MM/DD/YYYY format
-  const parseDate = (dateString: string): Date | undefined => {
-    if (!dateString) return undefined;
-
-    // Try to parse MM/DD/YYYY format
-    const parsed = parse(dateString, "MM/dd/yyyy", new Date());
-    if (isValid(parsed)) return parsed;
-
-    // Try other common formats
-    const formats = ["M/d/yyyy", "MM/d/yyyy", "M/dd/yyyy"];
-    for (const format of formats) {
-      const parsed = parse(dateString, format, new Date());
-      if (isValid(parsed)) return parsed;
-    }
-
-    return undefined;
-  };
-
-  // Helper function to format date input
-  const formatDateInput = (value: string): string => {
-    // Remove non-numeric characters except /
-    const cleaned = value.replace(/[^\d/]/g, "");
-
-    // Auto-add slashes
-    if (cleaned.length >= 2 && !cleaned.includes("/")) {
-      return cleaned.slice(0, 2) + "/" + cleaned.slice(2);
-    }
-    if (cleaned.length >= 5 && cleaned.split("/").length === 2) {
-      const parts = cleaned.split("/");
-      if (parts[1]) {
-        return parts[0] + "/" + parts[1].slice(0, 2) + "/" + parts[1].slice(2);
-      }
-    }
-
-    return cleaned;
-  };
 
   // Generate months between start and end date
   const getMonthsBetweenDates = (start: Date, end: Date): Date[] => {
@@ -202,128 +156,78 @@ export const NewCountdownMockForm = () => {
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <div className="space-y-2">
               <Label>Start Date</Label>
-              <div className="flex gap-2">
-                <div className="relative flex-1">
-                  <Input
-                    value={startDateText}
-                    onChange={(e) => {
-                      const formatted = formatDateInput(e.target.value);
-                      setStartDateText(formatted);
-
-                      const parsed = parseDate(formatted);
-                      if (parsed) {
-                        const today = new Date();
-                        today.setHours(0, 0, 0, 0);
-                        if (parsed >= today) {
-                          setFormData((prev) => ({
-                            ...prev,
-                            startDate: parsed,
-                          }));
-                        }
-                      } else if (formatted === "") {
-                        setFormData((prev) => ({
-                          ...prev,
-                          startDate: undefined,
-                        }));
-                      }
+              <Popover open={startDateOpen} onOpenChange={setStartDateOpen}>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className={cn(
+                      "w-full justify-start text-left font-normal",
+                      !formData.startDate && "text-muted-foreground",
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {formData.startDate
+                      ? format(formData.startDate, "MMMM d, yyyy")
+                      : "Select start date"}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={formData.startDate}
+                    onSelect={(date) => {
+                      setFormData((prev) => ({ ...prev, startDate: date }));
+                      setStartDateOpen(false);
                     }}
-                    placeholder="MM/DD/YYYY"
-                    className="pr-10"
-                    maxLength={10}
+                    disabled={(date) => {
+                      const today = new Date();
+                      today.setHours(0, 0, 0, 0);
+                      return date < today;
+                    }}
+                    initialFocus
                   />
-                  {/* <CalendarIcon className="text-muted-foreground pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2" /> */}
-                </div>
-                <Popover open={startDateOpen} onOpenChange={setStartDateOpen}>
-                  <PopoverTrigger asChild>
-                    <Button variant="outline" size="icon" className="shrink-0">
-                      <CalendarIcon className="h-4 w-4" />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={formData.startDate}
-                      onSelect={(date) => {
-                        setFormData((prev) => ({ ...prev, startDate: date }));
-                        setStartDateText(
-                          date ? format(date, "MM/dd/yyyy") : "",
-                        );
-                        setStartDateOpen(false);
-                      }}
-                      disabled={(date) => {
-                        const today = new Date();
-                        today.setHours(0, 0, 0, 0);
-                        return date < today;
-                      }}
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
-              </div>
+                </PopoverContent>
+              </Popover>
             </div>
 
             <div className="space-y-2">
               <Label>End Date</Label>
-              <div className="flex gap-2">
-                <div className="relative flex-1">
-                  <Input
-                    value={endDateText}
-                    onChange={(e) => {
-                      const formatted = formatDateInput(e.target.value);
-                      setEndDateText(formatted);
-
-                      const parsed = parseDate(formatted);
-                      if (parsed) {
-                        const today = new Date();
-                        today.setHours(0, 0, 0, 0);
-                        if (
-                          parsed >= today &&
-                          (!formData.startDate || parsed > formData.startDate)
-                        ) {
-                          setFormData((prev) => ({ ...prev, endDate: parsed }));
-                        }
-                      } else if (formatted === "") {
-                        setFormData((prev) => ({
-                          ...prev,
-                          endDate: undefined,
-                        }));
-                      }
+              <Popover open={endDateOpen} onOpenChange={setEndDateOpen}>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className={cn(
+                      "w-full justify-start text-left font-normal",
+                      !formData.endDate && "text-muted-foreground",
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {formData.endDate
+                      ? format(formData.endDate, "MMMM d, yyyy")
+                      : "Select end date"}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={formData.endDate}
+                    onSelect={(date) => {
+                      setFormData((prev) => ({ ...prev, endDate: date }));
+                      setEndDateOpen(false);
                     }}
-                    placeholder="MM/DD/YYYY"
-                    className="pr-10"
-                    maxLength={10}
+                    disabled={(date) => {
+                      const today = new Date();
+                      today.setHours(0, 0, 0, 0);
+                      if (date < today) return true;
+                      if (formData.startDate) {
+                        return date <= formData.startDate;
+                      }
+                      return false;
+                    }}
+                    initialFocus
                   />
-                  {/* <CalendarIcon className="text-muted-foreground pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2" /> */}
-                </div>
-                <Popover open={endDateOpen} onOpenChange={setEndDateOpen}>
-                  <PopoverTrigger asChild>
-                    <Button variant="outline" size="icon" className="shrink-0">
-                      <CalendarIcon className="h-4 w-4" />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={formData.endDate}
-                      onSelect={(date) => {
-                        setFormData((prev) => ({ ...prev, endDate: date }));
-                        setEndDateText(date ? format(date, "MM/dd/yyyy") : "");
-                        setEndDateOpen(false);
-                      }}
-                      disabled={(date) => {
-                        const today = new Date();
-                        today.setHours(0, 0, 0, 0);
-                        if (date < today) return true;
-                        if (formData.startDate) {
-                          return date <= formData.startDate;
-                        }
-                        return false;
-                      }}
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
-              </div>
+                </PopoverContent>
+              </Popover>
             </div>
           </div>
         </CardContent>
@@ -392,9 +296,9 @@ export const NewCountdownMockForm = () => {
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {months.map((month) => (
                   <div key={month.getTime()} className="space-y-2">
-                    <h3 className="text-center font-medium">
+                    {/* <h3 className="text-center font-medium">
                       {format(month, "MMMM yyyy")}
-                    </h3>
+                    </h3> */}
                     <div className="rounded-md border p-3">
                       <Calendar
                         mode="multiple"
@@ -419,10 +323,8 @@ export const NewCountdownMockForm = () => {
                         disabled={(date) =>
                           !isSameMonth(date, month) ||
                           isWeeklyDayOff(date) ||
-                          (formData.startDate
-                            ? date < formData.startDate
-                            : false) ||
-                          (formData.endDate ? date > formData.endDate : false)
+                          (formData.startDate && date < formData.startDate) ||
+                          (formData.endDate && date > formData.endDate)
                         }
                         modifiers={{
                           weeklyOff: isWeeklyDayOff,
