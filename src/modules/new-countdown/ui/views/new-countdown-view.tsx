@@ -1,4 +1,4 @@
-import { NewCountdownMockForm } from "../components/new-countdown-mock-form";
+import { NewCountdownForm } from "@/modules/new-countdown/ui/components/new-countdown-form";
 
 export const NewCountdownView = () => {
   return (
@@ -9,7 +9,7 @@ export const NewCountdownView = () => {
           Set up your school year countdown with custom dates and days off.
         </p>
       </div>
-      <NewCountdownMockForm />
+      <NewCountdownForm />
     </div>
   );
 };
