@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   FormControl,
   FormDescription,
@@ -8,27 +8,21 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import type { UseFormReturn } from "react-hook-form";
-import { DatePickerField } from "@/modules/new-countdown/ui/components/form-fields/date-picker-field";
 import type { FormData } from "@/modules/new-countdown/hooks/use-countdown-form";
+import { DatePickerField } from "@/modules/new-countdown/ui/components/form-fields/date-picker-field";
+import type { UseFormReturn } from "react-hook-form";
 
-interface BasicDetailsSectionProps {
+interface NameAndDatesSectionProps {
   form: UseFormReturn<FormData>;
   startDate?: Date;
 }
 
-export const BasicDetailsSection = ({
+export const NameAndDatesSection = ({
   form,
   startDate,
-}: BasicDetailsSectionProps) => {
+}: NameAndDatesSectionProps) => {
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>School Year Details</CardTitle>
-        <p className="text-muted-foreground text-sm">
-          Enter the basic information for your countdown
-        </p>
-      </CardHeader>
       <CardContent className="space-y-6">
         <FormField
           control={form.control}
@@ -37,11 +31,8 @@ export const BasicDetailsSection = ({
             <FormItem>
               <FormLabel>Countdown Name</FormLabel>
               <FormControl>
-                <Input placeholder="e.g., 2024-2025 School Year" {...field} />
+                <Input placeholder="e.g., School Year 2024-25" {...field} />
               </FormControl>
-              <FormDescription>
-                Enter a descriptive name for your countdown
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}

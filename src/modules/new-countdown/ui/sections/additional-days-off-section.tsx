@@ -1,14 +1,14 @@
 import { Calendar } from "@/components/ui/calendar";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   FormControl,
   FormField,
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+import type { FormData } from "@/modules/new-countdown/hooks/use-countdown-form";
 import { format, isSameMonth } from "date-fns";
 import type { UseFormReturn } from "react-hook-form";
-import type { FormData } from "@/modules/new-countdown/hooks/use-countdown-form";
 
 interface AdditionalDaysOffSectionProps {
   form: UseFormReturn<FormData>;
@@ -29,13 +29,11 @@ export const AdditionalDaysOffSection = ({
 }: AdditionalDaysOffSectionProps) => {
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>Additional Days Off</CardTitle>
+      <CardContent className="space-y-6">
         <p className="text-muted-foreground text-sm">
           Select specific dates that will be days off (holidays, breaks, etc.)
         </p>
-      </CardHeader>
-      <CardContent className="space-y-6">
+
         <FormField
           control={form.control}
           name="additionalDaysOff"
@@ -46,7 +44,7 @@ export const AdditionalDaysOffSection = ({
                   <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                     {months.map((month) => (
                       <div key={month.getTime()} className="space-y-2">
-                        <div className="rounded-md border p-3">
+                        <div className="flex justify-center rounded-md border p-3">
                           <Calendar
                             mode="multiple"
                             month={month}
@@ -56,7 +54,6 @@ export const AdditionalDaysOffSection = ({
                             onSelect={(dates) => {
                               if (!dates) return;
 
-                              // Remove all dates from this month and add the new selection
                               const otherMonthDates = field.value.filter(
                                 (date) => !isSameMonth(date, month),
                               );
@@ -72,10 +69,13 @@ export const AdditionalDaysOffSection = ({
                             modifiers={{
                               weeklyOff: isWeeklyDayOff,
                             }}
-                            modifiersClassNames={{
-                              weeklyOff:
-                                "opacity-50 bg-muted text-muted-foreground",
-                            }}
+                            // modifiersClassNames={{
+                            //   weeklyOff:
+                            //     "opacity-50 bg-muted text-muted-foreground",
+                            //   outside: "opacity-30 text-muted-foreground/50",
+                            // }}
+                            disableNavigation={true}
+                            fixedWeeks={true}
                           />
                         </div>
                       </div>

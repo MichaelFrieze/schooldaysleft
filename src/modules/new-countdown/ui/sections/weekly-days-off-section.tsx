@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   FormControl,
   FormField,
@@ -7,8 +7,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
-import type { UseFormReturn } from "react-hook-form";
 import type { FormData } from "@/modules/new-countdown/hooks/use-countdown-form";
+import type { UseFormReturn } from "react-hook-form";
 
 const DAYS_OF_WEEK = [
   { label: "Sunday", value: 0 },
@@ -33,13 +33,11 @@ export const WeeklyDaysOffSection = ({
 }: WeeklyDaysOffSectionProps) => {
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>Weekly Days Off</CardTitle>
-        <p className="text-muted-foreground text-sm">
-          Choose which days of the week are always off (e.g., weekends)
-        </p>
-      </CardHeader>
       <CardContent className="space-y-6">
+        <p className="text-muted-foreground text-center text-sm leading-relaxed">
+          Select the days of the week that are always off (like weekends)
+        </p>
+
         <FormField
           control={form.control}
           name="weeklyDaysOff"
@@ -76,9 +74,15 @@ export const WeeklyDaysOffSection = ({
         />
 
         {weeklyDaysOff.length > 0 && (
-          <div className="bg-muted rounded-md p-4">
-            <p className="text-sm font-medium">Selected weekly days off:</p>
-            <p className="text-muted-foreground text-sm">
+          <div className="bg-muted/50 border-muted space-y-2 rounded-lg border p-4">
+            <div className="flex items-center justify-center gap-2">
+              <div className="bg-primary h-2 w-2 rounded-full"></div>
+              <p className="text-sm font-medium">
+                {weeklyDaysOff.length} day
+                {weeklyDaysOff.length !== 1 ? "s" : ""} selected
+              </p>
+            </div>
+            <p className="text-muted-foreground text-center text-sm">
               {weeklyDaysOff
                 .map(
                   (dayValue) =>

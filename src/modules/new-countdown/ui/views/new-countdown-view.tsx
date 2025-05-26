@@ -6,7 +6,7 @@ export const NewCountdownView = () => {
       <div className="pb-8 text-center">
         <h1 className="text-3xl font-bold">Create New Countdown</h1>
         <p className="text-muted-foreground pt-2">
-          Set up your school year countdown with custom dates and days off.
+          Set up your countdown with custom dates and days off.
         </p>
       </div>
       <NewCountdownForm />
