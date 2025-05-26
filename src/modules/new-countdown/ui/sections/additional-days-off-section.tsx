@@ -76,6 +76,7 @@ export const AdditionalDaysOffSection = ({
                             // }}
                             disableNavigation={true}
                             fixedWeeks={true}
+                            today={undefined}
                           />
                         </div>
                       </div>
