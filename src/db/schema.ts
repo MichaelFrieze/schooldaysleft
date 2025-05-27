@@ -7,7 +7,7 @@ import {
 } from "drizzle-orm/pg-core";
 
 export const countdowns = pgTable(
-  "countdowns",
+  "countdown",
   {
     id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
     userId: text("user_id").notNull(),
