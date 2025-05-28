@@ -1,9 +1,13 @@
-import { z } from "zod";
-import { TRPCError } from "@trpc/server";
-import { eq, and } from "drizzle-orm";
-
-import { countdowns } from "@/db/schema";
 import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
+import { TRPCError } from "@trpc/server";
+import { z } from "zod";
+import {
+  createCountdown,
+  deleteCountdown,
+  getAllCountdowns,
+  getCountdownById,
+  updateCountdown,
+} from "./data";
 
 const createCountdownInput = z.object({
   name: z
@@ -44,19 +48,14 @@ export const countdownRouter = createTRPCRouter({
         });
       }
 
-      const [countdown] = await ctx.db
-        .insert(countdowns)
-        .values({
-          userId: ctx.session.userId,
-          name: input.name,
-          startDate: input.startDate,
-          endDate: input.endDate,
-          weeklyDaysOff: input.weeklyDaysOff,
-          additionalDaysOff: input.additionalDaysOff,
-        })
-        .returning();
-
-      return countdown;
+      return await createCountdown({
+        userId: ctx.session.userId,
+        name: input.name,
+        startDate: input.startDate,
+        endDate: input.endDate,
+        weeklyDaysOff: input.weeklyDaysOff,
+        additionalDaysOff: input.additionalDaysOff,
+      });
     }),
 
   update: protectedProcedure
@@ -75,74 +74,22 @@ export const countdownRouter = createTRPCRouter({
         });
       }
 
-      const [updatedCountdown] = await ctx.db
-        .update(countdowns)
-        .set(updateData)
-        .where(
-          and(eq(countdowns.id, id), eq(countdowns.userId, ctx.session.userId)),
-        )
-        .returning();
-
-      if (!updatedCountdown) {
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Unable to update countdown",
-        });
-      }
-
-      return updatedCountdown;
+      return await updateCountdown(id, ctx.session.userId, updateData);
     }),
 
   delete: protectedProcedure
     .input(z.object({ id: z.number() }))
     .mutation(async ({ ctx, input }) => {
-      const [deletedCountdown] = await ctx.db
-        .delete(countdowns)
-        .where(
-          and(
-            eq(countdowns.id, input.id),
-            eq(countdowns.userId, ctx.session.userId),
-          ),
-        )
-        .returning();
-
-      if (!deletedCountdown) {
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "Unable to delete countdown",
-        });
-      }
-
-      return { success: true };
+      return await deleteCountdown(input.id, ctx.session.userId);
     }),
 
   getAll: protectedProcedure.query(async ({ ctx }) => {
-    const userCountdowns = await ctx.db.query.countdowns.findMany({
-      where: (countdowns, { eq }) => eq(countdowns.userId, ctx.session.userId),
-      orderBy: (countdowns, { desc }) => [desc(countdowns.createdAt)],
-    });
-
-    return userCountdowns;
+    return await getAllCountdowns(ctx.session.userId);
   }),
 
   getById: protectedProcedure
     .input(z.object({ id: z.number() }))
     .query(async ({ ctx, input }) => {
-      const countdown = await ctx.db.query.countdowns.findFirst({
-        where: (countdowns, { eq, and }) =>
-          and(
-            eq(countdowns.id, input.id),
-            eq(countdowns.userId, ctx.session.userId),
-          ),
-      });
-
-      if (!countdown) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Countdown not found",
-        });
-      }
-
-      return countdown;
+      return await getCountdownById(input.id, ctx.session.userId);
     }),
 });
