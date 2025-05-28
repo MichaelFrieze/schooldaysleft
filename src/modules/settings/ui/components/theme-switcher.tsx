@@ -59,7 +59,7 @@ export const ThemeSwitcher = ({
     currentResolvedThemeKey,
   );
 
-  const handleBaseChange = async (newBase: string) => {
+  const handleBaseChange = (newBase: string) => {
     const baseChange =
       newBase === "default" ? modeKey : `${newBase}-${modeKey}`;
 

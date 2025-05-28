@@ -1,6 +1,6 @@
 import { NewCountdownView } from "@/modules/new-countdown/ui/views/new-countdown-view";
 
-const Page = async () => {
+const Page = () => {
   return <NewCountdownView />;
 };
 

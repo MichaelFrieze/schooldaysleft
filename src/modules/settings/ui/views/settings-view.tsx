@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ModeToggle } from "@/modules/settings/ui/components/mode-toggle";
 import { ThemeSwitcher } from "@/modules/settings/ui/components/theme-switcher";
 
-export const SettingsView = async () => {
+export const SettingsView = () => {
   return (
     <section className="container py-8 md:py-12">
       {/* <div className="mb-8">

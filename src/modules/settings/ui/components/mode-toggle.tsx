@@ -39,7 +39,7 @@ export function ModeToggle({
 
   const { baseKey, modeKey } = parseThemeKey(theme, resolvedTheme);
 
-  const toggleTheme = async () => {
+  const toggleTheme = () => {
     const newMode: "light" | "dark" = modeKey === "dark" ? "light" : "dark";
     const baseChange =
       baseKey === "default" ? newMode : `${baseKey}-${newMode}`;

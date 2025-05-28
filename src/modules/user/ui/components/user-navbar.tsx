@@ -5,7 +5,7 @@ import { TRPCPrefetch } from "@/trpc/trpc-prefetch";
 import Link from "next/link";
 import { UserButton } from "./user-button";
 
-export const UserNavbar = async () => {
+export const UserNavbar = () => {
   return (
     <header className="bg-background/95 supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 border-b backdrop-blur">
       <div className="container flex h-16 items-center">

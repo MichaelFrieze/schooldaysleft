@@ -1,6 +1,6 @@
 import { DashboardView } from "@/modules/dashboard/ui/views/dashboard-view";
 
-const Page = async () => {
+const Page = () => {
   return <DashboardView />;
 };
 

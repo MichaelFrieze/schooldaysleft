@@ -1,9 +1,7 @@
-const Page = async () => {
-  return (
-    <div>
-      <h1>Countdown Page</h1>
-    </div>
-  );
+import { CountdownView } from "@/modules/countdown/ui/views/countdown-view";
+
+const Page = () => {
+  return <CountdownView />;
 };
 
 export default Page;

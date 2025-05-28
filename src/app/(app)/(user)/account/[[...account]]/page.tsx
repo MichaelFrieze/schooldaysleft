@@ -1,6 +1,6 @@
 import { AccountView } from "@/modules/account/ui/views/account-view";
 
-const Page = async () => {
+const Page = () => {
   return <AccountView />;
 };
 
