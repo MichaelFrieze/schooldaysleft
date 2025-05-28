@@ -1,11 +1,10 @@
+import { useTRPC } from "@/trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addMonths, getDay, startOfMonth } from "date-fns";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import {
-  calculateSchoolDaysRemaining,
-  createCountdown,
-} from "@/modules/new-countdown/server/mock-data";
 
 // Form schema
 const formSchema = z
@@ -31,6 +30,18 @@ const formSchema = z
 export type FormData = z.infer<typeof formSchema>;
 
 export const useCountdownForm = () => {
+  const router = useRouter();
+  const trpc = useTRPC();
+  const queryClient = useQueryClient();
+  const createCountdownMutation = useMutation(
+    trpc.countdown.create.mutationOptions(),
+  );
+  const invalidateGetAllCountdowns = () => {
+    void queryClient.invalidateQueries({
+      queryKey: trpc.countdown.getAll.queryKey(),
+    });
+  };
+
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -73,29 +84,25 @@ export const useCountdownForm = () => {
     form.setValue("weeklyDaysOff", newDays);
   };
 
-  // Handle form submission
   const onSubmit = (data: FormData) => {
-    try {
-      const countdown = createCountdown({
-        name: data.name.trim(),
-        startDate: data.startDate,
-        endDate: data.endDate,
-        weeklyDaysOff: data.weeklyDaysOff,
-        additionalDaysOff: data.additionalDaysOff,
-      });
+    createCountdownMutation.mutate(data, {
+      onSuccess: (createdCountdown) => {
+        invalidateGetAllCountdowns();
 
-      const daysRemaining = calculateSchoolDaysRemaining(countdown);
+        console.log("Countdown created successfully", {
+          data: createdCountdown,
+        });
 
-      alert(
-        `Countdown "${countdown.name}" created successfully! ${daysRemaining} school days remaining.`,
-      );
-
-      // Reset form
-      form.reset();
-    } catch (error) {
-      console.error("Error creating countdown:", error);
-      alert("Error creating countdown. Please try again.");
-    }
+        if (createdCountdown?.id) {
+          void router.push(`/countdown/${createdCountdown.id}`);
+        } else {
+          console.error("Countdown created but no id found");
+        }
+      },
+      onError: (error) => {
+        console.error("Failed to create countdown:", error);
+      },
+    });
   };
 
   // Clear all form data

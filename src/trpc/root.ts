@@ -1,4 +1,4 @@
-import { postRouter } from "@/modules/posts/server/procedures";
+import { countdownRouter } from "@/modules/countdown/server/procedures";
 import { userRouter } from "@/modules/user/server/procedures";
 import { createCallerFactory, createTRPCRouter } from "@/trpc/init";
 
@@ -8,8 +8,8 @@ import { createCallerFactory, createTRPCRouter } from "@/trpc/init";
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-  post: postRouter,
   user: userRouter,
+  countdown: countdownRouter,
 });
 
 // export type definition of API

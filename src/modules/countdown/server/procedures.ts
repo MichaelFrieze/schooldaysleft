@@ -9,7 +9,7 @@ const createCountdownInput = z.object({
   name: z
     .string()
     .min(1, "Countdown name is required")
-    .max(150, "Countdown name must be less than 150 characters")
+    .max(100, "Countdown name must be less than 100 characters")
     .trim(),
   startDate: z.coerce.date(),
   endDate: z.coerce.date(),

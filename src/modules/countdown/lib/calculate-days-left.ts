@@ -1,9 +1,10 @@
-interface CountdownData {
-  startDate: Date;
-  endDate: Date;
-  weeklyDaysOff: number[]; // 0 = Sunday, 1 = Monday, etc.
-  additionalDaysOff: Date[];
-}
+import type { InferSelectModel } from "drizzle-orm";
+import type { countdowns } from "@/db/schema";
+
+type CountdownData = Pick<
+  InferSelectModel<typeof countdowns>,
+  "startDate" | "endDate" | "weeklyDaysOff" | "additionalDaysOff"
+>;
 
 export function calculateDaysLeft(countdown: CountdownData): number {
   const today = new Date();
