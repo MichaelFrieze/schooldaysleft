@@ -85,3 +85,54 @@ export const getCountdownById = cache(async (id: number, userId: string) => {
 
   return countdown;
 });
+
+// When I want to use Next persistent cache:
+// import { db } from "@/db";
+// import { countdowns } from "@/db/schema";
+// import { TRPCError } from "@trpc/server";
+// import { and, eq } from "drizzle-orm";
+// import { cache } from "react";
+// import { unstable_cache } from "next/cache";
+// import "server-only";
+
+// export const getAllCountdowns = cache(async (userId: string) => {
+//   return await unstable_cache(
+//     async (userId: string) => {
+//       const userCountdowns = await db.query.countdowns.findMany({
+//         where: (countdowns, { eq }) => eq(countdowns.userId, userId),
+//         orderBy: (countdowns, { desc }) => [desc(countdowns.createdAt)],
+//       });
+//       return userCountdowns;
+//     },
+//     [`user-countdowns-${userId}`],
+//     {
+//       tags: [`user-${userId}-countdowns`],
+//       revalidate: 60,
+//     },
+//   )(userId);
+// });
+
+// export const getCountdownById = cache(async (id: number, userId: string) => {
+//   return await unstable_cache(
+//     async (id: number, userId: string) => {
+//       const countdown = await db.query.countdowns.findFirst({
+//         where: (countdowns, { eq, and }) =>
+//           and(eq(countdowns.id, id), eq(countdowns.userId, userId)),
+//       });
+
+//       if (!countdown) {
+//         throw new TRPCError({
+//           code: "NOT_FOUND",
+//           message: "Countdown not found",
+//         });
+//       }
+
+//       return countdown;
+//     },
+//     [`countdown-${id}-${userId}`],
+//     {
+//       tags: [`user-${userId}-countdowns`, `countdown-${id}`],
+//       revalidate: 300,
+//     },
+//   )(id, userId);
+// });

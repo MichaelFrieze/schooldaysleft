@@ -1,21 +1,17 @@
 import type { Countdown } from "../types";
 
-export function calculateDaysLeft(countdown: Countdown): number {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0); // Normalize to start of day
-
+export function calculateTotalDays(countdown: Countdown): number {
   const startDate = new Date(countdown.startDate);
   startDate.setHours(0, 0, 0, 0);
 
   const endDate = new Date(countdown.endDate);
   endDate.setHours(0, 0, 0, 0);
 
-  if (today > endDate) {
+  if (startDate > endDate) {
     return 0;
   }
 
-  // Determine the actual start date for counting
-  const countStartDate = new Date(today < startDate ? startDate : today);
+  const countStartDate = new Date(startDate);
   const allDays: Date[] = [];
 
   while (countStartDate <= endDate) {
@@ -23,16 +19,13 @@ export function calculateDaysLeft(countdown: Countdown): number {
     countStartDate.setDate(countStartDate.getDate() + 1);
   }
 
-  // Filter out non-school days
   const schoolDays = allDays.filter((day) => {
     const dayOfWeek = day.getDay();
 
-    // Check if it's a weekly day off (e.g., weekends)
     if (countdown.weeklyDaysOff.includes(dayOfWeek)) {
       return false;
     }
 
-    // Check if it's an additional day off
     const isAdditionalDayOff = countdown.additionalDaysOff.some((offDay) => {
       const normalizedOffDay = new Date(offDay);
       normalizedOffDay.setHours(0, 0, 0, 0);

@@ -1,7 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import {
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -48,11 +47,6 @@ export const NameAndDatesSection = ({
                 <DatePickerField
                   field={field}
                   placeholder="Select start date"
-                  disabled={(date) => {
-                    const today = new Date();
-                    today.setHours(0, 0, 0, 0);
-                    return date < today;
-                  }}
                 />
                 <FormMessage />
               </FormItem>
@@ -69,9 +63,7 @@ export const NameAndDatesSection = ({
                   field={field}
                   placeholder="Select end date"
                   disabled={(date) => {
-                    const today = new Date();
-                    today.setHours(0, 0, 0, 0);
-                    if (date < today) return true;
+                    // Only disable dates that are before the start date
                     if (startDate) {
                       return date <= startDate;
                     }

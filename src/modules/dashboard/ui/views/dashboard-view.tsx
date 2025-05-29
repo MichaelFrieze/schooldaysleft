@@ -1,4 +1,6 @@
 import { Button } from "@/components/ui/button";
+import { trpc } from "@/trpc/server";
+import { TRPCPrefetch } from "@/trpc/trpc-prefetch";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 import { DashboardContent } from "../components/dashboard-content";
@@ -23,7 +25,14 @@ export const DashboardView = () => {
         </Button>
       </div>
 
-      <DashboardContent />
+      <TRPCPrefetch
+        isSuspense={true}
+        suspenseFallback={<p>Loading...</p>}
+        errorFallback={<p>Error...</p>}
+        queryOptionsToPrefetch={[trpc.countdown.getAll.queryOptions()]}
+      >
+        <DashboardContent />
+      </TRPCPrefetch>
     </section>
   );
 };

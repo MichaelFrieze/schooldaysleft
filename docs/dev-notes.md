@@ -14,6 +14,9 @@
 - start building new countdown page
 - I get an error when trying to create a new countdown and it has no weekly days off. Never mind, I can't reproduce the error.
 - When selecting weekly days off, I think I want the array to always be in order. Right now it's ordered based on how the user selects those days.
+- on the create new countdown form, I need to let the user know if they are trying to use a countdown name that is already used.
+- Add caching to data layer
+- Sept 4th, June 12th
 
 ```
     "vercel-build": "if [ \"$VERCEL_ENV\" = \"production\" ]; then drizzle-kit push; elif [ \"$VERCEL_ENV\" = \"preview\" ]; drizzle-kit push --force; fi && next build",
