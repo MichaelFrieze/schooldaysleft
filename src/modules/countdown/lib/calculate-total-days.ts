@@ -11,34 +11,30 @@ export function calculateTotalDays(countdown: Countdown): number {
     return 0;
   }
 
-  const countStartDate = new Date(startDate);
-  const allDays: Date[] = [];
+  // Pre-normalize all additional days off and create a Set for lookup
+  const additionalDaysOffSet = new Set(
+    countdown.additionalDaysOff.map((offDay) => {
+      const normalized = new Date(offDay);
+      normalized.setHours(0, 0, 0, 0);
+      return normalized.getTime(); // Use timestamp for comparison
+    }),
+  );
 
-  while (countStartDate <= endDate) {
-    allDays.push(new Date(countStartDate));
-    countStartDate.setDate(countStartDate.getDate() + 1);
-  }
+  let schoolDaysCount = 0;
 
-  const schoolDays = allDays.filter((day) => {
-    const dayOfWeek = day.getDay();
+  while (startDate <= endDate) {
+    const dayOfWeek = startDate.getDay();
 
-    if (countdown.weeklyDaysOff.includes(dayOfWeek)) {
-      return false;
+    // Check if it's NOT a weekly day off
+    if (!countdown.weeklyDaysOff.includes(dayOfWeek)) {
+      // Check if it's NOT an additional day off
+      if (!additionalDaysOffSet.has(startDate.getTime())) {
+        schoolDaysCount++;
+      }
     }
 
-    const isAdditionalDayOff = countdown.additionalDaysOff.some((offDay) => {
-      const normalizedOffDay = new Date(offDay);
-      normalizedOffDay.setHours(0, 0, 0, 0);
+    startDate.setDate(startDate.getDate() + 1);
+  }
 
-      return (
-        normalizedOffDay.getDate() === day.getDate() &&
-        normalizedOffDay.getMonth() === day.getMonth() &&
-        normalizedOffDay.getFullYear() === day.getFullYear()
-      );
-    });
-
-    return !isAdditionalDayOff;
-  });
-
-  return schoolDays.length;
+  return schoolDaysCount;
 }
