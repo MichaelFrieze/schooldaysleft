@@ -19,6 +19,7 @@ import {
   Settings,
   Sun,
   Trash2,
+  Zap,
 } from "lucide-react";
 import Link from "next/link";
 import { useMemo } from "react";
@@ -64,6 +65,19 @@ export const CountdownView = ({ countdownId }: CountdownViewProps) => {
     () => countdown.additionalDaysOff.map((date) => new Date(date)),
     [countdown.additionalDaysOff],
   );
+
+  // Find next upcoming day off from additionalDaysOff only
+  const nextDayOff = useMemo(() => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // Only look at additionalDaysOff, not start/end dates or weekly days off
+    const upcomingAdditionalDays = additionalDaysOffDates
+      .filter((date) => date >= today)
+      .sort((a, b) => a.getTime() - b.getTime());
+
+    return upcomingAdditionalDays.length > 0 ? upcomingAdditionalDays[0] : null;
+  }, [additionalDaysOffDates]);
 
   // Calendar configuration
   const startDate = new Date(countdown.startDate);
@@ -264,39 +278,47 @@ export const CountdownView = ({ countdownId }: CountdownViewProps) => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Sun className="h-5 w-5" />
-                  Holidays & Breaks ({countdown.additionalDaysOff.length})
+                  Holidays & Breaks
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
                   <div className="bg-muted/30 rounded-lg p-3">
                     <div className="mb-2 text-sm font-medium">
-                      {countdown.additionalDaysOff.length} days off selected
+                      Total: {countdown.additionalDaysOff.length} day
+                      {countdown.additionalDaysOff.length !== 1 ? "s" : ""}{" "}
                     </div>
-                    <div className="text-muted-foreground text-xs">
-                      From{" "}
-                      {format(
-                        new Date(
-                          Math.min(
-                            ...countdown.additionalDaysOff.map((d) =>
-                              new Date(d).getTime(),
+                    {/* {countdown.additionalDaysOff.length > 0 && (
+                      <div className="text-muted-foreground mb-2 text-xs">
+                        From{" "}
+                        {format(
+                          new Date(
+                            Math.min(
+                              ...countdown.additionalDaysOff.map((d) =>
+                                new Date(d).getTime(),
+                              ),
                             ),
                           ),
-                        ),
-                        "MMM d, yyyy",
-                      )}{" "}
-                      to{" "}
-                      {format(
-                        new Date(
-                          Math.max(
-                            ...countdown.additionalDaysOff.map((d) =>
-                              new Date(d).getTime(),
+                          "MMM d, yyyy",
+                        )}{" "}
+                        to{" "}
+                        {format(
+                          new Date(
+                            Math.max(
+                              ...countdown.additionalDaysOff.map((d) =>
+                                new Date(d).getTime(),
+                              ),
                             ),
                           ),
-                        ),
-                        "MMM d, yyyy",
-                      )}
-                    </div>
+                          "MMM d, yyyy",
+                        )}
+                      </div>
+                    )} */}
+                    {nextDayOff && (
+                      <div className="text-xs font-medium text-amber-600 dark:text-amber-400">
+                        Next holiday: {format(nextDayOff, "EEEE, MMM d, yyyy")}
+                      </div>
+                    )}
                   </div>
 
                   {/* Calendar View */}
@@ -340,7 +362,10 @@ export const CountdownView = ({ countdownId }: CountdownViewProps) => {
           {/* Quick Actions */}
           <Card>
             <CardHeader>
-              <CardTitle>Quick Actions</CardTitle>
+              <CardTitle className="flex items-center gap-2">
+                <Zap className="h-5 w-5" />
+                Quick Actions
+              </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               <Button asChild variant="outline" className="w-full">
