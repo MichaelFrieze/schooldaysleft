@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
@@ -11,14 +12,12 @@ import { useTRPC } from "@/trpc/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import {
-  Calendar,
+  Calendar as CalendarIcon,
   CalendarDays,
-  Clock,
   Edit,
   School,
   Settings,
   Sun,
-  Target,
   Trash2,
 } from "lucide-react";
 import Link from "next/link";
@@ -59,6 +58,40 @@ export const CountdownView = ({ countdownId }: CountdownViewProps) => {
 
   const isCountdownComplete = daysLeft === 0;
   const hasStarted = new Date() >= new Date(countdown.startDate);
+
+  // Convert additional days off to Date objects for calendar
+  const additionalDaysOffDates = useMemo(
+    () => countdown.additionalDaysOff.map((date) => new Date(date)),
+    [countdown.additionalDaysOff],
+  );
+
+  // Calendar configuration
+  const startDate = new Date(countdown.startDate);
+  const endDate = new Date(countdown.endDate);
+
+  const isDateDisabled = (date: Date) => {
+    // Disable dates outside the countdown period
+    if (date < startDate || date > endDate) {
+      return true;
+    }
+
+    // Disable weekly days off
+    const dayOfWeek = date.getDay();
+    if (countdown.weeklyDaysOff.includes(dayOfWeek)) {
+      return true;
+    }
+
+    return false;
+  };
+
+  const isDateSelected = (date: Date) => {
+    return additionalDaysOffDates.some(
+      (selectedDate) =>
+        selectedDate.getFullYear() === date.getFullYear() &&
+        selectedDate.getMonth() === date.getMonth() &&
+        selectedDate.getDate() === date.getDate(),
+    );
+  };
 
   return (
     <section className="container py-8 md:py-12">
@@ -125,7 +158,7 @@ export const CountdownView = ({ countdownId }: CountdownViewProps) => {
 
               <div className="mt-8 flex justify-center space-x-8">
                 <div className="flex items-center gap-2">
-                  <Calendar className="h-5 w-5 text-green-500" />
+                  <CalendarIcon className="h-5 w-5 text-green-500" />
                   <span className="text-muted-foreground text-sm font-medium">
                     {weeklyDaysOffLabels.length > 0
                       ? `${weeklyDaysOffLabels.join(", ")} Off`
@@ -156,44 +189,6 @@ export const CountdownView = ({ countdownId }: CountdownViewProps) => {
               </div>
             </CardContent>
           </Card>
-
-          {/* Quick Stats */}
-          <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
-            <Card>
-              <CardContent className="p-4 text-center">
-                <Target className="text-primary mx-auto mb-2 h-6 w-6" />
-                <div className="text-2xl font-bold">
-                  {Math.round(progressValue)}%
-                </div>
-                <p className="text-muted-foreground text-xs">Complete</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-4 text-center">
-                <CalendarDays className="text-primary mx-auto mb-2 h-6 w-6" />
-                <div className="text-2xl font-bold">
-                  {countdown.weeklyDaysOff.length}
-                </div>
-                <p className="text-muted-foreground text-xs">Weekly Off</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-4 text-center">
-                <Sun className="text-primary mx-auto mb-2 h-6 w-6" />
-                <div className="text-2xl font-bold">
-                  {countdown.additionalDaysOff.length}
-                </div>
-                <p className="text-muted-foreground text-xs">Holidays</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-4 text-center">
-                <Clock className="text-primary mx-auto mb-2 h-6 w-6" />
-                <div className="text-2xl font-bold">{daysLeft}</div>
-                <p className="text-muted-foreground text-xs">Days Left</p>
-              </CardContent>
-            </Card>
-          </div>
         </div>
 
         {/* Sidebar with Details */}
@@ -202,7 +197,7 @@ export const CountdownView = ({ countdownId }: CountdownViewProps) => {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Calendar className="h-5 w-5" />
+                <CalendarIcon className="h-5 w-5" />
                 Countdown Details
               </CardTitle>
             </CardHeader>
@@ -231,42 +226,102 @@ export const CountdownView = ({ countdownId }: CountdownViewProps) => {
           </Card>
 
           {/* Weekly Schedule */}
-          {weeklyDaysOffLabels.length > 0 && (
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <CalendarDays className="h-5 w-5" />
+                Weekly Schedule
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-2">
+                {DAYS_OF_WEEK.map((day) => (
+                  <div
+                    key={day.value}
+                    className="flex items-center justify-between"
+                  >
+                    <span className="text-sm">{day.label}</span>
+                    <span
+                      className={`rounded-full px-2 py-1 text-xs ${
+                        countdown.weeklyDaysOff.includes(day.value)
+                          ? "bg-red-100 text-red-700 dark:bg-red-900/20 dark:text-red-400"
+                          : "bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400"
+                      }`}
+                    >
+                      {countdown.weeklyDaysOff.includes(day.value)
+                        ? "Off"
+                        : "School"}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Additional Days Off Calendar */}
+          {countdown.additionalDaysOff.length > 0 ? (
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <CalendarDays className="h-5 w-5" />
-                  Weekly Schedule
+                  <Sun className="h-5 w-5" />
+                  Holidays & Breaks ({countdown.additionalDaysOff.length})
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-2">
-                  {DAYS_OF_WEEK.map((day) => (
-                    <div
-                      key={day.value}
-                      className="flex items-center justify-between"
-                    >
-                      <span className="text-sm">{day.label}</span>
-                      <span
-                        className={`rounded-full px-2 py-1 text-xs ${
-                          countdown.weeklyDaysOff.includes(day.value)
-                            ? "bg-red-100 text-red-700 dark:bg-red-900/20 dark:text-red-400"
-                            : "bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400"
-                        }`}
-                      >
-                        {countdown.weeklyDaysOff.includes(day.value)
-                          ? "Off"
-                          : "School"}
-                      </span>
+                <div className="space-y-3">
+                  <div className="bg-muted/30 rounded-lg p-3">
+                    <div className="mb-2 text-sm font-medium">
+                      {countdown.additionalDaysOff.length} days off selected
                     </div>
-                  ))}
+                    <div className="text-muted-foreground text-xs">
+                      From{" "}
+                      {format(
+                        new Date(
+                          Math.min(
+                            ...countdown.additionalDaysOff.map((d) =>
+                              new Date(d).getTime(),
+                            ),
+                          ),
+                        ),
+                        "MMM d, yyyy",
+                      )}{" "}
+                      to{" "}
+                      {format(
+                        new Date(
+                          Math.max(
+                            ...countdown.additionalDaysOff.map((d) =>
+                              new Date(d).getTime(),
+                            ),
+                          ),
+                        ),
+                        "MMM d, yyyy",
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Calendar View */}
+                  <div className="flex justify-center">
+                    <div className="max-h-80 w-fit overflow-y-auto rounded-lg border">
+                      <Calendar
+                        mode="multiple"
+                        selected={additionalDaysOffDates}
+                        disabled={isDateDisabled}
+                        defaultMonth={startDate}
+                        fromDate={startDate}
+                        toDate={endDate}
+                        className="w-full"
+                        classNames={{
+                          day_selected:
+                            "bg-amber-500 text-amber-50 hover:bg-amber-600 focus:bg-amber-600",
+                          day_disabled: "text-muted-foreground opacity-30",
+                        }}
+                      />
+                    </div>
+                  </div>
                 </div>
               </CardContent>
             </Card>
-          )}
-
-          {/* Additional Days Off */}
-          {countdown.additionalDaysOff.length > 0 && (
+          ) : (
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -275,25 +330,9 @@ export const CountdownView = ({ countdownId }: CountdownViewProps) => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-2">
-                  {countdown.additionalDaysOff
-                    .slice(0, 5)
-                    .map((date, index) => (
-                      <div
-                        key={index}
-                        className="bg-muted/50 flex items-center justify-between rounded-lg p-2"
-                      >
-                        <span className="text-sm">
-                          {format(new Date(date), "MMM d, yyyy")}
-                        </span>
-                      </div>
-                    ))}
-                  {countdown.additionalDaysOff.length > 5 && (
-                    <p className="text-muted-foreground text-center text-xs">
-                      +{countdown.additionalDaysOff.length - 5} more days
-                    </p>
-                  )}
-                </div>
+                <p className="text-muted-foreground text-sm">
+                  No additional days off configured for this countdown.
+                </p>
               </CardContent>
             </Card>
           )}
@@ -312,7 +351,7 @@ export const CountdownView = ({ countdownId }: CountdownViewProps) => {
               </Button>
               <Button asChild variant="outline" className="w-full">
                 <Link href="/countdown/new">
-                  <Calendar className="mr-2 h-4 w-4" />
+                  <CalendarIcon className="mr-2 h-4 w-4" />
                   Create New Countdown
                 </Link>
               </Button>

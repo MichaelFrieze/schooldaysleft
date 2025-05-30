@@ -16,6 +16,14 @@
 - Kayla school year (no more days off): Sept 4th, June 12th - 11 days left from May 29th
 - improve dashboard cards design
 - improve landing page design
+- create 404 error page
+- maybe let user know when they do not have access to something
+- improve suspense skeletons
+- countdown page main card needs a better design
+- The 4 small cards below the main card either need to go or find a way to be useful. It is consistent with landing page but useless
+- Consider removing quick actions
+- calendar for holidays and breaks
+- maybe add back the quick actions
 
 ```
     "vercel-build": "if [ \"$VERCEL_ENV\" = \"production\" ]; then drizzle-kit push; elif [ \"$VERCEL_ENV\" = \"preview\" ]; drizzle-kit push --force; fi && next build",
