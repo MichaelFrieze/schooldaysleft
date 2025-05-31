@@ -15,7 +15,7 @@ export const Footer = () => {
           <div className="flex gap-2">
             <Button variant={"ghost"} className="text-muted-foreground" asChild>
               <a
-                href="https://frieze.dev"
+                href="https://ko-fi.com/michaelfrieze"
                 target="_blank"
                 aria-label="Support This App"
               >

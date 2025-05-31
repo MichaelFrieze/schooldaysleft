@@ -26,6 +26,7 @@
 - maybe add back the quick actions
 - Holidays and breaks card needs improvement. Both design and text. It should show total additional days off left and not always just the total.
 - Use a modal or something to confirm delete on countdown page
+- Add my ko-fi donation page
 
 ```
     "vercel-build": "if [ \"$VERCEL_ENV\" = \"production\" ]; then drizzle-kit push; elif [ \"$VERCEL_ENV\" = \"preview\" ]; drizzle-kit push --force; fi && next build",
