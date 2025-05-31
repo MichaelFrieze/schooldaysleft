@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-// Form schema
 const formSchema = z
   .object({
     name: z
@@ -55,7 +54,6 @@ export const useCountdownForm = () => {
   const { startDate, endDate, weeklyDaysOff, additionalDaysOff } =
     watchedValues;
 
-  // Generate months between start and end date
   const getMonthsBetweenDates = (start: Date, end: Date): Date[] => {
     const months: Date[] = [];
     let current = startOfMonth(start);
@@ -69,17 +67,17 @@ export const useCountdownForm = () => {
     return months;
   };
 
-  // Check if a date should be disabled (is a weekly day off)
   const isWeeklyDayOff = (date: Date): boolean => {
     return weeklyDaysOff.includes(getDay(date));
   };
 
-  // Handle weekly days off selection
   const handleWeeklyDayToggle = (dayValue: number) => {
     const currentDays = form.getValues("weeklyDaysOff");
     const newDays = currentDays.includes(dayValue)
       ? currentDays.filter((d) => d !== dayValue)
       : [...currentDays, dayValue];
+
+    newDays.sort((a, b) => a - b);
 
     form.setValue("weeklyDaysOff", newDays);
   };
@@ -105,12 +103,10 @@ export const useCountdownForm = () => {
     });
   };
 
-  // Clear all form data
   const handleClear = () => {
     form.reset();
   };
 
-  // Check if form is complete
   const isFormComplete =
     form.formState.isValid &&
     startDate &&
