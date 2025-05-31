@@ -11,13 +11,7 @@ const Page = async ({ params }: PageProps) => {
 
   return (
     <TRPCPrefetch
-      isSuspense={true}
-      suspenseFallback={
-        <div className="container py-8 md:py-12">Loading countdown...</div>
-      }
-      errorFallback={
-        <div className="container py-8 md:py-12">Error loading countdown.</div>
-      }
+      isSuspense={false}
       queryOptionsToPrefetch={[
         trpc.countdown.getById.queryOptions({
           id: parseInt(countdownId),
