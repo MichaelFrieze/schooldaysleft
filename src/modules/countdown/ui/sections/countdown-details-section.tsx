@@ -58,6 +58,14 @@ const CountdownDetailsSectionSuspense = ({
     [countdown.additionalDaysOff],
   );
 
+  // Calculate remaining additional days off (future dates only)
+  const remainingAdditionalDaysOff = useMemo(() => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    return additionalDaysOffDates.filter((date) => date >= today).length;
+  }, [additionalDaysOffDates]);
+
   // Find next upcoming day off from additionalDaysOff only
   const nextDayOff = useMemo(() => {
     const today = new Date();
@@ -142,10 +150,15 @@ const CountdownDetailsSectionSuspense = ({
                 >
                   <span className="text-sm">{day.label}</span>
                   <span
+                    // className={`rounded-full px-2 py-1 text-xs ${
+                    //   countdown.weeklyDaysOff.includes(day.value)
+                    //     ? "bg-red-100 text-red-700 dark:bg-red-900/20 dark:text-red-400"
+                    //     : "bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400"
+                    // }`}
                     className={`rounded-full px-2 py-1 text-xs ${
                       countdown.weeklyDaysOff.includes(day.value)
-                        ? "bg-red-100 text-red-700 dark:bg-red-900/20 dark:text-red-400"
-                        : "bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400"
+                        ? "bg-accent/70 text-accent-foreground"
+                        : "bg-primary/70 text-primary-foreground"
                     }`}
                   >
                     {countdown.weeklyDaysOff.includes(day.value)
@@ -164,37 +177,32 @@ const CountdownDetailsSectionSuspense = ({
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Sun className="h-5 w-5" />
-                Holidays & Breaks
+                Holidays & Breaks ({remainingAdditionalDaysOff})
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                <div className="rounded-lg">
-                  {nextDayOff && (
-                    <div className="text-xs font-medium text-amber-600 dark:text-amber-400">
-                      Next holiday: {format(nextDayOff, "EEEE, MMM d, yyyy")}
-                    </div>
-                  )}
+            <CardContent className="space-y-4">
+              {nextDayOff && (
+                <div className="text-primary text-center text-xs font-medium">
+                  Upcoming: {format(nextDayOff, "EEEE, MMM d, yyyy")}
                 </div>
+              )}
 
-                {/* Calendar View */}
-                <div className="flex justify-center">
-                  <div className="max-h-80 w-fit overflow-y-auto rounded-lg border">
-                    <Calendar
-                      mode="multiple"
-                      selected={additionalDaysOffDates}
-                      disabled={isDateDisabled}
-                      defaultMonth={startDate}
-                      fromDate={startDate}
-                      toDate={endDate}
-                      className="w-full"
-                      classNames={{
-                        day_selected:
-                          "bg-amber-500 text-amber-50 hover:bg-amber-600 focus:bg-amber-600",
-                        day_disabled: "text-muted-foreground opacity-30",
-                      }}
-                    />
-                  </div>
+              {/* Calendar View */}
+              <div className="flex justify-center">
+                <div className="max-h-80 w-fit overflow-y-auto rounded-lg border">
+                  <Calendar
+                    mode="multiple"
+                    selected={additionalDaysOffDates}
+                    disabled={isDateDisabled}
+                    defaultMonth={startDate}
+                    fromDate={startDate}
+                    toDate={endDate}
+                    className="w-full"
+                    classNames={{
+                      day_selected: "bg-primary text-primary-foreground",
+                      day_disabled: "text-muted-foreground opacity-30",
+                    }}
+                  />
                 </div>
               </div>
             </CardContent>
@@ -204,7 +212,7 @@ const CountdownDetailsSectionSuspense = ({
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Sun className="h-5 w-5" />
-                Holidays & Breaks
+                Holidays & Breaks ({remainingAdditionalDaysOff})
               </CardTitle>
             </CardHeader>
             <CardContent>
