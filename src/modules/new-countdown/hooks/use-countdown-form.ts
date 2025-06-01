@@ -19,7 +19,8 @@ const formSchema = z
     name: z
       .string()
       .min(1, "Countdown name is required")
-      .max(100, "Name must be less than 100 characters"),
+      .max(60, "Countdown name must be less than 60 characters")
+      .trim(),
     startDate: z.date({
       required_error: "Start date is required",
     }),
