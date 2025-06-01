@@ -90,14 +90,11 @@ export const AdditionalDaysOffSection = ({
 
         {additionalDaysOff.length > 0 && (
           <div className="bg-muted rounded-md p-4">
-            <p className="mb-2 text-sm font-medium">
-              Selected additional days off ({additionalDaysOff.length} days):
-            </p>
-            <div className="text-muted-foreground max-h-32 overflow-y-auto text-sm">
-              {additionalDaysOff
-                .sort((a, b) => a.getTime() - b.getTime())
-                .map((date) => format(date, "MMM d, yyyy"))
-                .join(", ")}
+            <div className="flex items-center gap-2">
+              <div className="bg-primary h-2 w-2 rounded-full"></div>
+              <p className="text-sm font-medium">
+                {additionalDaysOff.length} additional days selected
+              </p>
             </div>
           </div>
         )}
