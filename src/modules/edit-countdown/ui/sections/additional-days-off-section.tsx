@@ -6,7 +6,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import type { FormData } from "@/modules/new-countdown/hooks/use-countdown-form";
+import type { FormData } from "@/modules/edit-countdown/hooks/use-countdown-form";
 import { format, isSameMonth } from "date-fns";
 import type { UseFormReturn } from "react-hook-form";
 

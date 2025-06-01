@@ -1,6 +1,10 @@
 import { useTRPC } from "@/trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
 import {
   addMonths,
   getDay,
@@ -9,7 +13,7 @@ import {
   isSameDay,
   startOfMonth,
 } from "date-fns";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -40,21 +44,35 @@ export const useCountdownForm = () => {
   const router = useRouter();
   const trpc = useTRPC();
   const queryClient = useQueryClient();
-  const createCountdownMutation = useMutation(
-    trpc.countdown.create.mutationOptions(),
+  const { countdownId } = useParams<{ countdownId: string }>();
+
+  const { data: defaultCountdown } = useSuspenseQuery({
+    ...trpc.countdown.getById.queryOptions({
+      id: parseInt(countdownId),
+    }),
+  });
+
+  const updateCountdownMutation = useMutation(
+    trpc.countdown.update.mutationOptions(),
   );
-  const invalidateGetAllCountdowns = () => {
+
+  const invalidateCountdownQueries = () => {
     void queryClient.invalidateQueries({
       queryKey: trpc.countdown.getAll.queryKey(),
+    });
+    void queryClient.invalidateQueries({
+      queryKey: trpc.countdown.getById.queryKey({ id: parseInt(countdownId) }),
     });
   };
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      weeklyDaysOff: [0, 6], // Default to Sunday and Saturday
-      additionalDaysOff: [],
+      name: defaultCountdown.name,
+      startDate: defaultCountdown.startDate,
+      endDate: defaultCountdown.endDate,
+      weeklyDaysOff: defaultCountdown.weeklyDaysOff,
+      additionalDaysOff: defaultCountdown.additionalDaysOff,
     },
   });
 
@@ -62,6 +80,7 @@ export const useCountdownForm = () => {
   const { startDate, endDate, weeklyDaysOff, additionalDaysOff } =
     watchedValues;
 
+  // Filter out additional days off that are outside the date range
   useEffect(() => {
     const currentAdditionalDays = form.getValues("additionalDaysOff");
     const filteredDays = currentAdditionalDays.filter(
@@ -105,28 +124,43 @@ export const useCountdownForm = () => {
   };
 
   const onSubmit = (data: FormData) => {
-    createCountdownMutation.mutate(data, {
-      onSuccess: (createdCountdown) => {
-        invalidateGetAllCountdowns();
-
-        console.log("Countdown created successfully", {
-          data: createdCountdown,
-        });
-
-        if (createdCountdown?.id) {
-          void router.push(`/countdown/${createdCountdown.id}`);
-        } else {
-          console.error("Countdown created but no id found");
-        }
+    updateCountdownMutation.mutate(
+      {
+        id: parseInt(countdownId),
+        name: data.name,
+        startDate: data.startDate,
+        endDate: data.endDate,
+        weeklyDaysOff: data.weeklyDaysOff,
+        additionalDaysOff: data.additionalDaysOff,
       },
-      onError: (error) => {
-        console.error("Failed to create countdown:", error);
+      {
+        onSuccess: (updatedCountdown) => {
+          invalidateCountdownQueries();
+
+          // TODO: remove this
+          console.log("Countdown updated successfully", {
+            data: updatedCountdown,
+          });
+
+          // TODO: consider remove this
+          void router.push(`/countdown/${updatedCountdown.id}`);
+        },
+        onError: (error) => {
+          console.error("Failed to update countdown:", error);
+          // TODO: show error toast
+        },
       },
-    });
+    );
   };
 
-  const handleClear = () => {
-    form.reset();
+  const handleReset = () => {
+    form.reset({
+      name: defaultCountdown.name,
+      startDate: defaultCountdown.startDate,
+      endDate: defaultCountdown.endDate,
+      weeklyDaysOff: defaultCountdown.weeklyDaysOff,
+      additionalDaysOff: defaultCountdown.additionalDaysOff,
+    });
   };
 
   const isFormComplete =
@@ -150,7 +184,9 @@ export const useCountdownForm = () => {
     isWeeklyDayOff,
     handleWeeklyDayToggle,
     onSubmit,
-    handleClear,
     isFormComplete,
+    defaultCountdown,
+    handleReset,
+    isSubmitting: updateCountdownMutation.isPending,
   };
 };
