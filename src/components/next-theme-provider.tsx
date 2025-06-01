@@ -5,9 +5,7 @@ interface NextThemeProviderProps {
   children: React.ReactNode;
 }
 
-export const NextThemeProvider = async ({
-  children,
-}: NextThemeProviderProps) => {
+export const NextThemeProvider = ({ children }: NextThemeProviderProps) => {
   const allThemeKeys = Object.keys(allThemes);
 
   return (

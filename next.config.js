@@ -6,10 +6,12 @@ import "./src/env.js";
 
 /** @type {import("next").NextConfig} */
 const config = {
+  experimental: {
+    taint: true,
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },
-
   typescript: {
     ignoreBuildErrors: true,
   },
