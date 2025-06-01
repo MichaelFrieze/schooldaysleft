@@ -3,7 +3,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import type { Countdown } from "@/modules/countdown/types";
 import type { FormData } from "@/modules/edit-countdown/hooks/use-countdown-form";
+import { useTRPC } from "@/trpc/react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { format, isSameDay } from "date-fns";
+import { Trash2 } from "lucide-react";
+import { useParams, useRouter } from "next/navigation";
 import type { UseFormReturn } from "react-hook-form";
 
 const DAYS_OF_WEEK = [
@@ -63,6 +67,38 @@ export const FormSummarySection = ({
   handleReset,
   isSubmitting = false,
 }: FormSummarySectionProps) => {
+  const router = useRouter();
+  const trpc = useTRPC();
+  const queryClient = useQueryClient();
+  const { countdownId } = useParams<{ countdownId: string }>();
+
+  const deleteCountdownMutation = useMutation({
+    ...trpc.countdown.delete.mutationOptions(),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({
+        queryKey: trpc.countdown.getAll.queryKey(),
+      });
+
+      void router.push("/dashboard");
+    },
+    onError: (error) => {
+      console.error("Failed to delete countdown:", error);
+      // Maybe add toast notification here if you have a toast system
+    },
+  });
+
+  const handleDelete = () => {
+    if (
+      confirm(
+        `Are you sure you want to delete "${defaultCountdown.name}"? This action cannot be undone.`,
+      )
+    ) {
+      deleteCountdownMutation.mutate({
+        id: parseInt(countdownId),
+      });
+    }
+  };
+
   const formatWeeklyDaysOff = (days: number[]) => {
     return days.length > 0
       ? days
@@ -153,18 +189,32 @@ export const FormSummarySection = ({
           />
         </div>
 
-        <div className="flex justify-between">
+        <div className="flex flex-col gap-3 sm:flex-row sm:justify-between">
           <Button
             type="button"
-            variant="outline"
-            onClick={handleReset}
-            disabled={!hasChanges}
+            variant="destructive"
+            size="sm"
+            onClick={handleDelete}
+            disabled={deleteCountdownMutation.isPending}
           >
-            Reset
+            <Trash2 className="mr-2 h-4 w-4" />
+            {deleteCountdownMutation.isPending
+              ? "Deleting..."
+              : "Delete Countdown"}
           </Button>
-          <Button type="submit" disabled={!hasChanges || isSubmitting}>
-            {isSubmitting ? "Saving..." : "Save Changes"}
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleReset}
+              disabled={!hasChanges}
+            >
+              Reset
+            </Button>
+            <Button type="submit" disabled={!hasChanges || isSubmitting}>
+              {isSubmitting ? "Saving..." : "Save Changes"}
+            </Button>
+          </div>
         </div>
       </CardContent>
     </Card>

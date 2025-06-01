@@ -35,6 +35,11 @@
 - Consider making the account page a modal
 - maybe put a back to countdown button on edit countdown page
 - Show date on countdown page
+- delete btn on edit countdown
+- loading on edit button
+- on the edit countdown page, consider removing the Selected additional days off section displaying all selected dates.
+- New Countdown button on dashboard needs to go under title on smaller screens
+- consider keeping title characters below 80, or at least 100. Even 60 would be okay.
 
 ```
     "vercel-build": "if [ \"$VERCEL_ENV\" = \"production\" ]; then drizzle-kit push; elif [ \"$VERCEL_ENV\" = \"preview\" ]; drizzle-kit push --force; fi && next build",
