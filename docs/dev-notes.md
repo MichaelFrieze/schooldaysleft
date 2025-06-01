@@ -34,9 +34,6 @@
 - Going to edit page from countdown page is a little slow since no suspense is being shown
 - Consider making the account page a modal
 - maybe put a back to countdown button on edit countdown page
-- Show date on countdown page
-- loading on edit button
-- on the edit countdown page, consider removing the Selected additional days off section displaying all selected dates.
 
 ```
     "vercel-build": "if [ \"$VERCEL_ENV\" = \"production\" ]; then drizzle-kit push; elif [ \"$VERCEL_ENV\" = \"preview\" ]; drizzle-kit push --force; fi && next build",

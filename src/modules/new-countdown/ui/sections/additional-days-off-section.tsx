@@ -7,7 +7,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import type { FormData } from "@/modules/new-countdown/hooks/use-countdown-form";
-import { format, isSameMonth } from "date-fns";
+import { isSameMonth } from "date-fns";
 import type { UseFormReturn } from "react-hook-form";
 
 interface AdditionalDaysOffSectionProps {

@@ -28,6 +28,17 @@ const CountdownHeaderSectionSkeleton = () => {
   return <div className="py-8 md:py-12">loading...</div>;
 };
 
+// const EditButtonWithLoadingIndicator = () => {
+//   const { pending } = useLinkStatus();
+
+//   return (
+//     <div className="flex items-center gap-2">
+//       <Edit className="h-4 w-4" />
+//       {pending ? "Loading..." : "Edit"}
+//     </div>
+//   );
+// };
+
 const CountdownHeaderSectionSuspense = ({
   countdownId,
 }: CountdownHeaderSectionProps) => {
@@ -49,7 +60,7 @@ const CountdownHeaderSectionSuspense = ({
         </div>
 
         <Button asChild variant="outline" size="sm">
-          <Link href={`/countdown/${countdown.id}/edit`}>
+          <Link href={`/countdown/${countdown.id}/edit`} prefetch={false}>
             <Edit className="h-4 w-4" />
             Edit
           </Link>
