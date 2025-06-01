@@ -29,7 +29,6 @@
 - animate loading on buttons
 - show today's date on countdown page
 - show countdowns in navbar dropdown
-- On the edit countdown page, when selecting end date, it should open to default countdown month
 
 - go through CodeRabbit recommendations and take notes: https://github.com/MichaelFrieze/schooldaysleft/pull/21
 - Going to edit page from countdown page is a little slow since no suspense is being shown

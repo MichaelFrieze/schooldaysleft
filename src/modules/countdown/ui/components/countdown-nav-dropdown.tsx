@@ -9,50 +9,43 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
+import { useTRPC } from "@/trpc/react";
+import { useQuery } from "@tanstack/react-query";
 import { ChevronDown, LayoutDashboard, Plus } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export const CountdownNavDropdown = () => {
   const pathname = usePathname();
+  const trpc = useTRPC();
 
-  // Temporary mock data until connected to DB
-  const countdowns = [
-    { id: "1", name: "Summer Break 2024" },
-    { id: "2", name: "Spring Break" },
-    { id: "3", name: "Winter Break" },
-  ];
+  const { data: countdowns } = useQuery({
+    ...trpc.countdown.getAll.queryOptions(),
+  });
 
   const getCurrentPageName = () => {
-    if (pathname === "/dashboard")
-      return (
-        <>
-          <span className="truncate">Dashboard</span>
-        </>
-      );
-    if (pathname === "/countdown/new")
-      return (
-        <>
-          <span className="truncate">New Countdown</span>
-        </>
-      );
+    if (pathname === "/dashboard") return "Dashboard";
+    if (pathname === "/countdown/new") return "New Countdown";
 
     const countdownId = pathname.split("/").pop();
-    const currentCountdown = countdowns.find((c) => c.id === countdownId);
-
-    return (
-      <span className="truncate">
-        {currentCountdown?.name ?? "Select Countdown"}
-      </span>
+    const currentCountdown = countdowns?.find(
+      (c) => c.id.toString() === countdownId,
     );
+
+    return currentCountdown?.name ?? "Loading...";
   };
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="gap-2 focus-visible:ring-1">
-          {getCurrentPageName()}
-          <ChevronDown className="h-4 w-4" />
+        <Button
+          variant="ghost"
+          className="max-w-64 min-w-0 gap-2 focus-visible:ring-1"
+        >
+          <span className="min-w-0 flex-1 truncate">
+            {getCurrentPageName()}
+          </span>
+          <ChevronDown className="h-4 w-4 shrink-0" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-45">
@@ -68,7 +61,7 @@ export const CountdownNavDropdown = () => {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        {countdowns.map((countdown) => (
+        {countdowns?.map((countdown) => (
           <DropdownMenuItem key={countdown.id} asChild>
             <Link
               href={`/countdown/${countdown.id}`}

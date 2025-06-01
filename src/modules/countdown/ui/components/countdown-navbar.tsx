@@ -16,7 +16,7 @@ export const CountdownNavbar = () => {
           </span>
         </Link>
 
-        <nav className="ml-auto flex items-center gap-1">
+        <nav className="ml-auto flex items-center gap-2">
           <div className="hidden sm:flex">
             <CountdownNavDropdown />
           </div>
