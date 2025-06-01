@@ -56,6 +56,7 @@ export const DatePickerField = <T extends FieldValues>({
             setOpen(false);
           }}
           disabled={disabled}
+          defaultMonth={field.value}
           initialFocus
         />
       </PopoverContent>
