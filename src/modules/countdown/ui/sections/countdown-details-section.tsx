@@ -6,7 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { formatDate } from "@/lib/utils";
 import { useTRPC } from "@/trpc/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { format, isAfter, isSameDay, isBefore } from "date-fns";
+import { format, isAfter, isBefore, isSameDay } from "date-fns";
 import { CalendarDays, CalendarIcon, Sun } from "lucide-react";
 import { Suspense, useMemo } from "react";
 import { ErrorBoundary } from "react-error-boundary";
@@ -30,16 +30,16 @@ export const CountdownDetailsSection = ({
 }: CountdownDetailsSectionProps) => {
   return (
     <ErrorBoundary fallback={<p>Error...</p>}>
-      <Suspense fallback={<CountdownDetailsSectionSkeleton />}>
+      <Suspense>
         <CountdownDetailsSectionSuspense countdownId={countdownId} />
       </Suspense>
     </ErrorBoundary>
   );
 };
 
-const CountdownDetailsSectionSkeleton = () => {
-  return <div className="pb-8 md:pb-12">loading...</div>;
-};
+// const CountdownDetailsSectionSkeleton = () => {
+//   return <div className="pb-8 md:pb-12">loading...</div>;
+// };
 
 const CountdownDetailsSectionSuspense = ({
   countdownId,

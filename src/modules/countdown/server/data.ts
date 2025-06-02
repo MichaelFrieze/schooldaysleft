@@ -1,5 +1,6 @@
 import { db } from "@/db";
 import { countdowns } from "@/db/schema";
+import { tryCatch } from "@/lib/try-catch";
 import { TRPCError } from "@trpc/server";
 import { and, eq } from "drizzle-orm";
 import { cache } from "react";
@@ -62,28 +63,60 @@ export async function deleteCountdown(id: number, userId: string) {
 }
 
 export const getAllCountdowns = cache(async (userId: string) => {
-  const userCountdowns = await db.query.countdowns.findMany({
-    where: (countdowns, { eq }) => eq(countdowns.userId, userId),
-    orderBy: (countdowns, { desc }) => [desc(countdowns.createdAt)],
-  });
+  const result = await tryCatch(
+    db.query.countdowns.findMany({
+      where: (countdowns, { eq }) => eq(countdowns.userId, userId),
+      orderBy: (countdowns, { desc }) => [desc(countdowns.createdAt)],
+    }),
+  );
 
-  return userCountdowns;
+  if (result.error) {
+    console.error("Database error fetching countdowns:", {
+      userId,
+      error: result.error.message,
+      stack: result.error.stack,
+    });
+
+    throw new TRPCError({
+      code: "INTERNAL_SERVER_ERROR",
+      message: "Failed to fetch countdowns",
+      cause: result.error,
+    });
+  }
+
+  return result.data;
 });
 
 export const getCountdownById = cache(async (id: number, userId: string) => {
-  const countdown = await db.query.countdowns.findFirst({
-    where: (countdowns, { eq, and }) =>
-      and(eq(countdowns.id, id), eq(countdowns.userId, userId)),
-  });
+  const result = await tryCatch(
+    db.query.countdowns.findFirst({
+      where: (countdowns, { eq, and }) =>
+        and(eq(countdowns.id, id), eq(countdowns.userId, userId)),
+    }),
+  );
 
-  if (!countdown) {
+  if (result.error) {
+    console.error("Database error fetching countdown:", {
+      id,
+      userId,
+      error: result.error.message,
+    });
+
+    throw new TRPCError({
+      code: "INTERNAL_SERVER_ERROR",
+      message: "Failed to fetch countdown",
+      cause: result.error,
+    });
+  }
+
+  if (!result.data) {
     throw new TRPCError({
       code: "NOT_FOUND",
       message: "Countdown not found",
     });
   }
 
-  return countdown;
+  return result.data;
 });
 
 // When I want to use Next persistent cache:

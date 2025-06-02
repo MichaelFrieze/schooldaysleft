@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
 import { trpc } from "@/trpc/server";
 import { TRPCPrefetch } from "@/trpc/trpc-prefetch";
 import Link from "next/link";
@@ -21,11 +20,6 @@ export const UserNavbar = () => {
             <Link href="/dashboard">Dashboard</Link>
           </Button>
           <TRPCPrefetch
-            isSuspense={true}
-            suspenseFallback={<Skeleton className="h-8 w-8 rounded-full" />}
-            errorFallback={
-              <Skeleton className="h-8 w-8 rounded-full bg-red-500" />
-            }
             queryOptionsToPrefetch={[
               trpc.user.getUserButtonData.queryOptions(),
             ]}

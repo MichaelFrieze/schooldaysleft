@@ -5,9 +5,21 @@ import { useTRPC } from "@/trpc/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { CalendarDays, Plus } from "lucide-react";
 import Link from "next/link";
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import { DashboardCountdownCard } from "./dashboard-countdown-card";
 
 export const DashboardContent = () => {
+  return (
+    <ErrorBoundary fallback={<p>Error...</p>}>
+      <Suspense>
+        <DashboardContentSuspense />
+      </Suspense>
+    </ErrorBoundary>
+  );
+};
+
+const DashboardContentSuspense = () => {
   const trpc = useTRPC();
 
   const { data: countdowns } = useSuspenseQuery({

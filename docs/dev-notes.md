@@ -24,12 +24,14 @@
 - What happens if a weekly day falls on start date or end date
 - what happens if additional days selected is start date or end date
 - go through everything and mark with TODO
-- animate loading on buttons
 
 - go through CodeRabbit recommendations and take notes: https://github.com/MichaelFrieze/schooldaysleft/pull/21
 - Going to edit page from countdown page is a little slow since no suspense is being shown
 - Consider making the account page a modal
 - dashboard cards need to look more like clickable buttons.
+- toast notifications
+- find out what happens if you make 2 separate prefetches to the same query during the same request. For example, using prefetch getAll procedure in the layout and on the page.
+- consider moving the getAll prefetch to the layout
 
 - navbar dropdown is only showing loading on edit countdown page
 

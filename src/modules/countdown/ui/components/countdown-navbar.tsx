@@ -1,4 +1,3 @@
-import { Skeleton } from "@/components/ui/skeleton";
 import { UserButton } from "@/modules/user/ui/components/user-button";
 import { trpc } from "@/trpc/server";
 import { TRPCPrefetch } from "@/trpc/trpc-prefetch";
@@ -18,14 +17,13 @@ export const CountdownNavbar = () => {
 
         <nav className="ml-auto flex items-center gap-2">
           <div className="hidden sm:flex">
-            <CountdownNavDropdown />
+            <TRPCPrefetch
+              queryOptionsToPrefetch={[trpc.countdown.getAll.queryOptions()]}
+            >
+              <CountdownNavDropdown />
+            </TRPCPrefetch>
           </div>
           <TRPCPrefetch
-            isSuspense={true}
-            suspenseFallback={<Skeleton className="h-8 w-8 rounded-full" />}
-            errorFallback={
-              <Skeleton className="h-8 w-8 rounded-full bg-red-500" />
-            }
             queryOptionsToPrefetch={[
               trpc.user.getUserButtonData.queryOptions(),
             ]}

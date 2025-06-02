@@ -10,16 +10,28 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import { useTRPC } from "@/trpc/react";
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { ChevronDown, LayoutDashboard, Plus } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
 export const CountdownNavDropdown = () => {
+  return (
+    <ErrorBoundary fallback={<p>Error...</p>}>
+      <Suspense>
+        <CountdownNavDropdownSuspense />
+      </Suspense>
+    </ErrorBoundary>
+  );
+};
+
+const CountdownNavDropdownSuspense = () => {
   const pathname = usePathname();
   const trpc = useTRPC();
 
-  const { data: countdowns } = useQuery({
+  const { data: countdowns } = useSuspenseQuery({
     ...trpc.countdown.getAll.queryOptions(),
   });
 
@@ -27,12 +39,20 @@ export const CountdownNavDropdown = () => {
     if (pathname === "/dashboard") return "Dashboard";
     if (pathname === "/countdown/new") return "New Countdown";
 
+    if (pathname.endsWith("/edit")) {
+      const countdownId = pathname.split("/")[2];
+      const currentCountdown = countdowns.find(
+        (c) => c.id.toString() === countdownId,
+      );
+      return currentCountdown?.name;
+    }
+
     const countdownId = pathname.split("/").pop();
-    const currentCountdown = countdowns?.find(
+    const currentCountdown = countdowns.find(
       (c) => c.id.toString() === countdownId,
     );
 
-    return currentCountdown?.name ?? "Loading...";
+    return currentCountdown?.name;
   };
 
   return (
