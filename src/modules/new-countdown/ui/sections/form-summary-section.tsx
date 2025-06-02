@@ -4,6 +4,7 @@ import { Separator } from "@/components/ui/separator";
 import { format } from "date-fns";
 import type { UseFormReturn } from "react-hook-form";
 import type { FormData } from "@/modules/new-countdown/hooks/use-countdown-form";
+import { Loader2 } from "lucide-react";
 
 const DAYS_OF_WEEK = [
   { label: "Sunday", value: 0 },
@@ -22,6 +23,7 @@ interface FormSummarySectionProps {
   weeklyDaysOff: number[];
   additionalDaysOff: Date[];
   onClear: () => void;
+  isSubmitting: boolean;
 }
 
 export const FormSummarySection = ({
@@ -31,7 +33,14 @@ export const FormSummarySection = ({
   weeklyDaysOff,
   additionalDaysOff,
   onClear,
+  isSubmitting,
 }: FormSummarySectionProps) => {
+  const handleClearWithConfirmation = () => {
+    if (confirm("Are you sure you want to clear this form?")) {
+      onClear();
+    }
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -85,11 +94,26 @@ export const FormSummarySection = ({
           </div>
         </div>
 
-        <div className="flex justify-between">
-          <Button type="button" variant="outline" onClick={onClear}>
+        <div className="flex flex-col-reverse gap-4 pt-2 sm:flex-row sm:justify-between">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={handleClearWithConfirmation}
+            className="flex-1 sm:flex-none"
+          >
             Clear All
           </Button>
-          <Button type="submit">Create Countdown</Button>
+
+          <Button type="submit" disabled={isSubmitting} className="sm:w-40">
+            {isSubmitting ? (
+              <div className="flex items-center gap-2">
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Creating...
+              </div>
+            ) : (
+              "Create Countdown"
+            )}
+          </Button>
         </div>
       </CardContent>
     </Card>

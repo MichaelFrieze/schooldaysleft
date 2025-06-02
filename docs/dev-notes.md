@@ -27,13 +27,13 @@
 - go through everything and mark with TODO
 - get loading on create new countdown button
 - animate loading on buttons
-- show today's date on countdown page
-- show countdowns in navbar dropdown
+- reset form should confirm on edit and new countdown pages
 
 - go through CodeRabbit recommendations and take notes: https://github.com/MichaelFrieze/schooldaysleft/pull/21
 - Going to edit page from countdown page is a little slow since no suspense is being shown
 - Consider making the account page a modal
 - dashboard cards need to look more like clickable buttons.
+- navbar dropdown is only showing loading on edit countdown page
 
 ```
     "vercel-build": "if [ \"$VERCEL_ENV\" = \"production\" ]; then drizzle-kit push; elif [ \"$VERCEL_ENV\" = \"preview\" ]; drizzle-kit push --force; fi && next build",

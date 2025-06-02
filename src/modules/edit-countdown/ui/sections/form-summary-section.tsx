@@ -6,7 +6,7 @@ import type { FormData } from "@/modules/edit-countdown/hooks/use-countdown-form
 import { useTRPC } from "@/trpc/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { format, isSameDay } from "date-fns";
-import { Trash2 } from "lucide-react";
+import { Loader2, Trash2 } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import type { UseFormReturn } from "react-hook-form";
 
@@ -96,6 +96,16 @@ export const FormSummarySection = ({
       deleteCountdownMutation.mutate({
         id: parseInt(countdownId),
       });
+    }
+  };
+
+  const handleResetWithConfirmation = () => {
+    if (
+      confirm(
+        "Are you sure you want to reset all changes? This will restore the original countdown settings.",
+      )
+    ) {
+      handleReset();
     }
   };
 
@@ -189,32 +199,46 @@ export const FormSummarySection = ({
           />
         </div>
 
-        <div className="flex flex-col gap-3 sm:flex-row sm:justify-between">
-          <Button
-            type="button"
-            variant="destructive"
-            size="sm"
-            onClick={handleDelete}
-            disabled={deleteCountdownMutation.isPending}
-          >
-            <Trash2 className="mr-2 h-4 w-4" />
-            {deleteCountdownMutation.isPending
-              ? "Deleting..."
-              : "Delete Countdown"}
-          </Button>
-          <div className="flex gap-2">
+        <div className="flex flex-col-reverse gap-4 pt-2 sm:flex-row sm:justify-between">
+          <div className="flex flex-row justify-center gap-2">
             <Button
               type="button"
               variant="outline"
-              onClick={handleReset}
+              onClick={handleResetWithConfirmation}
               disabled={!hasChanges}
+              className="flex-1"
             >
-              Reset
+              Reset Changes
             </Button>
-            <Button type="submit" disabled={!hasChanges || isSubmitting}>
-              {isSubmitting ? "Saving..." : "Save Changes"}
+            <Button
+              type="button"
+              variant="destructive"
+              onClick={handleDelete}
+              disabled={deleteCountdownMutation.isPending}
+              className="flex-1"
+            >
+              {deleteCountdownMutation.isPending ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Trash2 className="h-4 w-4" />
+              )}
             </Button>
           </div>
+
+          <Button
+            type="submit"
+            disabled={!hasChanges || isSubmitting}
+            className="sm:w-32"
+          >
+            {isSubmitting ? (
+              <div className="flex items-center gap-2">
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Saving...
+              </div>
+            ) : (
+              "Save Changes"
+            )}
+          </Button>
         </div>
       </CardContent>
     </Card>

@@ -9,10 +9,10 @@ interface EditCountdownViewProps {
 
 export const EditCountdownView = ({ countdownId }: EditCountdownViewProps) => {
   return (
-    <div className="container py-8">
+    <div className="container pt-4 pb-8">
       <div className="pb-8">
         <div className="pb-8">
-          <Button asChild variant="outline">
+          <Button asChild variant="ghost">
             <Link href={`/countdown/${countdownId}`}>
               <ArrowLeft className="h-4 w-4" />
               Back to Countdown

@@ -153,5 +153,6 @@ export const useCountdownForm = () => {
     onSubmit,
     handleClear,
     isFormComplete,
+    isSubmitting: createCountdownMutation.isPending,
   };
 };
