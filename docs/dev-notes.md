@@ -6,7 +6,6 @@
 - consider using drawer for contact button
 - consider using drawer for donate button
 - use drawer component in mobile view and dialog in desktop
-- look into how easy it is to use stripe in a small form component in drawer.
 - consider adding drizzle-kit push --force to preview branches:
 - Use a webhook to update user button full name after a change
 - look for some tailwind classes that are not needed in the landing page
@@ -25,14 +24,13 @@
 - What happens if a weekly day falls on start date or end date
 - what happens if additional days selected is start date or end date
 - go through everything and mark with TODO
-- get loading on create new countdown button
 - animate loading on buttons
-- reset form should confirm on edit and new countdown pages
 
 - go through CodeRabbit recommendations and take notes: https://github.com/MichaelFrieze/schooldaysleft/pull/21
 - Going to edit page from countdown page is a little slow since no suspense is being shown
 - Consider making the account page a modal
 - dashboard cards need to look more like clickable buttons.
+
 - navbar dropdown is only showing loading on edit countdown page
 
 ```
