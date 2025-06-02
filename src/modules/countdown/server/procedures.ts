@@ -13,7 +13,7 @@ const createCountdownInput = z.object({
   name: z
     .string()
     .min(1, "Countdown name is required")
-    .max(100, "Countdown name must be less than 100 characters")
+    .max(60, "Countdown name must be less than 60 characters")
     .trim(),
   startDate: z.coerce.date(),
   endDate: z.coerce.date(),
@@ -29,10 +29,21 @@ const createCountdownInput = z.object({
 
 const updateCountdownInput = z.object({
   id: z.number(),
-  name: z.string().min(1).max(150).trim().optional(),
+  name: z
+    .string()
+    .min(1, "Countdown name is required")
+    .max(60, "Countdown name must be less than 60 characters")
+    .trim()
+    .optional(),
   startDate: z.coerce.date().optional(),
   endDate: z.coerce.date().optional(),
-  weeklyDaysOff: z.array(z.number().int().min(0).max(6)).optional(),
+  weeklyDaysOff: z
+    .array(z.number().int().min(0).max(6))
+    .refine(
+      (days) => new Set(days).size === days.length,
+      "Weekly days off cannot contain duplicates",
+    )
+    .optional(),
   additionalDaysOff: z.array(z.coerce.date()).optional(),
 });
 
@@ -40,7 +51,6 @@ export const countdownRouter = createTRPCRouter({
   create: protectedProcedure
     .input(createCountdownInput)
     .mutation(async ({ ctx, input }) => {
-      // Validate dates
       if (input.startDate >= input.endDate) {
         throw new TRPCError({
           code: "BAD_REQUEST",

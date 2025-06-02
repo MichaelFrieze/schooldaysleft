@@ -3,7 +3,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import type { Countdown } from "@/modules/countdown/types";
 import type { FormData } from "@/modules/edit-countdown/hooks/use-countdown-form";
+import { useTRPC } from "@/trpc/react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { format, isSameDay } from "date-fns";
+import { Loader2, Trash2 } from "lucide-react";
+import { useParams, useRouter } from "next/navigation";
 import type { UseFormReturn } from "react-hook-form";
 
 const DAYS_OF_WEEK = [
@@ -63,6 +67,48 @@ export const FormSummarySection = ({
   handleReset,
   isSubmitting = false,
 }: FormSummarySectionProps) => {
+  const router = useRouter();
+  const trpc = useTRPC();
+  const queryClient = useQueryClient();
+  const { countdownId } = useParams<{ countdownId: string }>();
+
+  const deleteCountdownMutation = useMutation({
+    ...trpc.countdown.delete.mutationOptions(),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({
+        queryKey: trpc.countdown.getAll.queryKey(),
+      });
+
+      void router.push("/dashboard");
+    },
+    onError: (error) => {
+      console.error("Failed to delete countdown:", error);
+      // Maybe add toast notification here if you have a toast system
+    },
+  });
+
+  const handleDelete = () => {
+    if (
+      confirm(
+        `Are you sure you want to delete "${defaultCountdown.name}"? This action cannot be undone.`,
+      )
+    ) {
+      deleteCountdownMutation.mutate({
+        id: parseInt(countdownId),
+      });
+    }
+  };
+
+  const handleResetWithConfirmation = () => {
+    if (
+      confirm(
+        "Are you sure you want to reset all changes? This will restore the original countdown settings.",
+      )
+    ) {
+      handleReset();
+    }
+  };
+
   const formatWeeklyDaysOff = (days: number[]) => {
     return days.length > 0
       ? days
@@ -153,17 +199,45 @@ export const FormSummarySection = ({
           />
         </div>
 
-        <div className="flex justify-between">
+        <div className="flex flex-col-reverse gap-4 pt-2 sm:flex-row sm:justify-between">
+          <div className="flex flex-row justify-center gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleResetWithConfirmation}
+              disabled={!hasChanges}
+              className="flex-1"
+            >
+              Reset Changes
+            </Button>
+            <Button
+              type="button"
+              variant="destructive"
+              onClick={handleDelete}
+              disabled={deleteCountdownMutation.isPending}
+              className="flex-1"
+            >
+              {deleteCountdownMutation.isPending ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Trash2 className="h-4 w-4" />
+              )}
+            </Button>
+          </div>
+
           <Button
-            type="button"
-            variant="outline"
-            onClick={handleReset}
-            disabled={!hasChanges}
+            type="submit"
+            disabled={!hasChanges || isSubmitting}
+            className="sm:w-32"
           >
-            Reset
-          </Button>
-          <Button type="submit" disabled={!hasChanges || isSubmitting}>
-            {isSubmitting ? "Saving..." : "Save Changes"}
+            {isSubmitting ? (
+              <div className="flex items-center gap-2">
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Saving...
+              </div>
+            ) : (
+              "Save Changes"
+            )}
           </Button>
         </div>
       </CardContent>

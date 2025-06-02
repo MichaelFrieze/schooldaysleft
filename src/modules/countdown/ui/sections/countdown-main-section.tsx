@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useTRPC } from "@/trpc/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { School } from "lucide-react";
+import { Calendar } from "lucide-react";
 import { Suspense, useMemo } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { calculateCountdownProgress } from "../../lib/calculate-countdown-progress";
@@ -47,6 +47,13 @@ const CountdownMainSectionSuspense = ({
     [countdown],
   );
 
+  const todayFormatted = new Date().toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
   const isCountdownComplete = daysLeft === 0;
   const hasStarted = new Date() >= new Date(countdown.startDate);
 
@@ -54,9 +61,10 @@ const CountdownMainSectionSuspense = ({
     <section className="pb-8 md:pb-12">
       <Card className="bg-background rounded-xl">
         <CardContent className="p-8">
-          <div className="flex items-start justify-between pb-8">
-            <div className="bg-primary/10 flex h-16 w-16 items-center justify-center rounded-full">
-              <School className="text-primary h-8 w-8" />
+          <div className="pb-8">
+            <div className="text-muted-foreground flex items-center gap-2">
+              <Calendar className="h-4 w-4" />
+              <span className="text-sm font-medium">{todayFormatted}</span>
             </div>
           </div>
 

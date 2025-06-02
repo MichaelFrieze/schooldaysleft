@@ -24,7 +24,7 @@ const Page = async ({ params }: PageProps) => {
         }),
       ]}
     >
-      <EditCountdownView />
+      <EditCountdownView countdownId={countdownId} />
     </TRPCPrefetch>
   );
 };

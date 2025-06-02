@@ -20,6 +20,7 @@ export const NewCountdownForm = () => {
     onSubmit,
     handleClear,
     isFormComplete,
+    isSubmitting,
   } = useCountdownForm();
 
   return (
@@ -55,6 +56,7 @@ export const NewCountdownForm = () => {
             weeklyDaysOff={weeklyDaysOff}
             additionalDaysOff={additionalDaysOff}
             onClear={handleClear}
+            isSubmitting={isSubmitting}
           />
         )}
       </form>

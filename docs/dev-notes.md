@@ -19,7 +19,7 @@
 - create 404 error page
 - maybe let user know when they do not have access to something
 - improve suspense skeletons
-- Use a modal or something to confirm delete on countdown page
+- Use a modal or something to confirm delete on countdown page (check next-tube)
 - Consider adding a calendar for every month in holidays and break card
 - Consider removing outside days from calendar in holidays and break card
 - What happens if a weekly day falls on start date or end date
@@ -27,6 +27,13 @@
 - go through everything and mark with TODO
 - get loading on create new countdown button
 - animate loading on buttons
+- reset form should confirm on edit and new countdown pages
+
+- go through CodeRabbit recommendations and take notes: https://github.com/MichaelFrieze/schooldaysleft/pull/21
+- Going to edit page from countdown page is a little slow since no suspense is being shown
+- Consider making the account page a modal
+- dashboard cards need to look more like clickable buttons.
+- navbar dropdown is only showing loading on edit countdown page
 
 ```
     "vercel-build": "if [ \"$VERCEL_ENV\" = \"production\" ]; then drizzle-kit push; elif [ \"$VERCEL_ENV\" = \"preview\" ]; drizzle-kit push --force; fi && next build",
