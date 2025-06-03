@@ -8,6 +8,7 @@
 - dashboard cards need to look more like clickable buttons and get correct info displayed
 - What happens if a weekly day falls on start date or end date
 - what happens if additional days selected is start date or end date
+- install coderabiit extension
 
 - full moon
 - chance of outside recess (weather)
@@ -30,6 +31,7 @@
 - Consider making the account page a modal
 - find out what happens if you make 2 separate prefetches to the same query during the same request. For example, using prefetch getAll procedure in the layout and on the page.
 - improve error handling
+- I notice that confirm to delete requires 2 clicks
 
 ```
     "vercel-build": "if [ \"$VERCEL_ENV\" = \"production\" ]; then drizzle-kit push; elif [ \"$VERCEL_ENV\" = \"preview\" ]; drizzle-kit push --force; fi && next build",

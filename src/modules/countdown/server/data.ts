@@ -1,7 +1,5 @@
 import { db } from "@/db";
 import { countdowns } from "@/db/schema";
-import { tryCatch } from "@/lib/try-catch";
-import { TRPCError } from "@trpc/server";
 import { and, eq } from "drizzle-orm";
 import { cache } from "react";
 import "server-only";
@@ -37,10 +35,9 @@ export async function updateCountdown(
     .returning();
 
   if (!updatedCountdown) {
-    throw new TRPCError({
-      code: "BAD_REQUEST",
-      message: "Unable to update countdown",
-    });
+    throw new Error(
+      "Unable to update countdown - countdown not found or access denied",
+    );
   }
 
   return updatedCountdown;
@@ -53,119 +50,40 @@ export async function deleteCountdown(id: number, userId: string) {
     .returning();
 
   if (!deletedCountdown) {
-    throw new TRPCError({
-      code: "BAD_REQUEST",
-      message: "Unable to delete countdown",
-    });
+    throw new Error(
+      "Unable to delete countdown - countdown not found or access denied",
+    );
   }
 
   return { success: true };
 }
 
 export const getAllCountdowns = cache(async (userId: string) => {
-  const result = await tryCatch(
-    db.query.countdowns.findMany({
-      where: (countdowns, { eq }) => eq(countdowns.userId, userId),
-      orderBy: (countdowns, { desc }) => [desc(countdowns.createdAt)],
-    }),
-  );
+  const userCountdowns = await db.query.countdowns.findMany({
+    where: (countdowns, { eq }) => eq(countdowns.userId, userId),
+    orderBy: (countdowns, { desc }) => [desc(countdowns.createdAt)],
+  });
 
-  if (result.error) {
-    console.error("Database error fetching countdowns:", {
-      userId,
-      error: result.error.message,
-      stack: result.error.stack,
-    });
-
-    throw new TRPCError({
-      code: "INTERNAL_SERVER_ERROR",
-      message: "Failed to fetch countdowns",
-      cause: result.error,
-    });
+  if (!userCountdowns) {
+    throw new Error(
+      "Unable to get all countdowns - no countdowns found or access denied",
+    );
   }
 
-  return result.data;
+  return userCountdowns;
 });
 
 export const getCountdownById = cache(async (id: number, userId: string) => {
-  const result = await tryCatch(
-    db.query.countdowns.findFirst({
-      where: (countdowns, { eq, and }) =>
-        and(eq(countdowns.id, id), eq(countdowns.userId, userId)),
-    }),
-  );
+  const countdown = await db.query.countdowns.findFirst({
+    where: (countdowns, { eq, and }) =>
+      and(eq(countdowns.id, id), eq(countdowns.userId, userId)),
+  });
 
-  if (result.error) {
-    console.error("Database error fetching countdown:", {
-      id,
-      userId,
-      error: result.error.message,
-    });
-
-    throw new TRPCError({
-      code: "INTERNAL_SERVER_ERROR",
-      message: "Failed to fetch countdown",
-      cause: result.error,
-    });
+  if (!countdown) {
+    throw new Error(
+      "Unable to get countdown by id - countdown not found or access denied",
+    );
   }
 
-  if (!result.data) {
-    throw new TRPCError({
-      code: "NOT_FOUND",
-      message: "Countdown not found",
-    });
-  }
-
-  return result.data;
+  return countdown;
 });
-
-// When I want to use Next persistent cache:
-// import { db } from "@/db";
-// import { countdowns } from "@/db/schema";
-// import { TRPCError } from "@trpc/server";
-// import { and, eq } from "drizzle-orm";
-// import { cache } from "react";
-// import { unstable_cache } from "next/cache";
-// import "server-only";
-
-// export const getAllCountdowns = cache(async (userId: string) => {
-//   return await unstable_cache(
-//     async (userId: string) => {
-//       const userCountdowns = await db.query.countdowns.findMany({
-//         where: (countdowns, { eq }) => eq(countdowns.userId, userId),
-//         orderBy: (countdowns, { desc }) => [desc(countdowns.createdAt)],
-//       });
-//       return userCountdowns;
-//     },
-//     [`user-countdowns-${userId}`],
-//     {
-//       tags: [`user-${userId}-countdowns`],
-//       revalidate: 60,
-//     },
-//   )(userId);
-// });
-
-// export const getCountdownById = cache(async (id: number, userId: string) => {
-//   return await unstable_cache(
-//     async (id: number, userId: string) => {
-//       const countdown = await db.query.countdowns.findFirst({
-//         where: (countdowns, { eq, and }) =>
-//           and(eq(countdowns.id, id), eq(countdowns.userId, userId)),
-//       });
-
-//       if (!countdown) {
-//         throw new TRPCError({
-//           code: "NOT_FOUND",
-//           message: "Countdown not found",
-//         });
-//       }
-
-//       return countdown;
-//     },
-//     [`countdown-${id}-${userId}`],
-//     {
-//       tags: [`user-${userId}-countdowns`, `countdown-${id}`],
-//       revalidate: 300,
-//     },
-//   )(id, userId);
-// });
