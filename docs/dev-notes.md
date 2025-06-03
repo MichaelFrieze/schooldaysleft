@@ -4,7 +4,6 @@
 - Add caching to data layer
 - Consider adding a calendar for every month in holidays and break card
 - improve suspense skeletons
-- create 404 error page
 - toast notifications
 - dashboard cards need to look more like clickable buttons and get correct info displayed
 - What happens if a weekly day falls on start date or end date
@@ -30,6 +29,7 @@
 - go through CodeRabbit recommendations and take notes: https://github.com/MichaelFrieze/schooldaysleft/pull/21
 - Consider making the account page a modal
 - find out what happens if you make 2 separate prefetches to the same query during the same request. For example, using prefetch getAll procedure in the layout and on the page.
+- improve error handling
 
 ```
     "vercel-build": "if [ \"$VERCEL_ENV\" = \"production\" ]; then drizzle-kit push; elif [ \"$VERCEL_ENV\" = \"preview\" ]; drizzle-kit push --force; fi && next build",
