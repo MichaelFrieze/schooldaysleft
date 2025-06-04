@@ -64,90 +64,7 @@ export const countdownRouter = createTRPCRouter({
       );
 
       if (error) {
-        if (error.message === "User not authenticated") {
-          throw new TRPCError({
-            code: "UNAUTHORIZED",
-            message: error.message,
-            cause: error,
-          });
-        }
-
-        if (error.message === "Start date must be earlier than end date") {
-          throw new TRPCError({
-            code: "BAD_REQUEST",
-            message: error.message,
-            cause: error,
-          });
-        }
-
-        if (error.message === "Countdown name is required") {
-          throw new TRPCError({
-            code: "BAD_REQUEST",
-            message: error.message,
-            cause: error,
-          });
-        }
-
-        if (
-          error.message === "Weekly days off must be numbers between 0 and 6"
-        ) {
-          throw new TRPCError({
-            code: "BAD_REQUEST",
-            message: error.message,
-            cause: error,
-          });
-        }
-
-        if (error.message === "Weekly days off cannot contain duplicates") {
-          throw new TRPCError({
-            code: "BAD_REQUEST",
-            message: error.message,
-            cause: error,
-          });
-        }
-
-        if (error.message === "Weekly days off must be in order from 0 to 6") {
-          throw new TRPCError({
-            code: "BAD_REQUEST",
-            message: error.message,
-            cause: error,
-          });
-        }
-
-        if (
-          error.message === "Additional days off cannot contain duplicate dates"
-        ) {
-          throw new TRPCError({
-            code: "BAD_REQUEST",
-            message: error.message,
-            cause: error,
-          });
-        }
-
-        if (
-          error.message ===
-          "Additional days off must be between start date and end date"
-        ) {
-          throw new TRPCError({
-            code: "BAD_REQUEST",
-            message: error.message,
-            cause: error,
-          });
-        }
-
-        if (error.message === "Countdown name already exists") {
-          throw new TRPCError({
-            code: "CONFLICT",
-            message: error.message,
-            cause: error,
-          });
-        }
-
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: error.message,
-          cause: error,
-        });
+        handleDataLayerError(error);
       }
 
       return data;
@@ -163,106 +80,7 @@ export const countdownRouter = createTRPCRouter({
       );
 
       if (error) {
-        if (error.message === "User not authenticated") {
-          throw new TRPCError({
-            code: "UNAUTHORIZED",
-            message: error.message,
-            cause: error,
-          });
-        }
-
-        if (error.message === "Start date must be earlier than end date") {
-          throw new TRPCError({
-            code: "BAD_REQUEST",
-            message: error.message,
-            cause: error,
-          });
-        }
-
-        if (
-          error.message === "Weekly days off must be numbers between 0 and 6"
-        ) {
-          throw new TRPCError({
-            code: "BAD_REQUEST",
-            message: error.message,
-            cause: error,
-          });
-        }
-
-        if (error.message === "Weekly days off cannot contain duplicates") {
-          throw new TRPCError({
-            code: "BAD_REQUEST",
-            message: error.message,
-            cause: error,
-          });
-        }
-
-        if (error.message === "Weekly days off must be in order from 0 to 6") {
-          throw new TRPCError({
-            code: "BAD_REQUEST",
-            message: error.message,
-            cause: error,
-          });
-        }
-
-        if (error.message.includes("not found")) {
-          throw new TRPCError({
-            code: "NOT_FOUND",
-            message: error.message,
-            cause: error,
-          });
-        }
-
-        if (error.message.includes("does not belong to user")) {
-          throw new TRPCError({
-            code: "FORBIDDEN",
-            message: error.message,
-            cause: error,
-          });
-        }
-
-        if (error.message === "Countdown name is required") {
-          throw new TRPCError({
-            code: "BAD_REQUEST",
-            message: error.message,
-            cause: error,
-          });
-        }
-
-        if (
-          error.message === "Additional days off cannot contain duplicate dates"
-        ) {
-          throw new TRPCError({
-            code: "BAD_REQUEST",
-            message: error.message,
-            cause: error,
-          });
-        }
-
-        if (
-          error.message ===
-          "Additional days off must be between start date and end date"
-        ) {
-          throw new TRPCError({
-            code: "BAD_REQUEST",
-            message: error.message,
-            cause: error,
-          });
-        }
-
-        if (error.message === "Countdown name already exists") {
-          throw new TRPCError({
-            code: "CONFLICT",
-            message: error.message,
-            cause: error,
-          });
-        }
-
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: error.message,
-          cause: error,
-        });
+        handleDataLayerError(error);
       }
 
       return data;
@@ -276,35 +94,7 @@ export const countdownRouter = createTRPCRouter({
       );
 
       if (error) {
-        if (error.message === "User not authenticated") {
-          throw new TRPCError({
-            code: "UNAUTHORIZED",
-            message: error.message,
-            cause: error,
-          });
-        }
-
-        if (error.message === "Countdown not found") {
-          throw new TRPCError({
-            code: "NOT_FOUND",
-            message: error.message,
-            cause: error,
-          });
-        }
-
-        if (error.message === "Countdown does not belong to user") {
-          throw new TRPCError({
-            code: "FORBIDDEN",
-            message: error.message,
-            cause: error,
-          });
-        }
-
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: error.message,
-          cause: error,
-        });
+        handleDataLayerError(error);
       }
 
       return data;
@@ -316,19 +106,7 @@ export const countdownRouter = createTRPCRouter({
     );
 
     if (error) {
-      if (error.message === "User not authenticated") {
-        throw new TRPCError({
-          code: "UNAUTHORIZED",
-          message: error.message,
-          cause: error,
-        });
-      }
-
-      throw new TRPCError({
-        code: "INTERNAL_SERVER_ERROR",
-        message: error.message,
-        cause: error,
-      });
+      handleDataLayerError(error);
     }
 
     return data;
@@ -342,37 +120,54 @@ export const countdownRouter = createTRPCRouter({
       );
 
       if (error) {
-        if (error.message === "User not authenticated") {
-          throw new TRPCError({
-            code: "UNAUTHORIZED",
-            message: error.message,
-            cause: error,
-          });
-        }
-
-        if (error.message === "Countdown not found") {
-          throw new TRPCError({
-            code: "NOT_FOUND",
-            message: error.message,
-            cause: error,
-          });
-        }
-
-        if (error.message === "Countdown does not belong to user") {
-          throw new TRPCError({
-            code: "FORBIDDEN",
-            message: error.message,
-            cause: error,
-          });
-        }
-
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: error.message,
-          cause: error,
-        });
+        handleDataLayerError(error);
       }
 
       return data;
     }),
 });
+
+function handleDataLayerError(error: Error): never {
+  const errorMap = {
+    "User not authenticated": { code: "UNAUTHORIZED" as const },
+    "Start date must be earlier than end date": {
+      code: "BAD_REQUEST" as const,
+    },
+    "Countdown name is required": { code: "BAD_REQUEST" as const },
+    "Weekly days off must be numbers between 0 and 6": {
+      code: "BAD_REQUEST" as const,
+    },
+    "Weekly days off cannot contain duplicates": {
+      code: "BAD_REQUEST" as const,
+    },
+    "Weekly days off must be in order from 0 to 6": {
+      code: "BAD_REQUEST" as const,
+    },
+    "Additional days off cannot contain duplicate dates": {
+      code: "BAD_REQUEST" as const,
+    },
+    "Additional days off must be between start date and end date": {
+      code: "BAD_REQUEST" as const,
+    },
+    "Countdown name already exists": { code: "CONFLICT" as const },
+    "Countdown not found": { code: "NOT_FOUND" as const },
+    "Countdown does not belong to user": { code: "FORBIDDEN" as const },
+  };
+
+  const errorConfig = errorMap[error.message as keyof typeof errorMap];
+
+  if (errorConfig) {
+    throw new TRPCError({
+      code: errorConfig.code,
+      message: error.message,
+      cause: error,
+    });
+  }
+
+  // Fallback for unmapped errors
+  throw new TRPCError({
+    code: "INTERNAL_SERVER_ERROR",
+    message: error.message,
+    cause: error,
+  });
+}
