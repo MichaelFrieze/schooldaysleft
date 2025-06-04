@@ -27,7 +27,6 @@ export async function createCountdown(data: {
     throw new Error("Countdown name is required");
   }
 
-  // TODO: test this
   if (data.weeklyDaysOff.length > 0) {
     const invalidDays = data.weeklyDaysOff.filter((day) => day < 0 || day > 6);
     if (invalidDays.length > 0) {
@@ -48,7 +47,6 @@ export async function createCountdown(data: {
     }
   }
 
-  // TODO: test this
   if (data.additionalDaysOff.length > 0) {
     const dateStrings = data.additionalDaysOff.map(
       (date) => date.toISOString().split("T")[0],
@@ -68,7 +66,6 @@ export async function createCountdown(data: {
     }
   }
 
-  // TODO: test this
   const existingCountdown = await db.query.countdowns.findFirst({
     where: (countdowns, { eq, and }) =>
       and(eq(countdowns.userId, data.userId), eq(countdowns.name, data.name)),
@@ -102,15 +99,6 @@ export async function updateCountdown(
 
   if (userId !== clerkUserId) {
     throw new Error("User not authenticated");
-  }
-
-  // TODO: this needs to work if either date gets updated
-  if (
-    updateData.startDate &&
-    updateData.endDate &&
-    updateData.startDate >= updateData.endDate
-  ) {
-    throw new Error("Start date must be earlier than end date");
   }
 
   if (updateData.weeklyDaysOff && updateData.weeklyDaysOff.length > 0) {
@@ -147,11 +135,15 @@ export async function updateCountdown(
     throw new Error("Countdown does not belong to user");
   }
 
-  // TODO: this might be wrong
-  if (
-    existingCountdown.name !== updateData.name &&
-    (!updateData.name || updateData.name.trim() === "")
-  ) {
+  const effectiveStartDate =
+    updateData.startDate ?? existingCountdown.startDate;
+  const effectiveEndDate = updateData.endDate ?? existingCountdown.endDate;
+
+  if (effectiveStartDate >= effectiveEndDate) {
+    throw new Error("Start date must be earlier than end date");
+  }
+
+  if (updateData.name?.trim() === "") {
     throw new Error("Countdown name is required");
   }
 
