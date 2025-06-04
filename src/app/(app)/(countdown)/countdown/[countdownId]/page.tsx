@@ -11,7 +11,6 @@ const Page = async ({ params }: PageProps) => {
 
   return (
     <TRPCPrefetch
-      isSuspense={false}
       queryOptionsToPrefetch={[
         trpc.countdown.getById.queryOptions({
           id: parseInt(countdownId),

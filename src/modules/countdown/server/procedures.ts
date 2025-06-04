@@ -1,6 +1,7 @@
 import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import { tryCatch } from "@/lib/try-catch";
 import {
   createCountdown,
   deleteCountdown,
@@ -51,21 +52,22 @@ export const countdownRouter = createTRPCRouter({
   create: protectedProcedure
     .input(createCountdownInput)
     .mutation(async ({ ctx, input }) => {
-      if (input.startDate >= input.endDate) {
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "End date must be after start date",
-        });
+      const { error, data } = await tryCatch(
+        createCountdown({
+          userId: ctx.session.userId,
+          name: input.name,
+          startDate: input.startDate,
+          endDate: input.endDate,
+          weeklyDaysOff: input.weeklyDaysOff,
+          additionalDaysOff: input.additionalDaysOff,
+        }),
+      );
+
+      if (error) {
+        handleDataLayerError(error);
       }
 
-      return await createCountdown({
-        userId: ctx.session.userId,
-        name: input.name,
-        startDate: input.startDate,
-        endDate: input.endDate,
-        weeklyDaysOff: input.weeklyDaysOff,
-        additionalDaysOff: input.additionalDaysOff,
-      });
+      return data;
     }),
 
   update: protectedProcedure
@@ -73,33 +75,99 @@ export const countdownRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const { id, ...updateData } = input;
 
-      if (
-        updateData.startDate &&
-        updateData.endDate &&
-        updateData.startDate >= updateData.endDate
-      ) {
-        throw new TRPCError({
-          code: "BAD_REQUEST",
-          message: "End date must be after start date",
-        });
+      const { error, data } = await tryCatch(
+        updateCountdown(id, ctx.session.userId, updateData),
+      );
+
+      if (error) {
+        handleDataLayerError(error);
       }
 
-      return await updateCountdown(id, ctx.session.userId, updateData);
+      return data;
     }),
 
   delete: protectedProcedure
     .input(z.object({ id: z.number() }))
     .mutation(async ({ ctx, input }) => {
-      return await deleteCountdown(input.id, ctx.session.userId);
+      const { error, data } = await tryCatch(
+        deleteCountdown(input.id, ctx.session.userId),
+      );
+
+      if (error) {
+        handleDataLayerError(error);
+      }
+
+      return data;
     }),
 
   getAll: protectedProcedure.query(async ({ ctx }) => {
-    return await getAllCountdowns(ctx.session.userId);
+    const { error, data } = await tryCatch(
+      getAllCountdowns(ctx.session.userId),
+    );
+
+    if (error) {
+      handleDataLayerError(error);
+    }
+
+    return data;
   }),
 
   getById: protectedProcedure
     .input(z.object({ id: z.number() }))
     .query(async ({ ctx, input }) => {
-      return await getCountdownById(input.id, ctx.session.userId);
+      const { error, data } = await tryCatch(
+        getCountdownById(input.id, ctx.session.userId),
+      );
+
+      if (error) {
+        handleDataLayerError(error);
+      }
+
+      return data;
     }),
 });
+
+function handleDataLayerError(error: Error): never {
+  const errorMap = {
+    "User not authenticated": { code: "UNAUTHORIZED" as const },
+    "Start date must be earlier than end date": {
+      code: "BAD_REQUEST" as const,
+    },
+    "Countdown name is required": { code: "BAD_REQUEST" as const },
+    "Weekly days off must be numbers between 0 and 6": {
+      code: "BAD_REQUEST" as const,
+    },
+    "Weekly days off cannot contain duplicates": {
+      code: "BAD_REQUEST" as const,
+    },
+    "Weekly days off must be in order from 0 to 6": {
+      code: "BAD_REQUEST" as const,
+    },
+    "Additional days off cannot contain duplicate dates": {
+      code: "BAD_REQUEST" as const,
+    },
+    "Additional days off must be between start date and end date": {
+      code: "BAD_REQUEST" as const,
+    },
+    "Countdown name already exists": { code: "CONFLICT" as const },
+    "Countdown not found": { code: "NOT_FOUND" as const },
+    "Countdown does not belong to user": { code: "FORBIDDEN" as const },
+  };
+
+  const errorConfig = errorMap[error.message as keyof typeof errorMap];
+
+  if (errorConfig) {
+    throw new TRPCError({
+      code: errorConfig.code,
+      message: error.message,
+      cause: error,
+    });
+  }
+
+  // Fallback for unmapped errors
+  throw new TRPCError({
+    code: "INTERNAL_SERVER_ERROR",
+    message: error.message,
+    cause: error,
+  });
+}

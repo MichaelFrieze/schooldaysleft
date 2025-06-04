@@ -22,8 +22,22 @@ import {
   UserCircleIcon,
 } from "lucide-react";
 import Link from "next/link";
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
-export function UserButton() {
+export const UserButton = () => {
+  return (
+    <ErrorBoundary
+      fallback={<Skeleton className="h-8 w-8 rounded-full bg-red-500" />}
+    >
+      <Suspense fallback={<Skeleton className="h-8 w-8 rounded-full" />}>
+        <UserButtonSuspense />
+      </Suspense>
+    </ErrorBoundary>
+  );
+};
+
+export function UserButtonSuspense() {
   const trpc = useTRPC();
   const { signOut } = useClerk();
 

@@ -23,9 +23,6 @@ export const DashboardView = () => {
       </div>
 
       <TRPCPrefetch
-        isSuspense={true}
-        suspenseFallback={<p>Loading...</p>}
-        errorFallback={<p>Error...</p>}
         queryOptionsToPrefetch={[trpc.countdown.getAll.queryOptions()]}
       >
         <DashboardContent />

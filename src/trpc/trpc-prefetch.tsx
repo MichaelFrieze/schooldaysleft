@@ -7,14 +7,14 @@ import { ErrorBoundary } from "react-error-boundary";
 
 type TRPCPrefetchProps =
   | {
-      isSuspense?: true;
+      isSuspense: true;
       suspenseFallback?: ReactNode | null;
       errorFallback?: ReactNode | null;
       queryOptionsToPrefetch: ReturnType<TRPCQueryOptions<any>>[];
       children: ReactNode;
     }
   | {
-      isSuspense: false;
+      isSuspense?: false;
       suspenseFallback?: null;
       errorFallback?: null;
       queryOptionsToPrefetch: ReturnType<TRPCQueryOptions<any>>[];
@@ -23,7 +23,7 @@ type TRPCPrefetchProps =
 
 // Only use this to wrap a single client component
 export function TRPCPrefetch({
-  isSuspense = true,
+  isSuspense = false,
   suspenseFallback = null,
   errorFallback = null,
   queryOptionsToPrefetch,

@@ -19,16 +19,16 @@ export const CountdownMainSection = ({
 }: CountdownMainSectionProps) => {
   return (
     <ErrorBoundary fallback={<p>Error...</p>}>
-      <Suspense fallback={<CountdownMainSectionSkeleton />}>
+      <Suspense>
         <CountdownMainSectionSuspense countdownId={countdownId} />
       </Suspense>
     </ErrorBoundary>
   );
 };
 
-const CountdownMainSectionSkeleton = () => {
-  return <div className="pb-8 md:pb-12">loading...</div>;
-};
+// const CountdownMainSectionSkeleton = () => {
+//   return <div className="pb-8 md:pb-12">loading...</div>;
+// };
 
 const CountdownMainSectionSuspense = ({
   countdownId,
