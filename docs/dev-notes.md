@@ -1,14 +1,11 @@
 # TODO
 
 - on the create new countdown form, I need to let the user know if they are trying to use a countdown name that is already used.
-- Add caching to data layer
 - Consider adding a calendar for every month in holidays and break card
 - improve suspense skeletons
 - toast notifications
 - dashboard cards need to look more like clickable buttons and get correct info displayed
-- What happens if a weekly day falls on start date or end date
-- what happens if additional days selected is start date or end date
-- install coderabiit extension
+- Maybe add to countdown page if today counted or not.
 
 - full moon
 - chance of outside recess (weather)
