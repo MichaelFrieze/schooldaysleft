@@ -6,8 +6,6 @@
 - toast notifications
 - dashboard cards need to look more like clickable buttons and get correct info displayed
 - Maybe add to countdown page if today counted or not.
-- There is a bug with an interaction between weekly days off and additional days off.
-- Revert to old middleware
 - Make countdown forms respond to validation
 
 - full moon
@@ -33,6 +31,8 @@
 - improve error handling
 - I notice that confirm to delete requires 2 clicks
 - Watch Theo's tutorial to check out posthog and sentry
+- When I refresh countdown page, number will shift by 1 after loaded. It's probably related to today date.
+- move delete countdown to use form hook
 
 ```
     "vercel-build": "if [ \"$VERCEL_ENV\" = \"production\" ]; then drizzle-kit push; elif [ \"$VERCEL_ENV\" = \"preview\" ]; drizzle-kit push --force; fi && next build",

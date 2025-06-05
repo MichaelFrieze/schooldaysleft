@@ -12,7 +12,7 @@ import { DashboardCountdownCard } from "./dashboard-countdown-card";
 export const DashboardContent = () => {
   return (
     <ErrorBoundary fallback={<p>Error...</p>}>
-      <Suspense>
+      <Suspense fallback={<p>Loading...</p>}>
         <DashboardContentSuspense />
       </Suspense>
     </ErrorBoundary>
@@ -24,6 +24,7 @@ const DashboardContentSuspense = () => {
 
   const { data: countdowns } = useSuspenseQuery({
     ...trpc.countdown.getAll.queryOptions(),
+    retry: false,
   });
 
   if (countdowns.length === 0) {

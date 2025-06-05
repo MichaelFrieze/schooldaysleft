@@ -20,7 +20,7 @@ import { ErrorBoundary } from "react-error-boundary";
 export const CountdownNavDropdown = () => {
   return (
     <ErrorBoundary fallback={<p>Error...</p>}>
-      <Suspense>
+      <Suspense fallback={<p>Loading...</p>}>
         <CountdownNavDropdownSuspense />
       </Suspense>
     </ErrorBoundary>
@@ -33,6 +33,7 @@ const CountdownNavDropdownSuspense = () => {
 
   const { data: countdowns } = useSuspenseQuery({
     ...trpc.countdown.getAll.queryOptions(),
+    retry: false,
   });
 
   const getCurrentPageName = () => {

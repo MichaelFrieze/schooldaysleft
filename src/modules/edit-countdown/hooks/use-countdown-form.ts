@@ -16,6 +16,7 @@ import {
 import { useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const formSchema = z
@@ -160,8 +161,11 @@ export const useCountdownForm = () => {
           void router.push(`/countdown/${updatedCountdown.id}`);
         },
         onError: (error) => {
-          console.error("Failed to update countdown:", error);
-          // TODO: show error toast
+          toast.error("Failed to edit countdown", {
+            description: error.message,
+            descriptionClassName: "!text-destructive",
+          });
+          console.error("Failed to edit countdown:", error);
         },
       },
     );

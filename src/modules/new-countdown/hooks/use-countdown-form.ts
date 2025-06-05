@@ -12,6 +12,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const formSchema = z
@@ -133,6 +134,10 @@ export const useCountdownForm = () => {
         }
       },
       onError: (error) => {
+        toast.error("Failed to create countdown", {
+          description: error.message,
+          descriptionClassName: "!text-destructive",
+        });
         console.error("Failed to create countdown:", error);
       },
     });

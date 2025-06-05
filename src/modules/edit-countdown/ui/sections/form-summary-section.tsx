@@ -9,6 +9,7 @@ import { format, isSameDay } from "date-fns";
 import { Loader2, Trash2 } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import type { UseFormReturn } from "react-hook-form";
+import { toast } from "sonner";
 
 const DAYS_OF_WEEK = [
   { label: "Sunday", value: 0 },
@@ -82,8 +83,11 @@ export const FormSummarySection = ({
       void router.push("/dashboard");
     },
     onError: (error) => {
+      toast.error("Failed to delete countdown", {
+        description: error.message,
+        descriptionClassName: "!text-destructive",
+      });
       console.error("Failed to delete countdown:", error);
-      // Maybe add toast notification here if you have a toast system
     },
   });
 
