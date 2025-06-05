@@ -8,6 +8,7 @@
 - Maybe add to countdown page if today counted or not.
 - There is a bug with an interaction between weekly days off and additional days off.
 - Revert to old middleware
+- Make countdown forms respond to validation
 
 - full moon
 - chance of outside recess (weather)
