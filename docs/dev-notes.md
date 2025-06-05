@@ -6,6 +6,8 @@
 - toast notifications
 - dashboard cards need to look more like clickable buttons and get correct info displayed
 - Maybe add to countdown page if today counted or not.
+- There is a bug with an interaction between weekly days off and additional days off.
+- Revert to old middleware
 
 - full moon
 - chance of outside recess (weather)
@@ -29,7 +31,7 @@
 - find out what happens if you make 2 separate prefetches to the same query during the same request. For example, using prefetch getAll procedure in the layout and on the page.
 - improve error handling
 - I notice that confirm to delete requires 2 clicks
-- consider adding infinite scroll on the dashboard if a user has many countdowns
+- Watch Theo's tutorial to check out posthog and sentry
 
 ```
     "vercel-build": "if [ \"$VERCEL_ENV\" = \"production\" ]; then drizzle-kit push; elif [ \"$VERCEL_ENV\" = \"preview\" ]; drizzle-kit push --force; fi && next build",
