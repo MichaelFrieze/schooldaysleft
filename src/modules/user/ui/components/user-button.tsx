@@ -13,7 +13,10 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTRPC } from "@/trpc/react";
 import { useClerk } from "@clerk/nextjs";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import {
+  useQueryErrorResetBoundary,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
 import {
   Home,
   LayoutDashboard,
@@ -23,13 +26,13 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
-import { ErrorBoundary } from "react-error-boundary";
+import { ErrorBoundary, type FallbackProps } from "react-error-boundary";
 
 export const UserButton = () => {
+  const { reset } = useQueryErrorResetBoundary();
+
   return (
-    <ErrorBoundary
-      fallback={<Skeleton className="h-8 w-8 rounded-full bg-red-500" />}
-    >
+    <ErrorBoundary FallbackComponent={UserButtonError} onReset={reset}>
       <Suspense fallback={<Skeleton className="h-8 w-8 rounded-full" />}>
         <UserButtonSuspense />
       </Suspense>
@@ -115,3 +118,12 @@ export function UserButtonSuspense() {
     </DropdownMenu>
   );
 }
+
+const UserButtonError = ({ resetErrorBoundary }: FallbackProps) => {
+  return (
+    <Skeleton
+      onClick={resetErrorBoundary}
+      className="bg-destructive h-8 w-8 cursor-pointer rounded-full"
+    />
+  );
+};

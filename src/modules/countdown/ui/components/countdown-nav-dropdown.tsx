@@ -8,19 +8,33 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { useTRPC } from "@/trpc/react";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { ChevronDown, LayoutDashboard, Plus } from "lucide-react";
+import {
+  useQueryErrorResetBoundary,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
+import {
+  AlertTriangle,
+  ChevronDown,
+  LayoutDashboard,
+  Plus,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Suspense } from "react";
-import { ErrorBoundary } from "react-error-boundary";
+import { ErrorBoundary, type FallbackProps } from "react-error-boundary";
 
 export const CountdownNavDropdown = () => {
+  const { reset } = useQueryErrorResetBoundary();
+
   return (
-    <ErrorBoundary fallback={<p>Error...</p>}>
-      <Suspense fallback={<p>Loading...</p>}>
+    <ErrorBoundary
+      FallbackComponent={CountdownNavDropdownError}
+      onReset={reset}
+    >
+      <Suspense fallback={<CountdownNavDropdownLoading />}>
         <CountdownNavDropdownSuspense />
       </Suspense>
     </ErrorBoundary>
@@ -33,7 +47,6 @@ const CountdownNavDropdownSuspense = () => {
 
   const { data: countdowns } = useSuspenseQuery({
     ...trpc.countdown.getAll.queryOptions(),
-    retry: false,
   });
 
   const getCurrentPageName = () => {
@@ -111,4 +124,17 @@ const CountdownNavDropdownSuspense = () => {
       </DropdownMenuContent>
     </DropdownMenu>
   );
+};
+
+const CountdownNavDropdownError = ({ resetErrorBoundary }: FallbackProps) => {
+  return (
+    <Button variant="ghost" onClick={resetErrorBoundary} className="gap-2">
+      <AlertTriangle className="text-destructive h-4 w-4 shrink-0" />
+      <span className="text-destructive truncate">Error</span>
+    </Button>
+  );
+};
+
+const CountdownNavDropdownLoading = () => {
+  return <Skeleton className="h-8 w-48" />;
 };
