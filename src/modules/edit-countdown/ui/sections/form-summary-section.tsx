@@ -1,25 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { DAYS_OF_WEEK } from "@/lib/constants";
 import type { Countdown } from "@/modules/countdown/types";
 import type { FormData } from "@/modules/edit-countdown/hooks/use-countdown-form";
-import { useTRPC } from "@/trpc/react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { format, isSameDay } from "date-fns";
 import { Loader2, Trash2 } from "lucide-react";
-import { useParams, useRouter } from "next/navigation";
 import type { UseFormReturn } from "react-hook-form";
-import { toast } from "sonner";
-
-const DAYS_OF_WEEK = [
-  { label: "Sunday", value: 0 },
-  { label: "Monday", value: 1 },
-  { label: "Tuesday", value: 2 },
-  { label: "Wednesday", value: 3 },
-  { label: "Thursday", value: 4 },
-  { label: "Friday", value: 5 },
-  { label: "Saturday", value: 6 },
-];
 
 interface FormSummarySectionProps {
   form: UseFormReturn<FormData>;
@@ -29,6 +16,8 @@ interface FormSummarySectionProps {
   additionalDaysOff: Date[];
   defaultCountdown: Countdown;
   handleReset: () => void;
+  handleDelete: () => void;
+  isDeleting?: boolean;
   isSubmitting?: boolean;
 }
 
@@ -66,53 +55,10 @@ export const FormSummarySection = ({
   additionalDaysOff,
   defaultCountdown,
   handleReset,
+  handleDelete,
+  isDeleting = false,
   isSubmitting = false,
 }: FormSummarySectionProps) => {
-  const router = useRouter();
-  const trpc = useTRPC();
-  const queryClient = useQueryClient();
-  const { countdownId } = useParams<{ countdownId: string }>();
-
-  const deleteCountdownMutation = useMutation({
-    ...trpc.countdown.delete.mutationOptions(),
-    onSuccess: () => {
-      void queryClient.invalidateQueries({
-        queryKey: trpc.countdown.getAll.queryKey(),
-      });
-
-      void router.push("/dashboard");
-    },
-    onError: (error) => {
-      toast.error("Failed to delete countdown", {
-        description: error.message,
-        descriptionClassName: "!text-destructive",
-      });
-      console.error("Failed to delete countdown:", error);
-    },
-  });
-
-  const handleDelete = () => {
-    if (
-      confirm(
-        `Are you sure you want to delete "${defaultCountdown.name}"? This action cannot be undone.`,
-      )
-    ) {
-      deleteCountdownMutation.mutate({
-        id: parseInt(countdownId),
-      });
-    }
-  };
-
-  const handleResetWithConfirmation = () => {
-    if (
-      confirm(
-        "Are you sure you want to reset all changes? This will restore the original countdown settings.",
-      )
-    ) {
-      handleReset();
-    }
-  };
-
   const formatWeeklyDaysOff = (days: number[]) => {
     return days.length > 0
       ? days
@@ -208,7 +154,7 @@ export const FormSummarySection = ({
             <Button
               type="button"
               variant="outline"
-              onClick={handleResetWithConfirmation}
+              onClick={handleReset}
               disabled={!hasChanges}
               className="flex-1"
             >
@@ -218,10 +164,10 @@ export const FormSummarySection = ({
               type="button"
               variant="destructive"
               onClick={handleDelete}
-              disabled={deleteCountdownMutation.isPending}
+              disabled={isDeleting}
               className="flex-1"
             >
-              {deleteCountdownMutation.isPending ? (
+              {isDeleting ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
                 <Trash2 className="h-4 w-4" />

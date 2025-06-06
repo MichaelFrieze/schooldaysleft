@@ -58,6 +58,10 @@ export const useCountdownForm = () => {
     trpc.countdown.update.mutationOptions(),
   );
 
+  const deleteCountdownMutation = useMutation({
+    ...trpc.countdown.delete.mutationOptions(),
+  });
+
   const invalidateCountdownQueries = () => {
     void queryClient.invalidateQueries({
       queryKey: trpc.countdown.getAll.queryKey(),
@@ -171,14 +175,50 @@ export const useCountdownForm = () => {
     );
   };
 
+  const handleDelete = () => {
+    if (
+      confirm(
+        `Are you sure you want to delete "${defaultCountdown.name}"? This action cannot be undone.`,
+      )
+    ) {
+      deleteCountdownMutation.mutate(
+        {
+          id: parseInt(countdownId),
+        },
+        {
+          onSuccess: () => {
+            void queryClient.invalidateQueries({
+              queryKey: trpc.countdown.getAll.queryKey(),
+            });
+
+            void router.push("/dashboard");
+          },
+          onError: (error) => {
+            toast.error("Failed to delete countdown", {
+              description: error.message,
+              descriptionClassName: "!text-destructive",
+            });
+            console.error("Failed to delete countdown:", error);
+          },
+        },
+      );
+    }
+  };
+
   const handleReset = () => {
-    form.reset({
-      name: defaultCountdown.name,
-      startDate: defaultCountdown.startDate,
-      endDate: defaultCountdown.endDate,
-      weeklyDaysOff: defaultCountdown.weeklyDaysOff,
-      additionalDaysOff: defaultCountdown.additionalDaysOff,
-    });
+    if (
+      confirm(
+        "Are you sure you want to reset all changes? This will restore the original countdown settings.",
+      )
+    ) {
+      form.reset({
+        name: defaultCountdown.name,
+        startDate: defaultCountdown.startDate,
+        endDate: defaultCountdown.endDate,
+        weeklyDaysOff: defaultCountdown.weeklyDaysOff,
+        additionalDaysOff: defaultCountdown.additionalDaysOff,
+      });
+    }
   };
 
   const isFormComplete =
@@ -205,6 +245,8 @@ export const useCountdownForm = () => {
     isFormComplete,
     defaultCountdown,
     handleReset,
+    handleDelete,
+    isDeleting: deleteCountdownMutation.isPending,
     isSubmitting: updateCountdownMutation.isPending,
   };
 };

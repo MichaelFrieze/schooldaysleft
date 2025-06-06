@@ -5,8 +5,8 @@
 - improve suspense skeletons
 - toast notifications
 - dashboard cards need to look more like clickable buttons and get correct info displayed
-- Maybe add to countdown page if today counted or not.
-- Make countdown forms respond to validation
+- Maybe add to countdown page if today counted
+- Make landing page look better
 
 - full moon
 - chance of outside recess (weather)

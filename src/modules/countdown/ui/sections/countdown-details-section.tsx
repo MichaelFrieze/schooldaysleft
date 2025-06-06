@@ -3,6 +3,7 @@
 import { Calendar } from "@/components/ui/calendar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { DAYS_OF_WEEK } from "@/lib/constants";
 import { formatDate } from "@/lib/utils";
 import { useTRPC } from "@/trpc/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -14,16 +15,6 @@ import { ErrorBoundary } from "react-error-boundary";
 interface CountdownDetailsSectionProps {
   countdownId: string;
 }
-
-const DAYS_OF_WEEK = [
-  { label: "Sunday", value: 0 },
-  { label: "Monday", value: 1 },
-  { label: "Tuesday", value: 2 },
-  { label: "Wednesday", value: 3 },
-  { label: "Thursday", value: 4 },
-  { label: "Friday", value: 5 },
-  { label: "Saturday", value: 6 },
-];
 
 export const CountdownDetailsSection = ({
   countdownId,

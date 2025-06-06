@@ -37,6 +37,8 @@ export const EditCountdownFormSuspense = () => {
     isFormComplete,
     defaultCountdown,
     handleReset,
+    handleDelete,
+    isDeleting,
     isSubmitting,
   } = useCountdownForm();
 
@@ -74,6 +76,8 @@ export const EditCountdownFormSuspense = () => {
             additionalDaysOff={additionalDaysOff}
             defaultCountdown={defaultCountdown}
             handleReset={handleReset}
+            handleDelete={handleDelete}
+            isDeleting={isDeleting}
             isSubmitting={isSubmitting}
           />
         )}

@@ -1,20 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { format } from "date-fns";
-import type { UseFormReturn } from "react-hook-form";
+import { DAYS_OF_WEEK } from "@/lib/constants";
 import type { FormData } from "@/modules/new-countdown/hooks/use-countdown-form";
+import { format } from "date-fns";
 import { Loader2 } from "lucide-react";
-
-const DAYS_OF_WEEK = [
-  { label: "Sunday", value: 0 },
-  { label: "Monday", value: 1 },
-  { label: "Tuesday", value: 2 },
-  { label: "Wednesday", value: 3 },
-  { label: "Thursday", value: 4 },
-  { label: "Friday", value: 5 },
-  { label: "Saturday", value: 6 },
-];
+import type { UseFormReturn } from "react-hook-form";
 
 interface FormSummarySectionProps {
   form: UseFormReturn<FormData>;
