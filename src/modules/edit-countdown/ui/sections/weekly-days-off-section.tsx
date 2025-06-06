@@ -6,19 +6,10 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+import { DAYS_OF_WEEK } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import type { FormData } from "@/modules/edit-countdown/hooks/use-countdown-form";
 import type { UseFormReturn } from "react-hook-form";
-
-const DAYS_OF_WEEK = [
-  { label: "Sunday", value: 0 },
-  { label: "Monday", value: 1 },
-  { label: "Tuesday", value: 2 },
-  { label: "Wednesday", value: 3 },
-  { label: "Thursday", value: 4 },
-  { label: "Friday", value: 5 },
-  { label: "Saturday", value: 6 },
-];
 
 interface WeeklyDaysOffSectionProps {
   form: UseFormReturn<FormData>;

@@ -4,13 +4,14 @@ import { NextResponse } from "next/server";
 const isPublicRoute = createRouteMatcher(["/", "/sign-in(.*)", "/not-found"]);
 
 export default clerkMiddleware(async (auth, req) => {
-  if (isPublicRoute(req)) {
-    return NextResponse.next();
-  }
-
   const { userId } = await auth();
 
-  if (!userId) {
+  if (userId && req.nextUrl.pathname === "/") {
+    const dashboardUrl = new URL("/dashboard", req.url);
+    return NextResponse.redirect(dashboardUrl);
+  }
+
+  if (!userId && !isPublicRoute(req)) {
     const signInUrl = new URL("/sign-in", req.url);
     return NextResponse.redirect(signInUrl);
   }

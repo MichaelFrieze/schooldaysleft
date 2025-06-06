@@ -12,6 +12,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const formSchema = z
@@ -95,14 +96,26 @@ export const useCountdownForm = () => {
   };
 
   const handleWeeklyDayToggle = (dayValue: number) => {
-    const currentDays = form.getValues("weeklyDaysOff");
-    const newDays = currentDays.includes(dayValue)
-      ? currentDays.filter((d) => d !== dayValue)
-      : [...currentDays, dayValue];
+    const currentWeeklyDaysOff = form.getValues("weeklyDaysOff");
+    const isAddingDay = !currentWeeklyDaysOff.includes(dayValue);
 
-    newDays.sort((a, b) => a - b);
+    const newWeeklyDaysOff = isAddingDay
+      ? [...currentWeeklyDaysOff, dayValue]
+      : currentWeeklyDaysOff.filter((d) => d !== dayValue);
 
-    form.setValue("weeklyDaysOff", newDays);
+    newWeeklyDaysOff.sort((a, b) => a - b);
+    form.setValue("weeklyDaysOff", newWeeklyDaysOff);
+
+    if (isAddingDay) {
+      const currentAdditionalDaysOff = form.getValues("additionalDaysOff");
+      const updatedAdditionalDaysOff = currentAdditionalDaysOff.filter(
+        (date) => getDay(date) !== dayValue,
+      );
+
+      if (updatedAdditionalDaysOff.length !== currentAdditionalDaysOff.length) {
+        form.setValue("additionalDaysOff", updatedAdditionalDaysOff);
+      }
+    }
   };
 
   const onSubmit = (data: FormData) => {
@@ -121,6 +134,10 @@ export const useCountdownForm = () => {
         }
       },
       onError: (error) => {
+        toast.error("Failed to create countdown", {
+          description: error.message,
+          descriptionClassName: "!text-destructive",
+        });
         console.error("Failed to create countdown:", error);
       },
     });

@@ -16,6 +16,7 @@ import {
 import { useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const formSchema = z
@@ -56,6 +57,10 @@ export const useCountdownForm = () => {
   const updateCountdownMutation = useMutation(
     trpc.countdown.update.mutationOptions(),
   );
+
+  const deleteCountdownMutation = useMutation({
+    ...trpc.countdown.delete.mutationOptions(),
+  });
 
   const invalidateCountdownQueries = () => {
     void queryClient.invalidateQueries({
@@ -114,14 +119,27 @@ export const useCountdownForm = () => {
   };
 
   const handleWeeklyDayToggle = (dayValue: number) => {
-    const currentDays = form.getValues("weeklyDaysOff");
-    const newDays = currentDays.includes(dayValue)
-      ? currentDays.filter((d) => d !== dayValue)
-      : [...currentDays, dayValue];
+    const currentWeeklyDaysOff = form.getValues("weeklyDaysOff");
+    const isAddingDay = !currentWeeklyDaysOff.includes(dayValue);
 
-    newDays.sort((a, b) => a - b);
+    const newWeeklyDaysOff = isAddingDay
+      ? [...currentWeeklyDaysOff, dayValue]
+      : currentWeeklyDaysOff.filter((d) => d !== dayValue);
 
-    form.setValue("weeklyDaysOff", newDays);
+    newWeeklyDaysOff.sort((a, b) => a - b);
+    form.setValue("weeklyDaysOff", newWeeklyDaysOff);
+
+    // If a weekly day off was added, remove any additional days off that fall on that day
+    if (isAddingDay) {
+      const currentAdditionalDaysOff = form.getValues("additionalDaysOff");
+      const updatedAdditionalDaysOff = currentAdditionalDaysOff.filter(
+        (date) => getDay(date) !== dayValue,
+      );
+
+      if (updatedAdditionalDaysOff.length !== currentAdditionalDaysOff.length) {
+        form.setValue("additionalDaysOff", updatedAdditionalDaysOff);
+      }
+    }
   };
 
   const onSubmit = (data: FormData) => {
@@ -147,21 +165,60 @@ export const useCountdownForm = () => {
           void router.push(`/countdown/${updatedCountdown.id}`);
         },
         onError: (error) => {
-          console.error("Failed to update countdown:", error);
-          // TODO: show error toast
+          toast.error("Failed to edit countdown", {
+            description: error.message,
+            descriptionClassName: "!text-destructive",
+          });
+          console.error("Failed to edit countdown:", error);
         },
       },
     );
   };
 
+  const handleDelete = () => {
+    if (
+      confirm(
+        `Are you sure you want to delete "${defaultCountdown.name}"? This action cannot be undone.`,
+      )
+    ) {
+      deleteCountdownMutation.mutate(
+        {
+          id: parseInt(countdownId),
+        },
+        {
+          onSuccess: () => {
+            void queryClient.invalidateQueries({
+              queryKey: trpc.countdown.getAll.queryKey(),
+            });
+
+            void router.push("/dashboard");
+          },
+          onError: (error) => {
+            toast.error("Failed to delete countdown", {
+              description: error.message,
+              descriptionClassName: "!text-destructive",
+            });
+            console.error("Failed to delete countdown:", error);
+          },
+        },
+      );
+    }
+  };
+
   const handleReset = () => {
-    form.reset({
-      name: defaultCountdown.name,
-      startDate: defaultCountdown.startDate,
-      endDate: defaultCountdown.endDate,
-      weeklyDaysOff: defaultCountdown.weeklyDaysOff,
-      additionalDaysOff: defaultCountdown.additionalDaysOff,
-    });
+    if (
+      confirm(
+        "Are you sure you want to reset all changes? This will restore the original countdown settings.",
+      )
+    ) {
+      form.reset({
+        name: defaultCountdown.name,
+        startDate: defaultCountdown.startDate,
+        endDate: defaultCountdown.endDate,
+        weeklyDaysOff: defaultCountdown.weeklyDaysOff,
+        additionalDaysOff: defaultCountdown.additionalDaysOff,
+      });
+    }
   };
 
   const isFormComplete =
@@ -188,6 +245,8 @@ export const useCountdownForm = () => {
     isFormComplete,
     defaultCountdown,
     handleReset,
+    handleDelete,
+    isDeleting: deleteCountdownMutation.isPending,
     isSubmitting: updateCountdownMutation.isPending,
   };
 };

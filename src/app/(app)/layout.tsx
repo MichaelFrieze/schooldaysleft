@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/sonner";
 import { TRPCReactProvider } from "@/trpc/react";
 import { ClerkProvider } from "@clerk/nextjs";
 
@@ -8,7 +9,10 @@ interface LayoutProps {
 const Layout = ({ children }: LayoutProps) => {
   return (
     <ClerkProvider afterSignOutUrl={"/"}>
-      <TRPCReactProvider>{children}</TRPCReactProvider>
+      <TRPCReactProvider>
+        <Toaster />
+        {children}
+      </TRPCReactProvider>
     </ClerkProvider>
   );
 };

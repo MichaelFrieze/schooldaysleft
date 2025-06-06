@@ -3,9 +3,9 @@
 - on the create new countdown form, I need to let the user know if they are trying to use a countdown name that is already used.
 - Consider adding a calendar for every month in holidays and break card
 - improve suspense skeletons
-- toast notifications
 - dashboard cards need to look more like clickable buttons and get correct info displayed
-- Maybe add to countdown page if today counted or not.
+- Maybe add to countdown page if today counted
+- Make landing page look better
 
 - full moon
 - chance of outside recess (weather)
@@ -29,7 +29,9 @@
 - find out what happens if you make 2 separate prefetches to the same query during the same request. For example, using prefetch getAll procedure in the layout and on the page.
 - improve error handling
 - I notice that confirm to delete requires 2 clicks
-- consider adding infinite scroll on the dashboard if a user has many countdowns
+- Watch Theo's tutorial to check out posthog and sentry
+- When I refresh countdown page, number will shift by 1 after loaded. It's probably related to today date.
+- move delete countdown to use form hook
 
 ```
     "vercel-build": "if [ \"$VERCEL_ENV\" = \"production\" ]; then drizzle-kit push; elif [ \"$VERCEL_ENV\" = \"preview\" ]; drizzle-kit push --force; fi && next build",
