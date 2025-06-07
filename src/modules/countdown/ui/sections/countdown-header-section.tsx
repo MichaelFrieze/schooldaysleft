@@ -56,7 +56,7 @@ const CountdownHeaderSectionSuspense = ({
 
 const CountdownHeaderSectionLoading = () => {
   return (
-    <section className="py-8 md:py-12">
+    <section className="[animation:delayed-fade-in_.5s_ease-out] py-8 md:py-12">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="space-y-2">
           <Skeleton className="h-9 w-full rounded-md md:h-10 md:w-lg" />

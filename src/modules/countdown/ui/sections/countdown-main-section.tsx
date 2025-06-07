@@ -97,7 +97,7 @@ const CountdownMainSectionSuspense = ({
 
 const CountdownMainSectionLoading = () => {
   return (
-    <section className="pb-8 md:pb-12">
+    <section className="[animation:delayed-fade-in_.5s_ease-out] pb-8 md:pb-12">
       <Card className="bg-background rounded-xl">
         <CardContent className="p-8">
           <div className="pb-8">

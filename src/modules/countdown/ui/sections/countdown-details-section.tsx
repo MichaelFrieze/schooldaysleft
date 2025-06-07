@@ -214,7 +214,7 @@ const CountdownDetailsSectionSuspense = ({
 
 const CountdownDetailsSectionLoading = () => {
   return (
-    <section className="pb-8 md:pb-12">
+    <section className="[animation:delayed-fade-in_.5s_ease-out] pb-8 md:pb-12">
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
         {/* Countdown Details Skeleton */}
         <Card>

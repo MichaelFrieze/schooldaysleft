@@ -30,6 +30,7 @@
 - Watch Theo's tutorial to check out posthog and sentry
 - When I refresh countdown page, number will shift by 1 after loaded. It's probably related to today date.
 - move delete countdown to use form hook
+- consider moving auth redirects out of middleware to keep it static
 
 ```
     "vercel-build": "if [ \"$VERCEL_ENV\" = \"production\" ]; then drizzle-kit push; elif [ \"$VERCEL_ENV\" = \"preview\" ]; drizzle-kit push --force; fi && next build",
