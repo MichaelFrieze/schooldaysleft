@@ -1,6 +1,5 @@
 # TODO
 
-- Consider adding a calendar for every month in holidays and break card
 - dashboard cards need to look more like clickable buttons and get correct info displayed
 - Make landing page look better
 

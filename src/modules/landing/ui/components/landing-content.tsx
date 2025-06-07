@@ -11,15 +11,20 @@ import {
   Calendar,
   CalendarDays,
   PenLine,
-  School,
   Settings,
   Sparkles,
-  Sun,
   User,
 } from "lucide-react";
 import Link from "next/link";
 
 export const LandingContent = () => {
+  const todayFormatted = new Date().toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
   return (
     <div className="container">
       {/* Hero Section */}
@@ -80,43 +85,33 @@ export const LandingContent = () => {
           </div>
 
           <Card className="border-border/40 bg-background overflow-hidden rounded-xl border shadow-lg">
-            <CardContent className="p-6">
-              <div className="mb-6 flex items-start justify-between">
-                <div className="bg-primary/10 flex h-14 w-14 items-center justify-center rounded-full">
-                  <School className="text-primary h-8 w-8" />
-                </div>
-
-                <div className="text-muted-foreground hover:text-foreground h-8 w-8">
-                  <Settings className="h-4 w-4" />
+            <CardContent className="p-8">
+              <div className="pb-8">
+                <div className="text-muted-foreground flex items-center gap-2">
+                  <Calendar className="h-4 w-4" />
+                  <span className="text-sm font-medium">{todayFormatted}</span>
                 </div>
               </div>
 
               <div className="text-center">
-                <div className="from-primary via-primary/80 to-primary bg-gradient-to-r bg-clip-text text-8xl font-extrabold text-transparent tabular-nums md:text-9xl">
+                <div className="from-primary via-primary/80 to-primary bg-gradient-to-r bg-clip-text text-8xl font-extrabold text-transparent tabular-nums">
                   15
                 </div>
-                <p className="text-muted-foreground mt-1 text-lg font-medium">
-                  days to go!
+                <p className="text-muted-foreground pt-2 text-xl font-medium">
+                  days left!
                 </p>
               </div>
 
-              <div className="mt-8 flex justify-center space-x-6">
-                <div className="flex items-center gap-1.5">
-                  <Calendar className="h-4 w-4 text-green-500" />
-                  <span className="text-muted-foreground text-xs font-medium">
-                    Monday-Friday
+              <div className="pt-8">
+                <div className="flex items-center justify-between pb-2">
+                  <span className="text-muted-foreground text-sm font-medium">
+                    Progress
+                  </span>
+                  <span className="text-muted-foreground text-sm font-medium">
+                    87%
                   </span>
                 </div>
-                <div className="flex items-center gap-1.5">
-                  <Sun className="h-4 w-4 text-amber-500" />
-                  <span className="text-muted-foreground text-xs font-medium">
-                    Weekends Off
-                  </span>
-                </div>
-              </div>
-
-              <div className="mt-8">
-                <Progress value={87} className="h-2.5" />
+                <Progress value={87} className="h-3" />
               </div>
             </CardContent>
           </Card>
