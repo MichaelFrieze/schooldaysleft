@@ -158,12 +158,6 @@ export const useCountdownForm = () => {
         onSuccess: (updatedCountdown) => {
           invalidateCountdownQueries();
 
-          // TODO: remove this
-          console.log("Countdown updated successfully", {
-            data: updatedCountdown,
-          });
-
-          // TODO: consider remove this
           void router.push(`/countdown/${updatedCountdown.id}`);
         },
         onError: (error) => {

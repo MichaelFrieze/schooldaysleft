@@ -1,6 +1,5 @@
 # TODO
 
-- on the create new countdown form, I need to let the user know if they are trying to use a countdown name that is already used.
 - Consider adding a calendar for every month in holidays and break card
 - dashboard cards need to look more like clickable buttons and get correct info displayed
 - Make landing page look better
