@@ -167,6 +167,13 @@ export const useCountdownForm = () => {
           void router.push(`/countdown/${updatedCountdown.id}`);
         },
         onError: (error) => {
+          if (error.message.includes("Countdown name already exists")) {
+            form.setError("name", {
+              type: "manual",
+              message: "Countdown name already exists.",
+            });
+          }
+
           toast.error("Failed to edit countdown", {
             description: error.message,
             descriptionClassName: "!text-destructive",

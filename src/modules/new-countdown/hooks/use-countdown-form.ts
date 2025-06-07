@@ -135,6 +135,13 @@ export const useCountdownForm = () => {
         }
       },
       onError: (error) => {
+        if (error.message.includes("Countdown name already exists")) {
+          form.setError("name", {
+            type: "manual",
+            message: "Countdown name already exists.",
+          });
+        }
+
         toast.error("Failed to create countdown", {
           description: error.message,
           descriptionClassName: "!text-destructive",
