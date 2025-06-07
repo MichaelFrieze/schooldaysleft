@@ -6,22 +6,22 @@ import { AdditionalDaysOffSection } from "@/modules/edit-countdown/ui/sections/a
 import { FormSummarySection } from "@/modules/edit-countdown/ui/sections/form-summary-section";
 import { NameAndDatesSection } from "@/modules/edit-countdown/ui/sections/name-and-dates-section";
 import { WeeklyDaysOffSection } from "@/modules/edit-countdown/ui/sections/weekly-days-off-section";
+import { useQueryErrorResetBoundary } from "@tanstack/react-query";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+import { EditCountdownFormError } from "./edit-countdown-form-error";
 
 export const EditCountdownForm = () => {
+  const { reset } = useQueryErrorResetBoundary();
+
   return (
-    <ErrorBoundary fallback={<p>Error...</p>}>
+    <ErrorBoundary FallbackComponent={EditCountdownFormError} onReset={reset}>
       <Suspense>
         <EditCountdownFormSuspense />
       </Suspense>
     </ErrorBoundary>
   );
 };
-
-// const EditCountdownFormSkeleton = () => {
-//   return <div className="py-8 md:py-12">loading...</div>;
-// };
 
 export const EditCountdownFormSuspense = () => {
   const {

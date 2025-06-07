@@ -52,6 +52,7 @@ export const useCountdownForm = () => {
     ...trpc.countdown.getById.queryOptions({
       id: parseInt(countdownId),
     }),
+    retry: false,
   });
 
   const updateCountdownMutation = useMutation(

@@ -10,7 +10,6 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { format, isAfter, isBefore, isSameDay } from "date-fns";
 import { CalendarDays, CalendarIcon, Sun } from "lucide-react";
 import { Suspense, useMemo } from "react";
-import { ErrorBoundary } from "react-error-boundary";
 
 interface CountdownDetailsSectionProps {
   countdownId: string;
@@ -20,17 +19,11 @@ export const CountdownDetailsSection = ({
   countdownId,
 }: CountdownDetailsSectionProps) => {
   return (
-    <ErrorBoundary fallback={<p>Error...</p>}>
-      <Suspense>
-        <CountdownDetailsSectionSuspense countdownId={countdownId} />
-      </Suspense>
-    </ErrorBoundary>
+    <Suspense>
+      <CountdownDetailsSectionSuspense countdownId={countdownId} />
+    </Suspense>
   );
 };
-
-// const CountdownDetailsSectionSkeleton = () => {
-//   return <div className="pb-8 md:pb-12">loading...</div>;
-// };
 
 const CountdownDetailsSectionSuspense = ({
   countdownId,
@@ -41,6 +34,7 @@ const CountdownDetailsSectionSuspense = ({
     ...trpc.countdown.getById.queryOptions({
       id: parseInt(countdownId),
     }),
+    retry: false,
   });
 
   const allAdditionalDaysOffDates = useMemo(
@@ -216,3 +210,68 @@ const CountdownDetailsSectionSuspense = ({
     </section>
   );
 };
+
+// const CountdownDetailsSectionLoading = () => {
+//   return (
+//     <section className="pb-8 md:pb-12">
+//       <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+//         {/* Countdown Details Skeleton */}
+//         <Card>
+//           <CardHeader>
+//             <CardTitle>
+//               <Skeleton className="h-5 w-48" />
+//             </CardTitle>
+//           </CardHeader>
+//           <CardContent className="space-y-4">
+//             <div>
+//               <Skeleton className="mb-2 h-5 w-24" />
+//               <Skeleton className="h-4 w-40" />
+//             </div>
+//             <Separator />
+//             <div>
+//               <Skeleton className="mb-2 h-5 w-20" />
+//               <Skeleton className="h-4 w-40" />
+//             </div>
+//             <Separator />
+//             <div>
+//               <Skeleton className="mb-2 h-5 w-24" />
+//               <Skeleton className="h-4 w-40" />
+//             </div>
+//           </CardContent>
+//         </Card>
+
+//         {/* Weekly Schedule Skeleton */}
+//         <Card>
+//           <CardHeader>
+//             <CardTitle>
+//               <Skeleton className="h-5 w-56" />
+//             </CardTitle>
+//           </CardHeader>
+//           <CardContent>
+//             <div className="space-y-2">
+//               {Array.from({ length: 7 }).map((_, i) => (
+//                 <div key={i} className="flex items-center justify-between">
+//                   <Skeleton className="h-5 w-24" />
+//                   <Skeleton className="h-6 w-16 rounded-full" />
+//                 </div>
+//               ))}
+//             </div>
+//           </CardContent>
+//         </Card>
+
+//         {/* Additional Days Off Skeleton */}
+//         <Card className="md:col-span-2">
+//           <CardHeader>
+//             <CardTitle>
+//               <Skeleton className="h-5 w-72" />
+//             </CardTitle>
+//           </CardHeader>
+//           <CardContent className="space-y-4">
+//             <Skeleton className="h-4 w-lg" />
+//             {/* <Skeleton className="mx-auto h-80 w-full max-w-sm rounded-lg" /> */}
+//           </CardContent>
+//         </Card>
+//       </div>
+//     </section>
+//   );
+// };

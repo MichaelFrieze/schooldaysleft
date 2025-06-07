@@ -47,6 +47,7 @@ const CountdownNavDropdownSuspense = () => {
 
   const { data: countdowns } = useSuspenseQuery({
     ...trpc.countdown.getAll.queryOptions(),
+    retry: false,
   });
 
   const getCurrentPageName = () => {
