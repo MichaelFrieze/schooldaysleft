@@ -3,6 +3,7 @@
 import { Calendar } from "@/components/ui/calendar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
 import { DAYS_OF_WEEK } from "@/lib/constants";
 import { formatDate } from "@/lib/utils";
 import { useTRPC } from "@/trpc/react";
@@ -19,7 +20,7 @@ export const CountdownDetailsSection = ({
   countdownId,
 }: CountdownDetailsSectionProps) => {
   return (
-    <Suspense>
+    <Suspense fallback={<CountdownDetailsSectionLoading />}>
       <CountdownDetailsSectionSuspense countdownId={countdownId} />
     </Suspense>
   );
@@ -211,67 +212,67 @@ const CountdownDetailsSectionSuspense = ({
   );
 };
 
-// const CountdownDetailsSectionLoading = () => {
-//   return (
-//     <section className="pb-8 md:pb-12">
-//       <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-//         {/* Countdown Details Skeleton */}
-//         <Card>
-//           <CardHeader>
-//             <CardTitle>
-//               <Skeleton className="h-5 w-48" />
-//             </CardTitle>
-//           </CardHeader>
-//           <CardContent className="space-y-4">
-//             <div>
-//               <Skeleton className="mb-2 h-5 w-24" />
-//               <Skeleton className="h-4 w-40" />
-//             </div>
-//             <Separator />
-//             <div>
-//               <Skeleton className="mb-2 h-5 w-20" />
-//               <Skeleton className="h-4 w-40" />
-//             </div>
-//             <Separator />
-//             <div>
-//               <Skeleton className="mb-2 h-5 w-24" />
-//               <Skeleton className="h-4 w-40" />
-//             </div>
-//           </CardContent>
-//         </Card>
+const CountdownDetailsSectionLoading = () => {
+  return (
+    <section className="pb-8 md:pb-12">
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+        {/* Countdown Details Skeleton */}
+        <Card>
+          <CardHeader>
+            <CardTitle>
+              <Skeleton className="h-5 w-48" />
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div>
+              <Skeleton className="mb-2 h-5 w-24" />
+              <Skeleton className="h-4 w-40" />
+            </div>
+            <Separator />
+            <div>
+              <Skeleton className="mb-2 h-5 w-20" />
+              <Skeleton className="h-4 w-40" />
+            </div>
+            <Separator />
+            <div>
+              <Skeleton className="mb-2 h-5 w-24" />
+              <Skeleton className="h-4 w-40" />
+            </div>
+          </CardContent>
+        </Card>
 
-//         {/* Weekly Schedule Skeleton */}
-//         <Card>
-//           <CardHeader>
-//             <CardTitle>
-//               <Skeleton className="h-5 w-56" />
-//             </CardTitle>
-//           </CardHeader>
-//           <CardContent>
-//             <div className="space-y-2">
-//               {Array.from({ length: 7 }).map((_, i) => (
-//                 <div key={i} className="flex items-center justify-between">
-//                   <Skeleton className="h-5 w-24" />
-//                   <Skeleton className="h-6 w-16 rounded-full" />
-//                 </div>
-//               ))}
-//             </div>
-//           </CardContent>
-//         </Card>
+        {/* Weekly Schedule Skeleton */}
+        <Card>
+          <CardHeader>
+            <CardTitle>
+              <Skeleton className="h-5 w-56" />
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              {Array.from({ length: 7 }).map((_, i) => (
+                <div key={i} className="flex items-center justify-between">
+                  <Skeleton className="h-5 w-24" />
+                  <Skeleton className="h-6 w-16 rounded-full" />
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
 
-//         {/* Additional Days Off Skeleton */}
-//         <Card className="md:col-span-2">
-//           <CardHeader>
-//             <CardTitle>
-//               <Skeleton className="h-5 w-72" />
-//             </CardTitle>
-//           </CardHeader>
-//           <CardContent className="space-y-4">
-//             <Skeleton className="h-4 w-lg" />
-//             {/* <Skeleton className="mx-auto h-80 w-full max-w-sm rounded-lg" /> */}
-//           </CardContent>
-//         </Card>
-//       </div>
-//     </section>
-//   );
-// };
+        {/* Additional Days Off Skeleton */}
+        <Card className="md:col-span-2">
+          <CardHeader>
+            <CardTitle>
+              <Skeleton className="h-5 w-72" />
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <Skeleton className="h-4 w-lg" />
+            {/* <Skeleton className="mx-auto h-80 w-full max-w-sm rounded-lg" /> */}
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+  );
+};
