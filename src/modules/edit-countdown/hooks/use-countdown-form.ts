@@ -74,6 +74,7 @@ export const useCountdownForm = () => {
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
+    mode: "onChange",
     defaultValues: {
       name: defaultCountdown.name,
       startDate: defaultCountdown.startDate,

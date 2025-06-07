@@ -53,6 +53,7 @@ export const useCountdownForm = () => {
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
+    mode: "onChange",
     defaultValues: {
       name: "",
       weeklyDaysOff: [0, 6], // Default to Sunday and Saturday
