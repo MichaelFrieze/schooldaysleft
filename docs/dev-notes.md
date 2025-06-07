@@ -1,9 +1,9 @@
 # TODO
 
-- on the create new countdown form, I need to let the user know if they are trying to use a countdown name that is already used.
 - Consider adding a calendar for every month in holidays and break card
 - dashboard cards need to look more like clickable buttons and get correct info displayed
 - Make landing page look better
+- consider disabling loading components on the countdown page. Sometimes date loads so quickly that it's not helpful to add loading skeletons. Maybe add a transition to delay it.
 
 - full moon
 - chance of outside recess (weather)
@@ -30,6 +30,7 @@
 - Watch Theo's tutorial to check out posthog and sentry
 - When I refresh countdown page, number will shift by 1 after loaded. It's probably related to today date.
 - move delete countdown to use form hook
+- consider moving auth redirects out of middleware to keep it static
 
 ```
     "vercel-build": "if [ \"$VERCEL_ENV\" = \"production\" ]; then drizzle-kit push; elif [ \"$VERCEL_ENV\" = \"preview\" ]; drizzle-kit push --force; fi && next build",

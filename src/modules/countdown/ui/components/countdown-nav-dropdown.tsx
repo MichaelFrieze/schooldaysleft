@@ -127,6 +127,18 @@ const CountdownNavDropdownSuspense = () => {
   );
 };
 
+const CountdownNavDropdownLoading = () => {
+  return (
+    <Button
+      variant="ghost"
+      className="max-w-64 min-w-0 [animation:delayed-fade-in_.5s_ease-out] gap-2 focus-visible:ring-1"
+    >
+      <Skeleton className="h-5 w-32" />
+      <ChevronDown className="h-4 w-4 shrink-0" />
+    </Button>
+  );
+};
+
 const CountdownNavDropdownError = ({ resetErrorBoundary }: FallbackProps) => {
   return (
     <Button variant="ghost" onClick={resetErrorBoundary} className="gap-2">
@@ -134,8 +146,4 @@ const CountdownNavDropdownError = ({ resetErrorBoundary }: FallbackProps) => {
       <span className="text-destructive truncate">Error</span>
     </Button>
   );
-};
-
-const CountdownNavDropdownLoading = () => {
-  return <Skeleton className="h-8 w-48" />;
 };

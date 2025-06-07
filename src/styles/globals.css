@@ -87,6 +87,18 @@
       height: 0;
     }
   }
+
+  @keyframes delayed-fade-in {
+    0% {
+      opacity: 0;
+    }
+    80% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
 }
 
 @utility container {

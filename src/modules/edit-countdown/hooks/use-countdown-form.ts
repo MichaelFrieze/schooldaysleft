@@ -74,6 +74,7 @@ export const useCountdownForm = () => {
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
+    mode: "onChange",
     defaultValues: {
       name: defaultCountdown.name,
       startDate: defaultCountdown.startDate,
@@ -157,15 +158,16 @@ export const useCountdownForm = () => {
         onSuccess: (updatedCountdown) => {
           invalidateCountdownQueries();
 
-          // TODO: remove this
-          console.log("Countdown updated successfully", {
-            data: updatedCountdown,
-          });
-
-          // TODO: consider remove this
           void router.push(`/countdown/${updatedCountdown.id}`);
         },
         onError: (error) => {
+          if (error.message.includes("Countdown name already exists")) {
+            form.setError("name", {
+              type: "manual",
+              message: "Countdown name already exists.",
+            });
+          }
+
           toast.error("Failed to edit countdown", {
             description: error.message,
             descriptionClassName: "!text-destructive",

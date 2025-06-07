@@ -33,7 +33,7 @@ export const UserButton = () => {
 
   return (
     <ErrorBoundary FallbackComponent={UserButtonError} onReset={reset}>
-      <Suspense fallback={<Skeleton className="h-8 w-8 rounded-full" />}>
+      <Suspense fallback={<UserButtonLoading />}>
         <UserButtonSuspense />
       </Suspense>
     </ErrorBoundary>
@@ -119,6 +119,14 @@ export function UserButtonSuspense() {
     </DropdownMenu>
   );
 }
+
+const UserButtonLoading = () => {
+  return (
+    <div className="[animation:delayed-fade-in_.5s_ease-out]">
+      <Skeleton className="h-8 w-8 rounded-full" />
+    </div>
+  );
+};
 
 const UserButtonError = ({ resetErrorBoundary }: FallbackProps) => {
   return (
