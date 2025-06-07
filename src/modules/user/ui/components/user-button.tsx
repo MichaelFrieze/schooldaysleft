@@ -1,6 +1,6 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -59,9 +59,6 @@ export function UserButtonSuspense() {
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
             <AvatarImage src={userImage} alt={"User Avatar"} />
-            <AvatarFallback>
-              <Skeleton className="h-8 w-8 rounded-full" />
-            </AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
