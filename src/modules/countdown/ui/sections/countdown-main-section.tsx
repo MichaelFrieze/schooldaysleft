@@ -6,7 +6,6 @@ import { useTRPC } from "@/trpc/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Calendar } from "lucide-react";
 import { Suspense, useMemo } from "react";
-import { ErrorBoundary } from "react-error-boundary";
 import { calculateCountdownProgress } from "../../lib/calculate-countdown-progress";
 import { calculateDaysLeft } from "../../lib/calculate-days-left";
 
@@ -18,17 +17,11 @@ export const CountdownMainSection = ({
   countdownId,
 }: CountdownMainSectionProps) => {
   return (
-    <ErrorBoundary fallback={<p>Error...</p>}>
-      <Suspense>
-        <CountdownMainSectionSuspense countdownId={countdownId} />
-      </Suspense>
-    </ErrorBoundary>
+    <Suspense>
+      <CountdownMainSectionSuspense countdownId={countdownId} />
+    </Suspense>
   );
 };
-
-// const CountdownMainSectionSkeleton = () => {
-//   return <div className="pb-8 md:pb-12">loading...</div>;
-// };
 
 const CountdownMainSectionSuspense = ({
   countdownId,
@@ -39,6 +32,7 @@ const CountdownMainSectionSuspense = ({
     ...trpc.countdown.getById.queryOptions({
       id: parseInt(countdownId),
     }),
+    retry: false,
   });
 
   const daysLeft = useMemo(() => calculateDaysLeft(countdown), [countdown]);
@@ -99,3 +93,33 @@ const CountdownMainSectionSuspense = ({
     </section>
   );
 };
+
+// const CountdownMainSectionLoading = () => {
+//   return (
+//     <section className="pb-8 md:pb-12">
+//       <Card className="bg-background rounded-xl">
+//         <CardContent className="p-8">
+//           <div className="pb-8">
+//             <div className="text-muted-foreground flex items-center gap-2">
+//               <Skeleton className="h-4 w-4" />
+//               <Skeleton className="h-5 w-48" />
+//             </div>
+//           </div>
+
+//           <div className="text-center">
+//             <Skeleton className="mx-auto h-24 w-48" />
+//             <Skeleton className="mx-auto mt-2 h-7 w-36" />
+//           </div>
+
+//           <div className="pt-8">
+//             <div className="flex items-center justify-between pb-2">
+//               <Skeleton className="h-5 w-20" />
+//               <Skeleton className="h-5 w-12" />
+//             </div>
+//             <Skeleton className="h-3 w-full" />
+//           </div>
+//         </CardContent>
+//       </Card>
+//     </section>
+//   );
+// };

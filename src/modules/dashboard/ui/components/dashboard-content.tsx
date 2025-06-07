@@ -37,6 +37,7 @@ const DashboardContentSuspense = () => {
 
   const { data: countdowns } = useSuspenseQuery({
     ...trpc.countdown.getAll.queryOptions(),
+    retry: false,
   });
 
   if (countdowns.length === 0) {

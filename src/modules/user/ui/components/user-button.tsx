@@ -48,6 +48,7 @@ export function UserButtonSuspense() {
     ...trpc.user.getUserButtonData.queryOptions(),
     staleTime: 0,
     gcTime: 0,
+    retry: false,
   });
 
   const { userFullName, userEmail, userImage } = userButtonData;
