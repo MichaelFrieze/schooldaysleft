@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -20,16 +21,15 @@ import {
 import {
   CalendarDays,
   CalendarIcon,
-  Info,
-  Sun,
   Eye,
   EyeOff,
+  Info,
+  Sun,
 } from "lucide-react";
 import { Suspense, useMemo, useState } from "react";
-import { Button } from "@/components/ui/button";
+import { calculateCountdownProgress } from "../../lib/calculate-countdown-progress";
 import { calculateDaysLeft } from "../../lib/calculate-days-left";
 import { calculateTotalDays } from "../../lib/calculate-total-days";
-import { calculateCountdownProgress } from "../../lib/calculate-countdown-progress";
 import { calculateWeeksRemaining } from "../../lib/calculate-weeks-remaining";
 
 interface CountdownDetailsSectionProps {
@@ -109,6 +109,10 @@ const CountdownDetailsSectionSuspense = ({
   const months = showPastMonths
     ? allMonths
     : allMonths.filter((month) => !isBefore(endOfMonth(month), today));
+
+  const hasPastMonths = allMonths.some((month) =>
+    isBefore(endOfMonth(month), today),
+  );
 
   const isDateDisabled = (date: Date) => {
     if (
@@ -235,6 +239,7 @@ const CountdownDetailsSectionSuspense = ({
                 size="sm"
                 onClick={() => setShowPastMonths(!showPastMonths)}
                 className="flex items-center gap-2"
+                disabled={!hasPastMonths}
               >
                 {showPastMonths ? (
                   <>
