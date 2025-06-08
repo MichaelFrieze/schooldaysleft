@@ -54,7 +54,7 @@ const CountdownMainSectionSuspense = ({
 
   return (
     <section className="pb-8 md:pb-12">
-      <Card className="bg-background rounded-xl">
+      <Card className="bg-background">
         <CardContent className="p-8">
           <div className="pb-8">
             <div className="text-muted-foreground flex items-center gap-2">
