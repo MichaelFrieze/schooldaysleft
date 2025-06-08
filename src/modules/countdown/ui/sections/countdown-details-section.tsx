@@ -22,6 +22,7 @@ import { Suspense, useMemo } from "react";
 import { calculateDaysLeft } from "../../lib/calculate-days-left";
 import { calculateTotalDays } from "../../lib/calculate-total-days";
 import { calculateCountdownProgress } from "../../lib/calculate-countdown-progress";
+import { calculateWeeksRemaining } from "../../lib/calculate-weeks-remaining";
 
 interface CountdownDetailsSectionProps {
   countdownId: string;
@@ -53,6 +54,7 @@ const CountdownDetailsSectionSuspense = ({
   const totalDays = calculateTotalDays(countdown);
   const daysCompleted = totalDays - daysLeft;
   const progressPercentage = calculateCountdownProgress(countdown);
+  const weeksRemaining = calculateWeeksRemaining(countdown);
 
   const totalCalendarDays = (() => {
     const startDate = new Date(countdown.startDate);
@@ -63,8 +65,6 @@ const CountdownDetailsSectionSuspense = ({
       ) + 1
     );
   })();
-
-  const weeksRemaining = Math.ceil(daysLeft / 7);
 
   const allAdditionalDaysOffDates = useMemo(
     () => countdown.additionalDaysOff.map((date) => new Date(date)),
