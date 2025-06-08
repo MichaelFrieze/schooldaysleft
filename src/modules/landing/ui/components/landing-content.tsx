@@ -10,10 +10,10 @@ import { Progress } from "@/components/ui/progress";
 import {
   Calendar,
   CalendarDays,
-  PenLine,
-  Settings,
-  Sparkles,
-  User,
+  LayoutGrid,
+  Palette,
+  SlidersHorizontal,
+  PieChart,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -33,15 +33,16 @@ export const LandingContent = () => {
         <div className="lg:hidden">
           <div className="mx-auto flex max-w-xs flex-col justify-center sm:max-w-xl">
             <h1 className="text-left text-4xl leading-tight font-bold tracking-tighter sm:text-center sm:text-6xl">
-              <span className="text-primary bg-clip-text">Countdown</span>{" "}
+              <span className="text-primary bg-clip-text">Countdown</span> the
             </h1>
             <h1 className="mb-6 text-left text-4xl leading-tight font-bold tracking-tighter sm:text-center sm:text-6xl">
-              To Your Next Break
+              School Days Left
             </h1>
 
             <p className="text-muted-foreground mb-8 text-lg sm:text-center">
-              Track the days remaining until holidays, summer vacation, or any
-              time off. Stay motivated and see the finish line.
+              Create custom countdowns for important dates like summer break,
+              winter break, end of semester, or any other dates that matter most
+              to you.
             </p>
 
             <Button
@@ -62,13 +63,14 @@ export const LandingContent = () => {
         <div className="hidden grid-cols-1 gap-12 lg:grid lg:grid-cols-2">
           <div className="flex max-w-lg flex-col justify-center">
             <h1 className="mb-6 text-6xl leading-tight font-bold tracking-tighter">
-              <span className="text-primary bg-clip-text">Countdown</span> to
-              Your Next Break
+              <span className="text-primary bg-clip-text">Countdown</span> the
+              School Days Left
             </h1>
 
             <p className="text-muted-foreground mb-8 max-w-xl text-lg">
-              Track the days remaining until holidays, summer vacation, or any
-              time off. Stay motivated and see the finish line.
+              Create custom countdowns for important dates like summer break,
+              winter break, end of semester, or any other dates that matter most
+              to you.
             </p>
 
             <Button
@@ -119,61 +121,64 @@ export const LandingContent = () => {
       </section>
 
       {/* Features Section */}
-      <section className="mx-auto py-8">
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          <Card>
+      <section className="mx-auto py-16 sm:py-24">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <Card className="bg-background/80 border-border/40 flex flex-col border">
             <CardHeader className="pb-4">
-              <div className="mb-2">
-                <User className="text-primary h-8 w-8" />
+              <div className="bg-primary/10 mb-4 flex h-14 w-14 items-center justify-center rounded-2xl">
+                <LayoutGrid className="text-primary h-8 w-8" />
               </div>
-              <CardTitle>Separate Countdowns</CardTitle>
+              <CardTitle>Multiple Countdowns</CardTitle>
             </CardHeader>
             <CardContent>
               <CardDescription>
-                Track both teacher workdays and student school days separately.
+                Whether you&apos;re a teacher, student, or parent, create and
+                manage as many countdowns as you need.
               </CardDescription>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="bg-background/80 border-border/40 flex flex-col border">
             <CardHeader className="pb-4">
-              <div className="mb-2">
-                <Settings className="text-primary h-8 w-8" />
+              <div className="bg-primary/10 mb-4 flex h-14 w-14 items-center justify-center rounded-2xl">
+                <SlidersHorizontal className="text-primary h-8 w-8" />
               </div>
-              <CardTitle>Easy Setup</CardTitle>
+              <CardTitle>Flexible Scheduling</CardTitle>
             </CardHeader>
             <CardContent>
               <CardDescription>
-                Set start/end dates, then easily mark off holidays and non-work
-                days.
+                Easily set your start and end dates, mark weekly days off, and
+                add additional holidays and breaks.
               </CardDescription>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="bg-background/80 border-border/40 flex flex-col border">
             <CardHeader className="pb-4">
-              <div className="mb-2">
-                <Sparkles className="text-primary h-8 w-8" />
+              <div className="bg-primary/10 mb-4 flex h-14 w-14 items-center justify-center rounded-2xl">
+                <PieChart className="text-primary h-8 w-8" />
               </div>
-              <CardTitle>Daily Motivation</CardTitle>
+              <CardTitle>Progress Tracking</CardTitle>
             </CardHeader>
             <CardContent>
               <CardDescription>
-                Optional daily inspirational quotes to keep spirits high.
+                Visualize your progress with a clean interface that shows you
+                exactly how many days are left.
               </CardDescription>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="bg-background/80 border-border/40 flex flex-col border">
             <CardHeader className="pb-4">
-              <div className="mb-2">
-                <PenLine className="text-primary h-8 w-8" />
+              <div className="bg-primary/10 mb-4 flex h-14 w-14 items-center justify-center rounded-2xl">
+                <Palette className="text-primary h-8 w-8" />
               </div>
-              <CardTitle>Colorful Themes</CardTitle>
+              <CardTitle>Custom Themes</CardTitle>
             </CardHeader>
             <CardContent>
               <CardDescription>
-                Personalize your countdown with multiple color themes.
+                Choose from multiple color themes and switch between light and
+                dark modes to personalize your experience.
               </CardDescription>
             </CardContent>
           </Card>

@@ -1,7 +1,8 @@
 # TODO
 
 - dashboard cards need to look more like clickable buttons and get correct info displayed
-- Make landing page look better
+- user button maybe needs to be bigger
+- Fix some spacing issues on the landing page
 
 - full moon
 - chance of outside recess (weather)
