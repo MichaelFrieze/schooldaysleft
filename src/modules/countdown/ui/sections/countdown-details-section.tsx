@@ -239,12 +239,12 @@ const CountdownDetailsSectionSuspense = ({
                 {showPastMonths ? (
                   <>
                     <EyeOff className="h-4 w-4" />
-                    Hide Past
+                    <span className="hidden sm:block">Hide Past</span>
                   </>
                 ) : (
                   <>
                     <Eye className="h-4 w-4" />
-                    Show All
+                    <span className="hidden sm:block">Show All</span>
                   </>
                 )}
               </Button>
