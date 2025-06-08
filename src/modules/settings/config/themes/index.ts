@@ -1,13 +1,9 @@
-import { amberMinimalDark, amberMinimalLight } from "./amber-minimal";
 import { amethystHazeDark, amethystHazeLight } from "./amethyst-haze";
-import { blackAndWhiteDark, blackAndWhiteLight } from "./black-and-white";
-import { chirpDark, chirpLight } from "./chirp";
 import { defaultDark, defaultLight } from "./default";
 import { kodamaGroveDark, kodamaGroveLight } from "./kodama-grove";
 import { lavenderGlowDark, lavenderGlowLight } from "./lavender-glow";
 import { modernMinimalDark, modernMinimalLight } from "./modern-minimal";
 import { notebookDark, notebookLight } from "./notebook";
-import { oceanBreezeDark, oceanBreezeLight } from "./ocean-breeze";
 import { pastelDreamsDark, pastelDreamsLight } from "./pastel-dreams";
 import { plumNebulaDark, plumNebulaLight } from "./plum-nebula";
 import { quantumRoseDark, quantumRoseLight } from "./quantum-rose";
@@ -16,14 +12,8 @@ import { tangerineDark, tangerineLight } from "./tangerine";
 export type ThemeKey =
   | "light"
   | "dark"
-  | "amber-minimal-light"
-  | "amber-minimal-dark"
   | "amethyst-haze-light"
   | "amethyst-haze-dark"
-  | "black-and-white-light"
-  | "black-and-white-dark"
-  | "chirp-light"
-  | "chirp-dark"
   | "kodama-grove-light"
   | "kodama-grove-dark"
   | "lavender-glow-light"
@@ -32,8 +22,6 @@ export type ThemeKey =
   | "modern-minimal-dark"
   | "notebook-light"
   | "notebook-dark"
-  | "ocean-breeze-light"
-  | "ocean-breeze-dark"
   | "pastel-dreams-light"
   | "pastel-dreams-dark"
   | "plum-nebula-light"
@@ -63,14 +51,8 @@ export type Theme = {
 export const allThemes: Record<ThemeKey, Theme> = {
   light: defaultLight,
   dark: defaultDark,
-  "amber-minimal-light": amberMinimalLight,
-  "amber-minimal-dark": amberMinimalDark,
   "amethyst-haze-light": amethystHazeLight,
   "amethyst-haze-dark": amethystHazeDark,
-  "black-and-white-light": blackAndWhiteLight,
-  "black-and-white-dark": blackAndWhiteDark,
-  "chirp-light": chirpLight,
-  "chirp-dark": chirpDark,
   "kodama-grove-light": kodamaGroveLight,
   "kodama-grove-dark": kodamaGroveDark,
   "lavender-glow-light": lavenderGlowLight,
@@ -79,8 +61,6 @@ export const allThemes: Record<ThemeKey, Theme> = {
   "modern-minimal-dark": modernMinimalDark,
   "notebook-light": notebookLight,
   "notebook-dark": notebookDark,
-  "ocean-breeze-light": oceanBreezeLight,
-  "ocean-breeze-dark": oceanBreezeDark,
   "pastel-dreams-light": pastelDreamsLight,
   "pastel-dreams-dark": pastelDreamsDark,
   "plum-nebula-light": plumNebulaLight,

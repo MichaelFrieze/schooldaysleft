@@ -8,8 +8,16 @@ import { DAYS_OF_WEEK } from "@/lib/constants";
 import { formatDate } from "@/lib/utils";
 import { useTRPC } from "@/trpc/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { format, isAfter, isBefore, isSameDay } from "date-fns";
-import { CalendarDays, CalendarIcon, Sun } from "lucide-react";
+import {
+  eachMonthOfInterval,
+  endOfMonth,
+  format,
+  isAfter,
+  isBefore,
+  isSameDay,
+  isSameMonth,
+} from "date-fns";
+import { CalendarDays, CalendarIcon, Info, Sun } from "lucide-react";
 import { Suspense, useMemo } from "react";
 
 interface CountdownDetailsSectionProps {
@@ -63,6 +71,11 @@ const CountdownDetailsSectionSuspense = ({
 
   const startDate = new Date(countdown.startDate);
   const endDate = new Date(countdown.endDate);
+
+  const months = eachMonthOfInterval({
+    start: startDate,
+    end: endDate,
+  }).filter((month) => !isBefore(endOfMonth(month), today));
 
   const isDateDisabled = (date: Date) => {
     if (
@@ -159,36 +172,44 @@ const CountdownDetailsSectionSuspense = ({
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              {nextAdditionalDayOff && isAfter(nextAdditionalDayOff, today) ? (
-                <div className="text-primary text-center text-xs font-medium">
-                  Upcoming: {format(nextAdditionalDayOff, "EEEE, MMM d, yyyy")}
-                </div>
-              ) : nextAdditionalDayOff &&
-                isSameDay(nextAdditionalDayOff, today) ? (
-                <div className="text-primary text-center text-xs font-medium">
-                  Today is a holiday or break!
+              {nextAdditionalDayOff ? (
+                <div className="bg-accent text-accent-foreground flex items-center gap-3 rounded-lg border p-3 text-sm">
+                  <Info className="h-5 w-5 flex-shrink-0" />
+                  <div className="font-medium">
+                    {isSameDay(nextAdditionalDayOff, today)
+                      ? "Today is a holiday or break!"
+                      : `Next up: ${format(
+                          nextAdditionalDayOff,
+                          "EEEE, MMM d, yyyy",
+                        )}`}
+                  </div>
                 </div>
               ) : null}
 
-              <div className="flex justify-center">
-                <div className="max-h-90 w-fit overflow-y-auto rounded-lg border">
-                  <Calendar
-                    mode="multiple"
-                    selected={upcomingAdditionalDaysOffDates}
-                    disabled={isDateDisabled}
-                    defaultMonth={today}
-                    fromDate={startDate}
-                    toDate={endDate}
-                    className="w-full"
-                    classNames={{
-                      day_selected: "bg-primary text-primary-foreground",
-                      day_disabled: "text-muted-foreground opacity-30",
-                      day: "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 size-8 p-0 font-normal aria-selected:opacity-100",
-                      day_outside:
-                        "day-outside text-muted-foreground aria-selected:text-primary-foreground",
-                    }}
-                  />
-                </div>
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {months.map((month) => (
+                  <div key={month.getTime()} className="space-y-2">
+                    <div className="flex justify-center rounded-md border p-3">
+                      <Calendar
+                        mode="multiple"
+                        month={month}
+                        selected={upcomingAdditionalDaysOffDates}
+                        disabled={(date) =>
+                          !isSameMonth(date, month) || isDateDisabled(date)
+                        }
+                        disableNavigation={true}
+                        fixedWeeks={true}
+                        classNames={{
+                          day_selected: "bg-primary text-primary-foreground",
+                          day_disabled: "text-muted-foreground opacity-30",
+                          day: "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 size-8 p-0 font-normal aria-selected:opacity-100",
+                          day_outside:
+                            "text-muted-foreground/50 opacity-30 aria-selected:text-primary-foreground",
+                        }}
+                      />
+                    </div>
+                  </div>
+                ))}
               </div>
             </CardContent>
           </Card>
