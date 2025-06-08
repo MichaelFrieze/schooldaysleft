@@ -4,9 +4,7 @@
 - user button maybe needs to be bigger
 - Fix some spacing issues on the landing page
 - If there are only 1 or two calendars in holidays and breaks then maybe center them
-- consider changing colors of feature cards
 - The until start on countdown doesn't make sense
-- Maybe show days completed too. We can show total number of days and days completed.
 
 - full moon
 - chance of outside recess (weather)
