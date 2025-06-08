@@ -2,13 +2,14 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useTRPC } from "@/trpc/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Calendar } from "lucide-react";
-import { Suspense, useMemo } from "react";
+import { Suspense } from "react";
 import { calculateCountdownProgress } from "../../lib/calculate-countdown-progress";
 import { calculateDaysLeft } from "../../lib/calculate-days-left";
-import { Skeleton } from "@/components/ui/skeleton";
+import { calculateTotalDays } from "../../lib/calculate-total-days";
 
 interface CountdownMainSectionProps {
   countdownId: string;
@@ -36,11 +37,10 @@ const CountdownMainSectionSuspense = ({
     retry: false,
   });
 
-  const daysLeft = useMemo(() => calculateDaysLeft(countdown), [countdown]);
-  const progressValue = useMemo(
-    () => calculateCountdownProgress(countdown),
-    [countdown],
-  );
+  const daysLeft = calculateDaysLeft(countdown);
+  const totalDays = calculateTotalDays(countdown);
+  const daysCompleted = totalDays - daysLeft;
+  const progressValue = calculateCountdownProgress(countdown);
 
   const todayFormatted = new Date().toLocaleDateString("en-US", {
     weekday: "long",
@@ -81,7 +81,7 @@ const CountdownMainSectionSuspense = ({
           <div className="pt-8">
             <div className="flex items-center justify-between pb-2">
               <span className="text-muted-foreground text-sm font-medium">
-                Progress
+                Progress ({daysCompleted}/{totalDays} days)
               </span>
               <span className="text-muted-foreground text-sm font-medium">
                 {Math.round(progressValue)}%
