@@ -19,6 +19,9 @@ import {
 } from "date-fns";
 import { CalendarDays, CalendarIcon, Info, Sun } from "lucide-react";
 import { Suspense, useMemo } from "react";
+import { calculateDaysLeft } from "../../lib/calculate-days-left";
+import { calculateTotalDays } from "../../lib/calculate-total-days";
+import { calculateCountdownProgress } from "../../lib/calculate-countdown-progress";
 
 interface CountdownDetailsSectionProps {
   countdownId: string;
@@ -45,6 +48,23 @@ const CountdownDetailsSectionSuspense = ({
     }),
     retry: false,
   });
+
+  const daysLeft = calculateDaysLeft(countdown);
+  const totalDays = calculateTotalDays(countdown);
+  const daysCompleted = totalDays - daysLeft;
+  const progressPercentage = calculateCountdownProgress(countdown);
+
+  const totalCalendarDays = (() => {
+    const startDate = new Date(countdown.startDate);
+    const endDate = new Date(countdown.endDate);
+    return (
+      Math.ceil(
+        (endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24),
+      ) + 1
+    );
+  })();
+
+  const weeksRemaining = Math.ceil(daysLeft / 7);
 
   const allAdditionalDaysOffDates = useMemo(
     () => countdown.additionalDaysOff.map((date) => new Date(date)),
@@ -105,26 +125,54 @@ const CountdownDetailsSectionSuspense = ({
               Countdown Details
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div>
-              <h4 className="font-medium">Start Date</h4>
-              <p className="text-muted-foreground text-sm">
-                {formatDate(countdown.startDate)}
-              </p>
-            </div>
-            <Separator />
-            <div>
-              <h4 className="font-medium">End Date</h4>
-              <p className="text-muted-foreground text-sm">
-                {formatDate(countdown.endDate)}
-              </p>
-            </div>
-            <Separator />
-            <div>
-              <h4 className="font-medium">Created</h4>
-              <p className="text-muted-foreground text-sm">
-                {format(new Date(countdown.createdAt), "MMM d, yyyy")}
-              </p>
+          <CardContent>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <h4 className="font-medium">Start Date</h4>
+                <p className="text-muted-foreground text-sm">
+                  {formatDate(countdown.startDate)}
+                </p>
+              </div>
+              <div>
+                <h4 className="font-medium">End Date</h4>
+                <p className="text-muted-foreground text-sm">
+                  {formatDate(countdown.endDate)}
+                </p>
+              </div>
+              <div>
+                <h4 className="font-medium">Total School Days</h4>
+                <p className="text-muted-foreground text-sm">
+                  {totalDays} days
+                </p>
+              </div>
+              <div>
+                <h4 className="font-medium">Days Completed</h4>
+                <p className="text-muted-foreground text-sm">
+                  {daysCompleted} ({Math.round(progressPercentage)}%)
+                </p>
+              </div>
+              <div>
+                <h4 className="font-medium">Days Remaining</h4>
+                <p className="text-muted-foreground text-sm">{daysLeft} days</p>
+              </div>
+              <div>
+                <h4 className="font-medium">Weeks Remaining</h4>
+                <p className="text-muted-foreground text-sm">
+                  {weeksRemaining} {weeksRemaining === 1 ? "week" : "weeks"}
+                </p>
+              </div>
+              <div>
+                <h4 className="font-medium">Calendar Duration</h4>
+                <p className="text-muted-foreground text-sm">
+                  {totalCalendarDays} days
+                </p>
+              </div>
+              <div>
+                <h4 className="font-medium">Created</h4>
+                <p className="text-muted-foreground text-sm">
+                  {format(new Date(countdown.createdAt), "MMM d, yyyy")}
+                </p>
+              </div>
             </div>
           </CardContent>
         </Card>
