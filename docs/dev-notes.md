@@ -1,8 +1,6 @@
 # TODO
 
 - dashboard cards need to look more like clickable buttons and get correct info displayed
-- Fix some spacing issues on the landing page
-- The until start on countdown doesn't make sense
 
 - full moon
 - chance of outside recess (weather)

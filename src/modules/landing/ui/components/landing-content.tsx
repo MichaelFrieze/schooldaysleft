@@ -116,7 +116,7 @@ export const LandingContent = () => {
       </section>
 
       {/* Features Section */}
-      <section className="mx-auto py-16 sm:py-24">
+      <section className="mx-auto py-8 lg:py-24">
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <Card className="flex flex-col">
             <CardHeader className="pb-4">
