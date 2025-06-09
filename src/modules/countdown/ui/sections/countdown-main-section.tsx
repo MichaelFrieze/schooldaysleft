@@ -2,13 +2,15 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useTRPC } from "@/trpc/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Calendar } from "lucide-react";
-import { Suspense, useMemo } from "react";
+import { Suspense } from "react";
+import { calculateCalendarDaysUntilStart } from "../../lib/calculate-calendar-days-until-start";
 import { calculateCountdownProgress } from "../../lib/calculate-countdown-progress";
 import { calculateDaysLeft } from "../../lib/calculate-days-left";
-import { Skeleton } from "@/components/ui/skeleton";
+import { calculateTotalDays } from "../../lib/calculate-total-days";
 
 interface CountdownMainSectionProps {
   countdownId: string;
@@ -36,11 +38,11 @@ const CountdownMainSectionSuspense = ({
     retry: false,
   });
 
-  const daysLeft = useMemo(() => calculateDaysLeft(countdown), [countdown]);
-  const progressValue = useMemo(
-    () => calculateCountdownProgress(countdown),
-    [countdown],
-  );
+  const daysLeft = calculateDaysLeft(countdown);
+  const totalDays = calculateTotalDays(countdown);
+  const daysCompleted = totalDays - daysLeft;
+  const progressValue = calculateCountdownProgress(countdown);
+  const daysUntilStart = calculateCalendarDaysUntilStart(countdown);
 
   const todayFormatted = new Date().toLocaleDateString("en-US", {
     weekday: "long",
@@ -54,7 +56,7 @@ const CountdownMainSectionSuspense = ({
 
   return (
     <section className="pb-8 md:pb-12">
-      <Card className="bg-background rounded-xl">
+      <Card className="bg-background">
         <CardContent className="p-8">
           <div className="pb-8">
             <div className="text-muted-foreground flex items-center gap-2">
@@ -65,13 +67,15 @@ const CountdownMainSectionSuspense = ({
 
           <div className="text-center">
             <div className="from-primary via-primary/80 to-primary bg-gradient-to-r bg-clip-text text-8xl font-extrabold text-transparent tabular-nums">
-              {daysLeft}
+              {!hasStarted ? daysUntilStart : daysLeft}
             </div>
             <p className="text-muted-foreground pt-2 text-xl font-medium">
               {isCountdownComplete
                 ? "All done! 🎉"
                 : !hasStarted
-                  ? "days until start"
+                  ? daysUntilStart === 1
+                    ? "day until start"
+                    : "days until start"
                   : daysLeft === 1
                     ? "day left!"
                     : "days left!"}
@@ -81,7 +85,7 @@ const CountdownMainSectionSuspense = ({
           <div className="pt-8">
             <div className="flex items-center justify-between pb-2">
               <span className="text-muted-foreground text-sm font-medium">
-                Progress
+                Progress ({daysCompleted}/{totalDays} days)
               </span>
               <span className="text-muted-foreground text-sm font-medium">
                 {Math.round(progressValue)}%
