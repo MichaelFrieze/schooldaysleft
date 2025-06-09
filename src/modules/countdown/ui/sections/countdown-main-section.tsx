@@ -7,6 +7,7 @@ import { useTRPC } from "@/trpc/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Calendar } from "lucide-react";
 import { Suspense } from "react";
+import { calculateCalendarDaysUntilStart } from "../../lib/calculate-calendar-days-until-start";
 import { calculateCountdownProgress } from "../../lib/calculate-countdown-progress";
 import { calculateDaysLeft } from "../../lib/calculate-days-left";
 import { calculateTotalDays } from "../../lib/calculate-total-days";
@@ -41,6 +42,7 @@ const CountdownMainSectionSuspense = ({
   const totalDays = calculateTotalDays(countdown);
   const daysCompleted = totalDays - daysLeft;
   const progressValue = calculateCountdownProgress(countdown);
+  const daysUntilStart = calculateCalendarDaysUntilStart(countdown);
 
   const todayFormatted = new Date().toLocaleDateString("en-US", {
     weekday: "long",
@@ -65,13 +67,15 @@ const CountdownMainSectionSuspense = ({
 
           <div className="text-center">
             <div className="from-primary via-primary/80 to-primary bg-gradient-to-r bg-clip-text text-8xl font-extrabold text-transparent tabular-nums">
-              {daysLeft}
+              {!hasStarted ? daysUntilStart : daysLeft}
             </div>
             <p className="text-muted-foreground pt-2 text-xl font-medium">
               {isCountdownComplete
                 ? "All done! 🎉"
                 : !hasStarted
-                  ? "days until start"
+                  ? daysUntilStart === 1
+                    ? "day until start"
+                    : "days until start"
                   : daysLeft === 1
                     ? "day left!"
                     : "days left!"}

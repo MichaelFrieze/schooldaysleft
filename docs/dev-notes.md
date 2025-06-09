@@ -1,9 +1,7 @@
 # TODO
 
 - dashboard cards need to look more like clickable buttons and get correct info displayed
-- user button maybe needs to be bigger
 - Fix some spacing issues on the landing page
-- If there are only 1 or two calendars in holidays and breaks then maybe center them
 - The until start on countdown doesn't make sense
 
 - full moon
