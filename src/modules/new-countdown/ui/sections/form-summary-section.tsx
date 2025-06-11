@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { DAYS_OF_WEEK } from "@/lib/constants";
@@ -6,6 +6,17 @@ import type { FormData } from "@/modules/new-countdown/hooks/use-countdown-form"
 import { format } from "date-fns";
 import { Loader2 } from "lucide-react";
 import type { UseFormReturn } from "react-hook-form";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface FormSummarySectionProps {
   form: UseFormReturn<FormData>;
@@ -26,12 +37,6 @@ export const FormSummarySection = ({
   onClear,
   isSubmitting,
 }: FormSummarySectionProps) => {
-  const handleClearWithConfirmation = () => {
-    if (confirm("Are you sure you want to clear this form?")) {
-      onClear();
-    }
-  };
-
   return (
     <Card>
       <CardHeader>
@@ -86,14 +91,35 @@ export const FormSummarySection = ({
         </div>
 
         <div className="flex flex-col-reverse gap-4 pt-2 sm:flex-row sm:justify-between">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={handleClearWithConfirmation}
-            className="flex-1 sm:flex-none"
-          >
-            Clear All
-          </Button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button
+                type="button"
+                variant="outline"
+                className="flex-1 sm:flex-none"
+              >
+                Clear All
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This will permanently clear all the information you have
+                  entered in the form.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={onClear}
+                  className={buttonVariants({ variant: "destructive" })}
+                >
+                  Clear Form
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
 
           <Button type="submit" disabled={isSubmitting} className="sm:w-40">
             {isSubmitting ? (

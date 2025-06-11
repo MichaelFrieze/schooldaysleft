@@ -1,8 +1,5 @@
 # TODO
 
-- Consider making the account page a modal
-- Use a modal or something to confirm delete on countdown page (check next-tube)
-
 - full moon (teachers will think this is funny)
 - chance of outside recess (weather)
 - not in the mood for motivational quotes
