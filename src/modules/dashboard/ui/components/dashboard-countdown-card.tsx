@@ -1,15 +1,10 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { formatDate } from "@/lib/utils";
+import { calculateCalendarDaysUntilStart } from "@/modules/countdown/lib/calculate-calendar-days-until-start";
 import { calculateCountdownProgress } from "@/modules/countdown/lib/calculate-countdown-progress";
+import { calculateDaysLeft } from "@/modules/countdown/lib/calculate-days-left";
 import type { Countdown } from "@/modules/countdown/types";
-import { Calendar } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 
 interface DashboardCountdownCardProps {
@@ -20,28 +15,46 @@ export const DashboardCountdownCard = ({
   countdown,
 }: DashboardCountdownCardProps) => {
   const progressValue = calculateCountdownProgress(countdown);
+  const daysLeft = calculateDaysLeft(countdown);
+  const daysUntilStart = calculateCalendarDaysUntilStart(countdown);
+
+  const hasStarted = daysUntilStart === 0;
+
+  const displayValue = hasStarted ? daysLeft : daysUntilStart;
+  const displayText = hasStarted
+    ? "days left"
+    : `day${daysUntilStart === 1 ? "" : "s"} until start`;
 
   return (
     <Link
       href={`/countdown/${countdown.id}`}
       key={countdown.id}
       aria-label={`View countdown: ${countdown.name}`}
+      className="group block"
     >
-      <Card className="hover:bg-card/50 h-full overflow-hidden hover:shadow-md">
-        <CardHeader className="pb-2">
-          <CardTitle className="truncate text-lg font-medium">
-            {countdown.name}
-          </CardTitle>
-          {countdown.endDate && (
-            <CardDescription className="text-muted-foreground/90 flex items-center gap-1.5 text-sm font-medium">
-              <Calendar className="h-4 w-4" />
-              Ends on: {formatDate(countdown.endDate)}
-            </CardDescription>
-          )}
-        </CardHeader>
-        <CardContent>
-          <Progress value={progressValue} className="h-3" />
-        </CardContent>
+      <Card className="from-card to-card/50 hover:from-card/90 hover:to-card/40 relative h-full border-0 bg-gradient-to-br p-6 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:bg-gradient-to-br hover:shadow-lg">
+        <ArrowUpRight className="text-muted-foreground/60 group-hover:text-muted-foreground absolute top-4 right-4 h-4 w-4 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+
+        <div className="space-y-6">
+          <div>
+            <h3 className="text-foreground/90 truncate text-lg font-medium">
+              {countdown.name}
+            </h3>
+          </div>
+
+          <div className="space-y-2 text-center">
+            <div className="text-foreground text-5xl font-bold tabular-nums">
+              {displayValue}
+            </div>
+            <p className="text-muted-foreground text-sm font-medium">
+              {displayText}
+            </p>
+          </div>
+
+          <div className="space-y-2">
+            <Progress value={progressValue} className="h-1.5" />
+          </div>
+        </div>
       </Card>
     </Link>
   );

@@ -135,7 +135,7 @@ const CountdownDetailsSectionSuspense = ({
     <section className="pb-8 md:pb-12">
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
         {/* Countdown Details */}
-        <Card>
+        <Card className="border-0">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <CalendarIcon className="h-5 w-5" />
@@ -195,7 +195,7 @@ const CountdownDetailsSectionSuspense = ({
         </Card>
 
         {/* Weekly Schedule */}
-        <Card>
+        <Card className="border-0">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <CalendarDays className="h-5 w-5" />
@@ -227,7 +227,7 @@ const CountdownDetailsSectionSuspense = ({
           </CardContent>
         </Card>
 
-        <Card className="md:col-span-2">
+        <Card className="border-0 md:col-span-2">
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle className="flex items-center gap-2">
@@ -314,7 +314,7 @@ const CountdownDetailsSectionLoading = () => {
     <section className="[animation:delayed-fade-in_.5s_ease-out] pb-8 md:pb-12">
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
         {/* Countdown Details Skeleton */}
-        <Card>
+        <Card className="border-0">
           <CardHeader>
             <CardTitle>
               <Skeleton className="h-5 w-48" />
@@ -339,7 +339,7 @@ const CountdownDetailsSectionLoading = () => {
         </Card>
 
         {/* Weekly Schedule Skeleton */}
-        <Card>
+        <Card className="border-0">
           <CardHeader>
             <CardTitle>
               <Skeleton className="h-5 w-56" />
@@ -358,7 +358,7 @@ const CountdownDetailsSectionLoading = () => {
         </Card>
 
         {/* Additional Days Off Skeleton */}
-        <Card className="md:col-span-2">
+        <Card className="border-0 md:col-span-2">
           <CardHeader>
             <CardTitle>
               <Skeleton className="h-5 w-72" />

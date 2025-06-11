@@ -79,7 +79,7 @@ export const LandingContent = () => {
             </Button>
           </div>
 
-          <Card className="bg-background overflow-hidden">
+          <Card className="border-0">
             <CardContent className="p-8">
               <div className="pb-8">
                 <div className="text-muted-foreground flex items-center gap-2">
@@ -118,7 +118,7 @@ export const LandingContent = () => {
       {/* Features Section */}
       <section className="mx-auto py-8 lg:py-24">
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          <Card className="flex flex-col">
+          <Card className="border-0">
             <CardHeader className="pb-4">
               <div className="bg-primary/10 mb-4 flex h-14 w-14 items-center justify-center rounded-2xl">
                 <LayoutGrid className="text-primary h-8 w-8" />
@@ -133,7 +133,7 @@ export const LandingContent = () => {
             </CardContent>
           </Card>
 
-          <Card className="flex flex-col">
+          <Card className="border-0">
             <CardHeader className="pb-4">
               <div className="bg-primary/10 mb-4 flex h-14 w-14 items-center justify-center rounded-2xl">
                 <SlidersHorizontal className="text-primary h-8 w-8" />
@@ -148,7 +148,7 @@ export const LandingContent = () => {
             </CardContent>
           </Card>
 
-          <Card className="flex flex-col">
+          <Card className="border-0">
             <CardHeader className="pb-4">
               <div className="bg-primary/10 mb-4 flex h-14 w-14 items-center justify-center rounded-2xl">
                 <PieChart className="text-primary h-8 w-8" />
@@ -163,7 +163,7 @@ export const LandingContent = () => {
             </CardContent>
           </Card>
 
-          <Card className="flex flex-col">
+          <Card className="border-0">
             <CardHeader className="pb-4">
               <div className="bg-primary/10 mb-4 flex h-14 w-14 items-center justify-center rounded-2xl">
                 <Palette className="text-primary h-8 w-8" />
