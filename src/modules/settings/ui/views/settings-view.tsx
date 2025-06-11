@@ -6,7 +6,7 @@ import { ThemeSwitcher } from "@/modules/settings/ui/components/theme-switcher";
 export const SettingsView = () => {
   return (
     <section className="container py-8 md:py-12">
-      <Card className="">
+      <Card className="bg-background">
         <CardHeader>
           <CardTitle>Theme Preferences</CardTitle>
           <p className="text-muted-foreground">
@@ -14,7 +14,7 @@ export const SettingsView = () => {
           </p>
         </CardHeader>
         <CardContent>
-          <div className="bg-background mb-6 flex flex-col items-center justify-between rounded-md sm:border sm:p-4">
+          <div className="mb-6 flex flex-col items-center justify-between rounded-md sm:border sm:p-4">
             <div className="flex items-center gap-2">
               <ModeToggle variant="outline" />
               <ThemeSwitcher variant="outline" />

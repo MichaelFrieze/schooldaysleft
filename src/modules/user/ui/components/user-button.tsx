@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useClerkAppearanceVariables } from "@/modules/settings/hooks/use-clerk-appearance-variables";
 import { useTRPC } from "@/trpc/react";
 import { useClerk } from "@clerk/nextjs";
 import {
@@ -41,8 +42,9 @@ export const UserButton = () => {
 };
 
 export function UserButtonSuspense() {
+  const { signOut, openUserProfile } = useClerk();
+  const clerkAppearanceVariables = useClerkAppearanceVariables();
   const trpc = useTRPC();
-  const { signOut } = useClerk();
 
   const { data: userButtonData } = useSuspenseQuery({
     ...trpc.user.getUserButtonData.queryOptions(),
@@ -52,6 +54,51 @@ export function UserButtonSuspense() {
   });
 
   const { userFullName, userEmail, userImage } = userButtonData;
+
+  const handleOpenUserProfile = () => {
+    if (
+      parseFloat(clerkAppearanceVariables.borderRadius) >= parseFloat("1rem")
+    ) {
+      openUserProfile({
+        appearance: {
+          variables: {
+            ...clerkAppearanceVariables,
+            borderRadius: "1rem",
+          },
+          elements: {
+            cardBox: {
+              maxWidth: "calc(-4rem + 100vw)",
+            },
+            scrollBox: {
+              borderRadius: "0rem",
+            },
+            navbar: {
+              borderRadius: "0rem",
+            },
+          },
+        },
+      });
+    } else {
+      openUserProfile({
+        appearance: {
+          variables: {
+            ...clerkAppearanceVariables,
+          },
+          elements: {
+            cardBox: {
+              maxWidth: "calc(-4rem + 100vw)",
+            },
+            scrollBox: {
+              borderRadius: "0rem",
+            },
+            navbar: {
+              borderRadius: "0rem",
+            },
+          },
+        },
+      });
+    }
+  };
 
   return (
     <DropdownMenu>
@@ -88,11 +135,11 @@ export function UserButtonSuspense() {
             <span>Settings</span>
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href="/account">
+        <DropdownMenuItem asChild onClick={handleOpenUserProfile}>
+          <div>
             <UserCircleIcon />
             <span>Account</span>
-          </Link>
+          </div>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link href="/home">
