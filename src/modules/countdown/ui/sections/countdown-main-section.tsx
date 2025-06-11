@@ -56,7 +56,7 @@ const CountdownMainSectionSuspense = ({
 
   return (
     <section className="pb-8 md:pb-12">
-      <Card className="border-0">
+      <Card>
         <CardContent className="p-8">
           <div className="pb-8">
             <div className="text-muted-foreground flex items-center gap-2">
@@ -77,8 +77,8 @@ const CountdownMainSectionSuspense = ({
                     ? "day until start"
                     : "days until start"
                   : daysLeft === 1
-                    ? "day left!"
-                    : "days left!"}
+                    ? "day left"
+                    : "days left"}
             </p>
           </div>
 
@@ -102,7 +102,7 @@ const CountdownMainSectionSuspense = ({
 const CountdownMainSectionLoading = () => {
   return (
     <section className="[animation:delayed-fade-in_.5s_ease-out] pb-8 md:pb-12">
-      <Card className="border-0">
+      <Card>
         <CardContent className="p-8">
           <div className="pb-8">
             <div className="text-muted-foreground flex items-center gap-2">

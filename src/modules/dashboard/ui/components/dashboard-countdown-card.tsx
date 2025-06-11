@@ -19,11 +19,14 @@ export const DashboardCountdownCard = ({
   const daysUntilStart = calculateCalendarDaysUntilStart(countdown);
 
   const hasStarted = daysUntilStart === 0;
+  const isFinished = hasStarted && daysLeft === 0;
 
   const displayValue = hasStarted ? daysLeft : daysUntilStart;
-  const displayText = hasStarted
-    ? "days left"
-    : `day${daysUntilStart === 1 ? "" : "s"} until start`;
+  const displayText = isFinished
+    ? "All done! 🎉"
+    : hasStarted
+      ? `day${daysLeft === 1 ? "" : "s"} left`
+      : `day${daysUntilStart === 1 ? "" : "s"} until start`;
 
   return (
     <Link
@@ -32,8 +35,8 @@ export const DashboardCountdownCard = ({
       aria-label={`View countdown: ${countdown.name}`}
       className="group block"
     >
-      <Card className="from-card to-card/50 hover:from-card/90 hover:to-card/40 relative h-full border-0 bg-gradient-to-br p-6 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:bg-gradient-to-br hover:shadow-lg">
-        <ArrowUpRight className="text-muted-foreground/60 group-hover:text-muted-foreground absolute top-4 right-4 h-4 w-4 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+      <Card className="hover:bg-card/70 relative p-6">
+        <ArrowUpRight className="text-muted-foreground/60 group-hover:text-muted-foreground absolute top-4 right-4 h-4 w-4" />
 
         <div className="space-y-6">
           <div>
