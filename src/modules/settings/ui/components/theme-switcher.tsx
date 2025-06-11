@@ -21,13 +21,13 @@ import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
 interface ThemeSwitcherProps extends VariantProps<typeof buttonVariants> {
-  dropdownVariant?: VariantProps<typeof buttonVariants>["variant"];
-  dropdownSize?: VariantProps<typeof buttonVariants>["size"];
+  variant?: VariantProps<typeof buttonVariants>["variant"];
+  size?: VariantProps<typeof buttonVariants>["size"];
 }
 
 export const ThemeSwitcher = ({
-  dropdownVariant = "outline",
-  dropdownSize = "default",
+  variant = "outline",
+  size = "default",
 }: ThemeSwitcherProps) => {
   const [mounted, setMounted] = useState(false);
   const {
@@ -41,12 +41,7 @@ export const ThemeSwitcher = ({
   if (!mounted) {
     return (
       <div className="flex items-center gap-2">
-        <Button
-          variant={dropdownVariant}
-          size={dropdownSize}
-          disabled
-          className="h-9 w-32"
-        />
+        <Button variant={variant} size={size} disabled className="h-9 w-32" />
       </div>
     );
   }
@@ -96,7 +91,7 @@ export const ThemeSwitcher = ({
     <div className="flex items-center gap-2">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant={dropdownVariant} size={dropdownSize}>
+          <Button variant={variant} size={size}>
             <div className="flex gap-1">
               <ColorSwatch color={currentTheme.primary} size="sm" />
               <ColorSwatch color={currentTheme.secondary} size="sm" />

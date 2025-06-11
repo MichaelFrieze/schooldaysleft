@@ -1,6 +1,5 @@
 # TODO
 
-- dashboard cards need to look more like clickable buttons and get correct info displayed
 - Consider making the account page a modal
 - Use a modal or something to confirm delete on countdown page (check next-tube)
 
