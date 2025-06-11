@@ -77,8 +77,8 @@ const CountdownMainSectionSuspense = ({
                     ? "day until start"
                     : "days until start"
                   : daysLeft === 1
-                    ? "day left!"
-                    : "days left!"}
+                    ? "day left"
+                    : "days left"}
             </p>
           </div>
 

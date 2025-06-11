@@ -19,11 +19,14 @@ export const DashboardCountdownCard = ({
   const daysUntilStart = calculateCalendarDaysUntilStart(countdown);
 
   const hasStarted = daysUntilStart === 0;
+  const isFinished = hasStarted && daysLeft === 0;
 
   const displayValue = hasStarted ? daysLeft : daysUntilStart;
-  const displayText = hasStarted
-    ? "days left"
-    : `day${daysUntilStart === 1 ? "" : "s"} until start`;
+  const displayText = isFinished
+    ? "All done! 🎉"
+    : hasStarted
+      ? `day${daysLeft === 1 ? "" : "s"} left`
+      : `day${daysUntilStart === 1 ? "" : "s"} until start`;
 
   return (
     <Link
