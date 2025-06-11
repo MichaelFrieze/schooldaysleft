@@ -1,6 +1,5 @@
 # TODO
 
-- Consider making the account page a modal
 - Use a modal or something to confirm delete on countdown page (check next-tube)
 
 - full moon (teachers will think this is funny)
