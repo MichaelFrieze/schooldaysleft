@@ -32,7 +32,7 @@ export const DashboardCountdownCard = ({
       aria-label={`View countdown: ${countdown.name}`}
       className="group block"
     >
-      <Card className="hover:bg-card/70 relative border-0 p-6">
+      <Card className="hover:bg-card/70 relative p-6">
         <ArrowUpRight className="text-muted-foreground/60 group-hover:text-muted-foreground absolute top-4 right-4 h-4 w-4" />
 
         <div className="space-y-6">
