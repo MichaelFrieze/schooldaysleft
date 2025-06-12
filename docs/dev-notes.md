@@ -1,11 +1,14 @@
 # TODO
 
+- Clerk is still in dev mode
+
 - full moon (teachers will think this is funny)
 - chance of outside recess (weather)
 - not in the mood for motivational quotes
 - Use a webhook to update user button full name after a change
 - look for some tailwind classes that are not needed and replace margin classes with padding when possible
 - go through CodeRabbit recommendations and take notes: https://github.com/MichaelFrieze/schooldaysleft/pull/21
+- Consider adding services like sentry, posthog, etc.
 
 ```
     "vercel-build": "if [ \"$VERCEL_ENV\" = \"production\" ]; then drizzle-kit push; elif [ \"$VERCEL_ENV\" = \"preview\" ]; drizzle-kit push --force; fi && next build",
