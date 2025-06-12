@@ -173,7 +173,7 @@ export const FormSummarySection = ({
                   Reset Changes
                 </Button>
               </AlertDialogTrigger>
-              <AlertDialogContent>
+              <AlertDialogContent className="w-[calc(100vw-4rem)] max-w-sm">
                 <AlertDialogHeader>
                   <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                   <AlertDialogDescription>
@@ -207,7 +207,7 @@ export const FormSummarySection = ({
                   )}
                 </Button>
               </AlertDialogTrigger>
-              <AlertDialogContent>
+              <AlertDialogContent className="w-[calc(100vw-4rem)] max-w-sm">
                 <AlertDialogHeader>
                   <AlertDialogTitle>
                     Are you sure you want to delete this countdown?

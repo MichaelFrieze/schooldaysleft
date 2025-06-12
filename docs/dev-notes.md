@@ -9,6 +9,8 @@
 - look for some tailwind classes that are not needed and replace margin classes with padding when possible
 - go through CodeRabbit recommendations and take notes: https://github.com/MichaelFrieze/schooldaysleft/pull/21
 - Consider adding services like sentry, posthog, etc.
+- improve look of sign-in page or make it a modal again
+- increase Neon db CPU for production
 
 ```
     "vercel-build": "if [ \"$VERCEL_ENV\" = \"production\" ]; then drizzle-kit push; elif [ \"$VERCEL_ENV\" = \"preview\" ]; drizzle-kit push --force; fi && next build",
