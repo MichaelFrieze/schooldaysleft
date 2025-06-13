@@ -46,7 +46,7 @@ export const UserProfile = () => {
             borderRadius: "0rem",
           },
           navbar: {
-            borderRadius: borderRadiusLg,
+            borderRadius: "0rem",
           },
         },
       }}
