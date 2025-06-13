@@ -129,7 +129,7 @@ export function UserButtonSuspense() {
       </DropdownMenu>
 
       <Dialog open={isProfileDialogOpen} onOpenChange={setIsProfileDialogOpen}>
-        <DialogContent className="w-[calc(100vw-4rem)] max-w-[55rem] border-0 bg-red-500 p-0 sm:w-[calc(100vw-4rem)] sm:max-w-[55rem]">
+        <DialogContent className="w-[calc(100vw-4rem)] max-w-[55rem] rounded-lg border-0 p-0 sm:w-[calc(100vw-4rem)] sm:max-w-[55rem]">
           <DialogHeader className="sr-only">
             <DialogTitle>User Profile</DialogTitle>
           </DialogHeader>

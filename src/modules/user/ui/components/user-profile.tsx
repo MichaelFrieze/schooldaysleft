@@ -9,11 +9,11 @@ export const UserProfile = () => {
   const [isMounted, setIsMounted] = useState(false);
   const clerkAppearanceVariables = useClerkAppearanceVariables();
 
-  const borderRadiusNumber =
-    parseFloat(clerkAppearanceVariables.borderRadius) / 2;
-  const borderRadius = `${Math.round(borderRadiusNumber * 100) / 100}rem`;
+  // rounded-lg in tailwind: calc(var(--radius))
+  const borderRadiusLg = `calc(${clerkAppearanceVariables.borderRadius})`;
 
-  console.log(borderRadius);
+  // rounded-md in tailwind: calc(var(--radius) - 2px)
+  // const borderRadiusMd = `calc(${clerkAppearanceVariables.borderRadius} - 2px)`;
 
   useEffect(() => {
     setIsMounted(true);
@@ -21,7 +21,7 @@ export const UserProfile = () => {
 
   if (!isMounted) {
     return (
-      <Skeleton className="h-[44rem] w-[55rem] max-w-[calc(-4rem+100vw)]" />
+      <Skeleton className="h-[calc(100vh-8rem)] max-h-[44rem] w-[calc(100vw-4rem)] max-w-[55rem] rounded-lg" />
     );
   }
 
@@ -31,7 +31,6 @@ export const UserProfile = () => {
       appearance={{
         variables: {
           ...clerkAppearanceVariables,
-          borderRadius,
         },
         elements: {
           cardBox: {
@@ -41,12 +40,13 @@ export const UserProfile = () => {
             maxHeight: "44rem",
             boxShadow: "none",
             border: "none",
+            borderRadius: borderRadiusLg,
           },
           scrollBox: {
             borderRadius: "0rem",
           },
           navbar: {
-            borderRadius: "0rem",
+            borderRadius: borderRadiusLg,
           },
         },
       }}
