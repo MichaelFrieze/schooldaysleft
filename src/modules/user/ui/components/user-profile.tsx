@@ -13,6 +13,8 @@ export const UserProfile = () => {
     parseFloat(clerkAppearanceVariables.borderRadius) / 2;
   const borderRadius = `${Math.round(borderRadiusNumber * 100) / 100}rem`;
 
+  console.log(borderRadius);
+
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -33,7 +35,12 @@ export const UserProfile = () => {
         },
         elements: {
           cardBox: {
-            maxWidth: "calc(-4rem + 100vw)",
+            width: "calc(100vw - 4rem)",
+            maxWidth: "55rem",
+            height: "calc(100vh - 8rem)",
+            maxHeight: "44rem",
+            boxShadow: "none",
+            border: "none",
           },
           scrollBox: {
             borderRadius: "0rem",
