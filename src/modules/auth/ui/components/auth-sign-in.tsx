@@ -9,9 +9,11 @@ export const AuthSignIn = () => {
   const [isMounted, setIsMounted] = useState(false);
   const clerkAppearanceVariables = useClerkAppearanceVariables();
 
-  const borderRadiusNumber =
-    parseFloat(clerkAppearanceVariables.borderRadius) / 2;
-  const borderRadius = `${Math.round(borderRadiusNumber * 100) / 100}rem`;
+  // rounded-lg in tailwind: calc(var(--radius))
+  const borderRadiusLg = `calc(${clerkAppearanceVariables.borderRadius})`;
+
+  // rounded-md in tailwind: calc(var(--radius) - 2px)
+  // const borderRadiusMd = `calc(${clerkAppearanceVariables.borderRadius} - 2px)`;
 
   useEffect(() => {
     setIsMounted(true);
@@ -19,7 +21,7 @@ export const AuthSignIn = () => {
 
   if (!isMounted) {
     return (
-      <Skeleton className="h-[23rem] w-[25rem] max-w-[calc(-4rem+100vw)]" />
+      <Skeleton className="h-[27.5rem] w-[calc(100vw-4rem)] max-w-[25rem] rounded-lg min-[30.0625rem]:h-[23rem]" />
     );
   }
 
@@ -28,7 +30,6 @@ export const AuthSignIn = () => {
       appearance={{
         variables: {
           ...clerkAppearanceVariables,
-          borderRadius,
         },
         layout: {
           socialButtonsVariant: "blockButton",
@@ -43,9 +44,17 @@ export const AuthSignIn = () => {
           card: {
             borderBottomLeftRadius: "0rem",
             borderBottomRightRadius: "0rem",
+            borderTopLeftRadius: borderRadiusLg,
+            borderTopRightRadius: borderRadiusLg,
           },
           cardBox: {
-            maxWidth: "calc(-4rem + 100vw)",
+            maxWidth: "25rem",
+            width: "calc(100vw - 4rem)",
+            borderRadius: borderRadiusLg,
+            height: "27.5rem",
+            "@media (min-width: 30.0625rem)": {
+              height: "23rem",
+            },
           },
         },
       }}
