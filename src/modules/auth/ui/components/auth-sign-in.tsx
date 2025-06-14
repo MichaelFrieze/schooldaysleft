@@ -21,7 +21,7 @@ export const AuthSignIn = () => {
 
   if (!isMounted) {
     return (
-      <Skeleton className="h-[27.5rem] w-[calc(100vw-4rem)] max-w-[25rem] rounded-lg min-[30.0625rem]:h-[23rem]" />
+      <Skeleton className="h-[23rem] w-[calc(100vw-4rem)] max-w-[25rem] rounded-lg" />
     );
   }
 
@@ -51,10 +51,6 @@ export const AuthSignIn = () => {
             maxWidth: "25rem",
             width: "calc(100vw - 4rem)",
             borderRadius: borderRadiusLg,
-            height: "27.5rem",
-            "@media (min-width: 30.0625rem)": {
-              height: "23rem",
-            },
           },
         },
       }}
