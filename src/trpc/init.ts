@@ -108,10 +108,12 @@ const rateLimitMiddleware = t.middleware(async ({ ctx, next }) => {
 
   const ratelimit = createRateLimiter(60, "60s");
 
-  const { success } = await ratelimit.limit(ctx.session.userId);
+  const { success, remaining } = await ratelimit.limit(ctx.session.userId);
 
   if (!success) {
-    console.warn(`Rate limit exceeded for user: ${ctx.session.userId}`);
+    console.warn(
+      `[RATE_LIMIT] User ${ctx.session.userId} exceeded limit. Remaining: ${remaining}. Time: ${new Date().toISOString()}`,
+    );
 
     throw new TRPCError({ code: "TOO_MANY_REQUESTS" });
   }
