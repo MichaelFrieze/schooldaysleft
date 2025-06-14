@@ -9,6 +9,9 @@ export default tseslint.config(
   {
     ignores: [".next"],
   },
+  // TODO: Remove @ts-ignore when ESLint/TypeScript ESLint type compatibility is fixed
+  // Without this, running pnpm run typecheck will fail
+  // @ts-ignore - Type incompatibility between ESLint 9.29.0 and TypeScript ESLint 8.34.0
   ...compat.extends("next/core-web-vitals"),
   {
     files: ["**/*.ts", "**/*.tsx"],
