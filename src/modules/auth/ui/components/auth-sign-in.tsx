@@ -36,7 +36,7 @@ export const AuthSignIn = () => {
         },
         elements: {
           header: {
-            // display: "none",
+            display: "none",
           },
           main: {
             margin: "0.5rem",
