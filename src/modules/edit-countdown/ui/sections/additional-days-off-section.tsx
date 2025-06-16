@@ -66,14 +66,6 @@ export const AdditionalDaysOffSection = ({
                               date < startDate ||
                               date > endDate
                             }
-                            modifiers={{
-                              weeklyOff: isWeeklyDayOff,
-                            }}
-                            // modifiersClassNames={{
-                            //   weeklyOff:
-                            //     "opacity-50 bg-muted text-muted-foreground",
-                            //   outside: "opacity-30 text-muted-foreground/50",
-                            // }}
                             disableNavigation={true}
                             fixedWeeks={true}
                           />
