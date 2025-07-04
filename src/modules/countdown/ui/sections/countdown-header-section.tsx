@@ -29,7 +29,7 @@ const CountdownHeaderSectionSuspense = ({
 
   const { data: countdown } = useSuspenseQuery({
     ...trpc.countdown.getById.queryOptions({
-      id: parseInt(countdownId),
+      id: countdownId,
     }),
     retry: false,
   });
@@ -44,7 +44,7 @@ const CountdownHeaderSectionSuspense = ({
         </div>
 
         <Button asChild variant="outline" size="sm">
-          <Link href={`/countdown/${countdown.id}/edit`}>
+          <Link href={`/countdown/${countdown._id}/edit`}>
             <Edit className="h-4 w-4" />
             Edit
           </Link>

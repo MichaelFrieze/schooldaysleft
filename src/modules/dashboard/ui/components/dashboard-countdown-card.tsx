@@ -30,8 +30,7 @@ export const DashboardCountdownCard = ({
 
   return (
     <Link
-      href={`/countdown/${countdown.id}`}
-      key={countdown.id}
+      href={`/countdown/${countdown._id}`}
       aria-label={`View countdown: ${countdown.name}`}
       className="group block"
     >

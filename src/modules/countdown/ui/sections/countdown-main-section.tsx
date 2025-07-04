@@ -33,16 +33,19 @@ const CountdownMainSectionSuspense = ({
 
   const { data: countdown } = useSuspenseQuery({
     ...trpc.countdown.getById.queryOptions({
-      id: parseInt(countdownId),
+      id: countdownId,
     }),
     retry: false,
   });
 
-  const daysLeft = calculateDaysLeft(countdown);
-  const totalDays = calculateTotalDays(countdown);
+  // Add id property for compatibility with calculation functions
+  const countdownWithId = { ...countdown, id: countdown._id as string };
+
+  const daysLeft = calculateDaysLeft(countdownWithId);
+  const totalDays = calculateTotalDays(countdownWithId);
   const daysCompleted = totalDays - daysLeft;
-  const progressValue = calculateCountdownProgress(countdown);
-  const daysUntilStart = calculateCalendarDaysUntilStart(countdown);
+  const progressValue = calculateCountdownProgress(countdownWithId);
+  const daysUntilStart = calculateCalendarDaysUntilStart(countdownWithId);
 
   const todayFormatted = new Date().toLocaleDateString("en-US", {
     weekday: "long",

@@ -40,18 +40,12 @@ export const createTRPCContext = async (opts: { headers: Headers }) => {
     try {
       // Get the JWT token from Clerk for Convex
       const token = await session.getToken({ template: "convex" });
-      console.log(
-        "Clerk JWT token for Convex:",
-        token ? "✓ Token received" : "✗ No token",
-      );
       if (token) {
         convex.setAuth(token);
       }
     } catch (error) {
       console.error("Failed to get Clerk JWT token for Convex:", error);
     }
-  } else {
-    console.log("No session or userId found for Convex auth");
   }
 
   return {

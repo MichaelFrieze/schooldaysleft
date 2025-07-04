@@ -64,7 +64,8 @@ export const countdownRouter = createTRPCRouter({
         handleConvexError(error);
       }
 
-      return data;
+      // Return an object with the ID so frontend can access it
+      return { id: data };
     }),
 
   update: protectedProcedure
