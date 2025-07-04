@@ -2,13 +2,9 @@ import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { tryCatch } from "@/lib/try-catch";
-import {
-  createCountdown,
-  deleteCountdown,
-  getAllCountdowns,
-  getCountdownById,
-  updateCountdown,
-} from "./data";
+import { api } from "../../../../convex/_generated/api";
+import { ConvexError } from "convex/values";
+import type { Doc, Id } from "../../../../convex/_generated/dataModel";
 
 const createCountdownInput = z.object({
   name: z
@@ -29,7 +25,7 @@ const createCountdownInput = z.object({
 });
 
 const updateCountdownInput = z.object({
-  id: z.number(),
+  id: z.string(), // Convex uses string IDs
   name: z
     .string()
     .min(1, "Countdown name is required")
@@ -53,18 +49,19 @@ export const countdownRouter = createTRPCRouter({
     .input(createCountdownInput)
     .mutation(async ({ ctx, input }) => {
       const { error, data } = await tryCatch(
-        createCountdown({
-          userId: ctx.session.userId,
+        ctx.convex.mutation(api.countdowns.create, {
           name: input.name,
-          startDate: input.startDate,
-          endDate: input.endDate,
+          startDate: input.startDate.getTime(), // Convert Date to timestamp
+          endDate: input.endDate.getTime(),
           weeklyDaysOff: input.weeklyDaysOff,
-          additionalDaysOff: input.additionalDaysOff,
+          additionalDaysOff: input.additionalDaysOff.map((date) =>
+            date.getTime(),
+          ),
         }),
       );
 
       if (error) {
-        handleDataLayerError(error);
+        handleConvexError(error);
       }
 
       return data;
@@ -75,26 +72,52 @@ export const countdownRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const { id, ...updateData } = input;
 
+      // Convert dates to timestamps for Convex
+      const convexUpdateData: {
+        name?: string;
+        startDate?: number;
+        endDate?: number;
+        weeklyDaysOff?: number[];
+        additionalDaysOff?: number[];
+      } = {};
+      if (updateData.name !== undefined)
+        convexUpdateData.name = updateData.name;
+      if (updateData.startDate !== undefined)
+        convexUpdateData.startDate = updateData.startDate.getTime();
+      if (updateData.endDate !== undefined)
+        convexUpdateData.endDate = updateData.endDate.getTime();
+      if (updateData.weeklyDaysOff !== undefined)
+        convexUpdateData.weeklyDaysOff = updateData.weeklyDaysOff;
+      if (updateData.additionalDaysOff !== undefined)
+        convexUpdateData.additionalDaysOff = updateData.additionalDaysOff.map(
+          (date) => date.getTime(),
+        );
+
       const { error, data } = await tryCatch(
-        updateCountdown(id, ctx.session.userId, updateData),
+        ctx.convex.mutation(api.countdowns.update, {
+          id: id as Id<"countdowns">,
+          ...convexUpdateData,
+        }),
       );
 
       if (error) {
-        handleDataLayerError(error);
+        handleConvexError(error);
       }
 
       return data;
     }),
 
   delete: protectedProcedure
-    .input(z.object({ id: z.number() }))
+    .input(z.object({ id: z.string() })) // Changed to string for Convex
     .mutation(async ({ ctx, input }) => {
       const { error, data } = await tryCatch(
-        deleteCountdown(input.id, ctx.session.userId),
+        ctx.convex.mutation(api.countdowns.remove, {
+          id: input.id as Id<"countdowns">,
+        }),
       );
 
       if (error) {
-        handleDataLayerError(error);
+        handleConvexError(error);
       }
 
       return data;
@@ -102,66 +125,100 @@ export const countdownRouter = createTRPCRouter({
 
   getAll: protectedProcedure.query(async ({ ctx }) => {
     const { error, data } = await tryCatch(
-      getAllCountdowns(ctx.session.userId),
+      ctx.convex.query(api.countdowns.getAll),
     );
 
     if (error) {
-      handleDataLayerError(error);
+      handleConvexError(error);
     }
 
-    return data;
+    // Convert timestamps back to dates for the frontend
+    return (
+      data?.map((countdown: Doc<"countdowns">) => ({
+        ...countdown,
+        startDate: new Date(countdown.startDate),
+        endDate: new Date(countdown.endDate),
+        additionalDaysOff: countdown.additionalDaysOff.map(
+          (timestamp: number) => new Date(timestamp),
+        ),
+        createdAt: new Date(countdown.createdAt),
+        updatedAt: new Date(countdown.updatedAt),
+      })) ?? []
+    );
   }),
 
   getById: protectedProcedure
-    .input(z.object({ id: z.number() }))
+    .input(z.object({ id: z.string() })) // Changed to string for Convex
     .query(async ({ ctx, input }) => {
       const { error, data } = await tryCatch(
-        getCountdownById(input.id, ctx.session.userId),
+        ctx.convex.query(api.countdowns.getById, {
+          id: input.id as Id<"countdowns">,
+        }),
       );
 
       if (error) {
-        handleDataLayerError(error);
+        handleConvexError(error);
       }
 
-      return data;
+      if (!data) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Countdown not found",
+        });
+      }
+
+      // Convert timestamps back to dates for the frontend
+      return {
+        ...data,
+        startDate: new Date(data.startDate),
+        endDate: new Date(data.endDate),
+        additionalDaysOff: data.additionalDaysOff.map(
+          (timestamp: number) => new Date(timestamp),
+        ),
+        createdAt: new Date(data.createdAt),
+        updatedAt: new Date(data.updatedAt),
+      };
     }),
 });
 
-function handleDataLayerError(error: Error): never {
-  const errorMap = {
-    "User not authenticated": { code: "UNAUTHORIZED" as const },
-    "Start date must be earlier than end date": {
-      code: "BAD_REQUEST" as const,
-    },
-    "Countdown name is required": { code: "BAD_REQUEST" as const },
-    "Weekly days off must be numbers between 0 and 6": {
-      code: "BAD_REQUEST" as const,
-    },
-    "Weekly days off cannot contain duplicates": {
-      code: "BAD_REQUEST" as const,
-    },
-    "Weekly days off must be in order from 0 to 6": {
-      code: "BAD_REQUEST" as const,
-    },
-    "Additional days off cannot contain duplicate dates": {
-      code: "BAD_REQUEST" as const,
-    },
-    "Additional days off must be between start date and end date": {
-      code: "BAD_REQUEST" as const,
-    },
-    "Countdown name already exists": { code: "CONFLICT" as const },
-    "Countdown not found": { code: "NOT_FOUND" as const },
-    "Countdown does not belong to user": { code: "FORBIDDEN" as const },
-  };
+function handleConvexError(error: Error): never {
+  // Handle Convex errors
+  if (error instanceof ConvexError) {
+    const errorMap = {
+      "User not authenticated": { code: "UNAUTHORIZED" as const },
+      "Start date must be earlier than end date": {
+        code: "BAD_REQUEST" as const,
+      },
+      "Countdown name is required": { code: "BAD_REQUEST" as const },
+      "Weekly days off must be numbers between 0 and 6": {
+        code: "BAD_REQUEST" as const,
+      },
+      "Weekly days off cannot contain duplicates": {
+        code: "BAD_REQUEST" as const,
+      },
+      "Weekly days off must be in order from 0 to 6": {
+        code: "BAD_REQUEST" as const,
+      },
+      "Additional days off cannot contain duplicate dates": {
+        code: "BAD_REQUEST" as const,
+      },
+      "Additional days off must be between start date and end date": {
+        code: "BAD_REQUEST" as const,
+      },
+      "Countdown name already exists": { code: "CONFLICT" as const },
+      "Countdown not found": { code: "NOT_FOUND" as const },
+      "Countdown does not belong to user": { code: "FORBIDDEN" as const },
+    };
 
-  const errorConfig = errorMap[error.message as keyof typeof errorMap];
+    const errorConfig = errorMap[error.message as keyof typeof errorMap];
 
-  if (errorConfig) {
-    throw new TRPCError({
-      code: errorConfig.code,
-      message: error.message,
-      cause: error,
-    });
+    if (errorConfig) {
+      throw new TRPCError({
+        code: errorConfig.code,
+        message: error.message,
+        cause: error,
+      });
+    }
   }
 
   // Fallback for unmapped errors
