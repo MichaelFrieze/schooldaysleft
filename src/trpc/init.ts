@@ -39,9 +39,11 @@ export const createTRPCContext = async (opts: { headers: Headers }) => {
     );
 
     if (error) {
-      console.error("Failed to get Clerk JWT token for Convex:", error);
+      console.warn("Failed to get Convex token during SSR:", error.message);
     } else if (token) {
       convex.setAuth(token);
+    } else {
+      console.warn("No Convex token received during SSR");
     }
   }
 
