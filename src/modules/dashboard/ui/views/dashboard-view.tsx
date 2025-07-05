@@ -22,13 +22,11 @@ export const DashboardView = () => {
         </Button>
       </div>
 
-      {/* <TRPCPrefetch
+      <TRPCPrefetch
         queryOptionsToPrefetch={[trpc.countdown.getAll.queryOptions()]}
       >
         <DashboardContent />
-      </TRPCPrefetch> */}
-
-      <DashboardContent />
+      </TRPCPrefetch>
     </section>
   );
 };

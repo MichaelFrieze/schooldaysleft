@@ -30,27 +30,25 @@ import { ConvexHttpClient } from "convex/browser";
  * @see https://trpc.io/docs/server/context
  */
 export const createTRPCContext = async (opts: { headers: Headers }) => {
-  console.log(
-    "[TRPC CONTEXT] Creating context for:",
-    opts.headers.get("user-agent")?.slice(0, 50),
-  );
-
   const session = await auth();
   const convex = new ConvexHttpClient(env.NEXT_PUBLIC_CONVEX_URL);
 
   if (session.userId) {
-    console.log("[TRPC CONTEXT] User authenticated, fetching token...");
     const { data: token, error } = await tryCatch(
       session.getToken({ template: "convex" }),
     );
 
     if (error) {
-      console.warn("[TRPC CONTEXT] Failed to get Convex token:", error.message);
+      console.error(
+        "Failed to get Clerk JWT token from session in createTRPCContext:",
+        error,
+      );
     } else if (token) {
-      console.log("[TRPC CONTEXT] Token received, setting auth");
       convex.setAuth(token);
     } else {
-      console.warn("[TRPC CONTEXT] No Convex token received");
+      console.warn(
+        "No Convex token received from session in createTRPCContext",
+      );
     }
   }
 

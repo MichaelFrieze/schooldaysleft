@@ -10,17 +10,15 @@ const Page = async ({ params }: PageProps) => {
   const { countdownId } = await params;
 
   return (
-    // <TRPCPrefetch
-    //   queryOptionsToPrefetch={[
-    //     trpc.countdown.getById.queryOptions({
-    //       id: countdownId,
-    //     }),
-    //   ]}
-    // >
-    //   <CountdownView countdownId={countdownId} />
-    // </TRPCPrefetch>
-
-    <CountdownView countdownId={countdownId} />
+    <TRPCPrefetch
+      queryOptionsToPrefetch={[
+        trpc.countdown.getById.queryOptions({
+          id: countdownId,
+        }),
+      ]}
+    >
+      <CountdownView countdownId={countdownId} />
+    </TRPCPrefetch>
   );
 };
 
