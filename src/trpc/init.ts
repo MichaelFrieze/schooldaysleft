@@ -11,13 +11,11 @@ import superjson from "superjson";
 import { ZodError } from "zod";
 
 import { db } from "@/db";
-import { auth } from "@clerk/nextjs/server";
-import { createRateLimiter } from "@/lib/ratelimit";
-import { ConvexHttpClient } from "convex/browser";
 import { env } from "@/env";
-
-// Create Convex client for server-side use
-const convex = new ConvexHttpClient(env.NEXT_PUBLIC_CONVEX_URL);
+import { createRateLimiter } from "@/lib/ratelimit";
+import { tryCatch } from "@/lib/try-catch";
+import { auth } from "@clerk/nextjs/server";
+import { ConvexHttpClient } from "convex/browser";
 
 /**
  * 1. CONTEXT
@@ -33,18 +31,17 @@ const convex = new ConvexHttpClient(env.NEXT_PUBLIC_CONVEX_URL);
  */
 export const createTRPCContext = async (opts: { headers: Headers }) => {
   const session = await auth();
+  const convex = new ConvexHttpClient(env.NEXT_PUBLIC_CONVEX_URL);
 
-  // For server-side Convex calls, we need to get the JWT token from Clerk
-  // and set it on the Convex client for authentication
-  if (session?.userId) {
-    try {
-      // Get the JWT token from Clerk for Convex
-      const token = await session.getToken({ template: "convex" });
-      if (token) {
-        convex.setAuth(token);
-      }
-    } catch (error) {
+  if (session.userId) {
+    const { data: token, error } = await tryCatch(
+      session.getToken({ template: "convex" }),
+    );
+
+    if (error) {
       console.error("Failed to get Clerk JWT token for Convex:", error);
+    } else if (token) {
+      convex.setAuth(token);
     }
   }
 
