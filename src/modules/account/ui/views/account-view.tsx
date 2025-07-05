@@ -2,11 +2,9 @@ import { UserProfile } from "@/modules/user/ui/components/user-profile";
 
 export const AccountView = () => {
   return (
-    <section className="container py-8 md:py-12">
-      <div className="flex justify-center">
-        <div className="h-[44rem] w-[55rem] max-w-[calc(-4rem+100vw)]">
-          <UserProfile />
-        </div>
+    <section className="container">
+      <div className="fixed top-[50%] left-[50%] w-[calc(100vw-4rem)] max-w-[55rem] translate-x-[-50%] translate-y-[-50%] sm:w-[calc(100vw-4rem)] sm:max-w-[55rem]">
+        <UserProfile />
       </div>
     </section>
   );

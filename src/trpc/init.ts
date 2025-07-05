@@ -106,11 +106,15 @@ const rateLimitMiddleware = t.middleware(async ({ ctx, next }) => {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
 
-  const ratelimit = createRateLimiter(10, "10s");
+  const ratelimit = createRateLimiter(60, "60s");
 
-  const { success } = await ratelimit.limit(ctx.session.userId);
+  const { success, remaining } = await ratelimit.limit(ctx.session.userId);
 
   if (!success) {
+    console.warn(
+      `[RATE_LIMIT] User ${ctx.session.userId} exceeded limit. Remaining: ${remaining}. Time: ${new Date().toISOString()}`,
+    );
+
     throw new TRPCError({ code: "TOO_MANY_REQUESTS" });
   }
 
@@ -136,7 +140,7 @@ export const publicProcedure = t.procedure.use(timingMiddleware);
  */
 export const protectedProcedure = t.procedure
   .use(timingMiddleware)
-  // .use(rateLimitMiddleware)
+  .use(rateLimitMiddleware)
   .use(({ ctx, next }) => {
     if (!ctx.session?.userId) {
       throw new TRPCError({ code: "UNAUTHORIZED" });

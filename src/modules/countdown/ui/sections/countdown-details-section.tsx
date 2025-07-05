@@ -115,12 +115,14 @@ const CountdownDetailsSectionSuspense = ({
   );
 
   const isDateDisabled = (date: Date) => {
-    if (
-      isBefore(date, startDate) ||
-      isAfter(date, endDate) ||
-      isBefore(date, today)
-    ) {
-      return true;
+    if (showPastMonths) {
+      if (isBefore(date, startDate) || isAfter(date, endDate)) {
+        return true;
+      }
+    } else {
+      if (isBefore(date, today) || isAfter(date, endDate)) {
+        return true;
+      }
     }
 
     const dayOfWeek = date.getDay();
@@ -284,7 +286,10 @@ const CountdownDetailsSectionSuspense = ({
                     <Calendar
                       mode="multiple"
                       month={month}
-                      selected={upcomingAdditionalDaysOffDates}
+                      selected={(showPastMonths
+                        ? allAdditionalDaysOffDates
+                        : upcomingAdditionalDaysOffDates
+                      ).filter((date) => isSameMonth(date, month))}
                       disabled={(date) =>
                         !isSameMonth(date, month) || isDateDisabled(date)
                       }
@@ -292,10 +297,9 @@ const CountdownDetailsSectionSuspense = ({
                       fixedWeeks={true}
                       classNames={{
                         day_selected: "bg-primary text-primary-foreground",
-                        day_disabled: "text-muted-foreground opacity-30",
                         day: "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 size-8 p-0 font-normal aria-selected:opacity-100",
                         day_outside:
-                          "text-muted-foreground/50 opacity-30 aria-selected:text-primary-foreground",
+                          "text-muted-foreground aria-selected:text-primary-foreground",
                       }}
                     />
                   </div>

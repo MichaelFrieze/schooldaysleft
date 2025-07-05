@@ -1,5 +1,6 @@
 "use client";
 
+import { Skeleton } from "@/components/ui/skeleton";
 import { useClerkAppearanceVariables } from "@/modules/settings/hooks/use-clerk-appearance-variables";
 import { SignIn as ClerkSignIn } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
@@ -8,12 +9,20 @@ export const AuthSignIn = () => {
   const [isMounted, setIsMounted] = useState(false);
   const clerkAppearanceVariables = useClerkAppearanceVariables();
 
+  // rounded-lg in tailwind: calc(var(--radius))
+  const borderRadiusLg = `calc(${clerkAppearanceVariables.borderRadius})`;
+
+  // rounded-md in tailwind: calc(var(--radius) - 2px)
+  // const borderRadiusMd = `calc(${clerkAppearanceVariables.borderRadius} - 2px)`;
+
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
   if (!isMounted) {
-    return <div className="h-[23rem] w-[25rem] max-w-[calc(-4rem+100vw)]" />;
+    return (
+      <Skeleton className="h-[23rem] w-[calc(100vw-4rem)] max-w-[25rem] rounded-lg" />
+    );
   }
 
   return (
@@ -35,9 +44,13 @@ export const AuthSignIn = () => {
           card: {
             borderBottomLeftRadius: "0rem",
             borderBottomRightRadius: "0rem",
+            borderTopLeftRadius: borderRadiusLg,
+            borderTopRightRadius: borderRadiusLg,
           },
           cardBox: {
-            maxWidth: "calc(-4rem + 100vw)",
+            maxWidth: "25rem",
+            width: "calc(100vw - 4rem)",
+            borderRadius: borderRadiusLg,
           },
         },
       }}

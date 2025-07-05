@@ -101,7 +101,7 @@ export const FormSummarySection = ({
                 Clear All
               </Button>
             </AlertDialogTrigger>
-            <AlertDialogContent>
+            <AlertDialogContent className="w-[calc(100vw-4rem)] max-w-sm">
               <AlertDialogHeader>
                 <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                 <AlertDialogDescription>
