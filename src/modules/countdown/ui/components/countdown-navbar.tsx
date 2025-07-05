@@ -17,11 +17,13 @@ export const CountdownNavbar = () => {
 
         <nav className="ml-auto flex items-center gap-2">
           <div className="hidden sm:flex">
-            <TRPCPrefetch
+            {/* <TRPCPrefetch
               queryOptionsToPrefetch={[trpc.countdown.getAll.queryOptions()]}
             >
               <CountdownNavDropdown />
-            </TRPCPrefetch>
+            </TRPCPrefetch> */}
+
+            <CountdownNavDropdown />
           </div>
           <TRPCPrefetch
             queryOptionsToPrefetch={[
