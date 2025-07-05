@@ -34,4 +34,17 @@ const handler = (req: NextRequest) =>
         : undefined,
   });
 
-export { handler as GET, handler as POST };
+// Add OPTIONS handler for CORS preflight requests
+const optionsHandler = () => {
+  return new Response(null, {
+    status: 200,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      "Access-Control-Max-Age": "86400",
+    },
+  });
+};
+
+export { handler as GET, handler as POST, optionsHandler as OPTIONS };
