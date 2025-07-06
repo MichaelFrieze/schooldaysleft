@@ -44,7 +44,7 @@ const CountdownHeaderSectionSuspense = ({
         </div>
 
         <Button asChild variant="outline" size="sm">
-          <Link href={`/countdown/${countdown._id}/edit`}>
+          <Link href={`/countdown/${countdown.id}/edit`}>
             <Edit className="h-4 w-4" />
             Edit
           </Link>

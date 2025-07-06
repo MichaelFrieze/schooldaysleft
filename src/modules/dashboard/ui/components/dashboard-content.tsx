@@ -63,10 +63,7 @@ const DashboardContentSuspense = () => {
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {countdowns.map((countdown) => {
         return (
-          <DashboardCountdownCard
-            key={countdown._id}
-            countdown={{ ...countdown, id: countdown._id as string }}
-          />
+          <DashboardCountdownCard key={countdown.id} countdown={countdown} />
         );
       })}
     </div>

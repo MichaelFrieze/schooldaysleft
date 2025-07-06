@@ -48,6 +48,11 @@ export const useCountdownForm = () => {
   const queryClient = useQueryClient();
   const { countdownId } = useParams<{ countdownId: string }>();
 
+  // Validate countdownId
+  if (!countdownId || countdownId === "undefined") {
+    throw new Error("Invalid countdown ID");
+  }
+
   const { data: defaultCountdown } = useSuspenseQuery({
     ...trpc.countdown.getById.queryOptions({
       id: countdownId,

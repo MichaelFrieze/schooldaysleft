@@ -1,12 +1,10 @@
-import type { Doc } from "../../../convex/_generated/dataModel";
-
-export type Countdown = Omit<
-  Doc<"countdowns">,
-  "startDate" | "endDate" | "additionalDaysOff" | "createdAt" | "updatedAt"
-> & {
-  id: string; // Add id as alias for _id for compatibility
+export type Countdown = {
+  id: string;
+  userId: string;
+  name: string;
   startDate: Date;
   endDate: Date;
+  weeklyDaysOff: number[];
   additionalDaysOff: Date[];
   createdAt: Date;
   updatedAt: Date;

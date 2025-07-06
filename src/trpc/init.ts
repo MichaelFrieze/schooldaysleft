@@ -10,12 +10,8 @@ import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
-import { db } from "@/db";
-import { env } from "@/env";
 import { createRateLimiter } from "@/lib/ratelimit";
-import { tryCatch } from "@/lib/try-catch";
 import { auth } from "@clerk/nextjs/server";
-import { ConvexHttpClient } from "convex/browser";
 
 /**
  * 1. CONTEXT
@@ -31,31 +27,9 @@ import { ConvexHttpClient } from "convex/browser";
  */
 export const createTRPCContext = async (opts: { headers: Headers }) => {
   const session = await auth();
-  const convex = new ConvexHttpClient(env.NEXT_PUBLIC_CONVEX_URL);
-
-  if (session.userId) {
-    const { data: token, error } = await tryCatch(
-      session.getToken({ template: "convex" }),
-    );
-
-    if (error) {
-      console.error(
-        "Failed to get Clerk JWT token from session in createTRPCContext:",
-        error,
-      );
-    } else if (token) {
-      convex.setAuth(token);
-    } else {
-      console.warn(
-        "No Convex token received from session in createTRPCContext",
-      );
-    }
-  }
 
   return {
-    db,
     session,
-    convex,
     ...opts,
   };
 };

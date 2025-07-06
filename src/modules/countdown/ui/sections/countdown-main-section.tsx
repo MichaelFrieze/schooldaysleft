@@ -38,14 +38,11 @@ const CountdownMainSectionSuspense = ({
     retry: false,
   });
 
-  // Add id property for compatibility with calculation functions
-  const countdownWithId = { ...countdown, id: countdown._id as string };
-
-  const daysLeft = calculateDaysLeft(countdownWithId);
-  const totalDays = calculateTotalDays(countdownWithId);
+  const daysLeft = calculateDaysLeft(countdown);
+  const totalDays = calculateTotalDays(countdown);
   const daysCompleted = totalDays - daysLeft;
-  const progressValue = calculateCountdownProgress(countdownWithId);
-  const daysUntilStart = calculateCalendarDaysUntilStart(countdownWithId);
+  const progressValue = calculateCountdownProgress(countdown);
+  const daysUntilStart = calculateCalendarDaysUntilStart(countdown);
 
   const todayFormatted = new Date().toLocaleDateString("en-US", {
     weekday: "long",

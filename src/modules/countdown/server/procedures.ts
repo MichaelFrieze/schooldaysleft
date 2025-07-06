@@ -1,10 +1,14 @@
 import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
-import { z } from "zod";
 import { tryCatch } from "@/lib/try-catch";
-import { api } from "../../../../convex/_generated/api";
-import { ConvexError } from "convex/values";
-import type { Doc, Id } from "../../../../convex/_generated/dataModel";
+import { z } from "zod";
+import {
+  createCountdown,
+  updateCountdown,
+  deleteCountdown,
+  getAllCountdowns,
+  getCountdownById,
+} from "./data-convex";
 
 const createCountdownInput = z.object({
   name: z
@@ -48,24 +52,22 @@ export const countdownRouter = createTRPCRouter({
   create: protectedProcedure
     .input(createCountdownInput)
     .mutation(async ({ ctx, input }) => {
-      const { error, data } = await tryCatch(
-        ctx.convex.mutation(api.countdowns.create, {
+      const { data: countdown, error } = await tryCatch(
+        createCountdown({
+          userId: ctx.session.userId,
           name: input.name,
-          startDate: input.startDate.getTime(), // Convert Date to timestamp
-          endDate: input.endDate.getTime(),
+          startDate: input.startDate,
+          endDate: input.endDate,
           weeklyDaysOff: input.weeklyDaysOff,
-          additionalDaysOff: input.additionalDaysOff.map((date) =>
-            date.getTime(),
-          ),
+          additionalDaysOff: input.additionalDaysOff,
         }),
       );
 
       if (error) {
-        handleConvexError(error);
+        handleDataLayerError(error);
       }
 
-      // Return an object with the ID so frontend can access it
-      return { id: data };
+      return { id: countdown.id };
     }),
 
   update: protectedProcedure
@@ -73,159 +75,101 @@ export const countdownRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const { id, ...updateData } = input;
 
-      // Convert dates to timestamps for Convex
-      const convexUpdateData: {
-        name?: string;
-        startDate?: number;
-        endDate?: number;
-        weeklyDaysOff?: number[];
-        additionalDaysOff?: number[];
-      } = {};
-      if (updateData.name !== undefined)
-        convexUpdateData.name = updateData.name;
-      if (updateData.startDate !== undefined)
-        convexUpdateData.startDate = updateData.startDate.getTime();
-      if (updateData.endDate !== undefined)
-        convexUpdateData.endDate = updateData.endDate.getTime();
-      if (updateData.weeklyDaysOff !== undefined)
-        convexUpdateData.weeklyDaysOff = updateData.weeklyDaysOff;
-      if (updateData.additionalDaysOff !== undefined)
-        convexUpdateData.additionalDaysOff = updateData.additionalDaysOff.map(
-          (date) => date.getTime(),
-        );
-
-      const { error, data } = await tryCatch(
-        ctx.convex.mutation(api.countdowns.update, {
-          id: id as Id<"countdowns">,
-          ...convexUpdateData,
-        }),
+      const { data: countdown, error } = await tryCatch(
+        updateCountdown(id, ctx.session.userId, updateData),
       );
 
       if (error) {
-        handleConvexError(error);
+        handleDataLayerError(error);
       }
 
-      return data;
+      return { id: countdown.id };
     }),
 
   delete: protectedProcedure
-    .input(z.object({ id: z.string() })) // Changed to string for Convex
+    .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      const { error, data } = await tryCatch(
-        ctx.convex.mutation(api.countdowns.remove, {
-          id: input.id as Id<"countdowns">,
-        }),
+      const { data: result, error } = await tryCatch(
+        deleteCountdown(input.id, ctx.session.userId),
       );
 
       if (error) {
-        handleConvexError(error);
+        handleDataLayerError(error);
       }
 
-      return data;
+      return result;
     }),
 
   getAll: protectedProcedure.query(async ({ ctx }) => {
-    const { error, data } = await tryCatch(
-      ctx.convex.query(api.countdowns.getAll),
+    const { data: countdowns, error } = await tryCatch(
+      getAllCountdowns(ctx.session.userId),
     );
 
     if (error) {
-      handleConvexError(error);
+      handleDataLayerError(error);
     }
 
-    // Convert timestamps back to dates for the frontend
-    return (
-      data?.map((countdown: Doc<"countdowns">) => ({
-        ...countdown,
-        startDate: new Date(countdown.startDate),
-        endDate: new Date(countdown.endDate),
-        additionalDaysOff: countdown.additionalDaysOff.map(
-          (timestamp: number) => new Date(timestamp),
-        ),
-        createdAt: new Date(countdown.createdAt),
-        updatedAt: new Date(countdown.updatedAt),
-      })) ?? []
-    );
+    return countdowns;
   }),
 
   getById: protectedProcedure
-    .input(z.object({ id: z.string() })) // Changed to string for Convex
+    .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
-      const { error, data } = await tryCatch(
-        ctx.convex.query(api.countdowns.getById, {
-          id: input.id as Id<"countdowns">,
-        }),
+      const { data: countdown, error } = await tryCatch(
+        getCountdownById(input.id, ctx.session.userId),
       );
 
       if (error) {
-        handleConvexError(error);
+        handleDataLayerError(error);
       }
 
-      if (!data) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Countdown not found",
-        });
-      }
-
-      // Convert timestamps back to dates for the frontend
-      return {
-        ...data,
-        startDate: new Date(data.startDate),
-        endDate: new Date(data.endDate),
-        additionalDaysOff: data.additionalDaysOff.map(
-          (timestamp: number) => new Date(timestamp),
-        ),
-        createdAt: new Date(data.createdAt),
-        updatedAt: new Date(data.updatedAt),
-      };
+      return countdown;
     }),
 });
 
-function handleConvexError(error: Error): never {
-  // Handle Convex errors
-  if (error instanceof ConvexError) {
-    const errorMap = {
-      "User not authenticated": { code: "UNAUTHORIZED" as const },
-      "Start date must be earlier than end date": {
-        code: "BAD_REQUEST" as const,
-      },
-      "Countdown name is required": { code: "BAD_REQUEST" as const },
-      "Weekly days off must be numbers between 0 and 6": {
-        code: "BAD_REQUEST" as const,
-      },
-      "Weekly days off cannot contain duplicates": {
-        code: "BAD_REQUEST" as const,
-      },
-      "Weekly days off must be in order from 0 to 6": {
-        code: "BAD_REQUEST" as const,
-      },
-      "Additional days off cannot contain duplicate dates": {
-        code: "BAD_REQUEST" as const,
-      },
-      "Additional days off must be between start date and end date": {
-        code: "BAD_REQUEST" as const,
-      },
-      "Countdown name already exists": { code: "CONFLICT" as const },
-      "Countdown not found": { code: "NOT_FOUND" as const },
-      "Countdown does not belong to user": { code: "FORBIDDEN" as const },
-    };
+function handleDataLayerError(error: unknown): never {
+  const errorMessage = error instanceof Error ? error.message : "Unknown error";
 
-    const errorConfig = errorMap[error.message as keyof typeof errorMap];
+  const errorMap = {
+    "User not authenticated": { code: "UNAUTHORIZED" as const },
+    "Start date must be earlier than end date": {
+      code: "BAD_REQUEST" as const,
+    },
+    "Countdown name is required": { code: "BAD_REQUEST" as const },
+    "Weekly days off must be numbers between 0 and 6": {
+      code: "BAD_REQUEST" as const,
+    },
+    "Weekly days off cannot contain duplicates": {
+      code: "BAD_REQUEST" as const,
+    },
+    "Weekly days off must be in order from 0 to 6": {
+      code: "BAD_REQUEST" as const,
+    },
+    "Additional days off cannot contain duplicate dates": {
+      code: "BAD_REQUEST" as const,
+    },
+    "Additional days off must be between start date and end date": {
+      code: "BAD_REQUEST" as const,
+    },
+    "Countdown name already exists": { code: "CONFLICT" as const },
+    "Countdown not found": { code: "NOT_FOUND" as const },
+    "Countdown does not belong to user": { code: "FORBIDDEN" as const },
+  };
 
-    if (errorConfig) {
-      throw new TRPCError({
-        code: errorConfig.code,
-        message: error.message,
-        cause: error,
-      });
-    }
+  const errorConfig = errorMap[errorMessage as keyof typeof errorMap];
+
+  if (errorConfig) {
+    throw new TRPCError({
+      code: errorConfig.code,
+      message: errorMessage,
+      cause: error,
+    });
   }
 
   // Fallback for unmapped errors
   throw new TRPCError({
     code: "INTERNAL_SERVER_ERROR",
-    message: error.message,
+    message: errorMessage,
     cause: error,
   });
 }

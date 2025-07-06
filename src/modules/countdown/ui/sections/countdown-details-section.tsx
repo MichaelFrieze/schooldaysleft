@@ -70,14 +70,11 @@ const CountdownDetailsSectionSuspense = ({
     return date;
   })();
 
-  // Add id property for compatibility with calculation functions
-  const countdownWithId = { ...countdown, id: countdown._id as string };
-
-  const daysLeft = calculateDaysLeft(countdownWithId);
-  const totalDays = calculateTotalDays(countdownWithId);
+  const daysLeft = calculateDaysLeft(countdown);
+  const totalDays = calculateTotalDays(countdown);
   const daysCompleted = totalDays - daysLeft;
-  const progressPercentage = calculateCountdownProgress(countdownWithId);
-  const weeksRemaining = calculateWeeksRemaining(countdownWithId);
+  const progressPercentage = calculateCountdownProgress(countdown);
+  const weeksRemaining = calculateWeeksRemaining(countdown);
 
   const totalCalendarDays = (() => {
     const startDate = new Date(countdown.startDate);

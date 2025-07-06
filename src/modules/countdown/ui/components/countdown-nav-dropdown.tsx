@@ -56,12 +56,12 @@ const CountdownNavDropdownSuspense = () => {
 
     if (pathname.endsWith("/edit")) {
       const countdownId = pathname.split("/")[2];
-      const currentCountdown = countdowns.find((c) => c._id === countdownId);
+      const currentCountdown = countdowns.find((c) => c.id === countdownId);
       return currentCountdown?.name;
     }
 
     const countdownId = pathname.split("/").pop();
-    const currentCountdown = countdowns.find((c) => c._id === countdownId);
+    const currentCountdown = countdowns.find((c) => c.id === countdownId);
 
     return currentCountdown?.name;
   };
@@ -93,11 +93,11 @@ const CountdownNavDropdownSuspense = () => {
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         {countdowns?.map((countdown) => (
-          <DropdownMenuItem key={countdown._id} asChild>
+          <DropdownMenuItem key={countdown.id} asChild>
             <Link
-              href={`/countdown/${countdown._id}`}
+              href={`/countdown/${countdown.id}`}
               className={cn(
-                pathname === `/countdown/${countdown._id}` &&
+                pathname === `/countdown/${countdown.id}` &&
                   "bg-accent text-accent-foreground",
               )}
             >
