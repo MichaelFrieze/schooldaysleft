@@ -124,10 +124,6 @@ export const useCountdownForm = () => {
       onSuccess: (createdCountdown) => {
         invalidateGetAllCountdowns();
 
-        console.log("Countdown created successfully", {
-          data: createdCountdown,
-        });
-
         if (createdCountdown?.id) {
           void router.push(`/countdown/${createdCountdown.id}`);
         } else {
