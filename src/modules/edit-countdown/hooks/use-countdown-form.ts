@@ -48,9 +48,14 @@ export const useCountdownForm = () => {
   const queryClient = useQueryClient();
   const { countdownId } = useParams<{ countdownId: string }>();
 
+  // Validate countdownId
+  if (!countdownId || countdownId === "undefined") {
+    throw new Error("Invalid countdown ID");
+  }
+
   const { data: defaultCountdown } = useSuspenseQuery({
     ...trpc.countdown.getById.queryOptions({
-      id: parseInt(countdownId),
+      id: countdownId,
     }),
     retry: false,
   });
@@ -68,7 +73,7 @@ export const useCountdownForm = () => {
       queryKey: trpc.countdown.getAll.queryKey(),
     });
     void queryClient.invalidateQueries({
-      queryKey: trpc.countdown.getById.queryKey({ id: parseInt(countdownId) }),
+      queryKey: trpc.countdown.getById.queryKey({ id: countdownId }),
     });
   };
 
@@ -147,7 +152,7 @@ export const useCountdownForm = () => {
   const onSubmit = (data: FormData) => {
     updateCountdownMutation.mutate(
       {
-        id: parseInt(countdownId),
+        id: countdownId,
         name: data.name,
         startDate: data.startDate,
         endDate: data.endDate,
@@ -158,7 +163,7 @@ export const useCountdownForm = () => {
         onSuccess: (updatedCountdown) => {
           invalidateCountdownQueries();
 
-          void router.push(`/countdown/${updatedCountdown.id}`);
+          void router.push(`/countdown/${countdownId}`);
         },
         onError: (error) => {
           if (error.message.includes("Countdown name already exists")) {
@@ -181,7 +186,7 @@ export const useCountdownForm = () => {
   const handleDelete = () => {
     deleteCountdownMutation.mutate(
       {
-        id: parseInt(countdownId),
+        id: countdownId,
       },
       {
         onSuccess: () => {

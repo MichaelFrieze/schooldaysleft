@@ -1,14 +1,14 @@
 import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
-import { z } from "zod";
 import { tryCatch } from "@/lib/try-catch";
+import { z } from "zod";
 import {
   createCountdown,
+  updateCountdown,
   deleteCountdown,
   getAllCountdowns,
   getCountdownById,
-  updateCountdown,
-} from "./data";
+} from "./data-convex";
 
 const createCountdownInput = z.object({
   name: z
@@ -29,7 +29,7 @@ const createCountdownInput = z.object({
 });
 
 const updateCountdownInput = z.object({
-  id: z.number(),
+  id: z.string(), // Convex uses string IDs
   name: z
     .string()
     .min(1, "Countdown name is required")
@@ -52,7 +52,7 @@ export const countdownRouter = createTRPCRouter({
   create: protectedProcedure
     .input(createCountdownInput)
     .mutation(async ({ ctx, input }) => {
-      const { error, data } = await tryCatch(
+      const { data: countdown, error } = await tryCatch(
         createCountdown({
           userId: ctx.session.userId,
           name: input.name,
@@ -67,7 +67,7 @@ export const countdownRouter = createTRPCRouter({
         handleDataLayerError(error);
       }
 
-      return data;
+      return { id: countdown.id };
     }),
 
   update: protectedProcedure
@@ -75,7 +75,7 @@ export const countdownRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const { id, ...updateData } = input;
 
-      const { error, data } = await tryCatch(
+      const { data: countdown, error } = await tryCatch(
         updateCountdown(id, ctx.session.userId, updateData),
       );
 
@@ -83,13 +83,13 @@ export const countdownRouter = createTRPCRouter({
         handleDataLayerError(error);
       }
 
-      return data;
+      return { id: countdown.id };
     }),
 
   delete: protectedProcedure
-    .input(z.object({ id: z.number() }))
+    .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      const { error, data } = await tryCatch(
+      const { data: result, error } = await tryCatch(
         deleteCountdown(input.id, ctx.session.userId),
       );
 
@@ -97,11 +97,11 @@ export const countdownRouter = createTRPCRouter({
         handleDataLayerError(error);
       }
 
-      return data;
+      return result;
     }),
 
   getAll: protectedProcedure.query(async ({ ctx }) => {
-    const { error, data } = await tryCatch(
+    const { data: countdowns, error } = await tryCatch(
       getAllCountdowns(ctx.session.userId),
     );
 
@@ -109,13 +109,13 @@ export const countdownRouter = createTRPCRouter({
       handleDataLayerError(error);
     }
 
-    return data;
+    return countdowns;
   }),
 
   getById: protectedProcedure
-    .input(z.object({ id: z.number() }))
+    .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
-      const { error, data } = await tryCatch(
+      const { data: countdown, error } = await tryCatch(
         getCountdownById(input.id, ctx.session.userId),
       );
 
@@ -123,11 +123,13 @@ export const countdownRouter = createTRPCRouter({
         handleDataLayerError(error);
       }
 
-      return data;
+      return countdown;
     }),
 });
 
-function handleDataLayerError(error: Error): never {
+function handleDataLayerError(error: unknown): never {
+  const errorMessage = error instanceof Error ? error.message : "Unknown error";
+
   const errorMap = {
     "User not authenticated": { code: "UNAUTHORIZED" as const },
     "Start date must be earlier than end date": {
@@ -154,12 +156,12 @@ function handleDataLayerError(error: Error): never {
     "Countdown does not belong to user": { code: "FORBIDDEN" as const },
   };
 
-  const errorConfig = errorMap[error.message as keyof typeof errorMap];
+  const errorConfig = errorMap[errorMessage as keyof typeof errorMap];
 
   if (errorConfig) {
     throw new TRPCError({
       code: errorConfig.code,
-      message: error.message,
+      message: errorMessage,
       cause: error,
     });
   }
@@ -167,7 +169,7 @@ function handleDataLayerError(error: Error): never {
   // Fallback for unmapped errors
   throw new TRPCError({
     code: "INTERNAL_SERVER_ERROR",
-    message: error.message,
+    message: errorMessage,
     cause: error,
   });
 }

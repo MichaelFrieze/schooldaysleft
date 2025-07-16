@@ -56,16 +56,12 @@ const CountdownNavDropdownSuspense = () => {
 
     if (pathname.endsWith("/edit")) {
       const countdownId = pathname.split("/")[2];
-      const currentCountdown = countdowns.find(
-        (c) => c.id.toString() === countdownId,
-      );
+      const currentCountdown = countdowns.find((c) => c.id === countdownId);
       return currentCountdown?.name;
     }
 
     const countdownId = pathname.split("/").pop();
-    const currentCountdown = countdowns.find(
-      (c) => c.id.toString() === countdownId,
-    );
+    const currentCountdown = countdowns.find((c) => c.id === countdownId);
 
     return currentCountdown?.name;
   };

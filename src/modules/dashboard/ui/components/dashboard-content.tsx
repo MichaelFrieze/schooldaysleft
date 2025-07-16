@@ -1,13 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTRPC } from "@/trpc/react";
 import {
@@ -72,19 +66,20 @@ const DashboardContentSuspense = () => {
 
 const DashboardCountdownCardSkeleton = () => {
   return (
-    <Card className="h-full">
-      <CardHeader className="pb-2">
-        <CardTitle className="truncate text-lg font-medium">
-          <Skeleton className="h-5 w-3/4 rounded-md" />
-        </CardTitle>
-        <CardDescription className="flex items-center gap-1.5 text-sm font-medium">
-          <Skeleton className="h-4 w-4 rounded-full" />
-          <Skeleton className="h-4 w-1/2 rounded-md" />
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Skeleton className="h-3 w-full rounded-md" />
-      </CardContent>
+    <Card className="relative p-6">
+      <Skeleton className="absolute top-4 right-4 h-4 w-4 rounded-md" />
+      <div className="space-y-6">
+        <div>
+          <Skeleton className="h-7 w-3/4 rounded-md" />
+        </div>
+        <div className="space-y-2">
+          <Skeleton className="mx-auto h-11 w-16 rounded-md" />
+          <Skeleton className="mx-auto h-6 w-20 rounded-md" />
+        </div>
+        <div className="space-y-2">
+          <Skeleton className="h-1.5 w-full rounded-full" />
+        </div>
+      </div>
     </Card>
   );
 };

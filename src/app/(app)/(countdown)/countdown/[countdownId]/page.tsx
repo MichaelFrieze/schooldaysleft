@@ -13,7 +13,7 @@ const Page = async ({ params }: PageProps) => {
     <TRPCPrefetch
       queryOptionsToPrefetch={[
         trpc.countdown.getById.queryOptions({
-          id: parseInt(countdownId),
+          id: countdownId,
         }),
       ]}
     >

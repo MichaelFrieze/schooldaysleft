@@ -1,4 +1,11 @@
-import type { countdowns } from "@/db/schema";
-import type { InferSelectModel } from "drizzle-orm";
-
-export type Countdown = InferSelectModel<typeof countdowns>;
+export type Countdown = {
+  id: string;
+  userId: string;
+  name: string;
+  startDate: Date;
+  endDate: Date;
+  weeklyDaysOff: number[];
+  additionalDaysOff: Date[];
+  createdAt: Date;
+  updatedAt: Date;
+};

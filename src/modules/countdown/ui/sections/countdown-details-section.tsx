@@ -54,7 +54,7 @@ const CountdownDetailsSectionSuspense = ({
 
   const { data: countdown } = useSuspenseQuery({
     ...trpc.countdown.getById.queryOptions({
-      id: parseInt(countdownId),
+      id: countdownId,
     }),
     retry: false,
   });

@@ -4,6 +4,10 @@ import { NextResponse } from "next/server";
 const isPublicRoute = createRouteMatcher(["/", "/sign-in(.*)", "/not-found"]);
 
 export default clerkMiddleware(async (auth, req) => {
+  if (req.method === "OPTIONS") {
+    return new NextResponse(null, { status: 200 });
+  }
+
   const { userId } = await auth();
 
   if (userId && req.nextUrl.pathname === "/") {
