@@ -8,7 +8,7 @@ export const env = createEnv({
    */
   server: {
     DATABASE_URL: z.string().url(),
-    CONVEX_DEPLOYMENT: z.string(),
+    CONVEX_DEPLOYMENT: z.string().optional(),
     CLERK_SECRET_KEY: z.string(),
     UPSTASH_REDIS_REST_URL: z.string().url(),
     UPSTASH_REDIS_REST_TOKEN: z.string(),
