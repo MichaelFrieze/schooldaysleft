@@ -7,7 +7,7 @@ export const Route = createFileRoute("/")({
 
 function App() {
 	return (
-		<div className="flex flex-col items-center justify-center h-screen">
+		<div className="flex flex-col items-center justify-center h-screen font-sans">
 			<h1>Hello World</h1>
 			<Button variant="outline">Click me</Button>
 		</div>
