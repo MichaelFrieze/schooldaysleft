@@ -1,3 +1,4 @@
+import { ModeDropdownBtn, ModeToggleBtn } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -10,6 +11,8 @@ function App() {
 		<div className="flex h-screen flex-col items-center justify-center">
 			<h1>Hello World</h1>
 			<Button variant="outline">Click me</Button>
+			<ModeToggleBtn />
+			<ModeDropdownBtn />
 		</div>
 	);
 }

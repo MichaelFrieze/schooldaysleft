@@ -1,3 +1,4 @@
+import { ThemeProvider } from "@/components/theme-provider";
 import interLatinWoff2 from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
 import { TanstackDevtools } from "@tanstack/react-devtools";
 import type { QueryClient } from "@tanstack/react-query";
@@ -48,12 +49,19 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 
 function RootDocument({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang="en">
+		<html lang="en" suppressHydrationWarning>
 			<head>
 				<HeadContent />
 			</head>
 			<body>
-				{children}
+				<ThemeProvider
+					defaultTheme="system"
+					storageKey="schooldaysleft.theme"
+					enableColorScheme
+					disableTransitionOnChange
+				>
+					{children}
+				</ThemeProvider>
 				<TanstackDevtools
 					config={{
 						position: "bottom-left",
