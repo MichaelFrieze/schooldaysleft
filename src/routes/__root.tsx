@@ -1,5 +1,5 @@
 import { ThemeProvider } from "@/components/providers/theme-provider";
-import interLatinWoff2 from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
+// import interLatinWoff2 from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
 import { TanstackDevtools } from "@tanstack/react-devtools";
 import type { QueryClient } from "@tanstack/react-query";
 import {
@@ -30,13 +30,13 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 			},
 		],
 		links: [
-			{
-				rel: "preload",
-				as: "font",
-				href: interLatinWoff2,
-				type: "font/woff2",
-				crossOrigin: "anonymous",
-			},
+			// {
+			// 	rel: "preload",
+			// 	as: "font",
+			// 	href: interLatinWoff2,
+			// 	type: "font/woff2",
+			// 	crossOrigin: "anonymous",
+			// },
 			{
 				rel: "stylesheet",
 				href: appCss,
