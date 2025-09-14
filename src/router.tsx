@@ -1,6 +1,6 @@
 import { createRouter as createTanstackRouter } from "@tanstack/react-router";
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
-import * as TanstackQuery from "./integrations/tanstack-query/root-provider";
+import * as TanstackQuery from "./components/providers/query-provider";
 
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen";
@@ -25,6 +25,7 @@ export const createRouter = () => {
 	setupRouterSsrQueryIntegration({
 		router,
 		queryClient: rqContext.queryClient,
+		wrapQueryClient: false,
 	});
 
 	return router;

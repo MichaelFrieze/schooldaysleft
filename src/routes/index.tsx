@@ -1,5 +1,5 @@
-import { ModeDropdownBtn, ModeToggleBtn } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
+import { ModeToggleBtn } from "@/components/ui/mode-toggle";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
@@ -12,7 +12,6 @@ function App() {
 			<h1>Hello World</h1>
 			<Button variant="outline">Click me</Button>
 			<ModeToggleBtn />
-			<ModeDropdownBtn />
 		</div>
 	);
 }

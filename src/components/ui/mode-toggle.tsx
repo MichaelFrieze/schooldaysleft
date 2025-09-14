@@ -5,13 +5,13 @@ import { cn } from "@/lib/utils";
 import type { VariantProps } from "class-variance-authority";
 import { MoonIcon, SunIcon } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useTheme } from "./theme-provider";
+import { useTheme } from "../providers/theme-provider";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+} from "./dropdown-menu";
 
 interface ModeToggleProps extends VariantProps<typeof buttonVariants> {
 	variant?:
@@ -168,31 +168,3 @@ export function ModeDropdownBtn({
 		</DropdownMenu>
 	);
 }
-
-// export function ThemeSelect() {
-// 	const [mounted, setMounted] = useState(false);
-// 	const { theme, setTheme } = useTheme();
-
-// 	useEffect(() => setMounted(true), []);
-
-// 	if (!mounted) {
-// 		return (
-// 			<div className="w-[180px]">
-// 				<Skeleton className="h-9 w-full rounded-md" />
-// 			</div>
-// 		);
-// 	}
-
-// 	return (
-// 		<Select value={theme} onValueChange={setTheme}>
-// 			<SelectTrigger className="w-[180px]">
-// 				<SelectValue placeholder="Select theme" />
-// 			</SelectTrigger>
-// 			<SelectContent>
-// 				<SelectItem value="light">Light</SelectItem>
-// 				<SelectItem value="dark">Dark</SelectItem>
-// 				<SelectItem value="system">System</SelectItem>
-// 			</SelectContent>
-// 		</Select>
-// 	);
-// }

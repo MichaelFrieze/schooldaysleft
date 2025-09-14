@@ -143,5 +143,3 @@ export function useTheme() {
 	const context = use(ThemeProviderContext);
 	return context;
 }
-
-// This theme provider was inspired by: https://github.com/wannabespace/conar/blob/main/packages/ui/src/theme-provider.tsx
