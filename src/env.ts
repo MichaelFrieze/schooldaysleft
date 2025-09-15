@@ -4,6 +4,8 @@ import { z } from "zod";
 export const env = createEnv({
 	server: {
 		SERVER_URL: z.string().url().optional(),
+		CLERK_SECRET_KEY: z.string().min(1),
+		CONVEX_DEPLOYMENT: z.string().min(1),
 	},
 
 	/**
@@ -14,13 +16,25 @@ export const env = createEnv({
 
 	client: {
 		VITE_APP_TITLE: z.string().min(1).optional(),
+		VITE_CLERK_PUBLISHABLE_KEY: z.string().min(1),
+		VITE_CONVEX_URL: z.string().url(),
 	},
 
 	/**
-	 * What object holds the environment variables at runtime. This is usually
-	 * `process.env` or `import.meta.env`.
+	 * You can't destruct `import.meta.env` as a regular object, so we need to
+	 * destruct manually. This also ensures all variables are explicitly listed.
 	 */
-	runtimeEnv: import.meta.env,
+	runtimeEnv: {
+		// Server variables
+		SERVER_URL: import.meta.env.SERVER_URL,
+		CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
+		CONVEX_DEPLOYMENT: process.env.CONVEX_DEPLOYMENT,
+
+		// Client variables (must have VITE_ prefix)
+		VITE_APP_TITLE: import.meta.env.VITE_APP_TITLE,
+		VITE_CLERK_PUBLISHABLE_KEY: import.meta.env.VITE_CLERK_PUBLISHABLE_KEY,
+		VITE_CONVEX_URL: import.meta.env.VITE_CONVEX_URL,
+	},
 
 	/**
 	 * By default, this library will feed the environment variables directly to
