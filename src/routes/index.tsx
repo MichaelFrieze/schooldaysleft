@@ -7,18 +7,50 @@ import {
 	SignedOut,
 	UserButton,
 } from "@clerk/tanstack-react-start";
-import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
+import {
+	Link,
+	createFileRoute,
+	useLoaderData,
+	useNavigate,
+} from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
+	loader: ({ context }) => {
+		const userId = context.userId;
+		return {
+			userId,
+		};
+	},
 	component: App,
 });
 
 function App() {
+	const { userId } = useLoaderData({ from: "/" });
 	const navigate = useNavigate();
+	console.log(userId);
 
 	return (
 		<div className="flex h-screen flex-col items-center justify-center gap-4">
 			<h1>Hello World</h1>
+			<Button asChild>
+				<Link to="/slow-route">Slow Route</Link>
+			</Button>
+			<Button asChild>
+				<Link to="/auth-route">Auth Route</Link>
+			</Button>
+			<Button asChild>
+				<Link
+					to="/auth-route"
+					{...clickHandlers(() =>
+						navigate({
+							to: "/auth-route",
+						}),
+					)}
+				>
+					Mouse Down Auth Route
+				</Link>
+			</Button>
+
 			<ModeToggleBtn />
 
 			<SignedIn>

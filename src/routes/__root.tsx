@@ -1,5 +1,6 @@
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { ClerkProvider } from "@clerk/tanstack-react-start";
+import { getAuth } from "@clerk/tanstack-react-start/server";
 import { TanstackDevtools } from "@tanstack/react-devtools";
 import type { QueryClient } from "@tanstack/react-query";
 import {
@@ -9,6 +10,8 @@ import {
 	createRootRouteWithContext,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import { createServerFn } from "@tanstack/react-start";
+import { getWebRequest } from "@tanstack/react-start/server";
 import TanStackQueryDevtools from "../components/devtools/query-devtools";
 import appCss from "../styles.css?url";
 
@@ -16,7 +19,25 @@ interface MyRouterContext {
 	queryClient: QueryClient;
 }
 
+const fetchClerkAuth = createServerFn({ method: "GET" }).handler(async () => {
+	const { userId, getToken } = await getAuth(getWebRequest());
+	const token = await getToken({ template: "convex" });
+
+	return {
+		userId,
+		token,
+	};
+});
+
 export const Route = createRootRouteWithContext<MyRouterContext>()({
+	beforeLoad: async () => {
+		const { userId, token } = await fetchClerkAuth();
+
+		return {
+			userId,
+			token,
+		};
+	},
 	head: () => ({
 		meta: [
 			{
