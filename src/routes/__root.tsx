@@ -1,9 +1,10 @@
 import { ThemeProvider } from "@/components/providers/theme-provider";
-// import interLatinWoff2 from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
+import { ClerkProvider } from "@clerk/tanstack-react-start";
 import { TanstackDevtools } from "@tanstack/react-devtools";
 import type { QueryClient } from "@tanstack/react-query";
 import {
 	HeadContent,
+	Outlet,
 	Scripts,
 	createRootRouteWithContext,
 } from "@tanstack/react-router";
@@ -44,8 +45,18 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 		],
 	}),
 
-	shellComponent: RootDocument,
+	shellComponent: RootComponent,
 });
+
+function RootComponent() {
+	return (
+		<ClerkProvider>
+			<RootDocument>
+				<Outlet />
+			</RootDocument>
+		</ClerkProvider>
+	);
+}
 
 function RootDocument({ children }: { children: React.ReactNode }) {
 	return (
