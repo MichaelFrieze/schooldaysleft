@@ -36,6 +36,21 @@ function App() {
 				<Link to="/slow-route">Slow Route</Link>
 			</Button>
 			<Button asChild>
+				<Link to="/fast-route">Fast Route</Link>
+			</Button>
+			<Button asChild>
+				<Link
+					to="/fast-route"
+					{...clickHandlers(() =>
+						navigate({
+							to: "/fast-route",
+						}),
+					)}
+				>
+					Mouse Down Fast Route
+				</Link>
+			</Button>
+			<Button asChild>
 				<Link to="/auth-route">Auth Route</Link>
 			</Button>
 			<Button asChild>

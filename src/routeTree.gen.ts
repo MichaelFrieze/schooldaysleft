@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SlowRouteRouteImport } from './routes/slow-route'
+import { Route as FastRouteRouteImport } from './routes/fast-route'
 import { Route as AuthedRouteImport } from './routes/_authed'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SignUpSplatRouteImport } from './routes/sign-up.$'
@@ -19,6 +20,11 @@ import { Route as AuthedAuthRouteRouteImport } from './routes/_authed/auth-route
 const SlowRouteRoute = SlowRouteRouteImport.update({
   id: '/slow-route',
   path: '/slow-route',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FastRouteRoute = FastRouteRouteImport.update({
+  id: '/fast-route',
+  path: '/fast-route',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthedRoute = AuthedRouteImport.update({
@@ -48,6 +54,7 @@ const AuthedAuthRouteRoute = AuthedAuthRouteRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/fast-route': typeof FastRouteRoute
   '/slow-route': typeof SlowRouteRoute
   '/auth-route': typeof AuthedAuthRouteRoute
   '/sign-in/$': typeof SignInSplatRoute
@@ -55,6 +62,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/fast-route': typeof FastRouteRoute
   '/slow-route': typeof SlowRouteRoute
   '/auth-route': typeof AuthedAuthRouteRoute
   '/sign-in/$': typeof SignInSplatRoute
@@ -64,6 +72,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authed': typeof AuthedRouteWithChildren
+  '/fast-route': typeof FastRouteRoute
   '/slow-route': typeof SlowRouteRoute
   '/_authed/auth-route': typeof AuthedAuthRouteRoute
   '/sign-in/$': typeof SignInSplatRoute
@@ -71,13 +80,26 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/slow-route' | '/auth-route' | '/sign-in/$' | '/sign-up/$'
+  fullPaths:
+    | '/'
+    | '/fast-route'
+    | '/slow-route'
+    | '/auth-route'
+    | '/sign-in/$'
+    | '/sign-up/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/slow-route' | '/auth-route' | '/sign-in/$' | '/sign-up/$'
+  to:
+    | '/'
+    | '/fast-route'
+    | '/slow-route'
+    | '/auth-route'
+    | '/sign-in/$'
+    | '/sign-up/$'
   id:
     | '__root__'
     | '/'
     | '/_authed'
+    | '/fast-route'
     | '/slow-route'
     | '/_authed/auth-route'
     | '/sign-in/$'
@@ -87,6 +109,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthedRoute: typeof AuthedRouteWithChildren
+  FastRouteRoute: typeof FastRouteRoute
   SlowRouteRoute: typeof SlowRouteRoute
   SignInSplatRoute: typeof SignInSplatRoute
   SignUpSplatRoute: typeof SignUpSplatRoute
@@ -99,6 +122,13 @@ declare module '@tanstack/react-router' {
       path: '/slow-route'
       fullPath: '/slow-route'
       preLoaderRoute: typeof SlowRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/fast-route': {
+      id: '/fast-route'
+      path: '/fast-route'
+      fullPath: '/fast-route'
+      preLoaderRoute: typeof FastRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authed': {
@@ -153,6 +183,7 @@ const AuthedRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthedRoute: AuthedRouteWithChildren,
+  FastRouteRoute: FastRouteRoute,
   SlowRouteRoute: SlowRouteRoute,
   SignInSplatRoute: SignInSplatRoute,
   SignUpSplatRoute: SignUpSplatRoute,
