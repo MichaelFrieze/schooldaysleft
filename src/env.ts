@@ -4,13 +4,7 @@ import { z } from "zod";
 export const env = createEnv({
 	server: {
 		SERVER_URL: z.string().url().optional(),
-
 		CLERK_SECRET_KEY: z.string().min(1),
-		CLERK_SIGN_IN_URL: z.string().min(1),
-		CLERK_SIGN_UP_URL: z.string().min(1),
-		CLERK_SIGN_IN_FALLBACK_REDIRECT_URL: z.string().min(1),
-		CLERK_SIGN_UP_FALLBACK_REDIRECT_URL: z.string().min(1),
-
 		CONVEX_DEPLOYMENT: z.string().min(1),
 	},
 
@@ -22,7 +16,13 @@ export const env = createEnv({
 
 	client: {
 		VITE_APP_TITLE: z.string().min(1).optional(),
+
 		VITE_CLERK_PUBLISHABLE_KEY: z.string().min(1),
+		VITE_CLERK_SIGN_IN_URL: z.string().min(1),
+		VITE_CLERK_SIGN_UP_URL: z.string().min(1),
+		VITE_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL: z.string().min(1),
+		VITE_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL: z.string().min(1),
+
 		VITE_CONVEX_URL: z.string().url(),
 	},
 
@@ -33,20 +33,20 @@ export const env = createEnv({
 	runtimeEnv: {
 		// Server variables
 		SERVER_URL: process.env.SERVER_URL,
-
 		CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
-		CLERK_SIGN_IN_URL: process.env.CLERK_SIGN_IN_URL,
-		CLERK_SIGN_UP_URL: process.env.CLERK_SIGN_UP_URL,
-		CLERK_SIGN_IN_FALLBACK_REDIRECT_URL:
-			process.env.CLERK_SIGN_IN_FALLBACK_REDIRECT_URL,
-		CLERK_SIGN_UP_FALLBACK_REDIRECT_URL:
-			process.env.CLERK_SIGN_UP_FALLBACK_REDIRECT_URL,
-
 		CONVEX_DEPLOYMENT: process.env.CONVEX_DEPLOYMENT,
 
 		// Client variables (must have VITE_ prefix)
 		VITE_APP_TITLE: import.meta.env.VITE_APP_TITLE,
+
 		VITE_CLERK_PUBLISHABLE_KEY: import.meta.env.VITE_CLERK_PUBLISHABLE_KEY,
+		VITE_CLERK_SIGN_IN_URL: import.meta.env.VITE_CLERK_SIGN_IN_URL,
+		VITE_CLERK_SIGN_UP_URL: import.meta.env.VITE_CLERK_SIGN_UP_URL,
+		VITE_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL: import.meta.env
+			.VITE_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL,
+		VITE_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL: import.meta.env
+			.VITE_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL,
+
 		VITE_CONVEX_URL: import.meta.env.VITE_CONVEX_URL,
 	},
 
