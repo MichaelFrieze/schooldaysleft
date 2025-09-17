@@ -15,6 +15,7 @@ import { Route as AuthedRouteImport } from './routes/_authed'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SignUpSplatRouteImport } from './routes/sign-up.$'
 import { Route as SignInSplatRouteImport } from './routes/sign-in.$'
+import { Route as AuthedConvexRouteRouteImport } from './routes/_authed/convex-route'
 import { Route as AuthedAuthRouteRouteImport } from './routes/_authed/auth-route'
 
 const SlowRouteRoute = SlowRouteRouteImport.update({
@@ -46,6 +47,11 @@ const SignInSplatRoute = SignInSplatRouteImport.update({
   path: '/sign-in/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthedConvexRouteRoute = AuthedConvexRouteRouteImport.update({
+  id: '/convex-route',
+  path: '/convex-route',
+  getParentRoute: () => AuthedRoute,
+} as any)
 const AuthedAuthRouteRoute = AuthedAuthRouteRouteImport.update({
   id: '/auth-route',
   path: '/auth-route',
@@ -57,6 +63,7 @@ export interface FileRoutesByFullPath {
   '/fast-route': typeof FastRouteRoute
   '/slow-route': typeof SlowRouteRoute
   '/auth-route': typeof AuthedAuthRouteRoute
+  '/convex-route': typeof AuthedConvexRouteRoute
   '/sign-in/$': typeof SignInSplatRoute
   '/sign-up/$': typeof SignUpSplatRoute
 }
@@ -65,6 +72,7 @@ export interface FileRoutesByTo {
   '/fast-route': typeof FastRouteRoute
   '/slow-route': typeof SlowRouteRoute
   '/auth-route': typeof AuthedAuthRouteRoute
+  '/convex-route': typeof AuthedConvexRouteRoute
   '/sign-in/$': typeof SignInSplatRoute
   '/sign-up/$': typeof SignUpSplatRoute
 }
@@ -75,6 +83,7 @@ export interface FileRoutesById {
   '/fast-route': typeof FastRouteRoute
   '/slow-route': typeof SlowRouteRoute
   '/_authed/auth-route': typeof AuthedAuthRouteRoute
+  '/_authed/convex-route': typeof AuthedConvexRouteRoute
   '/sign-in/$': typeof SignInSplatRoute
   '/sign-up/$': typeof SignUpSplatRoute
 }
@@ -85,6 +94,7 @@ export interface FileRouteTypes {
     | '/fast-route'
     | '/slow-route'
     | '/auth-route'
+    | '/convex-route'
     | '/sign-in/$'
     | '/sign-up/$'
   fileRoutesByTo: FileRoutesByTo
@@ -93,6 +103,7 @@ export interface FileRouteTypes {
     | '/fast-route'
     | '/slow-route'
     | '/auth-route'
+    | '/convex-route'
     | '/sign-in/$'
     | '/sign-up/$'
   id:
@@ -102,6 +113,7 @@ export interface FileRouteTypes {
     | '/fast-route'
     | '/slow-route'
     | '/_authed/auth-route'
+    | '/_authed/convex-route'
     | '/sign-in/$'
     | '/sign-up/$'
   fileRoutesById: FileRoutesById
@@ -159,6 +171,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignInSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authed/convex-route': {
+      id: '/_authed/convex-route'
+      path: '/convex-route'
+      fullPath: '/convex-route'
+      preLoaderRoute: typeof AuthedConvexRouteRouteImport
+      parentRoute: typeof AuthedRoute
+    }
     '/_authed/auth-route': {
       id: '/_authed/auth-route'
       path: '/auth-route'
@@ -171,10 +190,12 @@ declare module '@tanstack/react-router' {
 
 interface AuthedRouteChildren {
   AuthedAuthRouteRoute: typeof AuthedAuthRouteRoute
+  AuthedConvexRouteRoute: typeof AuthedConvexRouteRoute
 }
 
 const AuthedRouteChildren: AuthedRouteChildren = {
   AuthedAuthRouteRoute: AuthedAuthRouteRoute,
+  AuthedConvexRouteRoute: AuthedConvexRouteRoute,
 }
 
 const AuthedRouteWithChildren =

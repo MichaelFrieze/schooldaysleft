@@ -65,6 +65,18 @@ function App() {
 					Mouse Down Auth Route
 				</Link>
 			</Button>
+			<Button asChild>
+				<Link
+					to="/convex-route"
+					{...clickHandlers(() =>
+						navigate({
+							to: "/convex-route",
+						}),
+					)}
+				>
+					Mouse Down Authed Convex Route
+				</Link>
+			</Button>
 
 			<ModeToggleBtn />
 
