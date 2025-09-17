@@ -1,20 +1,20 @@
+import DevtoolsLoader from "@/components/devtools/devtools-loader";
 import { ThemeProvider } from "@/components/providers/theme-provider";
-import { ClerkProvider } from "@clerk/tanstack-react-start";
+import { ClerkProvider, useAuth } from "@clerk/tanstack-react-start";
 import { getAuth } from "@clerk/tanstack-react-start/server";
 import type { ConvexQueryClient } from "@convex-dev/react-query";
-import { TanstackDevtools } from "@tanstack/react-devtools";
 import type { QueryClient } from "@tanstack/react-query";
 import {
 	HeadContent,
 	Outlet,
 	Scripts,
 	createRootRouteWithContext,
+	useRouteContext,
 } from "@tanstack/react-router";
-import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { createServerFn } from "@tanstack/react-start";
 import { getWebRequest } from "@tanstack/react-start/server";
 import type { ConvexReactClient } from "convex/react";
-import TanStackQueryDevtools from "../components/devtools/query-devtools";
+import { ConvexProviderWithClerk } from "convex/react-clerk";
 import appCss from "../styles.css?url";
 
 interface MyRouterContext {
@@ -34,8 +34,15 @@ const fetchClerkAuth = createServerFn({ method: "GET" }).handler(async () => {
 });
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
-	beforeLoad: async () => {
-		const { userId, token } = await fetchClerkAuth();
+	beforeLoad: async (ctx) => {
+		const auth = await fetchClerkAuth();
+		const { userId, token } = auth;
+
+		// During SSR only (the only time serverHttpClient exists),
+		// set the Clerk auth token to make HTTP queries with.
+		if (token) {
+			ctx.context.convexQueryClient.serverHttpClient?.setAuth(token);
+		}
 
 		return {
 			userId,
@@ -67,11 +74,14 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 });
 
 function RootComponent() {
+	const context = useRouteContext({ from: Route.id });
 	return (
 		<ClerkProvider>
-			<RootDocument>
-				<Outlet />
-			</RootDocument>
+			<ConvexProviderWithClerk client={context.convexClient} useAuth={useAuth}>
+				<RootDocument>
+					<Outlet />
+				</RootDocument>
+			</ConvexProviderWithClerk>
 		</ClerkProvider>
 	);
 }
@@ -91,18 +101,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 				>
 					{children}
 				</ThemeProvider>
-				<TanstackDevtools
-					config={{
-						position: "bottom-left",
-					}}
-					plugins={[
-						{
-							name: "Tanstack Router",
-							render: <TanStackRouterDevtoolsPanel />,
-						},
-						TanStackQueryDevtools,
-					]}
-				/>
+				<DevtoolsLoader />
 				<Scripts />
 			</body>
 		</html>
