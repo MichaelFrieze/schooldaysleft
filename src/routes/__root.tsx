@@ -1,6 +1,7 @@
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { ClerkProvider } from "@clerk/tanstack-react-start";
 import { getAuth } from "@clerk/tanstack-react-start/server";
+import type { ConvexQueryClient } from "@convex-dev/react-query";
 import { TanstackDevtools } from "@tanstack/react-devtools";
 import type { QueryClient } from "@tanstack/react-query";
 import {
@@ -12,11 +13,14 @@ import {
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { createServerFn } from "@tanstack/react-start";
 import { getWebRequest } from "@tanstack/react-start/server";
+import type { ConvexReactClient } from "convex/react";
 import TanStackQueryDevtools from "../components/devtools/query-devtools";
 import appCss from "../styles.css?url";
 
 interface MyRouterContext {
 	queryClient: QueryClient;
+	convexClient: ConvexReactClient;
+	convexQueryClient: ConvexQueryClient;
 }
 
 const fetchClerkAuth = createServerFn({ method: "GET" }).handler(async () => {
@@ -52,13 +56,6 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 			},
 		],
 		links: [
-			// {
-			// 	rel: "preload",
-			// 	as: "font",
-			// 	href: interLatinWoff2,
-			// 	type: "font/woff2",
-			// 	crossOrigin: "anonymous",
-			// },
 			{
 				rel: "stylesheet",
 				href: appCss,
