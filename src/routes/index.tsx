@@ -7,24 +7,9 @@ import {
 	SignedOut,
 	UserButton,
 } from "@clerk/tanstack-react-start";
-import {
-	Link,
-	createFileRoute,
-	redirect,
-	useNavigate,
-} from "@tanstack/react-router";
+import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
-	beforeLoad: async ({ context }) => {
-		const { userId } = context;
-
-		if (userId) {
-			throw redirect({
-				to: "/convex-route",
-				throw: true,
-			});
-		}
-	},
 	component: App,
 });
 
@@ -34,51 +19,6 @@ function App() {
 	return (
 		<div className="flex h-screen flex-col items-center justify-center gap-4">
 			<h1>Hello World</h1>
-			<Button asChild>
-				<Link to="/slow-route">Slow Route</Link>
-			</Button>
-			<Button asChild>
-				<Link to="/fast-route">Fast Route</Link>
-			</Button>
-			<Button asChild>
-				<Link
-					to="/fast-route"
-					{...clickHandlers(() =>
-						navigate({
-							to: "/fast-route",
-						}),
-					)}
-				>
-					Mouse Down Fast Route
-				</Link>
-			</Button>
-			<Button asChild>
-				<Link to="/auth-route">Auth Route</Link>
-			</Button>
-			<Button asChild>
-				<Link
-					to="/auth-route"
-					{...clickHandlers(() =>
-						navigate({
-							to: "/auth-route",
-						}),
-					)}
-				>
-					Mouse Down Auth Route
-				</Link>
-			</Button>
-			<Button asChild>
-				<Link
-					to="/convex-route"
-					{...clickHandlers(() =>
-						navigate({
-							to: "/convex-route",
-						}),
-					)}
-				>
-					Mouse Down Authed Convex Route
-				</Link>
-			</Button>
 
 			<ModeToggleBtn />
 

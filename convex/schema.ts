@@ -14,10 +14,4 @@ export default defineSchema({
 	})
 		.index("by_user", ["userId"])
 		.index("by_user_name", ["userId", "name"]), // Equivalent to the unique index in Drizzle
-
-	books: defineTable({
-		name: v.string(),
-		author: v.string(),
-		isbn: v.string(),
-	}),
 });
