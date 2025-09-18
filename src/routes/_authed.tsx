@@ -1,11 +1,34 @@
 import { Button } from "@/components/ui/button";
-import { Link, createFileRoute } from "@tanstack/react-router";
+import { fetchClerkAuth } from "@/lib/fetch-clerk-auth";
+import { Link, createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_authed")({
-	beforeLoad: ({ context }) => {
-		if (!context.userId) {
-			throw new Error("Not authenticated");
+	beforeLoad: async ({ context }) => {
+		// During SSR only (the only time serverHttpClient exists),
+		if (context.convexQueryClient.serverHttpClient) {
+			const { userId } = context;
+
+			if (!userId) {
+				throw redirect({
+					to: "/sign-in/$",
+					throw: true,
+				});
+			}
+
+			return;
 		}
+
+		const auth = await fetchClerkAuth();
+		const { userId } = auth;
+
+		if (!userId) {
+			throw redirect({
+				to: "/sign-in/$",
+				throw: true,
+			});
+		}
+
+		return;
 	},
 	errorComponent: ({ error }) => {
 		if (error.message === "Not authenticated") {

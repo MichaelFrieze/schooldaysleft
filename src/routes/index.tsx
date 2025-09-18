@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ModeToggleBtn } from "@/components/ui/mode-toggle";
+import { fetchClerkAuth } from "@/lib/fetch-clerk-auth";
 import { clickHandlers } from "@/lib/utils";
 import {
 	SignOutButton,
@@ -10,24 +11,46 @@ import {
 import {
 	Link,
 	createFileRoute,
-	useLoaderData,
+	redirect,
 	useNavigate,
 } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
-	loader: ({ context }) => {
-		const userId = context.userId;
-		return {
-			userId,
-		};
+	beforeLoad: async ({ context }) => {
+		// During SSR only (the only time serverHttpClient exists),
+		if (context.convexQueryClient.serverHttpClient) {
+			const { userId } = context;
+			console.log("userId in beforeLoad in index during SSR", userId);
+
+			if (userId) {
+				throw redirect({
+					to: "/convex-route",
+					throw: true,
+				});
+			}
+
+			return;
+		}
+
+		const auth = await fetchClerkAuth();
+		const { userId } = auth;
+
+		console.log("calling beforeLoad in index during CSR", userId);
+
+		if (userId) {
+			throw redirect({
+				to: "/convex-route",
+				throw: true,
+			});
+		}
+
+		return;
 	},
 	component: App,
 });
 
 function App() {
-	const { userId } = useLoaderData({ from: "/" });
 	const navigate = useNavigate();
-	console.log(userId);
 
 	return (
 		<div className="flex h-screen flex-col items-center justify-center gap-4">

@@ -1,4 +1,9 @@
 import { Button } from "@/components/ui/button";
+import {
+	SignOutButton,
+	SignedIn,
+	UserButton,
+} from "@clerk/tanstack-react-start";
 import { convexQuery, useConvexMutation } from "@convex-dev/react-query";
 import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
 import { Link, createFileRoute } from "@tanstack/react-router";
@@ -13,7 +18,6 @@ type SeedResponse = {
 
 export const Route = createFileRoute("/_authed/convex-route")({
 	loader: (opts) => {
-		console.log("loader from convex-route");
 		opts.context.queryClient.prefetchQuery(convexQuery(api.books.getBooks, {}));
 	},
 	// loader: async (opts) => {
@@ -292,6 +296,11 @@ function SuspenseComponent() {
 			<Button asChild>
 				<Link to="/">Home</Link>
 			</Button>
+			<SignedIn>
+				<p>You are signed in</p>
+				<SignOutButton />
+				<UserButton />
+			</SignedIn>
 		</div>
 	);
 }
