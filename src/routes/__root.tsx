@@ -23,23 +23,18 @@ interface MyRouterContext {
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
 	beforeLoad: async (ctx) => {
-		let userId: string | null = null;
+		const auth = await fetchClerkAuth();
+		const { userId, token } = auth;
 
 		// During SSR only (the only time serverHttpClient exists),
-		if (ctx.context.convexQueryClient.serverHttpClient) {
-			const auth = await fetchClerkAuth();
-			const { token, userId: userIdFromClerk } = auth;
-
-			if (token) {
-				// set the Clerk auth token to make HTTP queries with.
-				ctx.context.convexQueryClient.serverHttpClient.setAuth(token);
-			}
-
-			userId = userIdFromClerk;
+		// set the Clerk auth token to make HTTP queries with.
+		if (token) {
+			ctx.context.convexQueryClient.serverHttpClient?.setAuth(token);
 		}
 
 		return {
 			userId,
+			token,
 		};
 	},
 	head: () => ({

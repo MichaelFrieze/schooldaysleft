@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { ModeToggleBtn } from "@/components/ui/mode-toggle";
-import { fetchClerkAuth } from "@/lib/fetch-clerk-auth";
 import { clickHandlers } from "@/lib/utils";
 import {
 	SignOutButton,
@@ -17,25 +16,7 @@ import {
 
 export const Route = createFileRoute("/")({
 	beforeLoad: async ({ context }) => {
-		// During SSR only (the only time serverHttpClient exists),
-		if (context.convexQueryClient.serverHttpClient) {
-			const { userId } = context;
-			console.log("userId in beforeLoad in index during SSR", userId);
-
-			if (userId) {
-				throw redirect({
-					to: "/convex-route",
-					throw: true,
-				});
-			}
-
-			return;
-		}
-
-		const auth = await fetchClerkAuth();
-		const { userId } = auth;
-
-		console.log("calling beforeLoad in index during CSR", userId);
+		const { userId } = context;
 
 		if (userId) {
 			throw redirect({
@@ -43,8 +24,6 @@ export const Route = createFileRoute("/")({
 				throw: true,
 			});
 		}
-
-		return;
 	},
 	component: App,
 });
