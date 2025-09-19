@@ -1,0 +1,59 @@
+import { Button } from "@/components/ui/button";
+import { Link } from "@tanstack/react-router";
+import { Mail, Settings2 } from "lucide-react";
+import { ModeToggleBtn } from "./mode-toggle";
+
+export const Footer = () => {
+	return (
+		<footer className="border-t bg-background">
+			<div className="container mx-auto py-6 sm:py-4">
+				<div className="flex flex-col-reverse items-center justify-between gap-2 sm:flex-row">
+					<p className="text-muted-foreground text-sm">
+						&copy; {new Date().getFullYear()} Frieze Labs. All rights reserved.
+					</p>
+
+					<div className="flex gap-2">
+						<Button variant={"ghost"} className="text-muted-foreground" asChild>
+							<a
+								href="https://ko-fi.com/michaelfrieze"
+								target="_blank"
+								aria-label="Support This App"
+								rel="noreferrer"
+							>
+								Support This App
+							</a>
+						</Button>
+						<Button
+							variant={"ghost"}
+							size={"icon"}
+							className="text-muted-foreground"
+							asChild
+						>
+							<a
+								href="mailto:contact@schooldaysleft.com"
+								target="_blank"
+								aria-label="Contact us"
+								rel="noreferrer"
+							>
+								<Mail />
+							</a>
+						</Button>
+						<Button
+							variant={"ghost"}
+							size={"icon"}
+							className="text-muted-foreground"
+							asChild
+						>
+							<Link to="/">
+								<Settings2 />
+							</Link>
+						</Button>
+						<div className="text-muted-foreground">
+							<ModeToggleBtn variant={"ghost"} />
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+	);
+};
