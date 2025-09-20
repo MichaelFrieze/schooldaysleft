@@ -12,7 +12,6 @@ import {
 	Calendar,
 	CalendarDays,
 	LayoutGrid,
-	Palette,
 	PieChart,
 	SlidersHorizontal,
 } from "lucide-react";
@@ -117,7 +116,7 @@ export const LandingContent = () => {
 
 			{/* Features Section */}
 			<section className="mx-auto py-8 lg:py-24">
-				<div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+				<div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
 					<Card>
 						<CardHeader className="pb-4">
 							<div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10">
@@ -159,21 +158,6 @@ export const LandingContent = () => {
 							<CardDescription>
 								Track days completed and days remaining with a visual countdown
 								and progress bar.
-							</CardDescription>
-						</CardContent>
-					</Card>
-
-					<Card>
-						<CardHeader className="pb-4">
-							<div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10">
-								<Palette className="h-8 w-8 text-primary" />
-							</div>
-							<CardTitle>Custom Themes</CardTitle>
-						</CardHeader>
-						<CardContent>
-							<CardDescription>
-								Choose from multiple color themes and switch between light and
-								dark modes to personalize your experience.
 							</CardDescription>
 						</CardContent>
 					</Card>
