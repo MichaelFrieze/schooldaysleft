@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import {
 	Card,
 	CardContent,
@@ -37,17 +37,17 @@ export const LandingContent = () => {
 							to you.
 						</p>
 
-						<Button
-							asChild
-							size="lg"
-							variant="default"
-							className="gap-2 sm:mx-auto sm:w-sm"
+						<Link
+							to="/"
+							className={buttonVariants({
+								variant: "default",
+								size: "lg",
+								className: "gap-2 sm:mx-auto sm:w-sm",
+							})}
 						>
-							<Link to="/">
-								<CalendarDays className="h-5 w-5" />
-								Start Your Countdown
-							</Link>
-						</Button>
+							<CalendarDays className="h-5 w-5" />
+							Start Your Countdown
+						</Link>
 					</div>
 				</div>
 
@@ -65,17 +65,17 @@ export const LandingContent = () => {
 							to you.
 						</p>
 
-						<Button
-							asChild
-							size="lg"
-							variant="default"
-							className="min-w-[240px] gap-2"
+						<Link
+							to="/"
+							className={buttonVariants({
+								variant: "default",
+								size: "lg",
+								className: "min-w-[240px] gap-2",
+							})}
 						>
-							<Link to="/">
-								<CalendarDays className="h-5 w-5" />
-								Start Your Countdown
-							</Link>
-						</Button>
+							<CalendarDays className="h-5 w-5" />
+							Start Your Countdown
+						</Link>
 					</div>
 
 					<Card>
