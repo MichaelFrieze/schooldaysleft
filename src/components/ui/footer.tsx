@@ -1,6 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { Link } from "@tanstack/react-router";
-import { Mail, Settings2 } from "lucide-react";
+import { buttonVariants } from "@/components/ui/button";
+import { Mail } from "lucide-react";
 import { ModeToggleBtn } from "./mode-toggle";
 
 export const Footer = () => {
@@ -13,41 +12,31 @@ export const Footer = () => {
 					</p>
 
 					<div className="flex gap-2">
-						<Button variant={"ghost"} className="text-muted-foreground" asChild>
-							<a
-								href="https://ko-fi.com/michaelfrieze"
-								target="_blank"
-								aria-label="Support This App"
-								rel="noreferrer"
-							>
-								Support This App
-							</a>
-						</Button>
-						<Button
-							variant={"ghost"}
-							size={"icon"}
-							className="text-muted-foreground"
-							asChild
+						<a
+							href="https://ko-fi.com/michaelfrieze"
+							target="_blank"
+							aria-label="Support This App"
+							rel="noreferrer"
+							className={buttonVariants({
+								variant: "ghost",
+								className: "text-muted-foreground",
+							})}
 						>
-							<a
-								href="mailto:contact@schooldaysleft.com"
-								target="_blank"
-								aria-label="Contact us"
-								rel="noreferrer"
-							>
-								<Mail />
-							</a>
-						</Button>
-						<Button
-							variant={"ghost"}
-							size={"icon"}
-							className="text-muted-foreground"
-							asChild
+							Support This App
+						</a>
+						<a
+							href="mailto:contact@schooldaysleft.com"
+							target="_blank"
+							aria-label="Contact us"
+							rel="noreferrer"
+							className={buttonVariants({
+								variant: "ghost",
+								size: "icon",
+								className: "text-muted-foreground",
+							})}
 						>
-							<Link to="/">
-								<Settings2 />
-							</Link>
-						</Button>
+							<Mail />
+						</a>
 						<div className="text-muted-foreground">
 							<ModeToggleBtn variant={"ghost"} />
 						</div>
