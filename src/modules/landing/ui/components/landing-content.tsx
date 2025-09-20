@@ -20,11 +20,7 @@ export const LandingContent = () => {
 	return (
 		<div className="container">
 			{/* Hero Section */}
-			<section className="relative overflow-hidden py-8 lg:py-24">
-				{/* Background accent / banding mitigation */}
-				<div className="-z-10 pointer-events-none absolute inset-0">
-					<div className="absolute inset-0 bg-[radial-gradient(120%_80%_at_50%_-20%,hsl(var(--primary)/0.08),transparent_60%)]" />
-				</div>
+			<section className="py-8 lg:py-24">
 				{/* Mobile */}
 				<div className="lg:hidden">
 					<div className="mx-auto flex max-w-xs flex-col justify-center sm:max-w-xl">
@@ -46,8 +42,7 @@ export const LandingContent = () => {
 							className={buttonVariants({
 								variant: "default",
 								size: "lg",
-								className:
-									"gap-2 shadow-primary/10 shadow-sm ring-1 ring-primary/20 transition-colors duration-200 ease-out hover:shadow-md hover:shadow-primary/20 hover:ring-primary/30 motion-reduce:transition-none sm:mx-auto sm:w-sm",
+								className: "gap-2 sm:mx-auto sm:w-sm",
 							})}
 						>
 							<CalendarDays className="h-5 w-5" />
@@ -75,8 +70,7 @@ export const LandingContent = () => {
 							className={buttonVariants({
 								variant: "default",
 								size: "lg",
-								className:
-									"min-w-[240px] gap-2 shadow-primary/10 shadow-sm ring-1 ring-primary/20 transition-colors duration-200 ease-out hover:shadow-lg hover:shadow-primary/25 hover:ring-primary/30 motion-reduce:transition-none",
+								className: "min-w-[240px] gap-2",
 							})}
 						>
 							<CalendarDays className="h-5 w-5" />
@@ -84,11 +78,7 @@ export const LandingContent = () => {
 						</Link>
 					</div>
 
-					<Card className="relative overflow-hidden rounded-2xl border border-black/5 bg-background/60 shadow-[0_1px_2px_rgba(0,0,0,0.06),0_12px_24px_-8px_rgba(0,0,0,0.18)] backdrop-blur supports-[backdrop-filter]:bg-background/50 dark:border-white/5 dark:shadow-[0_1px_2px_rgba(0,0,0,0.6),0_12px_24px_-8px_rgba(0,0,0,0.7)]">
-						{/* subtle inner highlight for crisp edge */}
-						<div className="pointer-events-none absolute inset-0 [mask-image:linear-gradient(to_bottom,white,transparent_85%)]">
-							<div className="absolute inset-x-0 top-0 h-px bg-white/40 dark:bg-white/10" />
-						</div>
+					<Card>
 						<CardContent className="p-8">
 							<div className="pb-8">
 								<div className="flex items-center gap-2 text-muted-foreground">
@@ -117,10 +107,7 @@ export const LandingContent = () => {
 										92%
 									</span>
 								</div>
-								<Progress
-									value={92}
-									className="h-3 rounded-full border border-black/5 bg-muted/40 ring-1 ring-primary/10 dark:border-white/5"
-								/>
+								<Progress value={92} className="h-3" />
 							</div>
 						</CardContent>
 					</Card>
@@ -130,9 +117,9 @@ export const LandingContent = () => {
 			{/* Features Section */}
 			<section className="py-8 lg:py-24">
 				<div className="mx-auto grid max-w-xl grid-cols-1 gap-8 lg:mx-0 lg:max-w-full lg:grid-cols-3">
-					<Card className="motion-safe:hover:-translate-y-0.5 rounded-2xl border border-black/5 shadow-sm transition-transform duration-200 ease-out hover:shadow-lg hover:shadow-primary/10 motion-reduce:transition-none motion-reduce:hover:translate-y-0 dark:border-white/5">
+					<Card>
 						<CardHeader className="pb-4">
-							<div className="mb-4 flex h-14 w-14 items-center justify-center rounded-xl border border-primary/20 bg-primary/10 shadow-primary/10 shadow-sm">
+							<div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10">
 								<LayoutGrid className="h-8 w-8 text-primary" />
 							</div>
 							<CardTitle>Multiple Countdowns</CardTitle>
@@ -145,9 +132,9 @@ export const LandingContent = () => {
 						</CardContent>
 					</Card>
 
-					<Card className="motion-safe:hover:-translate-y-0.5 rounded-2xl border border-black/5 shadow-sm transition-transform duration-200 ease-out hover:shadow-lg hover:shadow-primary/10 motion-reduce:transition-none motion-reduce:hover:translate-y-0 dark:border-white/5">
+					<Card>
 						<CardHeader className="pb-4">
-							<div className="mb-4 flex h-14 w-14 items-center justify-center rounded-xl border border-primary/20 bg-primary/10 shadow-primary/10 shadow-sm">
+							<div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10">
 								<SlidersHorizontal className="h-8 w-8 text-primary" />
 							</div>
 							<CardTitle>Flexible Scheduling</CardTitle>
@@ -160,9 +147,9 @@ export const LandingContent = () => {
 						</CardContent>
 					</Card>
 
-					<Card className="motion-safe:hover:-translate-y-0.5 rounded-2xl border border-black/5 shadow-sm transition-transform duration-200 ease-out hover:shadow-lg hover:shadow-primary/10 motion-reduce:transition-none motion-reduce:hover:translate-y-0 dark:border-white/5">
+					<Card>
 						<CardHeader className="pb-4">
-							<div className="mb-4 flex h-14 w-14 items-center justify-center rounded-xl border border-primary/20 bg-primary/10 shadow-primary/10 shadow-sm">
+							<div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10">
 								<PieChart className="h-8 w-8 text-primary" />
 							</div>
 							<CardTitle>Progress Tracking</CardTitle>
