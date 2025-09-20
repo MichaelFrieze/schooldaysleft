@@ -1,16 +1,16 @@
 import { Footer } from "@/components/sections/footer";
-import { LandingNavbar } from "../components/landing-navbar";
+import { AuthNavbar } from "../components/auth-navbar";
 
-interface LandingLayoutProps {
+interface MarketingLayoutProps {
 	children: React.ReactNode;
 }
 
-export const LandingLayout = ({ children }: LandingLayoutProps) => {
+export function AuthLayout({ children }: MarketingLayoutProps) {
 	return (
 		<>
-			<LandingNavbar />
+			<AuthNavbar />
 			<main className="min-h-[calc(100vh-64px)]">{children}</main>
 			<Footer />
 		</>
 	);
-};
+}

@@ -1,23 +1,36 @@
 import { Button } from "@/components/ui/button";
 import { useClerkTheme } from "@/hooks/use-clerk-theme";
-import { SignUp as ClerkSignUp } from "@clerk/tanstack-react-start";
-import { Link, createFileRoute } from "@tanstack/react-router";
+import { SignIn as ClerkSignIn } from "@clerk/tanstack-react-start";
+import { Link } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/sign-up/$")({
-	component: SignUp,
-});
-
-function SignUp() {
+export function SignInView() {
+	// const [isMounted, setIsMounted] = useState(false);
 	const clerkAppearanceVariables = useClerkTheme();
 
 	// rounded-lg in tailwind: calc(var(--radius))
 	const borderRadiusLg = `calc(${clerkAppearanceVariables.borderRadius})`;
 
+	// useEffect(() => {
+	// 	setIsMounted(true);
+	// }, []);
+
+	// if (!isMounted) {
+	// 	return (
+	// 		<div className="flex h-screen flex-col items-center justify-center gap-4">
+	// 			<Skeleton className="h-[23rem] w-[calc(100vw-4rem)] max-w-[25rem] rounded-lg" />
+
+	// 			<Button asChild>
+	// 				<Link to="/">Home</Link>
+	// 			</Button>
+	// 		</div>
+	// 	);
+	// }
+
 	return (
 		<div className="flex h-screen flex-col items-center justify-center gap-4">
-			<ClerkSignUp
+			<ClerkSignIn
 				routing="path"
-				path="/sign-up"
+				path="/sign-in"
 				appearance={{
 					variables: {
 						...clerkAppearanceVariables,

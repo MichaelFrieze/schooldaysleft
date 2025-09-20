@@ -1,8 +1,8 @@
 import { buttonVariants } from "@/components/ui/button";
 import { Mail } from "lucide-react";
-import { ModeToggleBtn } from "./mode-toggle";
+import { ModeToggleBtn } from "../ui/mode-toggle";
 
-export const Footer = () => {
+export function Footer() {
 	return (
 		<footer className="border-t bg-background">
 			<div className="container mx-auto py-6 sm:py-4">
@@ -45,4 +45,4 @@ export const Footer = () => {
 			</div>
 		</footer>
 	);
-};
+}
