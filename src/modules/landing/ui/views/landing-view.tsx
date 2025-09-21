@@ -1,5 +1,5 @@
 import { LandingContent } from "../components/landing-content";
 
-export const LandingView = () => {
+export function LandingView() {
 	return <LandingContent />;
-};
+}

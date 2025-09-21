@@ -16,7 +16,7 @@ import {
 	SlidersHorizontal,
 } from "lucide-react";
 
-export const LandingContent = () => {
+export function LandingContent() {
 	return (
 		<div className="container">
 			{/* Hero Section */}
@@ -165,4 +165,4 @@ export const LandingContent = () => {
 			</section>
 		</div>
 	);
-};
+}

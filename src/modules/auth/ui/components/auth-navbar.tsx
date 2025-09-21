@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 
-export const AuthNavbar = () => {
+export function AuthNavbar() {
 	return (
 		<header>
 			<div className="container flex h-16 items-center">
@@ -13,4 +13,4 @@ export const AuthNavbar = () => {
 			</div>
 		</header>
 	);
-};
+}

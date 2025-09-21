@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
 import { UserCircleIcon } from "lucide-react";
 
-export const LandingNavbar = () => {
+export function LandingNavbar() {
 	return (
 		<header>
 			<div className="container flex h-16 items-center">
@@ -28,4 +28,4 @@ export const LandingNavbar = () => {
 			</div>
 		</header>
 	);
-};
+}

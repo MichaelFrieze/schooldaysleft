@@ -5,7 +5,7 @@ interface LandingLayoutProps {
 	children: React.ReactNode;
 }
 
-export const LandingLayout = ({ children }: LandingLayoutProps) => {
+export function LandingLayout({ children }: LandingLayoutProps) {
 	return (
 		<>
 			<LandingNavbar />
@@ -13,4 +13,4 @@ export const LandingLayout = ({ children }: LandingLayoutProps) => {
 			<Footer />
 		</>
 	);
-};
+}
