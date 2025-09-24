@@ -1,13 +1,11 @@
-import { isAppError } from "@/lib/app-error";
+import { isServerFnError } from "@/lib/server-fn-error";
 import { getWebRequest } from "@tanstack/react-start/server";
 
 type LoggerInfo = { path?: string; input?: unknown };
 
-export function logAppError(error: unknown, info?: LoggerInfo) {
-	// Dev-only logging
+export function logServerFnError(error: unknown, info?: LoggerInfo) {
 	if (!import.meta.env.DEV) return;
 
-	// Server-only logger (no-op on client)
 	if (typeof window !== "undefined") return;
 
 	const RESET = "\x1b[0m";
@@ -23,7 +21,7 @@ export function logAppError(error: unknown, info?: LoggerInfo) {
 		url = req.url || "";
 	} catch {}
 
-	const header = `${RED}❌ App Error${RESET}${info?.path ? ` (${info.path})` : ""}`;
+	const header = `${RED}❌ ServerFn Error${RESET}${info?.path ? ` (${info.path})` : ""}`;
 
 	const baseParts = [
 		header,
@@ -35,10 +33,10 @@ export function logAppError(error: unknown, info?: LoggerInfo) {
 		.join(" | ");
 
 	let detail = "";
-	if (isAppError(error)) {
-		const code = error.code;
+	if (isServerFnError(error)) {
+		const appErrorCode = error.appErrorCode;
 		const httpStatusCode = error.httpStatusCode;
-		detail = `Code: ${code}${httpStatusCode ? ` | HTTP_Status_Code: ${httpStatusCode}` : ""} | Message: ${error.message}`;
+		detail = `Code: ${appErrorCode}${httpStatusCode ? ` | HTTP_Status_Code: ${httpStatusCode}` : ""} | Message: ${error.message}`;
 	} else if (error instanceof Error) {
 		detail = `Message: ${error.message}`;
 	} else {

@@ -1,4 +1,4 @@
-export type AppErrorCode =
+export type ServerFnErrorCode =
 	| "INTERNAL_SERVER_ERROR"
 	| "PARSE_ERROR"
 	| "BAD_REQUEST"
@@ -19,7 +19,7 @@ export type AppErrorCode =
 	| "TOO_MANY_REQUESTS"
 	| "CLIENT_CLOSED_REQUEST";
 
-const HTTP_STATUS_CODE: Record<AppErrorCode, number> = {
+const HTTP_STATUS_CODE: Record<ServerFnErrorCode, number> = {
 	INTERNAL_SERVER_ERROR: 500,
 	PARSE_ERROR: 400,
 	BAD_REQUEST: 400,
@@ -41,9 +41,9 @@ const HTTP_STATUS_CODE: Record<AppErrorCode, number> = {
 	CLIENT_CLOSED_REQUEST: 499,
 };
 
-export function httpStatusCodeToAppErrorCode(
+export function httpStatusCodeToServerFnErrorCode(
 	httpStatusCode: number,
-): AppErrorCode {
+): ServerFnErrorCode {
 	if (httpStatusCode === 400) return "BAD_REQUEST";
 	if (httpStatusCode === 401) return "UNAUTHORIZED";
 	if (httpStatusCode === 403) return "FORBIDDEN";
@@ -66,7 +66,7 @@ export function httpStatusCodeToAppErrorCode(
 	return "INTERNAL_SERVER_ERROR";
 }
 
-const DEFAULT_MESSAGES: Record<AppErrorCode, string> = {
+const DEFAULT_MESSAGES: Record<ServerFnErrorCode, string> = {
 	INTERNAL_SERVER_ERROR: "Internal server error",
 	PARSE_ERROR: "Parse error",
 	BAD_REQUEST: "Bad request",
@@ -88,13 +88,13 @@ const DEFAULT_MESSAGES: Record<AppErrorCode, string> = {
 	CLIENT_CLOSED_REQUEST: "Client closed request",
 };
 
-export class AppError extends Error {
-	appErrorCode: AppErrorCode;
+export class ServerFnError extends Error {
+	serverFnErrorCode: ServerFnErrorCode;
 	httpStatusCode?: number;
 	cause?: Error;
 
 	constructor(opts: {
-		appErrorCode: AppErrorCode;
+		serverFnErrorCode: ServerFnErrorCode;
 		message?: string;
 		cause?: unknown;
 	}) {
@@ -102,11 +102,11 @@ export class AppError extends Error {
 		const message =
 			opts.message ??
 			coercedCause?.message ??
-			DEFAULT_MESSAGES[opts.appErrorCode];
+			DEFAULT_MESSAGES[opts.serverFnErrorCode];
 		super(message, { cause: coercedCause });
-		this.name = "AppError";
-		this.appErrorCode = opts.appErrorCode;
-		this.httpStatusCode = HTTP_STATUS_CODE[opts.appErrorCode];
+		this.name = "ServerFnError";
+		this.serverFnErrorCode = opts.serverFnErrorCode;
+		this.httpStatusCode = HTTP_STATUS_CODE[opts.serverFnErrorCode];
 		if (!this.cause) {
 			this.cause = coercedCause;
 		}
@@ -116,29 +116,30 @@ export class AppError extends Error {
 		return {
 			name: this.name,
 			message: this.message,
-			code: this.appErrorCode,
+			code: this.serverFnErrorCode,
 			httpCode: this.httpStatusCode,
 		};
 	}
 }
 
-export const isAppError = (e: unknown): e is AppError => e instanceof AppError;
+export const isServerFnError = (e: unknown): e is ServerFnError =>
+	e instanceof ServerFnError;
 
-export function createAppError(opts: {
-	appErrorCode: AppErrorCode;
+export function createServerFnError(opts: {
+	serverFnErrorCode: ServerFnErrorCode;
 	message?: string;
 	cause?: unknown;
-}): AppError {
-	return new AppError(opts);
+}): ServerFnError {
+	return new ServerFnError(opts);
 }
 
-export function assertOrThrow(
+export function assertOrThrowServerFnError(
 	condition: unknown,
-	appErrorCode: AppErrorCode,
+	serverFnErrorCode: ServerFnErrorCode,
 	message?: string,
 ): asserts condition {
 	if (!condition) {
-		throw new AppError({ appErrorCode, message });
+		throw new ServerFnError({ serverFnErrorCode, message });
 	}
 }
 
@@ -176,17 +177,17 @@ export function getCauseFromUnknown(cause: unknown): Error | undefined {
 	return undefined;
 }
 
-export function getAppErrorFromUnknown(
+export function getServerFnErrorFromUnknown(
 	cause: unknown,
-	appErrorCode: AppErrorCode = "INTERNAL_SERVER_ERROR",
-): AppError {
-	if (isAppError(cause)) return cause;
-	if (cause instanceof Error && cause.name === "AppError")
-		return cause as AppError;
+	serverFnErrorCode: ServerFnErrorCode = "INTERNAL_SERVER_ERROR",
+): ServerFnError {
+	if (isServerFnError(cause)) return cause;
+	if (cause instanceof Error && cause.name === "ServerFnError")
+		return cause as ServerFnError;
 
-	const appError = new AppError({ appErrorCode, cause });
+	const serverFnError = new ServerFnError({ serverFnErrorCode, cause });
 	if (cause instanceof Error && cause.stack) {
-		appError.stack = cause.stack;
+		serverFnError.stack = cause.stack;
 	}
-	return appError;
+	return serverFnError;
 }

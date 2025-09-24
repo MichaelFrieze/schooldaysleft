@@ -1,7 +1,6 @@
 import DevtoolsLoader from "@/components/devtools/devtools-loader";
-import { DefaultCatchBoundary } from "@/components/errors/default-catch-boundary";
+import { RootCatchBoundary } from "@/components/errors/root-catch-boundary";
 import { ThemeProvider } from "@/components/providers/theme-provider";
-import { isAppError } from "@/lib/app-error";
 import { tryCatch } from "@/lib/try-catch";
 import { fetchClerkAuth } from "@/modules/auth/server/server-fns";
 import { ClerkProvider, useAuth } from "@clerk/tanstack-react-start";
@@ -46,7 +45,6 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 		};
 	},
 	loader: ({ context }) => {
-		// console.log("context.error", context.error);
 		throw context.error;
 	},
 	head: () => ({
@@ -69,9 +67,9 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 			},
 		],
 	}),
-	errorComponent: ({ error, reset }) => (
+	errorComponent: (props) => (
 		<RootDocument>
-			<DefaultCatchBoundary error={error} reset={reset} />
+			<RootCatchBoundary {...props} />
 		</RootDocument>
 	),
 	component: RootComponent,
