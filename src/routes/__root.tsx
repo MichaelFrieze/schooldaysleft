@@ -1,6 +1,7 @@
 import DevtoolsLoader from "@/components/devtools/devtools-loader";
 import { DefaultCatchBoundary } from "@/components/errors/default-catch-boundary";
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import { isAppError } from "@/lib/app-error";
 import { tryCatch } from "@/lib/try-catch";
 import { fetchClerkAuth } from "@/modules/auth/server/server-fns";
 import { ClerkProvider, useAuth } from "@clerk/tanstack-react-start";
@@ -28,11 +29,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 		const { data, error } = await tryCatch(fetchClerkAuth());
 
 		if (error) {
-			// if (typeof window === "undefined") {
-			// 	throw error;
-			// }
-			// throw error;
-			return;
+			return { error };
 		}
 
 		const { userId, token } = data;
@@ -48,9 +45,9 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 			token,
 		};
 	},
-	loader: () => {
-		console.log("loader");
-		throw new Error("test");
+	loader: ({ context }) => {
+		// console.log("context.error", context.error);
+		throw context.error;
 	},
 	head: () => ({
 		meta: [

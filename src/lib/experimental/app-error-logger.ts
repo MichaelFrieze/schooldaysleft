@@ -1,4 +1,4 @@
-import { isAppError } from "@/lib/experimental/app-error";
+import { isAppError } from "@/lib/app-error";
 import { getWebRequest } from "@tanstack/react-start/server";
 
 type LoggerInfo = { path?: string; input?: unknown };

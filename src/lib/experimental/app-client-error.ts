@@ -1,4 +1,7 @@
-import { type AppErrorCode, statusToCode } from "@/lib/experimental/app-error";
+import {
+	type AppErrorCode,
+	httpStatusCodeToAppErrorCode,
+} from "@/lib/app-error";
 
 type Maybe<T> = T | undefined;
 
@@ -19,8 +22,8 @@ function coerceErrorFromUnknown(value: unknown): Error | undefined {
 }
 
 export class AppClientError extends Error {
-	readonly code: AppErrorCode;
-	readonly status?: number;
+	readonly appErrorCode: AppErrorCode;
+	readonly httpStatusCode?: number;
 	readonly data?: unknown;
 	meta?: Record<string, unknown>;
 	// Explicit cause to preserve chaining in environments where it's supported
@@ -31,8 +34,8 @@ export class AppClientError extends Error {
 	constructor(
 		message: string,
 		opts: {
-			code: AppErrorCode;
-			status?: number;
+			appErrorCode: AppErrorCode;
+			httpStatusCode?: number;
 			data?: unknown;
 			cause?: unknown;
 			meta?: Record<string, unknown>;
@@ -44,8 +47,8 @@ export class AppClientError extends Error {
 		super(message, { cause: coercedCause });
 
 		this.name = "AppClientError";
-		this.code = opts.code;
-		this.status = opts.status;
+		this.appErrorCode = opts.appErrorCode;
+		this.httpStatusCode = opts.httpStatusCode;
 		this.data = opts.data;
 		this.meta = opts.meta;
 		this.cause = coercedCause;
@@ -62,7 +65,7 @@ export class AppClientError extends Error {
 
 	static from(
 		cause: unknown,
-		defaultCode: AppErrorCode = "INTERNAL",
+		defaultAppErrorCode: AppErrorCode = "INTERNAL_SERVER_ERROR",
 		opts: { meta?: Record<string, unknown> } = {},
 	): AppClientError {
 		// Already normalized
@@ -83,6 +86,7 @@ export class AppClientError extends Error {
 			const code = causeObj.code as AppErrorCode;
 			const statusCandidate =
 				(causeObj as { httpStatusCode?: unknown }).httpStatusCode ??
+				(causeObj as { httpCode?: unknown }).httpCode ??
 				(causeObj as { statusCode?: unknown }).statusCode ??
 				(causeObj as { status?: unknown }).status;
 			const status = isNumeric(statusCandidate as number)
@@ -93,8 +97,8 @@ export class AppClientError extends Error {
 					? (causeObj.message as string)
 					: code;
 			return new AppClientError(message, {
-				code,
-				status,
+				appErrorCode: code,
+				httpStatusCode: status,
 				data: undefined,
 				cause: coerceErrorFromUnknown(cause),
 				meta: opts.meta,
@@ -109,24 +113,27 @@ export class AppClientError extends Error {
 			};
 			const statusRaw =
 				(c as { httpStatusCode?: number }).httpStatusCode ??
+				(c as { httpCode?: number }).httpCode ??
 				c.status ??
 				c.statusCode;
 			const status = isNumeric(statusRaw) ? Number(statusRaw) : undefined;
-			const code = status ? statusToCode(status) : defaultCode;
+			const code = status
+				? httpStatusCodeToAppErrorCode(status)
+				: defaultAppErrorCode;
 			const message =
 				typeof (c.message as unknown) === "string"
 					? (c.message as string)
 					: code;
 			return new AppClientError(message, {
-				code,
-				status,
+				appErrorCode: code,
+				httpStatusCode: status,
 				data: undefined,
 				cause: coerceErrorFromUnknown(cause),
 				meta: opts.meta,
 			});
 		}
 
-		// Envelope shape: { error: { code, message, status?, data? } }
+		// Envelope shape: { error: { code, message, httpStatusCode?/httpCode?/status?/statusCode?, data? } }
 		if (isObject(cause) && isObject((cause as Record<string, unknown>).error)) {
 			const errObj = (cause as Record<string, unknown>).error as Record<
 				string,
@@ -134,6 +141,7 @@ export class AppClientError extends Error {
 			>;
 			const statusCandidate =
 				(errObj as { httpStatusCode?: unknown }).httpStatusCode ??
+				(errObj as { httpCode?: unknown }).httpCode ??
 				(errObj as { statusCode?: unknown }).statusCode ??
 				(errObj as { status?: unknown }).status;
 			const status = isNumeric(statusCandidate as number)
@@ -143,14 +151,14 @@ export class AppClientError extends Error {
 				typeof errObj.code === "string"
 					? (errObj.code as string)
 					: status
-						? statusToCode(status)
-						: defaultCode
+						? httpStatusCodeToAppErrorCode(status)
+						: defaultAppErrorCode
 			) as AppErrorCode;
 			const message =
 				typeof errObj.message === "string" ? (errObj.message as string) : code;
 			return new AppClientError(message, {
-				code,
-				status,
+				appErrorCode: code,
+				httpStatusCode: status,
 				data: errObj.data,
 				cause: coerceErrorFromUnknown(cause),
 				meta: opts.meta,
@@ -159,9 +167,9 @@ export class AppClientError extends Error {
 
 		// Fallback
 		const base = coerceErrorFromUnknown(cause);
-		const message = base?.message ?? String(defaultCode);
+		const message = base?.message ?? String(defaultAppErrorCode);
 		return new AppClientError(message, {
-			code: defaultCode,
+			appErrorCode: defaultAppErrorCode,
 			cause: base,
 			meta: opts.meta,
 		});
@@ -173,8 +181,8 @@ export const isAppClientError = (e: unknown): e is AppClientError =>
 
 export function getAppClientErrorFromUnknown(
 	cause: unknown,
-	code: AppErrorCode = "INTERNAL",
+	appErrorCode: AppErrorCode = "INTERNAL_SERVER_ERROR",
 	opts?: { meta?: Record<string, unknown> },
 ): AppClientError {
-	return AppClientError.from(cause, code, opts);
+	return AppClientError.from(cause, appErrorCode, opts);
 }

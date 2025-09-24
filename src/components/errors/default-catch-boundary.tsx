@@ -1,3 +1,5 @@
+import { getAppClientErrorFromUnknown } from "@/lib/experimental/app-client-error";
+import { tryCatch } from "@/lib/try-catch";
 import type { ErrorComponentProps } from "@tanstack/react-router";
 import {
 	ErrorComponent,
@@ -6,9 +8,6 @@ import {
 	useMatch,
 	useRouter,
 } from "@tanstack/react-router";
-
-import { tryCatch } from "@/lib/try-catch";
-
 import { Button } from "../ui/button";
 
 export function DefaultCatchBoundary({ error, reset }: ErrorComponentProps) {
@@ -18,11 +17,13 @@ export function DefaultCatchBoundary({ error, reset }: ErrorComponentProps) {
 		select: (state) => state.id === rootRouteId,
 	});
 
-	console.error("Error in DefaultCatchBoundary", { error });
+	const appClientError = getAppClientErrorFromUnknown(error);
+
+	console.error("Error in DefaultCatchBoundary", { error: appClientError });
 
 	return (
 		<div className="flex min-w-0 flex-1 flex-col items-center justify-center gap-6 p-4">
-			<ErrorComponent error={error} />
+			{/* <ErrorComponent error={appClientError} /> */}
 
 			<div className="flex flex-wrap items-center gap-2">
 				<Button

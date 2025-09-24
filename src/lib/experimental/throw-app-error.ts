@@ -1,4 +1,4 @@
-import { AppError, type AppErrorCode } from "@/lib/experimental/app-error";
+import { AppError, type AppErrorCode } from "@/lib/app-error";
 import { logAppError } from "@/lib/experimental/app-error-logger";
 
 type Info = { path?: string; input?: unknown };

@@ -54,12 +54,10 @@ function sanitizeErrorForLog(
 	includeStack: boolean,
 ): Record<string, unknown> {
 	if (isAppClientError(err)) {
-		const httpStatusCode =
-			(err as unknown as { status?: number; statusCode?: number }).status ??
-			(err as unknown as { status?: number; statusCode?: number }).statusCode;
+		const httpStatusCode = (err as { httpStatusCode?: number }).httpStatusCode;
 		return {
 			name: "AppClientError",
-			code: err.code,
+			appErrorCode: (err as { appErrorCode: string }).appErrorCode,
 			httpStatusCode,
 			message: err.message,
 			...(includeStack && err.stack ? { stack: err.stack } : {}),

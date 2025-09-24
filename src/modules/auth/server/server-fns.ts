@@ -1,5 +1,4 @@
-import { AppError } from "@/lib/experimental/app-error";
-import { logAppError } from "@/lib/experimental/app-error-logger";
+import { AppError } from "@/lib/app-error";
 import { tryCatch } from "@/lib/try-catch";
 import { createServerFn } from "@tanstack/react-start";
 import { getClerkAuth } from "./data";
@@ -10,11 +9,11 @@ export const fetchClerkAuth = createServerFn({ method: "GET" }).handler(
 
 		if (error) {
 			const appError = new AppError({
-				code: "UNAUTHORIZED",
+				appErrorCode: "UNAUTHORIZED",
 				message: error.message,
 				cause: error,
 			});
-			logAppError(appError);
+			// console.error(appError);
 			throw appError;
 		}
 

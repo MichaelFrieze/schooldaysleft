@@ -8,7 +8,6 @@ import {
 import { createRouter as createTanstackRouter } from "@tanstack/react-router";
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
 import { ConvexReactClient } from "convex/react";
-import { DefaultCatchBoundary } from "./components/errors/default-catch-boundary";
 import { NotFound } from "./components/errors/not-found";
 import { env } from "./env";
 import { routeTree } from "./routeTree.gen";
