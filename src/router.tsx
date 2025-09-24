@@ -8,6 +8,8 @@ import {
 import { createRouter as createTanstackRouter } from "@tanstack/react-router";
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
 import { ConvexReactClient } from "convex/react";
+import { DefaultCatchBoundary } from "./components/errors/default-catch-boundary";
+import { NotFound } from "./components/errors/not-found";
 import { env } from "./env";
 import { routeTree } from "./routeTree.gen";
 
@@ -42,7 +44,6 @@ export const createRouter = () => {
 	const router = createTanstackRouter({
 		routeTree,
 		context: { queryClient, convexClient: convex, convexQueryClient },
-		defaultPreload: "intent",
 		Wrap: (props: { children: React.ReactNode }) => {
 			return (
 				<TanstackQuery.Provider queryClient={queryClient}>
@@ -50,6 +51,12 @@ export const createRouter = () => {
 				</TanstackQuery.Provider>
 			);
 		},
+		defaultPreload: "intent",
+		scrollRestoration: true,
+		// defaultErrorComponent: ({ error, reset }) => (
+		// 	<DefaultCatchBoundary error={error} reset={reset} />
+		// ),
+		defaultNotFoundComponent: () => <NotFound />,
 	});
 
 	setupRouterSsrQueryIntegration({

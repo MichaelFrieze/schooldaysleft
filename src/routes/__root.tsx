@@ -1,6 +1,8 @@
 import DevtoolsLoader from "@/components/devtools/devtools-loader";
+import { DefaultCatchBoundary } from "@/components/errors/default-catch-boundary";
 import { ThemeProvider } from "@/components/providers/theme-provider";
-import { fetchClerkAuth } from "@/lib/fetch-clerk-auth";
+import { tryCatch } from "@/lib/try-catch";
+import { fetchClerkAuth } from "@/modules/auth/server/server-fns";
 import { ClerkProvider, useAuth } from "@clerk/tanstack-react-start";
 import type { ConvexQueryClient } from "@convex-dev/react-query";
 import type { QueryClient } from "@tanstack/react-query";
@@ -23,8 +25,17 @@ interface MyRouterContext {
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
 	beforeLoad: async (ctx) => {
-		const auth = await fetchClerkAuth();
-		const { userId, token } = auth;
+		const { data, error } = await tryCatch(fetchClerkAuth());
+
+		if (error) {
+			// if (typeof window === "undefined") {
+			// 	throw error;
+			// }
+			// throw error;
+			return;
+		}
+
+		const { userId, token } = data;
 
 		// During SSR only (the only time serverHttpClient exists),
 		// set the Clerk auth token to make HTTP queries with.
@@ -36,6 +47,10 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 			userId,
 			token,
 		};
+	},
+	loader: () => {
+		console.log("loader");
+		throw new Error("test");
 	},
 	head: () => ({
 		meta: [
@@ -57,8 +72,12 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 			},
 		],
 	}),
-
-	shellComponent: RootComponent,
+	errorComponent: ({ error, reset }) => (
+		<RootDocument>
+			<DefaultCatchBoundary error={error} reset={reset} />
+		</RootDocument>
+	),
+	component: RootComponent,
 });
 
 function RootComponent() {
