@@ -7,8 +7,6 @@ export const getClerkAuth = async () => {
 		getAuth(getWebRequest()),
 	);
 
-	console.log("authData", authData);
-
 	if (authError) {
 		throw new Error("Failed to get Clerk auth");
 	}

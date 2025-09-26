@@ -88,9 +88,21 @@ const DEFAULT_MESSAGES: Record<ServerFnErrorCode, string> = {
 	CLIENT_CLOSED_REQUEST: "Client closed request",
 };
 
+function isServerRuntime(): boolean {
+	return typeof window === "undefined";
+}
+
+function ensureServerRuntime(): void {
+	if (!isServerRuntime()) {
+		throw new Error(
+			"Attempted to construct ServerFnError on client runtime. ServerFnError may only be created on the server.",
+		);
+	}
+}
+
 export class ServerFnError extends Error {
 	serverFnErrorCode: ServerFnErrorCode;
-	httpStatusCode?: number;
+	httpStatusCode: number;
 	cause?: Error;
 
 	constructor(opts: {
@@ -98,6 +110,7 @@ export class ServerFnError extends Error {
 		message?: string;
 		cause?: unknown;
 	}) {
+		ensureServerRuntime();
 		const coercedCause = getCauseFromUnknown(opts.cause);
 		const message =
 			opts.message ??
@@ -115,9 +128,11 @@ export class ServerFnError extends Error {
 	toJSON() {
 		return {
 			name: this.name,
-			message: this.message,
-			code: this.serverFnErrorCode,
-			httpCode: this.httpStatusCode,
+			message:
+				process.env.NODE_ENV === "development" ? this.message : undefined,
+			serverFnErrorCode: this.serverFnErrorCode,
+			httpStatusCode: this.httpStatusCode,
+			stack: process.env.NODE_ENV === "development" ? this.stack : undefined,
 		};
 	}
 }
@@ -130,6 +145,7 @@ export function createServerFnError(opts: {
 	message?: string;
 	cause?: unknown;
 }): ServerFnError {
+	ensureServerRuntime();
 	return new ServerFnError(opts);
 }
 
@@ -139,6 +155,7 @@ export function assertOrThrowServerFnError(
 	message?: string,
 ): asserts condition {
 	if (!condition) {
+		ensureServerRuntime();
 		throw new ServerFnError({ serverFnErrorCode, message });
 	}
 }
@@ -185,6 +202,7 @@ export function getServerFnErrorFromUnknown(
 	if (cause instanceof Error && cause.name === "ServerFnError")
 		return cause as ServerFnError;
 
+	ensureServerRuntime();
 	const serverFnError = new ServerFnError({ serverFnErrorCode, cause });
 	if (cause instanceof Error && cause.stack) {
 		serverFnError.stack = cause.stack;

@@ -34,7 +34,7 @@ export function logServerFnError(error: unknown, info?: LoggerInfo) {
 
 	let detail = "";
 	if (isServerFnError(error)) {
-		const appErrorCode = error.appErrorCode;
+		const appErrorCode = error.serverFnErrorCode;
 		const httpStatusCode = error.httpStatusCode;
 		detail = `Code: ${appErrorCode}${httpStatusCode ? ` | HTTP_Status_Code: ${httpStatusCode}` : ""} | Message: ${error.message}`;
 	} else if (error instanceof Error) {

@@ -1,6 +1,10 @@
 import DevtoolsLoader from "@/components/devtools/devtools-loader";
 import { RootCatchBoundary } from "@/components/errors/root-catch-boundary";
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import {
+	getServerFnErrorFromUnknown,
+	isServerFnError,
+} from "@/lib/server-fn-error";
 import { tryCatch } from "@/lib/try-catch";
 import { fetchClerkAuth } from "@/modules/auth/server/server-fns";
 import { ClerkProvider, useAuth } from "@clerk/tanstack-react-start";
@@ -45,7 +49,11 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 	},
 	loader: ({ context }) => {
 		if (context.error) {
-			throw context.error;
+			if (isServerFnError(context.error)) {
+				const serverFnError = getServerFnErrorFromUnknown(context.error);
+				throw { ...serverFnError.toJSON() };
+			}
+			throw new Error("An unexpected error occurred in the root loader");
 		}
 	},
 	head: () => ({
