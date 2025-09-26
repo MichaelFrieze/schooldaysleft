@@ -1,7 +1,5 @@
-import { Button } from "@/components/ui/button";
 import { useClerkTheme } from "@/hooks/use-clerk-theme";
 import { SignUp as ClerkSignUp } from "@clerk/tanstack-react-start";
-import { Link } from "@tanstack/react-router";
 
 export function SignUpView() {
 	const clerkAppearanceVariables = useClerkTheme();
@@ -29,8 +27,8 @@ export function SignUpView() {
 							margin: "0.5rem",
 						},
 						card: {
-							borderBottomLeftRadius: "0rem",
-							borderBottomRightRadius: "0rem",
+							borderBottomLeftRadius: borderRadiusLg,
+							borderBottomRightRadius: borderRadiusLg,
 							borderTopLeftRadius: borderRadiusLg,
 							borderTopRightRadius: borderRadiusLg,
 						},
@@ -42,10 +40,6 @@ export function SignUpView() {
 					},
 				}}
 			/>
-
-			<Button asChild>
-				<Link to="/">Home</Link>
-			</Button>
 		</div>
 	);
 }

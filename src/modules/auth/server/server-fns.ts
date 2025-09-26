@@ -10,7 +10,7 @@ export const fetchClerkAuth = createServerFn({ method: "GET" }).handler(
 
 		if (error) {
 			const serverFnError = new ServerFnError({
-				serverFnErrorCode: "UNAUTHORIZED",
+				serverFnErrorCode: "INTERNAL_SERVER_ERROR",
 				message: error.message,
 				cause: error,
 			});

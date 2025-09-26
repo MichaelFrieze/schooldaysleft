@@ -1,18 +1,37 @@
+import { tryCatch } from "@/lib/try-catch";
 import { getAuth } from "@clerk/tanstack-react-start/server";
 import { getWebRequest } from "@tanstack/react-start/server";
 
-const SIMULATE_AUTH_ERROR = true; // set to true to simulate an error
-
 export const getClerkAuth = async () => {
-	if (SIMULATE_AUTH_ERROR) {
-		throw new Error("Simulated Clerk auth failure");
+	const { data: authData, error: authError } = await tryCatch(
+		getAuth(getWebRequest()),
+	);
+
+	console.log("authData", authData);
+
+	if (authError) {
+		throw new Error("Failed to get Clerk auth");
 	}
 
-	const { userId, getToken } = await getAuth(getWebRequest());
-	const token = await getToken({ template: "convex" });
+	const { userId, getToken } = authData;
+
+	if (userId) {
+		const { data: tokenData, error: tokenError } = await tryCatch(
+			getToken({ template: "convex" }),
+		);
+
+		if (tokenError) {
+			throw new Error("Failed to get Clerk token");
+		}
+
+		return {
+			userId,
+			token: tokenData,
+		};
+	}
 
 	return {
-		userId,
-		token,
+		userId: null,
+		token: null,
 	};
 };

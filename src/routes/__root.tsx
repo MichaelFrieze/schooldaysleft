@@ -25,27 +25,28 @@ interface MyRouterContext {
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
 	beforeLoad: async (ctx) => {
-		const { data, error } = await tryCatch(fetchClerkAuth());
+		if (ctx.context.convexQueryClient.serverHttpClient) {
+			const { data, error } = await tryCatch(fetchClerkAuth());
 
-		if (error) {
-			return { error };
+			if (error) {
+				return { error };
+			}
+
+			const { token } = data;
+
+			if (token) {
+				// During SSR only (the only time serverHttpClient exists),
+				// set the Clerk auth token to make HTTP queries with.
+				ctx.context.convexQueryClient.serverHttpClient?.setAuth(token);
+			}
 		}
 
-		const { userId, token } = data;
-
-		// During SSR only (the only time serverHttpClient exists),
-		// set the Clerk auth token to make HTTP queries with.
-		if (token) {
-			ctx.context.convexQueryClient.serverHttpClient?.setAuth(token);
-		}
-
-		return {
-			userId,
-			token,
-		};
+		return {};
 	},
 	loader: ({ context }) => {
-		throw context.error;
+		if (context.error) {
+			throw context.error;
+		}
 	},
 	head: () => ({
 		meta: [

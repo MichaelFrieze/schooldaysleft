@@ -1,4 +1,6 @@
 import { Button } from "@/components/ui/button";
+import { UserButton } from "@/components/ui/user-button";
+import { SignedIn, SignedOut } from "@clerk/tanstack-react-start";
 import { Link } from "@tanstack/react-router";
 import { UserCircleIcon } from "lucide-react";
 
@@ -14,16 +16,23 @@ export function LandingNavbar() {
 				</Link>
 
 				<nav className="ml-auto">
-					<Button
-						asChild
-						variant="default"
-						className="h-8 rounded-full font-medium text-sm shadow-none"
-					>
-						<Link to="/sign-in/$">
-							<UserCircleIcon />
-							Sign in
-						</Link>
-					</Button>
+					<SignedIn>
+						<UserButton />
+					</SignedIn>
+
+					<SignedOut>
+						<Button
+							asChild
+							variant="default"
+							size="sm"
+							className="rounded-full"
+						>
+							<Link to="/sign-in/$">
+								<UserCircleIcon />
+								Sign in
+							</Link>
+						</Button>
+					</SignedOut>
 				</nav>
 			</div>
 		</header>

@@ -1,7 +1,5 @@
-import { Button } from "@/components/ui/button";
 import { useClerkTheme } from "@/hooks/use-clerk-theme";
 import { SignIn as ClerkSignIn } from "@clerk/tanstack-react-start";
-import { Link } from "@tanstack/react-router";
 
 export function SignInView() {
 	// const [isMounted, setIsMounted] = useState(false);
@@ -9,22 +7,6 @@ export function SignInView() {
 
 	// rounded-lg in tailwind: calc(var(--radius))
 	const borderRadiusLg = `calc(${clerkAppearanceVariables.borderRadius})`;
-
-	// useEffect(() => {
-	// 	setIsMounted(true);
-	// }, []);
-
-	// if (!isMounted) {
-	// 	return (
-	// 		<div className="flex h-screen flex-col items-center justify-center gap-4">
-	// 			<Skeleton className="h-[23rem] w-[calc(100vw-4rem)] max-w-[25rem] rounded-lg" />
-
-	// 			<Button asChild>
-	// 				<Link to="/">Home</Link>
-	// 			</Button>
-	// 		</div>
-	// 	);
-	// }
 
 	return (
 		<div className="flex h-screen flex-col items-center justify-center gap-4">
@@ -46,8 +28,8 @@ export function SignInView() {
 							margin: "0.5rem",
 						},
 						card: {
-							borderBottomLeftRadius: "0rem",
-							borderBottomRightRadius: "0rem",
+							borderBottomLeftRadius: borderRadiusLg,
+							borderBottomRightRadius: borderRadiusLg,
 							borderTopLeftRadius: borderRadiusLg,
 							borderTopRightRadius: borderRadiusLg,
 						},
@@ -59,10 +41,6 @@ export function SignInView() {
 					},
 				}}
 			/>
-
-			<Button asChild>
-				<Link to="/">Home</Link>
-			</Button>
 		</div>
 	);
 }
