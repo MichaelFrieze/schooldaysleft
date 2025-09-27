@@ -7,7 +7,9 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Link } from "@tanstack/react-router";
+import { clickHandlers, cn } from "@/lib/utils";
+import { SignedIn, SignedOut } from "@clerk/tanstack-react-start";
+import { Link, useNavigate } from "@tanstack/react-router";
 import {
 	Calendar,
 	CalendarDays,
@@ -17,6 +19,8 @@ import {
 } from "lucide-react";
 
 export function LandingContent() {
+	const navigate = useNavigate();
+
 	return (
 		<div className="container">
 			{/* Hero Section */}
@@ -37,17 +41,41 @@ export function LandingContent() {
 							to you.
 						</p>
 
-						<Link
-							to="/"
-							className={buttonVariants({
-								variant: "default",
-								size: "lg",
-								className: "gap-2 sm:mx-auto sm:w-sm",
-							})}
-						>
-							<CalendarDays className="h-5 w-5" />
-							Start Your Countdown
-						</Link>
+						<SignedIn>
+							<Link
+								to="/dashboard"
+								{...clickHandlers(() =>
+									navigate({
+										to: "/dashboard",
+									}),
+								)}
+								className={cn(
+									buttonVariants({ variant: "default", size: "lg" }),
+									"gap-2 sm:mx-auto sm:w-sm",
+								)}
+							>
+								<CalendarDays className="h-5 w-5" />
+								Start Your Countdown
+							</Link>
+						</SignedIn>
+
+						<SignedOut>
+							<Link
+								to="/sign-in/$"
+								{...clickHandlers(() =>
+									navigate({
+										to: "/sign-in/$",
+									}),
+								)}
+								className={cn(
+									buttonVariants({ variant: "default", size: "lg" }),
+									"gap-2 sm:mx-auto sm:w-sm",
+								)}
+							>
+								<CalendarDays className="h-5 w-5" />
+								Start Your Countdown
+							</Link>
+						</SignedOut>
 					</div>
 				</div>
 
@@ -65,17 +93,41 @@ export function LandingContent() {
 							to you.
 						</p>
 
-						<Link
-							to="/"
-							className={buttonVariants({
-								variant: "default",
-								size: "lg",
-								className: "min-w-[240px] gap-2",
-							})}
-						>
-							<CalendarDays className="h-5 w-5" />
-							Start Your Countdown
-						</Link>
+						<SignedIn>
+							<Link
+								to="/dashboard"
+								{...clickHandlers(() =>
+									navigate({
+										to: "/dashboard",
+									}),
+								)}
+								className={cn(
+									buttonVariants({ variant: "default", size: "lg" }),
+									"min-w-[240px] gap-2",
+								)}
+							>
+								<CalendarDays className="h-5 w-5" />
+								Start Your Countdown
+							</Link>
+						</SignedIn>
+
+						<SignedOut>
+							<Link
+								to="/sign-in/$"
+								{...clickHandlers(() =>
+									navigate({
+										to: "/sign-in/$",
+									}),
+								)}
+								className={cn(
+									buttonVariants({ variant: "default", size: "lg" }),
+									"min-w-[240px] gap-2",
+								)}
+							>
+								<CalendarDays className="h-5 w-5" />
+								Start Your Countdown
+							</Link>
+						</SignedOut>
 					</div>
 
 					<Card>

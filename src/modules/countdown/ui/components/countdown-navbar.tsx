@@ -4,18 +4,19 @@ import { clickHandlers, cn } from "@/lib/utils";
 import { SignedIn, SignedOut } from "@clerk/tanstack-react-start";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { UserCircleIcon } from "lucide-react";
+import { CountdownNavDropdown } from "./countdown-nav-dropdown";
 
-export function LandingNavbar() {
+export function CountdownNavbar() {
 	const navigate = useNavigate();
 
 	return (
-		<header>
+		<header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
 			<div className="container flex h-16 items-center">
 				<Link
-					to="/"
+					to="/dashboard"
 					{...clickHandlers(() =>
 						navigate({
-							to: "/",
+							to: "/dashboard",
 						}),
 					)}
 					className="group flex items-center gap-1"
@@ -26,25 +27,11 @@ export function LandingNavbar() {
 					</span>
 				</Link>
 
-				<nav className="ml-auto">
+				<nav className="ml-auto flex items-center gap-2">
+					<CountdownNavDropdown />
+
 					<SignedIn>
-						<div className="flex items-center gap-1">
-							<Link
-								to="/dashboard"
-								{...clickHandlers(() =>
-									navigate({
-										to: "/dashboard",
-									}),
-								)}
-								className={cn(
-									buttonVariants({ variant: "link" }),
-									"hidden text-foreground lg:flex",
-								)}
-							>
-								Dashboard
-							</Link>
-							<UserButton />
-						</div>
+						<UserButton />
 					</SignedIn>
 
 					<SignedOut>

@@ -3,7 +3,7 @@ import { Link, useRouter } from "@tanstack/react-router";
 import { Footer } from "../sections/footer";
 import { Button, buttonVariants } from "../ui/button";
 
-export function RootCatchBoundary({ error }: ErrorComponentProps) {
+export function RootCatchBoundary({ error, reset }: ErrorComponentProps) {
 	const router = useRouter();
 
 	return (
@@ -19,22 +19,41 @@ export function RootCatchBoundary({ error }: ErrorComponentProps) {
 				</div>
 			</header>
 
-			<main className="container mx-auto flex flex-1 items-center justify-center px-4 py-8 sm:py-12">
+			<main className="container flex flex-1 items-center justify-center">
 				<div className="w-full max-w-3xl rounded-lg border bg-card p-6 shadow sm:p-8">
-					<h1 className="mb-2 font-extrabold text-3xl">Something went wrong</h1>
-					<p className="mb-4 text-muted-foreground">
-						An unexpected error occurred. You can try again, go home, or reload
-						the page.
+					<h1 className="pb-2 font-extrabold text-3xl">Something went wrong</h1>
+					<p className="pb-4 text-muted-foreground">
+						An unexpected error occurred. You can go home, invalidate router, or
+						reload the page.
 					</p>
 
-					<div className="mb-6">
+					<div className="pb-6">
 						{typeof error === "object" && error !== null ? (
 							(() => {
 								const e = error as unknown as Record<string, unknown>;
+								const hasServerCode =
+									e.serverFnErrorCode != null || e.httpStatusCode != null;
+								if (!hasServerCode) {
+									return (
+										<div className="rounded border bg-muted p-4">
+											<div>
+												<div className="text-muted-foreground text-xs">
+													Type
+												</div>
+												<div className="break-all font-medium">
+													{String(e.name ?? "Error")}
+												</div>
+											</div>
+											{e.message ? (
+												<div className="pt-3 text-sm">{String(e.message)}</div>
+											) : null}
+										</div>
+									);
+								}
 								return (
 									<div className="rounded border bg-muted p-4">
 										{/* Collapse to a single column on small screens */}
-										<div className="mt-3 grid grid-cols-1 gap-3 text-sm sm:grid-cols-3">
+										<div className="grid grid-cols-1 gap-3 pt-3 text-sm sm:grid-cols-3">
 											<div>
 												<div className="text-muted-foreground text-xs">
 													Type
@@ -47,7 +66,7 @@ export function RootCatchBoundary({ error }: ErrorComponentProps) {
 												<div className="text-muted-foreground text-xs">
 													Error code
 												</div>
-												<div className="font-medium">
+												<div className="break-all font-medium">
 													{String(e.serverFnErrorCode ?? "—")}
 												</div>
 											</div>
@@ -55,13 +74,13 @@ export function RootCatchBoundary({ error }: ErrorComponentProps) {
 												<div className="text-muted-foreground text-xs">
 													HTTP Code
 												</div>
-												<div className="font-medium">
+												<div className="break-all font-medium">
 													{String(e.httpStatusCode ?? "—")}
 												</div>
 											</div>
 										</div>
 
-										<div className="mt-3 text-muted-foreground text-xs">
+										<div className="pt-3 text-muted-foreground text-xs">
 											If this keeps happening, please contact support and
 											include the error code above.
 										</div>
@@ -75,19 +94,28 @@ export function RootCatchBoundary({ error }: ErrorComponentProps) {
 						)}
 					</div>
 
-					{/* Center buttons on small screens, align start on larger */}
 					<div className="flex flex-wrap items-center justify-center gap-3 sm:justify-start">
+						<Link to="/" className={buttonVariants({ variant: "default" })}>
+							Go Home
+						</Link>
 						<Button
+							variant="outline"
+							onClick={() => {
+								reset?.();
+							}}
+							className="cursor-pointer"
+						>
+							Reset
+						</Button>
+						<Button
+							variant="outline"
 							onClick={() => {
 								router.invalidate();
 							}}
 							className="cursor-pointer"
 						>
-							Try Again
+							Invalidate Data
 						</Button>
-						<Link to="/" className={buttonVariants({ variant: "default" })}>
-							Go Home
-						</Link>
 					</div>
 				</div>
 			</main>

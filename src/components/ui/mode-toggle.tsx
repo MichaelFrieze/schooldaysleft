@@ -77,7 +77,7 @@ export function ModeToggleBtn({
 			variant={variant}
 			size={size}
 			className={cn(
-				"group/toggle",
+				"group/toggle cursor-pointer",
 				size === "sm" && "w-8",
 				size === "lg" && "w-10",
 				size === "default" && "w-9",

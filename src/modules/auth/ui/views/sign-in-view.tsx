@@ -9,38 +9,42 @@ export function SignInView() {
 	const borderRadiusLg = `calc(${clerkAppearanceVariables.borderRadius})`;
 
 	return (
-		<div className="flex h-screen flex-col items-center justify-center gap-4">
-			<ClerkSignIn
-				routing="path"
-				path="/sign-in"
-				appearance={{
-					variables: {
-						...clerkAppearanceVariables,
-					},
-					layout: {
-						socialButtonsVariant: "blockButton",
-					},
-					elements: {
-						header: {
-							display: "none",
+		<section className="container flex min-h-[calc(100vh-64px)] justify-center md:items-center">
+			<div className="py-12 md:pb-48">
+				<ClerkSignIn
+					routing="path"
+					path="/sign-in"
+					fallbackRedirectUrl="/dashboard"
+					signUpFallbackRedirectUrl="/dashboard"
+					appearance={{
+						variables: {
+							...clerkAppearanceVariables,
 						},
-						main: {
-							margin: "0.5rem",
+						layout: {
+							socialButtonsVariant: "blockButton",
 						},
-						card: {
-							borderBottomLeftRadius: borderRadiusLg,
-							borderBottomRightRadius: borderRadiusLg,
-							borderTopLeftRadius: borderRadiusLg,
-							borderTopRightRadius: borderRadiusLg,
+						elements: {
+							header: {
+								display: "none",
+							},
+							main: {
+								margin: "0.5rem",
+							},
+							card: {
+								borderBottomLeftRadius: borderRadiusLg,
+								borderBottomRightRadius: borderRadiusLg,
+								borderTopLeftRadius: borderRadiusLg,
+								borderTopRightRadius: borderRadiusLg,
+							},
+							cardBox: {
+								maxWidth: "25rem",
+								width: "calc(100vw - 4rem)",
+								borderRadius: borderRadiusLg,
+							},
 						},
-						cardBox: {
-							maxWidth: "25rem",
-							width: "calc(100vw - 4rem)",
-							borderRadius: borderRadiusLg,
-						},
-					},
-				}}
-			/>
-		</div>
+					}}
+				/>
+			</div>
+		</section>
 	);
 }

@@ -10,13 +10,19 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as landingRouteRouteImport } from './routes/(landing)/route'
+import { Route as countdownRouteRouteImport } from './routes/(countdown)/route'
 import { Route as authRouteRouteImport } from './routes/(auth)/route'
 import { Route as landingIndexRouteImport } from './routes/(landing)/index'
+import { Route as countdownDashboardIndexRouteImport } from './routes/(countdown)/dashboard/index'
 import { Route as authSignUpSplatRouteImport } from './routes/(auth)/sign-up.$'
 import { Route as authSignInSplatRouteImport } from './routes/(auth)/sign-in.$'
 
 const landingRouteRoute = landingRouteRouteImport.update({
   id: '/(landing)',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const countdownRouteRoute = countdownRouteRouteImport.update({
+  id: '/(countdown)',
   getParentRoute: () => rootRouteImport,
 } as any)
 const authRouteRoute = authRouteRouteImport.update({
@@ -27,6 +33,11 @@ const landingIndexRoute = landingIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => landingRouteRoute,
+} as any)
+const countdownDashboardIndexRoute = countdownDashboardIndexRouteImport.update({
+  id: '/dashboard/',
+  path: '/dashboard/',
+  getParentRoute: () => countdownRouteRoute,
 } as any)
 const authSignUpSplatRoute = authSignUpSplatRouteImport.update({
   id: '/sign-up/$',
@@ -43,36 +54,43 @@ export interface FileRoutesByFullPath {
   '/': typeof landingIndexRoute
   '/sign-in/$': typeof authSignInSplatRoute
   '/sign-up/$': typeof authSignUpSplatRoute
+  '/dashboard': typeof countdownDashboardIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof landingIndexRoute
   '/sign-in/$': typeof authSignInSplatRoute
   '/sign-up/$': typeof authSignUpSplatRoute
+  '/dashboard': typeof countdownDashboardIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/(auth)': typeof authRouteRouteWithChildren
+  '/(countdown)': typeof countdownRouteRouteWithChildren
   '/(landing)': typeof landingRouteRouteWithChildren
   '/(landing)/': typeof landingIndexRoute
   '/(auth)/sign-in/$': typeof authSignInSplatRoute
   '/(auth)/sign-up/$': typeof authSignUpSplatRoute
+  '/(countdown)/dashboard/': typeof countdownDashboardIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/sign-in/$' | '/sign-up/$'
+  fullPaths: '/' | '/sign-in/$' | '/sign-up/$' | '/dashboard'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/sign-in/$' | '/sign-up/$'
+  to: '/' | '/sign-in/$' | '/sign-up/$' | '/dashboard'
   id:
     | '__root__'
     | '/(auth)'
+    | '/(countdown)'
     | '/(landing)'
     | '/(landing)/'
     | '/(auth)/sign-in/$'
     | '/(auth)/sign-up/$'
+    | '/(countdown)/dashboard/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   authRouteRoute: typeof authRouteRouteWithChildren
+  countdownRouteRoute: typeof countdownRouteRouteWithChildren
   landingRouteRoute: typeof landingRouteRouteWithChildren
 }
 
@@ -83,6 +101,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof landingRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(countdown)': {
+      id: '/(countdown)'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof countdownRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(auth)': {
@@ -98,6 +123,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof landingIndexRouteImport
       parentRoute: typeof landingRouteRoute
+    }
+    '/(countdown)/dashboard/': {
+      id: '/(countdown)/dashboard/'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof countdownDashboardIndexRouteImport
+      parentRoute: typeof countdownRouteRoute
     }
     '/(auth)/sign-up/$': {
       id: '/(auth)/sign-up/$'
@@ -130,6 +162,18 @@ const authRouteRouteWithChildren = authRouteRoute._addFileChildren(
   authRouteRouteChildren,
 )
 
+interface countdownRouteRouteChildren {
+  countdownDashboardIndexRoute: typeof countdownDashboardIndexRoute
+}
+
+const countdownRouteRouteChildren: countdownRouteRouteChildren = {
+  countdownDashboardIndexRoute: countdownDashboardIndexRoute,
+}
+
+const countdownRouteRouteWithChildren = countdownRouteRoute._addFileChildren(
+  countdownRouteRouteChildren,
+)
+
 interface landingRouteRouteChildren {
   landingIndexRoute: typeof landingIndexRoute
 }
@@ -144,6 +188,7 @@ const landingRouteRouteWithChildren = landingRouteRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   authRouteRoute: authRouteRouteWithChildren,
+  countdownRouteRoute: countdownRouteRouteWithChildren,
   landingRouteRoute: landingRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
