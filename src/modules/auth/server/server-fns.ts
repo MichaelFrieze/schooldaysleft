@@ -1,21 +1,21 @@
-import { ServerFnError } from "@/lib/server-fn-error";
-import { logServerFnError } from "@/lib/server-fn-error-logger";
+import { AppError } from "@/lib/app-error";
+import { logAppError } from "@/lib/app-error-logger";
 import { tryCatch } from "@/lib/try-catch";
 import { createServerFn } from "@tanstack/react-start";
-import { getClerkAuth } from "./data";
+import { getClerkAuthAndToken } from "./data";
 
 export const fetchClerkAuth = createServerFn({ method: "GET" }).handler(
 	async () => {
-		const { data, error } = await tryCatch(getClerkAuth());
+		const { data, error } = await tryCatch(getClerkAuthAndToken());
 
 		if (error) {
-			const serverFnError = new ServerFnError({
-				serverFnErrorCode: "INTERNAL_SERVER_ERROR",
+			const appError = new AppError({
+				appErrorCode: "INTERNAL_SERVER_ERROR",
 				message: error.message,
 				cause: error,
 			});
-			logServerFnError(serverFnError);
-			throw serverFnError;
+			logAppError(appError);
+			throw appError;
 		}
 
 		const { userId, token } = data;

@@ -2,13 +2,13 @@ import { tryCatch } from "@/lib/try-catch";
 import { getAuth } from "@clerk/tanstack-react-start/server";
 import { getWebRequest } from "@tanstack/react-start/server";
 
-export const getClerkAuth = async () => {
+export const getClerkAuthAndToken = async () => {
 	const { data: authData, error: authError } = await tryCatch(
 		getAuth(getWebRequest()),
 	);
 
 	if (authError) {
-		throw new Error("Failed to get Clerk auth");
+		throw new Error("Clerk getAuth error");
 	}
 
 	const { userId, getToken } = authData;
@@ -19,7 +19,7 @@ export const getClerkAuth = async () => {
 		);
 
 		if (tokenError) {
-			throw new Error("Failed to get Clerk token");
+			throw new Error("Clerk getToken error");
 		}
 
 		return {

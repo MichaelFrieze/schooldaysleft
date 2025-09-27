@@ -1,10 +1,7 @@
 import DevtoolsLoader from "@/components/devtools/devtools-loader";
 import { RootCatchBoundary } from "@/components/errors/root-catch-boundary";
 import { ThemeProvider } from "@/components/providers/theme-provider";
-import {
-	getServerFnErrorFromUnknown,
-	isServerFnError,
-} from "@/lib/server-fn-error";
+import { isAppError } from "@/lib/app-error";
 import { tryCatch } from "@/lib/try-catch";
 import { fetchClerkAuth } from "@/modules/auth/server/server-fns";
 import { ClerkProvider, useAuth } from "@clerk/tanstack-react-start";
@@ -28,30 +25,34 @@ interface MyRouterContext {
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
-	beforeLoad: async (ctx) => {
-		if (ctx.context.convexQueryClient.serverHttpClient) {
+	beforeLoad: async (opts) => {
+		if (opts.context.convexQueryClient.serverHttpClient) {
 			const { data, error } = await tryCatch(fetchClerkAuth());
 
 			if (error) {
 				return { error };
 			}
 
-			const { token } = data;
+			const { userId, token } = data;
 
 			if (token) {
 				// During SSR only (the only time serverHttpClient exists),
 				// set the Clerk auth token to make HTTP queries with.
-				ctx.context.convexQueryClient.serverHttpClient?.setAuth(token);
+				opts.context.convexQueryClient.serverHttpClient.setAuth(token);
 			}
+
+			return { userId, token };
 		}
 
 		return {};
 	},
 	loader: ({ context }) => {
 		if (context.error) {
-			if (isServerFnError(context.error)) {
-				const serverFnError = getServerFnErrorFromUnknown(context.error);
-				throw { ...serverFnError.toJSON() };
+			if (isAppError(context.error)) {
+				if (typeof window === "undefined") {
+					const appErrorOverTheWire = context.error.toJSON();
+					throw { ...appErrorOverTheWire };
+				}
 			}
 			throw new Error("An unexpected error occurred in the root loader");
 		}
