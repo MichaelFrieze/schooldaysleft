@@ -1,7 +1,6 @@
 import DevtoolsLoader from "@/components/devtools/devtools-loader";
 import { RootCatchBoundary } from "@/components/errors/root-catch-boundary";
 import { ThemeProvider } from "@/components/providers/theme-provider";
-import { isAppError } from "@/lib/app-error";
 import { tryCatch } from "@/lib/try-catch";
 import { fetchClerkAuth } from "@/modules/auth/server/server-fns";
 import { ClerkProvider, useAuth } from "@clerk/tanstack-react-start";
@@ -33,27 +32,19 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 				return { error };
 			}
 
-			const { userId, token } = data;
+			const { token } = data;
 
 			if (token) {
 				// During SSR only (the only time serverHttpClient exists),
 				// set the Clerk auth token to make HTTP queries with.
 				opts.context.convexQueryClient.serverHttpClient.setAuth(token);
 			}
-
-			return { userId, token };
 		}
 
 		return {};
 	},
 	loader: ({ context }) => {
 		if (context.error) {
-			if (isAppError(context.error)) {
-				if (typeof window === "undefined") {
-					const appErrorOverTheWire = context.error.toJSON();
-					throw { ...appErrorOverTheWire };
-				}
-			}
 			throw new Error("An unexpected error occurred in the root loader");
 		}
 	},
