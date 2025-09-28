@@ -14,7 +14,7 @@ import {
 	useQueryErrorResetBoundary,
 	useSuspenseQuery,
 } from "@tanstack/react-query";
-import { Link, useLocation, useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { api } from "convex/_generated/api";
 import {
 	AlertTriangle,

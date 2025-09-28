@@ -1,8 +1,10 @@
-import type { Countdown } from "../types";
+import type { Doc } from "convex/_generated/dataModel";
 import { calculateDaysLeft } from "./calculate-days-left";
 import { calculateTotalDays } from "./calculate-total-days";
 
-export function calculateCountdownProgress(countdown: Countdown): number {
+export function calculateCountdownProgress(
+	countdown: Doc<"countdowns">,
+): number {
 	const today = new Date();
 	today.setHours(0, 0, 0, 0);
 

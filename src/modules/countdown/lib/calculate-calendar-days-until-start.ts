@@ -1,6 +1,8 @@
-import type { Countdown } from "../types";
+import type { Doc } from "convex/_generated/dataModel";
 
-export function calculateCalendarDaysUntilStart(countdown: Countdown): number {
+export function calculateCalendarDaysUntilStart(
+	countdown: Doc<"countdowns">,
+): number {
 	const now = new Date();
 	now.setHours(0, 0, 0, 0);
 

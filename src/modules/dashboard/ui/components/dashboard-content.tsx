@@ -12,6 +12,7 @@ import { api } from "convex/_generated/api";
 import { AlertTriangle, CalendarDays, Plus } from "lucide-react";
 import { Suspense } from "react";
 import { ErrorBoundary, type FallbackProps } from "react-error-boundary";
+import { DashboardCountdownCard } from "./dashboard-countdown-card";
 
 export function DashboardContent() {
 	const { reset } = useQueryErrorResetBoundary();
@@ -61,8 +62,7 @@ export function DashboardContentSuspense() {
 		<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
 			{countdowns.map((countdown) => {
 				return (
-					// <DashboardCountdownCard key={countdown._id} countdown={countdown} />
-					<div key={countdown._id}>{countdown.name}</div>
+					<DashboardCountdownCard key={countdown._id} countdown={countdown} />
 				);
 			})}
 		</div>

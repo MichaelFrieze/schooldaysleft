@@ -4,12 +4,12 @@ import { clickHandlers } from "@/lib/utils";
 import { calculateCalendarDaysUntilStart } from "@/modules/countdown/lib/calculate-calendar-days-until-start";
 import { calculateCountdownProgress } from "@/modules/countdown/lib/calculate-countdown-progress";
 import { calculateDaysLeft } from "@/modules/countdown/lib/calculate-days-left";
-import type { Countdown } from "@/modules/countdown/types";
 import { Link, useNavigate } from "@tanstack/react-router";
+import type { Doc } from "convex/_generated/dataModel";
 import { ArrowUpRight } from "lucide-react";
 
 interface DashboardCountdownCardProps {
-	countdown: Countdown;
+	countdown: Doc<"countdowns">;
 }
 
 export function DashboardCountdownCard({
