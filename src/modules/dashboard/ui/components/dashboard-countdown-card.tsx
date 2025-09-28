@@ -33,10 +33,16 @@ export function DashboardCountdownCard({
 
 	return (
 		<Link
-			to="/dashboard"
+			to="/countdown/$countdownId"
+			params={{
+				countdownId: countdown._id,
+			}}
 			{...clickHandlers(() =>
 				navigate({
-					to: "/dashboard",
+					to: "/countdown/$countdownId",
+					params: {
+						countdownId: countdown._id,
+					},
 				}),
 			)}
 			aria-label={`View countdown: ${countdown.name}`}
