@@ -5,7 +5,6 @@ import { api } from "convex/_generated/api";
 
 export const Route = createFileRoute("/(countdown)")({
 	loader: (opts) => {
-		console.log("prefetching countdowns");
 		opts.context.queryClient.prefetchQuery(
 			convexQuery(api.countdowns.getAll, {}),
 		);

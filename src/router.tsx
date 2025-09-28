@@ -13,7 +13,7 @@ import { RootCatchBoundary } from "./components/errors/root-catch-boundary";
 import { env } from "./env";
 import { routeTree } from "./routeTree.gen";
 
-export const createRouter = () => {
+export function createRouter() {
 	if (typeof document !== "undefined") {
 		notifyManager.setScheduler(window.requestAnimationFrame);
 	}
@@ -64,7 +64,7 @@ export const createRouter = () => {
 	});
 
 	return router;
-};
+}
 
 declare module "@tanstack/react-router" {
 	interface Register {
