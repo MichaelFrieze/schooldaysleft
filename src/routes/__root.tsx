@@ -25,36 +25,28 @@ interface MyRouterContext {
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
 	beforeLoad: async (opts) => {
-		const { data, error } = await tryCatch(fetchClerkAuth());
+		if (opts.context.convexQueryClient.serverHttpClient) {
+			const { data, error } = await tryCatch(fetchClerkAuth());
 
-		if (error) {
-			return { error };
+			if (error) {
+				return { error };
+			}
+
+			const { token } = data;
+
+			if (token) {
+				// During SSR only (the only time serverHttpClient exists),
+				// set the Clerk auth token to make HTTP queries with.
+				opts.context.convexQueryClient.serverHttpClient.setAuth(token);
+			}
 		}
 
-		const { token, userId } = data;
-
-		if (token) {
-			// During SSR only (the only time serverHttpClient exists),
-			// set the Clerk auth token to make HTTP queries with.
-			opts.context.convexQueryClient.serverHttpClient?.setAuth(token);
-		}
-
-		return {
-			userId,
-			token,
-		};
+		return {};
 	},
 	loader: ({ context }) => {
 		if (context.error) {
 			throw new Error("An unexpected error occurred in the root loader");
 		}
-
-		const { userId, token } = context;
-
-		return {
-			userId,
-			token,
-		};
 	},
 	head: () => ({
 		meta: [
