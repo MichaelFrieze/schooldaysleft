@@ -1,6 +1,7 @@
 import DevtoolsLoader from "@/components/devtools/devtools-loader";
 import { RootCatchBoundary } from "@/components/errors/root-catch-boundary";
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import { env } from "@/env";
 import { ClerkProvider, useAuth } from "@clerk/tanstack-react-start";
 import type { ConvexQueryClient } from "@convex-dev/react-query";
 import type { QueryClient } from "@tanstack/react-query";
@@ -53,7 +54,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 function RootComponent() {
 	const context = useRouteContext({ from: Route.id });
 	return (
-		<ClerkProvider>
+		<ClerkProvider publishableKey={env.VITE_CLERK_PUBLISHABLE_KEY}>
 			<ConvexProviderWithClerk client={context.convexClient} useAuth={useAuth}>
 				<RootDocument>
 					<Outlet />

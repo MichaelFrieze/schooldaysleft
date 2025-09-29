@@ -60,7 +60,7 @@ export function createRouter() {
 	setupRouterSsrQueryIntegration({
 		router,
 		queryClient,
-		wrapQueryClient: false,
+		// wrapQueryClient: false,
 	});
 
 	return router;
