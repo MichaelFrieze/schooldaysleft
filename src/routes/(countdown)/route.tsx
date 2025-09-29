@@ -9,6 +9,7 @@ export const Route = createFileRoute("/(countdown)")({
 			convexQuery(api.countdowns.getAll, {}),
 		);
 	},
+	ssr: false,
 	component: CountdownLayoutRoute,
 });
 

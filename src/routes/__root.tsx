@@ -1,8 +1,6 @@
 import DevtoolsLoader from "@/components/devtools/devtools-loader";
 import { RootCatchBoundary } from "@/components/errors/root-catch-boundary";
 import { ThemeProvider } from "@/components/providers/theme-provider";
-import { tryCatch } from "@/lib/try-catch";
-import { fetchClerkAuth } from "@/modules/auth/server/server-fns";
 import { ClerkProvider, useAuth } from "@clerk/tanstack-react-start";
 import type { ConvexQueryClient } from "@convex-dev/react-query";
 import type { QueryClient } from "@tanstack/react-query";
@@ -24,30 +22,6 @@ interface MyRouterContext {
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
-	beforeLoad: async (opts) => {
-		if (opts.context.convexQueryClient.serverHttpClient) {
-			const { data, error } = await tryCatch(fetchClerkAuth());
-
-			if (error) {
-				return { error };
-			}
-
-			const { token } = data;
-
-			if (token) {
-				// During SSR only (the only time serverHttpClient exists),
-				// set the Clerk auth token to make HTTP queries with.
-				opts.context.convexQueryClient.serverHttpClient.setAuth(token);
-			}
-		}
-
-		return {};
-	},
-	loader: ({ context }) => {
-		if (context.error) {
-			throw new Error("An unexpected error occurred in the root loader");
-		}
-	},
 	head: () => ({
 		meta: [
 			{
