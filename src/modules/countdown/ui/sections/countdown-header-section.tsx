@@ -48,10 +48,16 @@ function CountdownHeaderSectionSuspense({
 
 				<Button asChild variant="outline" size="sm">
 					<Link
-						to="/dashboard"
+						to="/countdown/$countdownId/edit"
+						params={{
+							countdownId,
+						}}
 						{...clickHandlers(() =>
 							navigate({
-								to: "/dashboard",
+								to: "/countdown/$countdownId/edit",
+								params: {
+									countdownId,
+								},
 							}),
 						)}
 					>

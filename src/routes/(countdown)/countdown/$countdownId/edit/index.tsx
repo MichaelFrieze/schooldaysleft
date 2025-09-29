@@ -1,3 +1,4 @@
+import { EditCountdownView } from "@/modules/edit-countdown/ui/views/edit-countdown-view";
 import { convexQuery } from "@convex-dev/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { api } from "convex/_generated/api";
@@ -18,5 +19,7 @@ export const Route = createFileRoute(
 });
 
 function EditCountdownRoute() {
-	return <div>Hello "/(countdown)/countdown/$countdownId/edit/"!</div>;
+	const { countdownId } = Route.useParams();
+
+	return <EditCountdownView countdownId={countdownId} />;
 }
