@@ -47,8 +47,6 @@ export const useCountdownForm = () => {
 		from: "/(countdown)/countdown/$countdownId/edit/",
 	});
 
-	console.log("countdownId in useCountdownForm", { countdownId });
-
 	// Validate countdownId
 	if (!countdownId || countdownId === "undefined") {
 		throw new Error("Invalid countdown ID");
