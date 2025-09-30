@@ -9,13 +9,12 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import useStableLocation from "@/hooks/use-stable-location";
 import { clickHandlers, cn } from "@/lib/utils";
-import { convexQuery } from "@convex-dev/react-query";
 import {
 	useQueryErrorResetBoundary,
 	useSuspenseQuery,
 } from "@tanstack/react-query";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { api } from "convex/_generated/api";
+import { useServerFn } from "@tanstack/react-start";
 import {
 	AlertTriangle,
 	ChevronDown,
@@ -24,6 +23,7 @@ import {
 } from "lucide-react";
 import { Suspense } from "react";
 import { ErrorBoundary, type FallbackProps } from "react-error-boundary";
+import { getAllCountdowns } from "../../server/server-fns";
 
 export function CountdownNavDropdown() {
 	const { reset } = useQueryErrorResetBoundary();
@@ -41,6 +41,7 @@ export function CountdownNavDropdown() {
 }
 
 export function CountdownNavDropdownSuspense() {
+	const convexCountdowns = useServerFn(getAllCountdowns);
 	const navigate = useNavigate();
 	// const pathname = useLocation({
 	// 	select: (location) => location.pathname,
@@ -48,9 +49,10 @@ export function CountdownNavDropdownSuspense() {
 
 	const pathname = useStableLocation();
 
-	const { data: countdowns } = useSuspenseQuery(
-		convexQuery(api.countdowns.getAll, {}),
-	);
+	const { data: countdowns } = useSuspenseQuery({
+		queryKey: ["countdowns"],
+		queryFn: convexCountdowns,
+	});
 
 	const getCurrentPageName = () => {
 		if (pathname === "/dashboard") return "Dashboard";
