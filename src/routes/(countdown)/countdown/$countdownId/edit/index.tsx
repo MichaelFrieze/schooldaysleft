@@ -4,13 +4,6 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute(
 	"/(countdown)/countdown/$countdownId/edit/",
 )({
-	// loader: (opts) => {
-	// 	opts.context.queryClient.prefetchQuery(
-	// 		convexQuery(api.countdowns.getById, {
-	// 			id: opts.params.countdownId as Id<"countdowns">,
-	// 		}),
-	// 	);
-	// },
 	ssr: false,
 	component: EditCountdownRoute,
 });
