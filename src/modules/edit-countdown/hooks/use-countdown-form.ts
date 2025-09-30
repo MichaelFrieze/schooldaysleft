@@ -1,6 +1,11 @@
+import { countdownsQueryOptions } from "@/modules/countdown/lib/countdowns-query-options";
 import { convexQuery, useConvexMutation } from "@convex-dev/react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
+import {
+	useMutation,
+	useQueryClient,
+	useSuspenseQuery,
+} from "@tanstack/react-query";
 import { useNavigate, useParams } from "@tanstack/react-router";
 import { api } from "convex/_generated/api";
 import type { Id } from "convex/_generated/dataModel";
@@ -42,6 +47,7 @@ export type FormData = z.infer<typeof formSchema>;
 
 export const useCountdownForm = () => {
 	const navigate = useNavigate({ from: "/countdown/$countdownId/edit" });
+	const queryClient = useQueryClient();
 
 	const { countdownId } = useParams({
 		from: "/(countdown)/countdown/$countdownId/edit/",
@@ -69,6 +75,12 @@ export const useCountdownForm = () => {
 	const deleteCountdownMutation = useMutation({
 		mutationFn: useConvexMutation(api.countdowns.remove),
 	});
+
+	const invalidateCountdownsQuery = () => {
+		void queryClient.invalidateQueries({
+			queryKey: countdownsQueryOptions().queryKey,
+		});
+	};
 
 	const form = useForm<FormData>({
 		resolver: zodResolver(formSchema),
@@ -154,7 +166,8 @@ export const useCountdownForm = () => {
 			},
 			{
 				onSuccess: () => {
-					// void router.push(`/countdown/${countdownId}`);
+					invalidateCountdownsQuery();
+
 					void navigate({
 						to: "/countdown/$countdownId",
 						params: {
@@ -187,6 +200,8 @@ export const useCountdownForm = () => {
 			},
 			{
 				onSuccess: () => {
+					invalidateCountdownsQuery();
+
 					void navigate({
 						to: "/dashboard",
 					});

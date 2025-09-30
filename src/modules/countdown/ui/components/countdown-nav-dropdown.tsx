@@ -8,12 +8,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
 import useStableLocation from "@/hooks/use-stable-location";
-import { clickHandlers, cn } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import {
 	useQueryErrorResetBoundary,
 	useSuspenseQuery,
 } from "@tanstack/react-query";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import {
 	AlertTriangle,
 	ChevronDown,
@@ -40,7 +40,6 @@ export function CountdownNavDropdown() {
 }
 
 export function CountdownNavDropdownSuspense() {
-	const navigate = useNavigate();
 	// const pathname = useLocation({
 	// 	select: (location) => location.pathname,
 	// });
@@ -82,11 +81,6 @@ export function CountdownNavDropdownSuspense() {
 				<DropdownMenuItem asChild>
 					<Link
 						to="/dashboard"
-						{...clickHandlers(() =>
-							navigate({
-								to: "/dashboard",
-							}),
-						)}
 						className={cn(
 							pathname === "/dashboard" && "bg-accent text-accent-foreground",
 						)}
@@ -99,12 +93,10 @@ export function CountdownNavDropdownSuspense() {
 				{countdowns?.map((countdown) => (
 					<DropdownMenuItem key={countdown._id} asChild>
 						<Link
-							to="/dashboard"
-							{...clickHandlers(() =>
-								navigate({
-									to: "/dashboard",
-								}),
-							)}
+							to="/countdown/$countdownId"
+							params={{
+								countdownId: countdown._id,
+							}}
 							className={cn(
 								pathname === `/countdown/${countdown._id}` &&
 									"bg-accent text-accent-foreground",
@@ -118,11 +110,6 @@ export function CountdownNavDropdownSuspense() {
 				<DropdownMenuItem asChild>
 					<Link
 						to="/dashboard"
-						{...clickHandlers(() =>
-							navigate({
-								to: "/dashboard",
-							}),
-						)}
 						className={cn(
 							pathname === "/countdown/new" &&
 								"bg-accent text-accent-foreground",
