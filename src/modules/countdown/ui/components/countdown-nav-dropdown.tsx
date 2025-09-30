@@ -14,7 +14,6 @@ import {
 	useSuspenseQuery,
 } from "@tanstack/react-query";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { useServerFn } from "@tanstack/react-start";
 import {
 	AlertTriangle,
 	ChevronDown,
@@ -23,7 +22,7 @@ import {
 } from "lucide-react";
 import { Suspense } from "react";
 import { ErrorBoundary, type FallbackProps } from "react-error-boundary";
-import { getAllCountdowns } from "../../server/server-fns";
+import { countdownsQueryOptions } from "../../lib/countdowns-query-options";
 
 export function CountdownNavDropdown() {
 	const { reset } = useQueryErrorResetBoundary();
@@ -41,7 +40,6 @@ export function CountdownNavDropdown() {
 }
 
 export function CountdownNavDropdownSuspense() {
-	const convexCountdowns = useServerFn(getAllCountdowns);
 	const navigate = useNavigate();
 	// const pathname = useLocation({
 	// 	select: (location) => location.pathname,
@@ -49,10 +47,7 @@ export function CountdownNavDropdownSuspense() {
 
 	const pathname = useStableLocation();
 
-	const { data: countdowns } = useSuspenseQuery({
-		queryKey: ["countdowns"],
-		queryFn: convexCountdowns,
-	});
+	const { data: countdowns } = useSuspenseQuery(countdownsQueryOptions());
 
 	const getCurrentPageName = () => {
 		if (pathname === "/dashboard") return "Dashboard";

@@ -27,7 +27,6 @@ export const getAllCountdowns = createServerFn({ method: "GET" }).handler(
 		}
 
 		if (token) {
-			console.log("Setting token");
 			convex.setAuth(token);
 		} else {
 			throw new Error("Convex token not found");
