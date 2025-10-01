@@ -1,6 +1,7 @@
 import DevtoolsLoader from "@/components/devtools/devtools-loader";
 import { RootCatchBoundary } from "@/components/errors/root-catch-boundary";
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import { seo } from "@/lib/seo";
 import { ClerkProvider, useAuth } from "@clerk/tanstack-react-start";
 import type { ConvexQueryClient } from "@convex-dev/react-query";
 import type { QueryClient } from "@tanstack/react-query";
@@ -69,6 +70,14 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 			{
 				title: "SchoolDaysLeft",
 			},
+			...seo({
+				title: "SchoolDaysLeft",
+				description:
+					"Track the remaining school days with customizable start dates, end dates, and days off. Perfect for students, parents, and teachers.",
+				image: "/og-image-1200x630.png",
+				keywords:
+					"school days left, school countdown, days until school ends, last day of school countdown, academic calendar app, school calendar tracker, custom school calendar, track school days, semester countdown, school holiday tracker, days off planner, student planner, parent school tracker, teacher classroom tool, SchoolDaysLeft",
+			}),
 		],
 		links: [
 			{
