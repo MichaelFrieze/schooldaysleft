@@ -74,7 +74,8 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 				title: "SchoolDaysLeft",
 				description:
 					"Track the remaining school days with customizable start dates, end dates, and days off. Perfect for students, parents, and teachers.",
-				image: "/og-image-1200x630.png",
+				image:
+					"https://d54nslkxpa.ufs.sh/f/xWWrB0vOU3uQjPrQNDMOyA8cGm4UaHFVEQZIbKwdetkzloMW",
 				keywords:
 					"school days left, school countdown, days until school ends, last day of school countdown, academic calendar app, school calendar tracker, custom school calendar, track school days, semester countdown, school holiday tracker, days off planner, student planner, parent school tracker, teacher classroom tool, SchoolDaysLeft",
 			}),
