@@ -16,6 +16,7 @@ import { Route as landingIndexRouteImport } from './routes/(landing)/index'
 import { Route as countdownDashboardIndexRouteImport } from './routes/(countdown)/dashboard/index'
 import { Route as authSignUpSplatRouteImport } from './routes/(auth)/sign-up.$'
 import { Route as authSignInSplatRouteImport } from './routes/(auth)/sign-in.$'
+import { Route as countdownCountdownNewIndexRouteImport } from './routes/(countdown)/countdown/new/index'
 import { Route as countdownCountdownCountdownIdIndexRouteImport } from './routes/(countdown)/countdown/$countdownId/index'
 import { Route as countdownCountdownCountdownIdEditIndexRouteImport } from './routes/(countdown)/countdown/$countdownId/edit/index'
 
@@ -51,6 +52,12 @@ const authSignInSplatRoute = authSignInSplatRouteImport.update({
   path: '/sign-in/$',
   getParentRoute: () => authRouteRoute,
 } as any)
+const countdownCountdownNewIndexRoute =
+  countdownCountdownNewIndexRouteImport.update({
+    id: '/countdown/new/',
+    path: '/countdown/new/',
+    getParentRoute: () => countdownRouteRoute,
+  } as any)
 const countdownCountdownCountdownIdIndexRoute =
   countdownCountdownCountdownIdIndexRouteImport.update({
     id: '/countdown/$countdownId/',
@@ -70,6 +77,7 @@ export interface FileRoutesByFullPath {
   '/sign-up/$': typeof authSignUpSplatRoute
   '/dashboard': typeof countdownDashboardIndexRoute
   '/countdown/$countdownId': typeof countdownCountdownCountdownIdIndexRoute
+  '/countdown/new': typeof countdownCountdownNewIndexRoute
   '/countdown/$countdownId/edit': typeof countdownCountdownCountdownIdEditIndexRoute
 }
 export interface FileRoutesByTo {
@@ -78,6 +86,7 @@ export interface FileRoutesByTo {
   '/sign-up/$': typeof authSignUpSplatRoute
   '/dashboard': typeof countdownDashboardIndexRoute
   '/countdown/$countdownId': typeof countdownCountdownCountdownIdIndexRoute
+  '/countdown/new': typeof countdownCountdownNewIndexRoute
   '/countdown/$countdownId/edit': typeof countdownCountdownCountdownIdEditIndexRoute
 }
 export interface FileRoutesById {
@@ -90,6 +99,7 @@ export interface FileRoutesById {
   '/(auth)/sign-up/$': typeof authSignUpSplatRoute
   '/(countdown)/dashboard/': typeof countdownDashboardIndexRoute
   '/(countdown)/countdown/$countdownId/': typeof countdownCountdownCountdownIdIndexRoute
+  '/(countdown)/countdown/new/': typeof countdownCountdownNewIndexRoute
   '/(countdown)/countdown/$countdownId/edit/': typeof countdownCountdownCountdownIdEditIndexRoute
 }
 export interface FileRouteTypes {
@@ -100,6 +110,7 @@ export interface FileRouteTypes {
     | '/sign-up/$'
     | '/dashboard'
     | '/countdown/$countdownId'
+    | '/countdown/new'
     | '/countdown/$countdownId/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -108,6 +119,7 @@ export interface FileRouteTypes {
     | '/sign-up/$'
     | '/dashboard'
     | '/countdown/$countdownId'
+    | '/countdown/new'
     | '/countdown/$countdownId/edit'
   id:
     | '__root__'
@@ -119,6 +131,7 @@ export interface FileRouteTypes {
     | '/(auth)/sign-up/$'
     | '/(countdown)/dashboard/'
     | '/(countdown)/countdown/$countdownId/'
+    | '/(countdown)/countdown/new/'
     | '/(countdown)/countdown/$countdownId/edit/'
   fileRoutesById: FileRoutesById
 }
@@ -179,6 +192,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authSignInSplatRouteImport
       parentRoute: typeof authRouteRoute
     }
+    '/(countdown)/countdown/new/': {
+      id: '/(countdown)/countdown/new/'
+      path: '/countdown/new'
+      fullPath: '/countdown/new'
+      preLoaderRoute: typeof countdownCountdownNewIndexRouteImport
+      parentRoute: typeof countdownRouteRoute
+    }
     '/(countdown)/countdown/$countdownId/': {
       id: '/(countdown)/countdown/$countdownId/'
       path: '/countdown/$countdownId'
@@ -213,6 +233,7 @@ const authRouteRouteWithChildren = authRouteRoute._addFileChildren(
 interface countdownRouteRouteChildren {
   countdownDashboardIndexRoute: typeof countdownDashboardIndexRoute
   countdownCountdownCountdownIdIndexRoute: typeof countdownCountdownCountdownIdIndexRoute
+  countdownCountdownNewIndexRoute: typeof countdownCountdownNewIndexRoute
   countdownCountdownCountdownIdEditIndexRoute: typeof countdownCountdownCountdownIdEditIndexRoute
 }
 
@@ -220,6 +241,7 @@ const countdownRouteRouteChildren: countdownRouteRouteChildren = {
   countdownDashboardIndexRoute: countdownDashboardIndexRoute,
   countdownCountdownCountdownIdIndexRoute:
     countdownCountdownCountdownIdIndexRoute,
+  countdownCountdownNewIndexRoute: countdownCountdownNewIndexRoute,
   countdownCountdownCountdownIdEditIndexRoute:
     countdownCountdownCountdownIdEditIndexRoute,
 }

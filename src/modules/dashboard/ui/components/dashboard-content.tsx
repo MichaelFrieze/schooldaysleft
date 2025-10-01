@@ -43,10 +43,10 @@ export function DashboardContentSuspense() {
 				</p>
 				<Button asChild variant="outline" className="mt-6">
 					<Link
-						to="/dashboard"
+						to="/countdown/new"
 						{...clickHandlers(() =>
 							navigate({
-								to: "/dashboard",
+								to: "/countdown/new",
 							}),
 						)}
 					>

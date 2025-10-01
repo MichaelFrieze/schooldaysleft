@@ -109,7 +109,7 @@ export function CountdownNavDropdownSuspense() {
 				<DropdownMenuSeparator />
 				<DropdownMenuItem asChild>
 					<Link
-						to="/dashboard"
+						to="/countdown/new"
 						className={cn(
 							pathname === "/countdown/new" &&
 								"bg-accent text-accent-foreground",

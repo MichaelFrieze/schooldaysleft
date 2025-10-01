@@ -17,10 +17,10 @@ export function DashboardView() {
 				</div>
 				<Button asChild>
 					<Link
-						to="/dashboard"
+						to="/countdown/new"
 						{...clickHandlers(() =>
 							navigate({
-								to: "/dashboard",
+								to: "/countdown/new",
 							}),
 						)}
 					>
