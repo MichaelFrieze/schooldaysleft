@@ -5,7 +5,7 @@ export const env = createEnv({
 	server: {
 		SERVER_URL: z.string().url().optional(),
 		CLERK_SECRET_KEY: z.string().min(1),
-		CONVEX_DEPLOYMENT: z.string().min(1),
+		// CONVEX_DEPLOYMENT: z.string().min(1),
 	},
 
 	/**
@@ -34,7 +34,7 @@ export const env = createEnv({
 		// Server variables
 		SERVER_URL: process.env.SERVER_URL,
 		CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
-		CONVEX_DEPLOYMENT: process.env.CONVEX_DEPLOYMENT,
+		// CONVEX_DEPLOYMENT: process.env.CONVEX_DEPLOYMENT,
 
 		// Client variables (must have VITE_ prefix)
 		VITE_APP_TITLE: import.meta.env.VITE_APP_TITLE,
