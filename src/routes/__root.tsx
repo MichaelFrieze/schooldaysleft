@@ -29,16 +29,69 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 			},
 			{
 				name: "viewport",
-				content: "width=device-width, initial-scale=1",
+				content:
+					"width=device-width, initial-scale=1, user-scalable=yes, viewport-fit=cover",
 			},
 			{
-				title: "TanStack Start Starter",
+				name: "theme-color",
+				content: "#f5f5ff",
+				media: "(prefers-color-scheme: light)",
+			},
+			{
+				name: "theme-color",
+				content: "#0f0f1a",
+				media: "(prefers-color-scheme: dark)",
+			},
+			{
+				name: "apple-mobile-web-app-title",
+				content: "SchoolDaysLeft",
+			},
+			{
+				name: "mobile-web-app-capable",
+				content: "yes",
+			},
+			{
+				name: "apple-mobile-web-app-capable",
+				content: "yes",
+			},
+			{
+				name: "apple-mobile-web-app-status-bar-style",
+				content: "default",
+			},
+			{
+				name: "format-detection",
+				content: "telephone=no,date=no,address=no,email=no,url=no",
+			},
+			{
+				name: "application-name",
+				content: "SchoolDaysLeft",
+			},
+			{
+				title: "SchoolDaysLeft",
 			},
 		],
 		links: [
 			{
 				rel: "stylesheet",
 				href: appCss,
+			},
+			{ rel: "manifest", href: "/site.webmanifest" },
+			{
+				rel: "icon",
+				type: "image/png",
+				href: "/favicon-96x96.png",
+				sizes: "96x96",
+			},
+			{
+				rel: "icon",
+				type: "image/svg+xml",
+				href: "/favicon.svg",
+			},
+			{ rel: "shortcut icon", href: "/favicon.ico" },
+			{
+				rel: "apple-touch-icon",
+				sizes: "180x180",
+				href: "/apple-touch-icon.png",
 			},
 		],
 	}),
