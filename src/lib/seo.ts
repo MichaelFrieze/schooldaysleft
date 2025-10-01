@@ -20,6 +20,7 @@ export const seo = ({
 		{ property: "og:type", content: "website" },
 		{ property: "og:title", content: title },
 		{ property: "og:description", content: description },
+		{ property: "og:site_name", content: title },
 		...(image
 			? [
 					{ name: "twitter:image", content: image },
