@@ -1,248 +1,258 @@
-import { useTRPC } from "@/trpc/react";
+import { countdownsQueryOptions } from "@/modules/countdown/lib/countdowns-query-options";
+import { convexQuery, useConvexMutation } from "@convex-dev/react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  useMutation,
-  useQueryClient,
-  useSuspenseQuery,
+	useMutation,
+	useQueryClient,
+	useSuspenseQuery,
 } from "@tanstack/react-query";
+import { useNavigate, useParams } from "@tanstack/react-router";
+import { api } from "convex/_generated/api";
+import type { Id } from "convex/_generated/dataModel";
 import {
-  addMonths,
-  getDay,
-  isAfter,
-  isBefore,
-  isSameDay,
-  startOfMonth,
+	addMonths,
+	getDay,
+	isAfter,
+	isBefore,
+	isSameDay,
+	startOfMonth,
 } from "date-fns";
-import { useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
 const formSchema = z
-  .object({
-    name: z
-      .string()
-      .min(1, "Countdown name is required")
-      .max(60, "Countdown name must be less than 60 characters")
-      .trim(),
-    startDate: z.date({
-      required_error: "Start date is required",
-    }),
-    endDate: z.date({
-      required_error: "End date is required",
-    }),
-    weeklyDaysOff: z.array(z.number()),
-    additionalDaysOff: z.array(z.date()),
-  })
-  .refine((data) => data.endDate > data.startDate, {
-    message: "End date must be after start date",
-    path: ["endDate"],
-  });
+	.object({
+		name: z
+			.string()
+			.min(1, "Countdown name is required")
+			.max(60, "Countdown name must be less than 60 characters")
+			.trim(),
+		startDate: z.number({
+			required_error: "Start date is required",
+		}),
+		endDate: z.number({
+			required_error: "End date is required",
+		}),
+		weeklyDaysOff: z.array(z.number()),
+		additionalDaysOff: z.array(z.number()),
+	})
+	.refine((data) => data.endDate > data.startDate, {
+		message: "End date must be after start date",
+		path: ["endDate"],
+	});
 
 export type FormData = z.infer<typeof formSchema>;
 
 export const useCountdownForm = () => {
-  const router = useRouter();
-  const trpc = useTRPC();
-  const queryClient = useQueryClient();
-  const { countdownId } = useParams<{ countdownId: string }>();
+	const navigate = useNavigate({ from: "/countdown/$countdownId/edit" });
+	const queryClient = useQueryClient();
 
-  // Validate countdownId
-  if (!countdownId || countdownId === "undefined") {
-    throw new Error("Invalid countdown ID");
-  }
+	const { countdownId } = useParams({
+		from: "/(countdown)/countdown/$countdownId/edit/",
+	});
 
-  const { data: defaultCountdown } = useSuspenseQuery({
-    ...trpc.countdown.getById.queryOptions({
-      id: countdownId,
-    }),
-    retry: false,
-  });
+	// Validate countdownId
+	if (!countdownId || countdownId === "undefined") {
+		throw new Error("Invalid countdown ID");
+	}
 
-  const updateCountdownMutation = useMutation(
-    trpc.countdown.update.mutationOptions(),
-  );
+	const { data: defaultCountdown } = useSuspenseQuery(
+		convexQuery(api.countdowns.getById, {
+			id: countdownId as Id<"countdowns">,
+		}),
+	);
 
-  const deleteCountdownMutation = useMutation({
-    ...trpc.countdown.delete.mutationOptions(),
-  });
+	if (!defaultCountdown) {
+		throw new Error("Countdown not found");
+	}
 
-  const invalidateCountdownQueries = () => {
-    void queryClient.invalidateQueries({
-      queryKey: trpc.countdown.getAll.queryKey(),
-    });
-    void queryClient.invalidateQueries({
-      queryKey: trpc.countdown.getById.queryKey({ id: countdownId }),
-    });
-  };
+	const updateCountdownMutation = useMutation({
+		mutationFn: useConvexMutation(api.countdowns.update),
+	});
 
-  const form = useForm<FormData>({
-    resolver: zodResolver(formSchema),
-    mode: "onChange",
-    defaultValues: {
-      name: defaultCountdown.name,
-      startDate: defaultCountdown.startDate,
-      endDate: defaultCountdown.endDate,
-      weeklyDaysOff: defaultCountdown.weeklyDaysOff,
-      additionalDaysOff: defaultCountdown.additionalDaysOff,
-    },
-  });
+	const deleteCountdownMutation = useMutation({
+		mutationFn: useConvexMutation(api.countdowns.remove),
+	});
 
-  const watchedValues = form.watch();
-  const { startDate, endDate, weeklyDaysOff, additionalDaysOff } =
-    watchedValues;
+	const invalidateCountdownsQuery = () => {
+		void queryClient.invalidateQueries({
+			queryKey: countdownsQueryOptions().queryKey,
+		});
+	};
 
-  // Filter out additional days off that are outside the date range
-  useEffect(() => {
-    const currentAdditionalDays = form.getValues("additionalDaysOff");
-    const filteredDays = currentAdditionalDays.filter(
-      (date) =>
-        (isSameDay(date, startDate) || isAfter(date, startDate)) &&
-        (isSameDay(date, endDate) || isBefore(date, endDate)),
-    );
+	const form = useForm<FormData>({
+		resolver: zodResolver(formSchema),
+		mode: "onChange",
+		defaultValues: {
+			name: defaultCountdown.name,
+			startDate: defaultCountdown.startDate,
+			endDate: defaultCountdown.endDate,
+			weeklyDaysOff: defaultCountdown.weeklyDaysOff,
+			additionalDaysOff: defaultCountdown.additionalDaysOff,
+		},
+	});
 
-    // Only update if there's a difference to avoid infinite loops
-    if (filteredDays.length !== currentAdditionalDays.length) {
-      form.setValue("additionalDaysOff", filteredDays);
-    }
-  }, [startDate, endDate, form]);
+	const watchedValues = form.watch();
+	const { startDate, endDate, weeklyDaysOff, additionalDaysOff } =
+		watchedValues;
 
-  const getMonthsBetweenDates = (start: Date, end: Date): Date[] => {
-    const months: Date[] = [];
-    let current = startOfMonth(start);
-    const endMonth = startOfMonth(end);
+	// Filter out additional days off that are outside the date range
+	useEffect(() => {
+		const currentAdditionalDays = form.getValues("additionalDaysOff");
+		const filteredDays = currentAdditionalDays.filter(
+			(timestamp) =>
+				(isSameDay(timestamp, startDate) || isAfter(timestamp, startDate)) &&
+				(isSameDay(timestamp, endDate) || isBefore(timestamp, endDate)),
+		);
 
-    while (current <= endMonth) {
-      months.push(current);
-      current = addMonths(current, 1);
-    }
+		// Only update if there's a difference to avoid infinite loops
+		if (filteredDays.length !== currentAdditionalDays.length) {
+			form.setValue("additionalDaysOff", filteredDays);
+		}
+	}, [startDate, endDate, form]);
 
-    return months;
-  };
+	const getMonthsBetweenDates = (start: number, end: number): number[] => {
+		const months: number[] = [];
+		let current = startOfMonth(start);
+		const endMonth = startOfMonth(end);
 
-  const isWeeklyDayOff = (date: Date): boolean => {
-    return weeklyDaysOff.includes(getDay(date));
-  };
+		while (current <= endMonth) {
+			months.push(current.getTime());
+			current = addMonths(current, 1);
+		}
 
-  const handleWeeklyDayToggle = (dayValue: number) => {
-    const currentWeeklyDaysOff = form.getValues("weeklyDaysOff");
-    const isAddingDay = !currentWeeklyDaysOff.includes(dayValue);
+		return months;
+	};
 
-    const newWeeklyDaysOff = isAddingDay
-      ? [...currentWeeklyDaysOff, dayValue]
-      : currentWeeklyDaysOff.filter((d) => d !== dayValue);
+	const isWeeklyDayOff = (timestamp: number): boolean => {
+		return weeklyDaysOff.includes(getDay(timestamp));
+	};
 
-    newWeeklyDaysOff.sort((a, b) => a - b);
-    form.setValue("weeklyDaysOff", newWeeklyDaysOff);
+	const handleWeeklyDayToggle = (dayValue: number) => {
+		const currentWeeklyDaysOff = form.getValues("weeklyDaysOff");
+		const isAddingDay = !currentWeeklyDaysOff.includes(dayValue);
 
-    // If a weekly day off was added, remove any additional days off that fall on that day
-    if (isAddingDay) {
-      const currentAdditionalDaysOff = form.getValues("additionalDaysOff");
-      const updatedAdditionalDaysOff = currentAdditionalDaysOff.filter(
-        (date) => getDay(date) !== dayValue,
-      );
+		const newWeeklyDaysOff = isAddingDay
+			? [...currentWeeklyDaysOff, dayValue]
+			: currentWeeklyDaysOff.filter((d) => d !== dayValue);
 
-      if (updatedAdditionalDaysOff.length !== currentAdditionalDaysOff.length) {
-        form.setValue("additionalDaysOff", updatedAdditionalDaysOff);
-      }
-    }
-  };
+		newWeeklyDaysOff.sort((a, b) => a - b);
+		form.setValue("weeklyDaysOff", newWeeklyDaysOff);
 
-  const onSubmit = (data: FormData) => {
-    updateCountdownMutation.mutate(
-      {
-        id: countdownId,
-        name: data.name,
-        startDate: data.startDate,
-        endDate: data.endDate,
-        weeklyDaysOff: data.weeklyDaysOff,
-        additionalDaysOff: data.additionalDaysOff,
-      },
-      {
-        onSuccess: (updatedCountdown) => {
-          invalidateCountdownQueries();
+		// If a weekly day off was added, remove any additional days off that fall on that day
+		if (isAddingDay) {
+			const currentAdditionalDaysOff = form.getValues("additionalDaysOff");
+			const updatedAdditionalDaysOff = currentAdditionalDaysOff.filter(
+				(timestamp) => getDay(timestamp) !== dayValue,
+			);
 
-          void router.push(`/countdown/${countdownId}`);
-        },
-        onError: (error) => {
-          if (error.message.includes("Countdown name already exists")) {
-            form.setError("name", {
-              type: "manual",
-              message: "Countdown name already exists.",
-            });
-          }
+			if (updatedAdditionalDaysOff.length !== currentAdditionalDaysOff.length) {
+				form.setValue("additionalDaysOff", updatedAdditionalDaysOff);
+			}
+		}
+	};
 
-          toast.error("Failed to edit countdown", {
-            description: error.message,
-            descriptionClassName: "!text-destructive",
-          });
-          console.error("Failed to edit countdown:", error);
-        },
-      },
-    );
-  };
+	const onSubmit = (data: FormData) => {
+		updateCountdownMutation.mutate(
+			{
+				id: countdownId as Id<"countdowns">,
+				name: data.name,
+				startDate: data.startDate,
+				endDate: data.endDate,
+				weeklyDaysOff: data.weeklyDaysOff,
+				additionalDaysOff: data.additionalDaysOff,
+			},
+			{
+				onSuccess: () => {
+					invalidateCountdownsQuery();
 
-  const handleDelete = () => {
-    deleteCountdownMutation.mutate(
-      {
-        id: countdownId,
-      },
-      {
-        onSuccess: () => {
-          void queryClient.invalidateQueries({
-            queryKey: trpc.countdown.getAll.queryKey(),
-          });
+					void navigate({
+						to: "/countdown/$countdownId",
+						params: {
+							countdownId,
+						},
+					});
+				},
+				onError: (error) => {
+					if (error.message.includes("Countdown name already exists")) {
+						form.setError("name", {
+							type: "manual",
+							message: "Countdown name already exists.",
+						});
+					}
 
-          void router.push("/dashboard");
-        },
-        onError: (error) => {
-          toast.error("Failed to delete countdown", {
-            description: error.message,
-            descriptionClassName: "!text-destructive",
-          });
-          console.error("Failed to delete countdown:", error);
-        },
-      },
-    );
-  };
+					toast.error("Failed to edit countdown", {
+						description: error.message,
+						descriptionClassName: "!text-destructive",
+					});
+					console.error("Failed to edit countdown:", error);
+				},
+			},
+		);
+	};
 
-  const handleReset = () => {
-    form.reset({
-      name: defaultCountdown.name,
-      startDate: defaultCountdown.startDate,
-      endDate: defaultCountdown.endDate,
-      weeklyDaysOff: defaultCountdown.weeklyDaysOff,
-      additionalDaysOff: defaultCountdown.additionalDaysOff,
-    });
-  };
+	const handleDelete = () => {
+		deleteCountdownMutation.mutate(
+			{
+				id: countdownId as Id<"countdowns">,
+			},
+			{
+				onSuccess: () => {
+					invalidateCountdownsQuery();
 
-  const isFormComplete =
-    form.formState.isValid &&
-    startDate &&
-    endDate &&
-    form.getValues("name").trim();
+					void navigate({
+						to: "/dashboard",
+					});
+				},
+				onError: (error) => {
+					toast.error("Failed to delete countdown", {
+						description: error.message,
+						descriptionClassName: "!text-destructive",
+					});
+					console.error("Failed to delete countdown:", error);
+				},
+			},
+		);
+	};
 
-  const months =
-    startDate && endDate ? getMonthsBetweenDates(startDate, endDate) : [];
+	const handleReset = () => {
+		form.reset({
+			name: defaultCountdown.name,
+			startDate: defaultCountdown.startDate,
+			endDate: defaultCountdown.endDate,
+			weeklyDaysOff: defaultCountdown.weeklyDaysOff,
+			additionalDaysOff: defaultCountdown.additionalDaysOff,
+		});
+	};
 
-  return {
-    form,
-    watchedValues,
-    startDate,
-    endDate,
-    weeklyDaysOff,
-    additionalDaysOff,
-    months,
-    getMonthsBetweenDates,
-    isWeeklyDayOff,
-    handleWeeklyDayToggle,
-    onSubmit,
-    isFormComplete,
-    defaultCountdown,
-    handleReset,
-    handleDelete,
-    isDeleting: deleteCountdownMutation.isPending,
-    isSubmitting: updateCountdownMutation.isPending,
-  };
+	const isFormComplete =
+		form.formState.isValid &&
+		startDate &&
+		endDate &&
+		form.getValues("name").trim();
+
+	const months =
+		startDate && endDate ? getMonthsBetweenDates(startDate, endDate) : [];
+
+	return {
+		form,
+		watchedValues,
+		startDate,
+		endDate,
+		weeklyDaysOff,
+		additionalDaysOff,
+		months,
+		getMonthsBetweenDates,
+		isWeeklyDayOff,
+		handleWeeklyDayToggle,
+		onSubmit,
+		isFormComplete,
+		defaultCountdown,
+		handleReset,
+		handleDelete,
+		isDeleting: deleteCountdownMutation.isPending,
+		isSubmitting: updateCountdownMutation.isPending,
+	};
 };

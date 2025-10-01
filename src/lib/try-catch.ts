@@ -1,26 +1,22 @@
-// This came from Theo's gist: https://gist.github.com/t3dotgg/a486c4ae66d32bf17c09c73609dacc5b
-
-// Types for the result object with discriminated union
 type Success<T> = {
-  data: T;
-  error: null;
+	data: T;
+	error: null;
 };
 
-type Failure<E> = {
-  data: null;
-  error: E;
+type Failure<TError> = {
+	data: null;
+	error: TError;
 };
 
-type Result<T, E = Error> = Success<T> | Failure<E>;
+type Result<T, TError = Error> = Success<T> | Failure<TError>;
 
-// Main wrapper function
-export async function tryCatch<T, E = Error>(
-  promise: Promise<T>,
-): Promise<Result<T, E>> {
-  try {
-    const data = await promise;
-    return { data, error: null };
-  } catch (error) {
-    return { data: null, error: error as E };
-  }
+export async function tryCatch<T, TError = Error>(
+	promise: Promise<T>,
+): Promise<Result<T, TError>> {
+	try {
+		const data = await promise;
+		return { data, error: null };
+	} catch (error) {
+		return { data: null, error: error as TError };
+	}
 }
