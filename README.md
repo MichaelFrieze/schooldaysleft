@@ -1,328 +1,147 @@
-Welcome to your new TanStack app! 
+# SchoolDaysLeft
 
-# Getting Started
+A countdown tracker for school built with React 19, TanStack React Router/Start, React Query, Convex, Clerk, Tailwind CSS v4, and shadcn‑ui.
 
-To run this application:
+## Intro
+
+SchoolDaysLeft lets authenticated users create and manage countdowns for school terms, accounting for weekly days off and additional days off. The UI is built with TanStack Start and shadcn‑ui; data and auth are handled by Convex and Clerk.
+
+## Tech stack
+
+- React 19 + Vite 7
+- TanStack Start 1.x
+- TanStack React Query 5
+- Convex (real-time DB, serverless functions)
+- Clerk (authentication)
+- Tailwind CSS v4 + shadcn‑ui components
+- TypeScript, Biome (format/lint)
+
+## Local development
+
+Prereqs:
+
+- Node 20+
+- pnpm 9+
+
+Install deps:
 
 ```bash
 pnpm install
-pnpm start
 ```
 
-# Building For Production
-
-To build this application for production:
+Create `.env.local` at the repo root (see Environment variables below), then start both the web app and Convex dev server:
 
 ```bash
-pnpm build
+pnpm dev
 ```
 
-## Testing
+This runs:
 
-This project uses [Vitest](https://vitest.dev/) for testing. You can run the tests with:
+- Vite dev server on port 3000
+- Convex dev server via `convex dev`
+
+## Environment variables
+
+Environment is validated via `@t3-oss/env-core` in `src/env.ts`.
+
+Server (no prefix):
+
+- `SERVER_URL` (optional): Base URL when running the production server locally (used by the `start` script).
+- `CLERK_SECRET_KEY` (required): Clerk secret key for server-side auth utils.
+- `CONVEX_DEPLOYMENT` (required): Convex deployment URL or slug (e.g. `dev:my-project` or `https://...convex.cloud`).
+
+Client (must be prefixed with `VITE_`):
+
+- `VITE_APP_TITLE` (optional): App title override.
+- `VITE_CLERK_PUBLISHABLE_KEY` (required)
+- `VITE_CLERK_SIGN_IN_URL` (required)
+- `VITE_CLERK_SIGN_UP_URL` (required)
+- `VITE_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL` (required)
+- `VITE_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL` (required)
+- `VITE_CONVEX_URL` (required): Convex public URL for the browser client.
+
+Convex auth config expects `VITE_CLERK_FRONTEND_API_URL` available to Convex runtime (see `convex/auth.config.ts`). In Convex dashboard, set an auth provider with your Clerk Frontend API URL and `applicationID: "convex"`.
+
+Example `.env.local` (adjust values):
 
 ```bash
-pnpm test
+# Server
+CLERK_SECRET_KEY=sk_live_...
+CONVEX_DEPLOYMENT=dev:schooldaysleft
+SERVER_URL=http://localhost:3000
+
+# Client
+VITE_APP_TITLE=SchoolDaysLeft
+VITE_CLERK_PUBLISHABLE_KEY=pk_live_...
+VITE_CLERK_SIGN_IN_URL=/sign-in
+VITE_CLERK_SIGN_UP_URL=/sign-up
+VITE_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL=/dashboard
+VITE_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL=/dashboard
+VITE_CONVEX_URL=https://<your-convex>.convex.cloud
 ```
 
-## Styling
+## Available scripts
 
-This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
+From `package.json`:
 
+- `pnpm dev`: Runs `convex dev --once`, then concurrently starts Vite on `:3000` and Convex dev server.
+- `pnpm dev:web`: Start Vite dev server only.
+- `pnpm dev:convex`: Start Convex dev only.
+- `pnpm build`: Build client app with Vite (TanStack Start plugin targets Vercel by default).
+- `pnpm serve`: Preview built client locally.
+- `pnpm start`: Run the production server output (requires `.output/server/index.mjs`).
+- `pnpm typecheck`: TypeScript type check.
+- `pnpm test`: Run Vitest tests.
+- `pnpm format` / `pnpm format:write`: Biome format.
+- `pnpm lint` / `pnpm lint:fix`: Biome lint.
+- `pnpm check` / `pnpm check:write` / `pnpm check:unsafe`: Biome check variants.
 
-## Linting & Formatting
+## Project structure
 
-This project uses [Biome](https://biomejs.dev/) for linting and formatting. The following scripts are available:
+Key paths:
 
+- `src/routes`: Route files for TanStack Router.
+- `src/modules/*`: Feature modules for auth, countdowns, dashboards, etc.
+- `src/components/ui`: shadcn‑ui components.
+- `convex/*`: Convex schema and server functions.
+- `src/env.ts`: Strongly‑typed environment schema.
+- `src/router.tsx`: Router creation, Convex + Query client providers.
 
-```bash
-pnpm lint
-pnpm format
-pnpm check
-```
+## Features
 
+- Auth via Clerk integrated with TanStack Start.
+- Convex‑backed CRUD for countdowns with validation on create/update.
+- Countdown calculations (days left, weeks remaining, progress) and views.
+- Responsive, themeable UI with Tailwind v4 and shadcn‑ui.
+- React Query for data caching and Devtools integration.
 
-## Shadcn
+## UI components (shadcn)
 
-Add components using the latest version of [Shadcn](https://ui.shadcn.com/).
+To add new components, follow the project rule to use the latest shadcn installer. For example, to add a `button`:
 
 ```bash
 pnpx shadcn@latest add button
 ```
 
+## Development conventions
 
-## T3Env
+- TypeScript everywhere; avoid `any`.
+- Keep functions small and descriptive; prefer early returns.
+- Use Biome for formatting and linting before commits.
+- Prefer feature modules under `src/modules/*`.
+- Do not commit secrets. Use `.env.local` for local development.
 
-- You can use T3Env to add type safety to your environment variables.
-- Add Environment variables to the `src/env.mjs` file.
-- Use the environment variables in your code.
+## Deployment
 
-### Usage
+- The Vite TanStack Start plugin is configured with `target: "vercel"` in `vite.config.ts`.
+- Provision Convex (deployment & env vars) and Clerk (publishable + secret keys, frontend API URL) in your hosting environment.
+- Ensure all server env vars (no `VITE_` prefix) are available to the server runtime and Convex env (as applicable).
 
-```ts
-import { env } from "@/env";
+## Convex schema & functions
 
-console.log(env.VITE_APP_TITLE);
-```
+- Schema: `convex/schema.ts` defines a `countdowns` table indexed by user and by `(userId, name)`.
+- Server functions: `convex/countdowns.ts` exports `create`, `update`, `remove`, `getAll`, `getById`, `getByName` with auth checks and strong validation.
 
+## License
 
-
-
-
-
-## Routing
-This project uses [TanStack Router](https://tanstack.com/router). The initial setup is a file based router. Which means that the routes are managed as files in `src/routes`.
-
-### Adding A Route
-
-To add a new route to your application just add another a new file in the `./src/routes` directory.
-
-TanStack will automatically generate the content of the route file for you.
-
-Now that you have two routes you can use a `Link` component to navigate between them.
-
-### Adding Links
-
-To use SPA (Single Page Application) navigation you will need to import the `Link` component from `@tanstack/react-router`.
-
-```tsx
-import { Link } from "@tanstack/react-router";
-```
-
-Then anywhere in your JSX you can use it like so:
-
-```tsx
-<Link to="/about">About</Link>
-```
-
-This will create a link that will navigate to the `/about` route.
-
-More information on the `Link` component can be found in the [Link documentation](https://tanstack.com/router/v1/docs/framework/react/api/router/linkComponent).
-
-### Using A Layout
-
-In the File Based Routing setup the layout is located in `src/routes/__root.tsx`. Anything you add to the root route will appear in all the routes. The route content will appear in the JSX where you use the `<Outlet />` component.
-
-Here is an example layout that includes a header:
-
-```tsx
-import { Outlet, createRootRoute } from '@tanstack/react-router'
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
-
-import { Link } from "@tanstack/react-router";
-
-export const Route = createRootRoute({
-  component: () => (
-    <>
-      <header>
-        <nav>
-          <Link to="/">Home</Link>
-          <Link to="/about">About</Link>
-        </nav>
-      </header>
-      <Outlet />
-      <TanStackRouterDevtools />
-    </>
-  ),
-})
-```
-
-The `<TanStackRouterDevtools />` component is not required so you can remove it if you don't want it in your layout.
-
-More information on layouts can be found in the [Layouts documentation](https://tanstack.com/router/latest/docs/framework/react/guide/routing-concepts#layouts).
-
-
-## Data Fetching
-
-There are multiple ways to fetch data in your application. You can use TanStack Query to fetch data from a server. But you can also use the `loader` functionality built into TanStack Router to load the data for a route before it's rendered.
-
-For example:
-
-```tsx
-const peopleRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/people",
-  loader: async () => {
-    const response = await fetch("https://swapi.dev/api/people");
-    return response.json() as Promise<{
-      results: {
-        name: string;
-      }[];
-    }>;
-  },
-  component: () => {
-    const data = peopleRoute.useLoaderData();
-    return (
-      <ul>
-        {data.results.map((person) => (
-          <li key={person.name}>{person.name}</li>
-        ))}
-      </ul>
-    );
-  },
-});
-```
-
-Loaders simplify your data fetching logic dramatically. Check out more information in the [Loader documentation](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#loader-parameters).
-
-### React-Query
-
-React-Query is an excellent addition or alternative to route loading and integrating it into you application is a breeze.
-
-First add your dependencies:
-
-```bash
-pnpm add @tanstack/react-query @tanstack/react-query-devtools
-```
-
-Next we'll need to create a query client and provider. We recommend putting those in `main.tsx`.
-
-```tsx
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
-// ...
-
-const queryClient = new QueryClient();
-
-// ...
-
-if (!rootElement.innerHTML) {
-  const root = ReactDOM.createRoot(rootElement);
-
-  root.render(
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
-  );
-}
-```
-
-You can also add TanStack Query Devtools to the root route (optional).
-
-```tsx
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-
-const rootRoute = createRootRoute({
-  component: () => (
-    <>
-      <Outlet />
-      <ReactQueryDevtools buttonPosition="top-right" />
-      <TanStackRouterDevtools />
-    </>
-  ),
-});
-```
-
-Now you can use `useQuery` to fetch your data.
-
-```tsx
-import { useQuery } from "@tanstack/react-query";
-
-import "./App.css";
-
-function App() {
-  const { data } = useQuery({
-    queryKey: ["people"],
-    queryFn: () =>
-      fetch("https://swapi.dev/api/people")
-        .then((res) => res.json())
-        .then((data) => data.results as { name: string }[]),
-    initialData: [],
-  });
-
-  return (
-    <div>
-      <ul>
-        {data.map((person) => (
-          <li key={person.name}>{person.name}</li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-export default App;
-```
-
-You can find out everything you need to know on how to use React-Query in the [React-Query documentation](https://tanstack.com/query/latest/docs/framework/react/overview).
-
-## State Management
-
-Another common requirement for React applications is state management. There are many options for state management in React. TanStack Store provides a great starting point for your project.
-
-First you need to add TanStack Store as a dependency:
-
-```bash
-pnpm add @tanstack/store
-```
-
-Now let's create a simple counter in the `src/App.tsx` file as a demonstration.
-
-```tsx
-import { useStore } from "@tanstack/react-store";
-import { Store } from "@tanstack/store";
-import "./App.css";
-
-const countStore = new Store(0);
-
-function App() {
-  const count = useStore(countStore);
-  return (
-    <div>
-      <button onClick={() => countStore.setState((n) => n + 1)}>
-        Increment - {count}
-      </button>
-    </div>
-  );
-}
-
-export default App;
-```
-
-One of the many nice features of TanStack Store is the ability to derive state from other state. That derived state will update when the base state updates.
-
-Let's check this out by doubling the count using derived state.
-
-```tsx
-import { useStore } from "@tanstack/react-store";
-import { Store, Derived } from "@tanstack/store";
-import "./App.css";
-
-const countStore = new Store(0);
-
-const doubledStore = new Derived({
-  fn: () => countStore.state * 2,
-  deps: [countStore],
-});
-doubledStore.mount();
-
-function App() {
-  const count = useStore(countStore);
-  const doubledCount = useStore(doubledStore);
-
-  return (
-    <div>
-      <button onClick={() => countStore.setState((n) => n + 1)}>
-        Increment - {count}
-      </button>
-      <div>Doubled - {doubledCount}</div>
-    </div>
-  );
-}
-
-export default App;
-```
-
-We use the `Derived` class to create a new store that is derived from another store. The `Derived` class has a `mount` method that will start the derived store updating.
-
-Once we've created the derived store we can use it in the `App` component just like we would any other store using the `useStore` hook.
-
-You can find out everything you need to know on how to use TanStack Store in the [TanStack Store documentation](https://tanstack.com/store/latest).
-
-# Demo files
-
-Files prefixed with `demo` can be safely deleted. They are there to provide a starting point for you to play around with the features you've installed.
-
-# Learn More
-
-You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
+MIT
