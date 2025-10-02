@@ -24,24 +24,6 @@ interface MyRouterContext {
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
 	head: () => {
-		const rawUrl =
-			typeof window === "undefined"
-				? "https://schooldaysleft.com"
-				: window.location.href;
-
-		let canonicalUrl = rawUrl;
-		try {
-			const u = new URL(rawUrl);
-			u.search = "";
-			u.hash = "";
-			if (u.pathname !== "/" && u.pathname.endsWith("/")) {
-				u.pathname = u.pathname.slice(0, -1);
-			}
-			canonicalUrl = u.toString();
-		} catch {
-			// ignore URL parse errors and use rawUrl
-		}
-
 		return {
 			meta: [
 				{
@@ -95,7 +77,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 					keywords:
 						"school days left, school countdown, days until school ends, last day of school countdown, academic calendar app, school calendar tracker, custom school calendar, track school days, semester countdown, school holiday tracker, days off planner, student planner, parent school tracker, teacher classroom tool, SchoolDaysLeft",
 					siteName: "SchoolDaysLeft",
-					url: canonicalUrl,
+					url: "https://www.schooldaysleft.com",
 					locale: "en_US",
 					imageAlt: "SchoolDaysLeft social card",
 					imageWidth: 1200,
@@ -103,7 +85,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 				}),
 			],
 			links: [
-				{ rel: "canonical", href: canonicalUrl },
+				{ rel: "canonical", href: "https://www.schooldaysleft.com" },
 				{
 					rel: "stylesheet",
 					href: appCss,
