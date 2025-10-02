@@ -8,7 +8,7 @@ export function Footer() {
 			<div className="container mx-auto py-6 sm:py-4">
 				<div className="flex flex-col-reverse items-center justify-between gap-2 sm:flex-row">
 					<p className="text-muted-foreground text-sm">
-						&copy; {new Date().getFullYear()} Frieze Labs. All rights reserved.
+						&copy; {new Date().getFullYear()} Frieze.DEV. All rights reserved.
 					</p>
 
 					<div className="flex gap-2">
