@@ -38,47 +38,9 @@ export function UserButton() {
 							...clerkAppearanceVariables,
 						},
 						elements: {
-							// scrollBox: {
-							// 	// borderRadius: "0rem",
-							// },
-							// navbarMobileMenuRow: {
-							// 	// padding: "1rem",
-							// },
-							// modalCloseButton: {
-							// 	marginTop: "0.5rem",
-							// 	marginRight: "0.5rem",
-							// },
-							// rootBox: {
-							// 	maxHeight: "2rem",
-							// },
-							// cardBox: {
-							// 	maxHeight: "100%",
-							// 	backgroundColor: "red",
-							// },
-							// navbar: {
-							// 	// borderRadius: "0rem",
-							// 	backgroundColor: "blue",
-							// },
-							// modalContent: {
-							// 	height: "auto",
-							// },
-							// cardBox: {
-							// 	// critical: prevent flex stretch and let height be content-driven
-							// 	alignSelf: "center",
-							// 	height: "auto",
-							// 	maxHeight: "unset",
-							// 	minHeight: "auto",
-							// 	// backgroundColor: "red", // keep if you still want to visualize
-							// },
-							// scrollBox: {
-							// 	// when content is tall, scroll inside the card instead of growing the card itself
-							// 	maxHeight: "calc(100dvh - 8rem)",
-							// 	overflow: "auto",
-							// },
 							scrollBox: {
 								height: "100%",
 								overflow: "auto",
-								// maxHeight: "calc(100dvh - 6rem)",
 							},
 						},
 					},
