@@ -5,6 +5,13 @@ import { api } from "convex/_generated/api";
 import type { Id } from "convex/_generated/dataModel";
 
 export const Route = createFileRoute("/(countdown)/countdown/$countdownId/")({
+	head: () => ({
+		meta: [
+			{
+				title: "Countdown | SchoolDaysLeft",
+			},
+		],
+	}),
 	loader: (opts) => {
 		opts.context.queryClient.prefetchQuery(
 			convexQuery(api.countdowns.getById, {

@@ -4,6 +4,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import { api } from "convex/_generated/api";
 
 export const Route = createFileRoute("/(countdown)/dashboard/")({
+	head: () => ({
+		meta: [
+			{
+				title: "Dashboard | SchoolDaysLeft",
+			},
+		],
+	}),
 	loader: (opts) => {
 		opts.context.queryClient.prefetchQuery(
 			convexQuery(api.countdowns.getAll, {}),
