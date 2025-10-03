@@ -3,6 +3,8 @@ import { QueryClient } from "@tanstack/react-query";
 import { createRouter as createTanStackRouter } from "@tanstack/react-router";
 import { routerWithQueryClient } from "@tanstack/react-router-with-query";
 import { ConvexProvider, ConvexReactClient } from "convex/react";
+import { NotFound } from "./components/errors/not-found";
+import { RootCatchBoundary } from "./components/errors/root-catch-boundary";
 import { env } from "./env";
 import { routeTree } from "./routeTree.gen";
 
@@ -34,8 +36,8 @@ export function createRouter() {
 			defaultPreload: "intent",
 			scrollRestoration: true,
 			defaultPreloadStaleTime: 0, // Let React Query handle all caching
-			defaultErrorComponent: (err) => <p>{err.error.stack}</p>,
-			defaultNotFoundComponent: () => <p>not found</p>,
+			defaultErrorComponent: RootCatchBoundary,
+			defaultNotFoundComponent: () => <NotFound />,
 			context: { queryClient, convexClient: convex, convexQueryClient },
 			Wrap: ({ children }) => (
 				<ConvexProvider client={convexQueryClient.convexClient}>

@@ -299,9 +299,11 @@ const CountdownDetailsSectionSuspense = ({
 											fixedWeeks={true}
 											classNames={{
 												day_selected: "bg-primary text-primary-foreground",
-												day: "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 size-8 p-0 font-normal aria-selected:opacity-100",
+												day: "pointer-events-none inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 size-8 p-0 font-normal aria-selected:opacity-100",
 												day_outside:
 													"text-muted-foreground aria-selected:text-primary-foreground",
+												button_next: "hidden pointer-events-none",
+												button_previous: "hidden pointer-events-none",
 											}}
 										/>
 									</div>
