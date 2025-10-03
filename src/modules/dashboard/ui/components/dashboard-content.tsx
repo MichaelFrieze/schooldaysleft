@@ -78,8 +78,8 @@ function DashboardCountdownCardSkeleton() {
 					<Skeleton className="h-7 w-3/4 rounded-md" />
 				</div>
 				<div className="space-y-2">
-					<Skeleton className="mx-auto h-11 w-16 rounded-md" />
-					<Skeleton className="mx-auto h-6 w-20 rounded-md" />
+					<Skeleton className="mx-auto h-12 w-30 rounded-md" />
+					<Skeleton className="mx-auto h-5 w-30 rounded-md" />
 				</div>
 				<div className="space-y-2">
 					<Skeleton className="h-1.5 w-full rounded-full" />
