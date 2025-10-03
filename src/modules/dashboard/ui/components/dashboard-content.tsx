@@ -21,8 +21,6 @@ export function DashboardContent() {
 		<ErrorBoundary FallbackComponent={DashboardError} onReset={reset}>
 			<Suspense fallback={<DashboardContentLoading />}>
 				<DashboardContentSuspense />
-				<br />
-				<DashboardContentLoading />
 			</Suspense>
 		</ErrorBoundary>
 	);
