@@ -28,18 +28,8 @@ export function LandingContent() {
 				{/* Mobile */}
 				<div className="lg:hidden">
 					<div className="mx-auto flex max-w-xs flex-col justify-center sm:max-w-xl">
-						<h1 className="text-left font-bold text-4xl leading-tight tracking-tighter sm:text-center sm:text-6xl">
-							<span className="bg-clip-text text-primary">Countdown</span> the
-						</h1>
-						<h1 className="mb-6 text-left font-bold text-4xl leading-tight tracking-tighter sm:text-center sm:text-6xl">
-							School Days Left
-						</h1>
-
-						<p className="mb-8 text-lg text-muted-foreground sm:text-center">
-							Create custom countdowns for important dates like summer break,
-							winter break, end of semester, or any other dates that matter most
-							to you.
-						</p>
+						<LandingHeader />
+						<LandingDescription />
 
 						<SignedIn>
 							<Link
@@ -82,16 +72,8 @@ export function LandingContent() {
 				{/* Desktop */}
 				<div className="hidden grid-cols-1 gap-12 lg:grid lg:grid-cols-2">
 					<div className="flex max-w-lg flex-col justify-center">
-						<h1 className="mb-6 font-bold text-6xl leading-tight tracking-tighter">
-							<span className="bg-clip-text text-primary">Countdown</span> the
-							School Days Left
-						</h1>
-
-						<p className="mb-8 max-w-xl text-lg text-muted-foreground">
-							Create custom countdowns for important dates like summer break,
-							winter break, end of semester, or any other dates that matter most
-							to you.
-						</p>
+						<LandingHeader />
+						<LandingDescription />
 
 						<SignedIn>
 							<Link
@@ -216,5 +198,23 @@ export function LandingContent() {
 				</div>
 			</section>
 		</div>
+	);
+}
+
+function LandingHeader() {
+	return (
+		<h1 className="mb-6 font-bold text-4xl leading-tight tracking-tighter sm:text-center sm:text-6xl lg:text-left">
+			<span className="bg-clip-text text-primary">Countdown</span> the School
+			Days Left
+		</h1>
+	);
+}
+
+function LandingDescription() {
+	return (
+		<p className="mb-8 text-lg text-muted-foreground sm:text-center lg:max-w-xl lg:text-left">
+			Create custom countdowns for important dates like summer break, winter
+			break, end of semester, or any other dates that matter most to you.
+		</p>
 	);
 }
