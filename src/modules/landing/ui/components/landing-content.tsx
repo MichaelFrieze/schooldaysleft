@@ -4,7 +4,6 @@ import {
 	CardContent,
 	CardDescription,
 	CardHeader,
-	CardTitle,
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { clickHandlers, cn } from "@/lib/utils";
@@ -156,7 +155,9 @@ export function LandingContent() {
 							<div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10">
 								<LayoutGrid className="h-8 w-8 text-primary" />
 							</div>
-							<CardTitle>Multiple Countdowns</CardTitle>
+							<h3 className="font-semibold leading-none">
+								Multiple Countdowns
+							</h3>
 						</CardHeader>
 						<CardContent>
 							<CardDescription>
@@ -171,7 +172,9 @@ export function LandingContent() {
 							<div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10">
 								<SlidersHorizontal className="h-8 w-8 text-primary" />
 							</div>
-							<CardTitle>Flexible Scheduling</CardTitle>
+							<h3 className="font-semibold leading-none">
+								Flexible Scheduling
+							</h3>
 						</CardHeader>
 						<CardContent>
 							<CardDescription>
@@ -186,7 +189,7 @@ export function LandingContent() {
 							<div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10">
 								<PieChart className="h-8 w-8 text-primary" />
 							</div>
-							<CardTitle>Progress Tracking</CardTitle>
+							<h3 className="font-semibold leading-none">Progress Tracking</h3>
 						</CardHeader>
 						<CardContent>
 							<CardDescription>
@@ -203,7 +206,7 @@ export function LandingContent() {
 
 function LandingHeader() {
 	return (
-		<h1 className="mb-6 font-bold text-4xl leading-tight tracking-tighter sm:text-center sm:text-6xl lg:text-left">
+		<h1 className="mb-4 font-bold text-4xl leading-tight tracking-tighter sm:text-center sm:text-6xl lg:text-left">
 			<span className="bg-clip-text text-primary">Countdown</span> the School
 			Days Left
 		</h1>
@@ -212,9 +215,11 @@ function LandingHeader() {
 
 function LandingDescription() {
 	return (
-		<p className="mb-8 text-lg text-muted-foreground sm:text-center lg:max-w-xl lg:text-left">
+		<h2 className="mb-4 text-md text-muted-foreground sm:text-center lg:max-w-xl lg:text-left">
 			Create custom countdowns for important dates like summer break, winter
-			break, end of semester, or any other dates that matter most to you.
-		</p>
+			break, end of semester, testing periods, or any school events that matter
+			most to you. Set your dates, track real school days, and stay motivated
+			with a clear, friendly progress view you can check from any device.
+		</h2>
 	);
 }
