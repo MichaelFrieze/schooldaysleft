@@ -9,6 +9,7 @@
 		"start": "DOTENV_CONFIG_PATH=.env.local node -r dotenv/config .output/server/index.mjs",
 		"build": "vite build",
 		"serve": "vite preview",
+		"deploy:convex": "pnpx convex deploy",
 		"test": "vitest run",
 		"format": "biome format",
 		"format:write": "biome format --write",
