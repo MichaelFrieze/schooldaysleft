@@ -1,10 +1,9 @@
 import { Card } from "@/components/ui/card";
+import { FastLink } from "@/components/ui/fast-link";
 import { Progress } from "@/components/ui/progress";
-import { clickHandlers } from "@/lib/utils";
 import { calculateCalendarDaysUntilStart } from "@/modules/countdown/lib/calculate-calendar-days-until-start";
 import { calculateCountdownProgress } from "@/modules/countdown/lib/calculate-countdown-progress";
 import { calculateDaysLeft } from "@/modules/countdown/lib/calculate-days-left";
-import { Link, useNavigate } from "@tanstack/react-router";
 import type { Doc } from "convex/_generated/dataModel";
 import { ArrowUpRight } from "lucide-react";
 
@@ -15,8 +14,6 @@ interface DashboardCountdownCardProps {
 export function DashboardCountdownCard({
 	countdown,
 }: DashboardCountdownCardProps) {
-	const navigate = useNavigate();
-
 	const progressValue = calculateCountdownProgress(countdown);
 	const daysLeft = calculateDaysLeft(countdown);
 	const daysUntilStart = calculateCalendarDaysUntilStart(countdown);
@@ -32,19 +29,11 @@ export function DashboardCountdownCard({
 			: `day${daysUntilStart === 1 ? "" : "s"} until start`;
 
 	return (
-		<Link
+		<FastLink
 			to="/countdown/$countdownId"
 			params={{
 				countdownId: countdown._id,
 			}}
-			{...clickHandlers(() =>
-				navigate({
-					to: "/countdown/$countdownId",
-					params: {
-						countdownId: countdown._id,
-					},
-				}),
-			)}
 			aria-label={`View countdown: ${countdown.name}`}
 			className="group block"
 		>
@@ -72,6 +61,6 @@ export function DashboardCountdownCard({
 					</div>
 				</div>
 			</Card>
-		</Link>
+		</FastLink>
 	);
 }

@@ -1,13 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { FastLink } from "@/components/ui/fast-link";
 import { Skeleton } from "@/components/ui/skeleton";
-import { clickHandlers } from "@/lib/utils";
 import { convexQuery } from "@convex-dev/react-query";
 import {
 	useQueryErrorResetBoundary,
 	useSuspenseQuery,
 } from "@tanstack/react-query";
-import { Link, useNavigate } from "@tanstack/react-router";
 import { api } from "convex/_generated/api";
 import { AlertTriangle, CalendarDays, Plus } from "lucide-react";
 import { Suspense } from "react";
@@ -27,7 +26,6 @@ export function DashboardContent() {
 }
 
 export function DashboardContentSuspense() {
-	const navigate = useNavigate();
 	const { data: countdowns } = useSuspenseQuery(
 		convexQuery(api.countdowns.getAll, {}),
 	);
@@ -42,7 +40,7 @@ export function DashboardContentSuspense() {
 					break or the end of the school year.
 				</p>
 				<Button asChild variant="outline" className="mt-6">
-					<Link
+					{/* <Link
 						to="/countdown/new"
 						{...clickHandlers(() =>
 							navigate({
@@ -52,7 +50,11 @@ export function DashboardContentSuspense() {
 					>
 						<Plus className="mr-2 h-4 w-4" />
 						Create Your First Countdown
-					</Link>
+					</Link> */}
+					<FastLink to="/countdown/new">
+						<Plus className="mr-2 h-4 w-4" />
+						Create Your First Countdown
+					</FastLink>
 				</Button>
 			</div>
 		);
@@ -78,8 +80,8 @@ function DashboardCountdownCardSkeleton() {
 					<Skeleton className="h-7 w-3/4 rounded-md" />
 				</div>
 				<div className="space-y-2">
-					<Skeleton className="mx-auto h-12 w-30 rounded-md" />
-					<Skeleton className="mx-auto h-5 w-30 rounded-md" />
+					<Skeleton className="mx-auto h-11 w-16 rounded-md" />
+					<Skeleton className="mx-auto h-6 w-20 rounded-md" />
 				</div>
 				<div className="space-y-2">
 					<Skeleton className="h-1.5 w-full rounded-full" />

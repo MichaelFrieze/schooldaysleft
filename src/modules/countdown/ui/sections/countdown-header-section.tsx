@@ -1,9 +1,8 @@
 import { Button } from "@/components/ui/button";
+import { FastLink } from "@/components/ui/fast-link";
 import { Skeleton } from "@/components/ui/skeleton";
-import { clickHandlers } from "@/lib/utils";
 import { convexQuery } from "@convex-dev/react-query";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { Link, useNavigate } from "@tanstack/react-router";
 import { api } from "convex/_generated/api";
 import type { Id } from "convex/_generated/dataModel";
 import { Edit } from "lucide-react";
@@ -26,7 +25,6 @@ export function CountdownHeaderSection({
 function CountdownHeaderSectionSuspense({
 	countdownId,
 }: CountdownHeaderSectionProps) {
-	const navigate = useNavigate();
 	const { data: countdown } = useSuspenseQuery(
 		convexQuery(api.countdowns.getById, {
 			id: countdownId as Id<"countdowns">,
@@ -47,23 +45,10 @@ function CountdownHeaderSectionSuspense({
 				</div>
 
 				<Button asChild variant="outline" size="sm">
-					<Link
-						to="/countdown/$countdownId/edit"
-						params={{
-							countdownId,
-						}}
-						{...clickHandlers(() =>
-							navigate({
-								to: "/countdown/$countdownId/edit",
-								params: {
-									countdownId,
-								},
-							}),
-						)}
-					>
+					<FastLink to="/countdown/$countdownId/edit" params={{ countdownId }}>
 						<Edit className="h-4 w-4" />
 						Edit
-					</Link>
+					</FastLink>
 				</Button>
 			</div>
 		</section>

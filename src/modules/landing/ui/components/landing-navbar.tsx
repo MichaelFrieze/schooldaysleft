@@ -1,60 +1,40 @@
 import { buttonVariants } from "@/components/ui/button";
+import { FastLink } from "@/components/ui/fast-link";
 import { UserButton } from "@/components/ui/user-button";
-import { clickHandlers, cn } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { SignedIn, SignedOut } from "@clerk/tanstack-react-start";
-import { Link, useNavigate } from "@tanstack/react-router";
 import { UserCircleIcon } from "lucide-react";
 
 export function LandingNavbar() {
-	const navigate = useNavigate();
-
 	return (
 		<header>
 			<div className="container flex h-16 items-center">
-				<Link
-					to="/"
-					{...clickHandlers(() =>
-						navigate({
-							to: "/",
-						}),
-					)}
-					className="group flex items-center gap-1"
-				>
+				<FastLink to="/" className="group flex items-center gap-1">
 					<span className="font-bold text-2xl">
 						<span className="text-primary">School</span>
 						DaysLeft
 					</span>
-				</Link>
+				</FastLink>
 
 				<nav className="ml-auto">
 					<SignedIn>
 						<div className="flex items-center gap-1">
-							<Link
+							<FastLink
 								to="/dashboard"
-								{...clickHandlers(() =>
-									navigate({
-										to: "/dashboard",
-									}),
-								)}
 								className={cn(
 									buttonVariants({ variant: "link" }),
 									"hidden text-foreground lg:flex",
 								)}
 							>
 								Dashboard
-							</Link>
+							</FastLink>
 							<UserButton />
 						</div>
 					</SignedIn>
 
 					<SignedOut>
-						<Link
+						<FastLink
 							to="/sign-in/$"
-							{...clickHandlers(() =>
-								navigate({
-									to: "/sign-in/$",
-								}),
-							)}
 							className={cn(
 								buttonVariants({ variant: "default", size: "sm" }),
 								"rounded-full",
@@ -62,7 +42,7 @@ export function LandingNavbar() {
 						>
 							<UserCircleIcon />
 							Sign in
-						</Link>
+						</FastLink>
 					</SignedOut>
 				</nav>
 			</div>
