@@ -1,7 +1,11 @@
+/* eslint-disable react-hooks/refs */
+
 import { useRouterState } from '@tanstack/react-router'
 import { useMemo, useRef } from 'react'
 
-export default function useStableLocation() {
+export function useStableLocation() {
+  'use no memo'
+
   const { isLoading, pathname } = useRouterState({
     select: (state) => ({
       isLoading: state.isLoading,

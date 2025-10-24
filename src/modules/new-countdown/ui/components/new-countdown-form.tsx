@@ -35,16 +35,14 @@ export function NewCountdownForm() {
           onWeeklyDayToggle={handleWeeklyDayToggle}
         />
 
-        {startDate != null && endDate != null && (
-          <AdditionalDaysOffSection
-            form={form}
-            startDate={startDate}
-            endDate={endDate}
-            additionalDaysOff={additionalDaysOff}
-            months={months}
-            isWeeklyDayOff={isWeeklyDayOff}
-          />
-        )}
+        <AdditionalDaysOffSection
+          form={form}
+          startDate={startDate}
+          endDate={endDate}
+          additionalDaysOff={additionalDaysOff}
+          months={months}
+          isWeeklyDayOff={isWeeklyDayOff}
+        />
 
         {Boolean(isFormComplete) && (
           <FormSummarySection

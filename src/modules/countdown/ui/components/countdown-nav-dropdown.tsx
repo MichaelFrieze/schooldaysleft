@@ -9,7 +9,7 @@ import { ErrorBoundary } from 'react-error-boundary'
 import { countdownsQueryOptions } from '../../lib/countdowns-query-options'
 import type { FallbackProps } from 'react-error-boundary'
 import { cn } from '@/lib/utils'
-import useStableLocation from '@/hooks/use-stable-location'
+import { useStableLocation } from '@/hooks/use-stable-location'
 import { Skeleton } from '@/components/ui/skeleton'
 import {
   DropdownMenu,
@@ -86,7 +86,7 @@ export function CountdownNavDropdownSuspense() {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        {countdowns?.map((countdown) => (
+        {countdowns.map((countdown) => (
           <DropdownMenuItem key={countdown._id} asChild>
             <Link
               to="/countdown/$countdownId"
@@ -124,7 +124,7 @@ function CountdownNavDropdownLoading() {
   return (
     <Button
       variant="ghost"
-      className="max-w-64 min-w-0 [animation:delayed-fade-in_.5s_ease-out] gap-2 focus-visible:ring-1"
+      className="max-w-64 min-w-0 animate-[delayed-fade-in_.5s_ease-out] gap-2 focus-visible:ring-1"
     >
       <Skeleton className="h-5 w-32" />
       <ChevronDown className="h-4 w-4 shrink-0" />

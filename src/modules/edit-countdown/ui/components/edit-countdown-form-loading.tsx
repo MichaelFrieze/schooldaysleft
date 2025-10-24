@@ -66,8 +66,11 @@ const AdditionalDaysOffSectionSkeleton = () => {
                     <Skeleton className="h-6 w-24" />
                   </div>
                   <div className="grid grid-cols-7 gap-2">
-                    {DAY_CELL_KEYS.map((key) => (
-                      <Skeleton key={key} className="h-8 w-8 rounded-md" />
+                    {DAY_CELL_KEYS.map((dayCellKey) => (
+                      <Skeleton
+                        key={dayCellKey}
+                        className="h-8 w-8 rounded-md"
+                      />
                     ))}
                   </div>
                 </div>

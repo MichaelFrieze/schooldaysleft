@@ -12,6 +12,7 @@ export function RootCatchBoundary({
 }: Omit<ErrorComponentProps, 'error'> & { error: Error | AppError }) {
   const router = useRouter()
   console.log('error', error)
+
   return (
     <div className="container flex min-h-screen w-full flex-col items-center justify-center">
       <Card className="max-w-3xl p-6">
@@ -27,20 +28,18 @@ export function RootCatchBoundary({
             <div className="grid grid-cols-1 gap-3 pt-3 text-sm sm:grid-cols-3">
               <div>
                 <div className="text-muted-foreground text-xs">Type</div>
-                <div className="font-medium">
-                  {String(error.name ?? 'Error')}
-                </div>
+                <div className="font-medium">{String(error.name)}</div>
               </div>
               <div>
                 <div className="text-muted-foreground text-xs">Error code</div>
                 <div className="font-medium break-all">
-                  {String(error.appErrorCode ?? '—')}
+                  {String(error.appErrorCode)}
                 </div>
               </div>
               <div>
                 <div className="text-muted-foreground text-xs">HTTP Code</div>
                 <div className="font-medium break-all">
-                  {String(error.httpStatusCode ?? '—')}
+                  {String(error.httpStatusCode)}
                 </div>
               </div>
             </div>
@@ -50,7 +49,7 @@ export function RootCatchBoundary({
               error code above.
             </div>
           </div>
-        ) : typeof error === 'object' && error !== null ? (
+        ) : typeof error === 'object' ? (
           (() => {
             const e = error as unknown as Record<string, unknown>
             const hasServerCode =
@@ -119,7 +118,7 @@ export function RootCatchBoundary({
             <Button
               variant="outline"
               onClick={() => {
-                reset?.()
+                reset()
                 router.invalidate()
               }}
               className="cursor-pointer"
