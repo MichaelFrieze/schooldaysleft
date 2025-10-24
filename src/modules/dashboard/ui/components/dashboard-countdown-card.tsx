@@ -1,7 +1,7 @@
 import { ArrowUpRight } from 'lucide-react'
+import { Link } from '@tanstack/react-router'
 import type { Doc } from 'convex/_generated/dataModel'
 import { Card } from '@/components/ui/card'
-import { FastLink } from '@/components/ui/fast-link'
 import { Progress } from '@/components/ui/progress'
 import { calculateCalendarDaysUntilStart } from '@/modules/countdown/lib/calculate-calendar-days-until-start'
 import { calculateCountdownProgress } from '@/modules/countdown/lib/calculate-countdown-progress'
@@ -29,7 +29,7 @@ export function DashboardCountdownCard({
       : `day${daysUntilStart === 1 ? '' : 's'} until start`
 
   return (
-    <FastLink
+    <Link
       to="/countdown/$countdownId"
       params={{
         countdownId: countdown._id,
@@ -61,6 +61,6 @@ export function DashboardCountdownCard({
           </div>
         </div>
       </Card>
-    </FastLink>
+    </Link>
   )
 }

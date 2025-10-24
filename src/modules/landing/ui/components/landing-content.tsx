@@ -6,6 +6,7 @@ import {
   PieChart,
   SlidersHorizontal,
 } from 'lucide-react'
+import { Link } from '@tanstack/react-router'
 import { buttonVariants } from '@/components/ui/button'
 import {
   Card,
@@ -14,7 +15,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { FastLink } from '@/components/ui/fast-link'
 import { Progress } from '@/components/ui/progress'
 import { cn } from '@/lib/utils'
 
@@ -40,7 +40,7 @@ export function LandingContent() {
             </p>
 
             <SignedIn>
-              <FastLink
+              <Link
                 to="/dashboard"
                 className={cn(
                   buttonVariants({ variant: 'default', size: 'lg' }),
@@ -49,11 +49,11 @@ export function LandingContent() {
               >
                 <CalendarDays className="h-5 w-5" />
                 Start Your Countdown
-              </FastLink>
+              </Link>
             </SignedIn>
 
             <SignedOut>
-              <FastLink
+              <Link
                 to="/sign-in/$"
                 className={cn(
                   buttonVariants({ variant: 'default', size: 'lg' }),
@@ -62,7 +62,7 @@ export function LandingContent() {
               >
                 <CalendarDays className="h-5 w-5" />
                 Start Your Countdown
-              </FastLink>
+              </Link>
             </SignedOut>
           </div>
         </div>
@@ -82,7 +82,7 @@ export function LandingContent() {
             </p>
 
             <SignedIn>
-              <FastLink
+              <Link
                 to="/dashboard"
                 className={cn(
                   buttonVariants({ variant: 'default', size: 'lg' }),
@@ -91,11 +91,11 @@ export function LandingContent() {
               >
                 <CalendarDays className="h-5 w-5" />
                 Start Your Countdown
-              </FastLink>
+              </Link>
             </SignedIn>
 
             <SignedOut>
-              <FastLink
+              <Link
                 to="/sign-in/$"
                 className={cn(
                   buttonVariants({ variant: 'default', size: 'lg' }),
@@ -104,7 +104,7 @@ export function LandingContent() {
               >
                 <CalendarDays className="h-5 w-5" />
                 Start Your Countdown
-              </FastLink>
+              </Link>
             </SignedOut>
           </div>
 
@@ -120,7 +120,7 @@ export function LandingContent() {
               </div>
 
               <div className="text-center">
-                <div className="from-primary via-primary/80 to-primary bg-gradient-to-r bg-clip-text text-8xl font-extrabold text-transparent tabular-nums">
+                <div className="from-primary via-primary/80 to-primary bg-linear-to-r bg-clip-text text-8xl font-extrabold text-transparent tabular-nums">
                   15
                 </div>
                 <p className="text-muted-foreground pt-2 text-xl font-medium">

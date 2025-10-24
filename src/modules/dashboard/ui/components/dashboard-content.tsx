@@ -7,10 +7,10 @@ import { api } from 'convex/_generated/api'
 import { AlertTriangle, CalendarDays, Plus } from 'lucide-react'
 import { Suspense } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
+import { Link } from '@tanstack/react-router'
 import { DashboardCountdownCard } from './dashboard-countdown-card'
 import type { FallbackProps } from 'react-error-boundary'
 import { Skeleton } from '@/components/ui/skeleton'
-import { FastLink } from '@/components/ui/fast-link'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 
@@ -41,21 +41,10 @@ export function DashboardContentSuspense() {
           break or the end of the school year.
         </p>
         <Button asChild variant="outline" className="mt-6">
-          {/* <Link
-						to="/countdown/new"
-						{...clickHandlers(() =>
-							navigate({
-								to: "/countdown/new",
-							}),
-						)}
-					>
-						<Plus className="mr-2 h-4 w-4" />
-						Create Your First Countdown
-					</Link> */}
-          <FastLink to="/countdown/new">
+          <Link to="/countdown/new">
             <Plus className="mr-2 h-4 w-4" />
             Create Your First Countdown
-          </FastLink>
+          </Link>
         </Button>
       </div>
     )
@@ -94,7 +83,7 @@ function DashboardCountdownCardSkeleton() {
 
 function DashboardContentLoading() {
   return (
-    <div className="grid [animation:delayed-fade-in_.5s_ease-out] grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid animate-[delayed-fade-in_.5s_ease-out] grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
       <DashboardCountdownCardSkeleton />
       <DashboardCountdownCardSkeleton />
       <DashboardCountdownCardSkeleton />

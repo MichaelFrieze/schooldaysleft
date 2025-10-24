@@ -1,7 +1,7 @@
 import { Plus } from 'lucide-react'
+import { Link } from '@tanstack/react-router'
 import { DashboardContent } from '../components/dashboard-content'
 import { Button } from '@/components/ui/button'
-import { FastLink } from '@/components/ui/fast-link'
 
 export function DashboardView() {
   return (
@@ -13,10 +13,10 @@ export function DashboardView() {
           </h1>
         </div>
         <Button asChild>
-          <FastLink to="/countdown/new">
+          <Link to="/countdown/new">
             <Plus className="h-4 w-4" />
             New Countdown
-          </FastLink>
+          </Link>
         </Button>
       </div>
 

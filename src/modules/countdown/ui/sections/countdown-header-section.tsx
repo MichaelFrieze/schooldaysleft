@@ -3,9 +3,9 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { api } from 'convex/_generated/api'
 import { Edit } from 'lucide-react'
 import { Suspense } from 'react'
+import { Link } from '@tanstack/react-router'
 import type { Id } from 'convex/_generated/dataModel'
 import { Skeleton } from '@/components/ui/skeleton'
-import { FastLink } from '@/components/ui/fast-link'
 import { Button } from '@/components/ui/button'
 
 interface CountdownHeaderSectionProps {
@@ -45,10 +45,10 @@ function CountdownHeaderSectionSuspense({
         </div>
 
         <Button asChild variant="outline" size="sm">
-          <FastLink to="/countdown/$countdownId/edit" params={{ countdownId }}>
+          <Link to="/countdown/$countdownId/edit" params={{ countdownId }}>
             <Edit className="h-4 w-4" />
             Edit
-          </FastLink>
+          </Link>
         </Button>
       </div>
     </section>
@@ -57,7 +57,7 @@ function CountdownHeaderSectionSuspense({
 
 function CountdownHeaderSectionLoading() {
   return (
-    <section className="[animation:delayed-fade-in_.5s_ease-out] py-8 md:py-12">
+    <section className="animate-[delayed-fade-in_.5s_ease-out] py-8 md:py-12">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="space-y-2">
           <Skeleton className="h-9 w-full rounded-md md:h-10 md:w-lg" />

@@ -1,15 +1,15 @@
-import { FastLink } from '@/components/ui/fast-link'
+import { Link } from '@tanstack/react-router'
 
 export function AuthNavbar() {
   return (
     <header>
       <div className="container flex h-16 items-center">
-        <FastLink to="/" className="group flex items-center gap-1">
+        <Link to="/" className="group flex items-center gap-1">
           <span className="text-2xl font-bold">
             <span className="text-primary">School</span>
             DaysLeft
           </span>
-        </FastLink>
+        </Link>
       </div>
     </header>
   )

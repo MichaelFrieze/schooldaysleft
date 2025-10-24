@@ -1,6 +1,6 @@
 import { ArrowLeft } from 'lucide-react'
+import { Link } from '@tanstack/react-router'
 import { Button } from '@/components/ui/button'
-import { FastLink } from '@/components/ui/fast-link'
 import { EditCountdownForm } from '@/modules/edit-countdown/ui/components/edit-countdown-form'
 
 interface EditCountdownViewProps {
@@ -13,10 +13,10 @@ export const EditCountdownView = ({ countdownId }: EditCountdownViewProps) => {
       <div className="pb-8">
         <div className="pb-8">
           <Button asChild variant="ghost">
-            <FastLink to="/countdown/$countdownId" params={{ countdownId }}>
+            <Link to="/countdown/$countdownId" params={{ countdownId }}>
               <ArrowLeft className="h-4 w-4" />
               Back to Countdown
-            </FastLink>
+            </Link>
           </Button>
         </div>
         <div className="text-center">
