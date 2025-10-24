@@ -1,37 +1,37 @@
-import type { Doc } from "convex/_generated/dataModel";
-import { calculateDaysLeft } from "./calculate-days-left";
-import { calculateTotalDays } from "./calculate-total-days";
+import { calculateDaysLeft } from './calculate-days-left'
+import { calculateTotalDays } from './calculate-total-days'
+import type { Doc } from 'convex/_generated/dataModel'
 
 export function calculateCountdownProgress(
-	countdown: Doc<"countdowns">,
+  countdown: Doc<'countdowns'>,
 ): number {
-	const today = new Date();
-	today.setHours(0, 0, 0, 0);
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
 
-	const startDate = new Date(countdown.startDate);
-	startDate.setHours(0, 0, 0, 0);
+  const startDate = new Date(countdown.startDate)
+  startDate.setHours(0, 0, 0, 0)
 
-	const endDate = new Date(countdown.endDate);
-	endDate.setHours(0, 0, 0, 0);
+  const endDate = new Date(countdown.endDate)
+  endDate.setHours(0, 0, 0, 0)
 
-	if (today < startDate) {
-		return 0;
-	}
+  if (today < startDate) {
+    return 0
+  }
 
-	if (today > endDate) {
-		return 100;
-	}
+  if (today > endDate) {
+    return 100
+  }
 
-	const remainingDays = calculateDaysLeft(countdown);
+  const remainingDays = calculateDaysLeft(countdown)
 
-	const totalDays = calculateTotalDays(countdown);
+  const totalDays = calculateTotalDays(countdown)
 
-	if (totalDays === 0) {
-		return 100;
-	}
+  if (totalDays === 0) {
+    return 100
+  }
 
-	const daysCompleted = totalDays - remainingDays;
-	const progressValue = (daysCompleted / totalDays) * 100;
+  const daysCompleted = totalDays - remainingDays
+  const progressValue = (daysCompleted / totalDays) * 100
 
-	return progressValue;
+  return progressValue
 }

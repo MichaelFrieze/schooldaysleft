@@ -1,19 +1,19 @@
-import { countdownsQueryOptions } from "@/modules/countdown/lib/countdowns-query-options";
-import { CountdownLayout } from "@/modules/countdown/ui/layouts/countdown-layout";
-import { Outlet, createFileRoute } from "@tanstack/react-router";
+import { Outlet, createFileRoute } from '@tanstack/react-router'
+import { countdownsQueryOptions } from '@/modules/countdown/lib/countdowns-query-options'
+import { CountdownLayout } from '@/modules/countdown/ui/layouts/countdown-layout'
 
-export const Route = createFileRoute("/(countdown)")({
-	loader: (opts) => {
-		opts.context.queryClient.prefetchQuery(countdownsQueryOptions());
-	},
-	ssr: false,
-	component: CountdownLayoutRoute,
-});
+export const Route = createFileRoute('/(countdown)')({
+  loader: (opts) => {
+    opts.context.queryClient.prefetchQuery(countdownsQueryOptions())
+  },
+  ssr: false,
+  component: CountdownLayoutRoute,
+})
 
 function CountdownLayoutRoute() {
-	return (
-		<CountdownLayout>
-			<Outlet />
-		</CountdownLayout>
-	);
+  return (
+    <CountdownLayout>
+      <Outlet />
+    </CountdownLayout>
+  )
 }
