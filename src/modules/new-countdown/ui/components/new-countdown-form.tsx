@@ -44,7 +44,7 @@ export function NewCountdownForm() {
           isWeeklyDayOff={isWeeklyDayOff}
         />
 
-        {Boolean(isFormComplete) && (
+        {isFormComplete && (
           <FormSummarySection
             form={form}
             startDate={startDate}

@@ -62,10 +62,18 @@ export const useCountdownForm = () => {
     },
   })
 
-  const [startDate, endDate, weeklyDaysOff, additionalDaysOff] = useWatch({
-    control: form.control,
-    name: ['startDate', 'endDate', 'weeklyDaysOff', 'additionalDaysOff'],
-  })
+  const [name, startDate, endDate, weeklyDaysOff, additionalDaysOff] = useWatch(
+    {
+      control: form.control,
+      name: [
+        'name',
+        'startDate',
+        'endDate',
+        'weeklyDaysOff',
+        'additionalDaysOff',
+      ],
+    },
+  )
   const watchedValues = {
     startDate,
     endDate,
@@ -166,11 +174,7 @@ export const useCountdownForm = () => {
     form.reset()
   }
 
-  const isFormComplete =
-    form.formState.isValid &&
-    startDate &&
-    endDate &&
-    form.getValues('name').trim()
+  const isFormComplete = Boolean(form.formState.isValid && name.trim().length)
 
   const months =
     startDate && endDate ? getMonthsBetweenDates(startDate, endDate) : []
