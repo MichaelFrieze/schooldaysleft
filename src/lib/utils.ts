@@ -1,32 +1,33 @@
-import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { clsx } from 'clsx'
+import { twMerge } from 'tailwind-merge'
+import type { ClassValue } from 'clsx'
 
-export function cn(...inputs: ClassValue[]) {
-	return twMerge(clsx(inputs));
+export function cn(...inputs: Array<ClassValue>) {
+  return twMerge(clsx(inputs))
 }
 
 export function formatDate(
-	date: Date | number | string | null | undefined,
+  date: Date | number | string | null | undefined,
 ): string {
-	if (date === null || date === undefined) return "N/A";
+  if (date === null || date === undefined) return 'N/A'
 
-	let normalizedDate: Date;
+  let normalizedDate: Date
 
-	if (date instanceof Date) {
-		normalizedDate = date;
-	} else if (typeof date === "number") {
-		normalizedDate = new Date(date);
-	} else if (typeof date === "string") {
-		const parsed = new Date(date);
-		if (Number.isNaN(parsed.getTime())) return "Invalid date";
-		normalizedDate = parsed;
-	} else {
-		return "N/A";
-	}
+  if (date instanceof Date) {
+    normalizedDate = date
+  } else if (typeof date === 'number') {
+    normalizedDate = new Date(date)
+  } else if (typeof date === 'string') {
+    const parsed = new Date(date)
+    if (Number.isNaN(parsed.getTime())) return 'Invalid date'
+    normalizedDate = parsed
+  } else {
+    return 'N/A'
+  }
 
-	return new Intl.DateTimeFormat("en-US", {
-		year: "numeric",
-		month: "long",
-		day: "numeric",
-	}).format(normalizedDate);
+  return new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(normalizedDate)
 }

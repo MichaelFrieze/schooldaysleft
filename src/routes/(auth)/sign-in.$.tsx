@@ -1,11 +1,11 @@
-import { SignInView } from "@/modules/auth/ui/views/sign-in-view";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from '@tanstack/react-router'
+import { SignInView } from '@/modules/auth/ui/views/sign-in-view'
 
-export const Route = createFileRoute("/(auth)/sign-in/$")({
-	ssr: false,
-	component: SignInRoute,
-});
+export const Route = createFileRoute('/(auth)/sign-in/$')({
+  ssr: false,
+  component: SignInRoute,
+})
 
 function SignInRoute() {
-	return <SignInView />;
+  return <SignInView />
 }

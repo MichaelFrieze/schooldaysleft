@@ -1,0 +1,9 @@
+.nitro/
+.output/
+.tanstack/
+.vinxi/
+.vercel/
+convex/_generated/
+routeTree.gen.ts
+pnpm-lock.yaml
+yarn.lock

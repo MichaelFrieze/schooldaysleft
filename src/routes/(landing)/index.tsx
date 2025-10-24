@@ -1,10 +1,10 @@
-import { LandingView } from "@/modules/landing/ui/views/landing-view";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from '@tanstack/react-router'
+import { LandingView } from '@/modules/landing/ui/views/landing-view'
 
-export const Route = createFileRoute("/(landing)/")({
-	component: LandingRoute,
-});
+export const Route = createFileRoute('/(landing)/')({
+  component: LandingRoute,
+})
 
 function LandingRoute() {
-	return <LandingView />;
+  return <LandingView />
 }

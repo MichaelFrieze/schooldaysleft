@@ -1,65 +1,65 @@
-import { useClerkTheme } from "@/hooks/use-clerk-theme";
-import { UserButton as ClerkUserButton } from "@clerk/tanstack-react-start";
-import { Home, LayoutDashboard } from "lucide-react";
-import { Skeleton } from "./skeleton";
+import { UserButton as ClerkUserButton } from '@clerk/tanstack-react-start'
+import { Home, LayoutDashboard } from 'lucide-react'
+import { Skeleton } from './skeleton'
+import { useClerkTheme } from '@/hooks/use-clerk-theme'
 
 export function UserButton() {
-	// const [isMounted, setIsMounted] = useState(false);
-	const clerkAppearanceVariables = useClerkTheme();
+  // const [isMounted, setIsMounted] = useState(false);
+  const clerkAppearanceVariables = useClerkTheme()
 
-	// rounded-lg in tailwind: calc(var(--radius))
-	const borderRadiusLg = `calc(${clerkAppearanceVariables.borderRadius})`;
+  // rounded-lg in tailwind: calc(var(--radius))
+  const borderRadiusLg = `calc(${clerkAppearanceVariables.borderRadius})`
 
-	return (
-		<div className="flex items-center justify-center">
-			<ClerkUserButton
-				fallback={<Skeleton className="h-8 w-8 rounded-full" />}
-				appearance={{
-					elements: {
-						avatarBox: {
-							height: "2rem",
-							width: "2rem",
-						},
-						userButtonPopoverMain: {
-							borderBottomLeftRadius: borderRadiusLg,
-							borderBottomRightRadius: borderRadiusLg,
-						},
-						userButtonPopoverCard: {
-							borderRadius: borderRadiusLg,
-						},
-					},
-					variables: {
-						...clerkAppearanceVariables,
-					},
-				}}
-				userProfileProps={{
-					appearance: {
-						variables: {
-							...clerkAppearanceVariables,
-						},
-						elements: {
-							scrollBox: {
-								height: "100%",
-								overflow: "auto",
-							},
-						},
-					},
-				}}
-			>
-				<ClerkUserButton.MenuItems>
-					<ClerkUserButton.Link
-						label="Dashboard"
-						href="/dashboard"
-						labelIcon={<LayoutDashboard className="size-4" />}
-					/>
-					<ClerkUserButton.Action label="manageAccount" />
-					<ClerkUserButton.Link
-						label="Home"
-						href="/"
-						labelIcon={<Home className="size-4" />}
-					/>
-				</ClerkUserButton.MenuItems>
-			</ClerkUserButton>
-		</div>
-	);
+  return (
+    <div className="flex items-center justify-center">
+      <ClerkUserButton
+        fallback={<Skeleton className="h-8 w-8 rounded-full" />}
+        appearance={{
+          elements: {
+            avatarBox: {
+              height: '2rem',
+              width: '2rem',
+            },
+            userButtonPopoverMain: {
+              borderBottomLeftRadius: borderRadiusLg,
+              borderBottomRightRadius: borderRadiusLg,
+            },
+            userButtonPopoverCard: {
+              borderRadius: borderRadiusLg,
+            },
+          },
+          variables: {
+            ...clerkAppearanceVariables,
+          },
+        }}
+        userProfileProps={{
+          appearance: {
+            variables: {
+              ...clerkAppearanceVariables,
+            },
+            elements: {
+              scrollBox: {
+                height: '100%',
+                overflow: 'auto',
+              },
+            },
+          },
+        }}
+      >
+        <ClerkUserButton.MenuItems>
+          <ClerkUserButton.Link
+            label="Dashboard"
+            href="/dashboard"
+            labelIcon={<LayoutDashboard className="size-4" />}
+          />
+          <ClerkUserButton.Action label="manageAccount" />
+          <ClerkUserButton.Link
+            label="Home"
+            href="/"
+            labelIcon={<Home className="size-4" />}
+          />
+        </ClerkUserButton.MenuItems>
+      </ClerkUserButton>
+    </div>
+  )
 }

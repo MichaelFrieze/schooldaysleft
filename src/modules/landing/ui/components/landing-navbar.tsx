@@ -1,51 +1,51 @@
-import { buttonVariants } from "@/components/ui/button";
-import { FastLink } from "@/components/ui/fast-link";
-import { UserButton } from "@/components/ui/user-button";
-import { cn } from "@/lib/utils";
-import { SignedIn, SignedOut } from "@clerk/tanstack-react-start";
-import { UserCircleIcon } from "lucide-react";
+import { SignedIn, SignedOut } from '@clerk/tanstack-react-start'
+import { UserCircleIcon } from 'lucide-react'
+import { buttonVariants } from '@/components/ui/button'
+import { FastLink } from '@/components/ui/fast-link'
+import { UserButton } from '@/components/ui/user-button'
+import { cn } from '@/lib/utils'
 
 export function LandingNavbar() {
-	return (
-		<header>
-			<div className="container flex h-16 items-center">
-				<FastLink to="/" className="group flex items-center gap-1">
-					<span className="font-bold text-2xl">
-						<span className="text-primary">School</span>
-						DaysLeft
-					</span>
-				</FastLink>
+  return (
+    <header>
+      <div className="container flex h-16 items-center">
+        <FastLink to="/" className="group flex items-center gap-1">
+          <span className="text-2xl font-bold">
+            <span className="text-primary">School</span>
+            DaysLeft
+          </span>
+        </FastLink>
 
-				<nav className="ml-auto">
-					<SignedIn>
-						<div className="flex items-center gap-1">
-							<FastLink
-								to="/dashboard"
-								className={cn(
-									buttonVariants({ variant: "link" }),
-									"hidden text-foreground lg:flex",
-								)}
-							>
-								Dashboard
-							</FastLink>
-							<UserButton />
-						</div>
-					</SignedIn>
+        <nav className="ml-auto">
+          <SignedIn>
+            <div className="flex items-center gap-1">
+              <FastLink
+                to="/dashboard"
+                className={cn(
+                  buttonVariants({ variant: 'link' }),
+                  'text-foreground hidden lg:flex',
+                )}
+              >
+                Dashboard
+              </FastLink>
+              <UserButton />
+            </div>
+          </SignedIn>
 
-					<SignedOut>
-						<FastLink
-							to="/sign-in/$"
-							className={cn(
-								buttonVariants({ variant: "default", size: "sm" }),
-								"rounded-full",
-							)}
-						>
-							<UserCircleIcon />
-							Sign in
-						</FastLink>
-					</SignedOut>
-				</nav>
-			</div>
-		</header>
-	);
+          <SignedOut>
+            <FastLink
+              to="/sign-in/$"
+              className={cn(
+                buttonVariants({ variant: 'default', size: 'sm' }),
+                'rounded-full',
+              )}
+            >
+              <UserCircleIcon />
+              Sign in
+            </FastLink>
+          </SignedOut>
+        </nav>
+      </div>
+    </header>
+  )
 }

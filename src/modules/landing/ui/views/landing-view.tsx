@@ -1,5 +1,5 @@
-import { LandingContent } from "../components/landing-content";
+import { LandingContent } from '../components/landing-content'
 
 export function LandingView() {
-	return <LandingContent />;
+  return <LandingContent />
 }

@@ -1,22 +1,22 @@
-import { EditCountdownView } from "@/modules/edit-countdown/ui/views/edit-countdown-view";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from '@tanstack/react-router'
+import { EditCountdownView } from '@/modules/edit-countdown/ui/views/edit-countdown-view'
 
 export const Route = createFileRoute(
-	"/(countdown)/countdown/$countdownId/edit/",
+  '/(countdown)/countdown/$countdownId/edit/',
 )({
-	head: () => ({
-		meta: [
-			{
-				title: "Edit Countdown | SchoolDaysLeft",
-			},
-		],
-	}),
-	ssr: false,
-	component: EditCountdownRoute,
-});
+  head: () => ({
+    meta: [
+      {
+        title: 'Edit Countdown | SchoolDaysLeft',
+      },
+    ],
+  }),
+  ssr: false,
+  component: EditCountdownRoute,
+})
 
 function EditCountdownRoute() {
-	const { countdownId } = Route.useParams();
+  const { countdownId } = Route.useParams()
 
-	return <EditCountdownView countdownId={countdownId} />;
+  return <EditCountdownView countdownId={countdownId} />
 }

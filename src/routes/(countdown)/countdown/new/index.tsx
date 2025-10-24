@@ -1,18 +1,18 @@
-import { NewCountdownView } from "@/modules/new-countdown/ui/views/new-countdown-view";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from '@tanstack/react-router'
+import { NewCountdownView } from '@/modules/new-countdown/ui/views/new-countdown-view'
 
-export const Route = createFileRoute("/(countdown)/countdown/new/")({
-	head: () => ({
-		meta: [
-			{
-				title: "Create Countdown | SchoolDaysLeft",
-			},
-		],
-	}),
-	ssr: false,
-	component: NewCountdownRoute,
-});
+export const Route = createFileRoute('/(countdown)/countdown/new/')({
+  head: () => ({
+    meta: [
+      {
+        title: 'Create Countdown | SchoolDaysLeft',
+      },
+    ],
+  }),
+  ssr: false,
+  component: NewCountdownRoute,
+})
 
 function NewCountdownRoute() {
-	return <NewCountdownView />;
+  return <NewCountdownView />
 }
