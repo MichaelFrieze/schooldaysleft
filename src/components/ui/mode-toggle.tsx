@@ -1,16 +1,17 @@
 import { MoonIcon, SunIcon } from 'lucide-react'
-import { useEffect, useState } from 'react'
-import { useTheme } from '../providers/theme-provider'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from './dropdown-menu'
-import type { buttonVariants } from '@/components/ui/button'
+} from '../ui/dropdown-menu'
+import { useTheme } from '../providers/theme-provider'
 import type { VariantProps } from 'class-variance-authority'
+
+import type { buttonVariants } from '@/components/ui/button'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
+import { useIsClient } from '@/hooks/use-is-client'
 import { cn } from '@/lib/utils'
 
 interface ModeToggleProps extends VariantProps<typeof buttonVariants> {
@@ -28,7 +29,7 @@ export function ModeToggleBtn({
   variant = 'outline',
   size = 'icon',
 }: ModeToggleProps) {
-  const [mounted, setMounted] = useState(false)
+  const mounted = useIsClient()
   const { resolvedTheme, setTheme } = useTheme()
 
   const isDark = resolvedTheme === 'dark'
@@ -37,8 +38,6 @@ export function ModeToggleBtn({
     const newTheme = isDark ? 'light' : 'dark'
     setTheme(newTheme)
   }
-
-  useEffect(() => setMounted(true), [])
 
   if (!mounted) {
     // For ghost variant, use small centered skeleton to match icon size
@@ -96,12 +95,10 @@ export function ModeDropdownBtn({
   variant = 'outline',
   size = 'icon',
 }: ModeToggleProps) {
-  const [mounted, setMounted] = useState(false)
+  const mounted = useIsClient()
   const { resolvedTheme, setTheme } = useTheme()
 
   const isDark = resolvedTheme === 'dark'
-
-  useEffect(() => setMounted(true), [])
 
   if (!mounted) {
     // For ghost variant, use small centered skeleton to match icon size
