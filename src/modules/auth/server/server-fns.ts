@@ -11,10 +11,11 @@ export const fetchClerkAuth = createServerFn({ method: 'GET' }).handler(
       throw error
     }
 
-    const { userId, token } = data
+    const { userId, isAuthenticated, token } = data
 
     return {
       userId,
+      isAuthenticated,
       token,
     }
   },

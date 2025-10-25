@@ -18,11 +18,10 @@ export function CountdownNavbar() {
         </Link>
 
         <nav className="ml-auto flex items-center gap-2">
-          <div className="hidden sm:block">
-            <CountdownNavDropdown />
-          </div>
-
           <SignedIn>
+            <div className="hidden sm:block">
+              <CountdownNavDropdown />
+            </div>
             <UserButton />
           </SignedIn>
 
