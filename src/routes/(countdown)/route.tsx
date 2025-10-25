@@ -6,7 +6,6 @@ export const Route = createFileRoute('/(countdown)')({
   loader: (opts) => {
     opts.context.queryClient.prefetchQuery(countdownsQueryOptions())
   },
-  ssr: false,
   component: CountdownLayoutRoute,
 })
 

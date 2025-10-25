@@ -4,25 +4,52 @@ import {
   useSuspenseQuery,
 } from '@tanstack/react-query'
 import { api } from 'convex/_generated/api'
-import { AlertTriangle, CalendarDays, Plus } from 'lucide-react'
+import { AlertTriangle, CalendarDays, Plus, UserCircleIcon } from 'lucide-react'
 import { Suspense } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { Link } from '@tanstack/react-router'
+import { AuthLoading, Authenticated, Unauthenticated } from 'convex/react'
 import { DashboardCountdownCard } from './dashboard-countdown-card'
 import type { FallbackProps } from 'react-error-boundary'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Card } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
 
 export function DashboardContent() {
   const { reset } = useQueryErrorResetBoundary()
 
   return (
-    <ErrorBoundary FallbackComponent={DashboardError} onReset={reset}>
-      <Suspense fallback={<DashboardContentLoading />}>
-        <DashboardContentSuspense />
-      </Suspense>
-    </ErrorBoundary>
+    <>
+      <Authenticated>
+        <ErrorBoundary FallbackComponent={DashboardError} onReset={reset}>
+          <Suspense fallback={<DashboardContentLoading />}>
+            <DashboardContentSuspense />
+          </Suspense>
+        </ErrorBoundary>
+      </Authenticated>
+      <AuthLoading>
+        <DashboardContentLoading />
+      </AuthLoading>
+      <Unauthenticated>
+        <div className="flex min-h-[300px] flex-col items-center justify-center rounded-lg border border-dashed p-12 text-center">
+          <h3 className="text-lg font-medium">You&apos;re not signed in.</h3>
+          <p className="text-muted-foreground max-w-sm pb-4 text-sm">
+            Please sign in to access your dashboard.
+          </p>
+          <Link
+            to="/sign-in/$"
+            className={cn(
+              buttonVariants({ variant: 'default', size: 'sm' }),
+              'rounded-full',
+            )}
+          >
+            <UserCircleIcon />
+            Sign in
+          </Link>
+        </div>
+      </Unauthenticated>
+    </>
   )
 }
 

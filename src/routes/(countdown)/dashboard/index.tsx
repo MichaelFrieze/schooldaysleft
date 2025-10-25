@@ -1,4 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { convexQuery } from '@convex-dev/react-query'
+import { api } from 'convex/_generated/api'
 import { DashboardView } from '@/modules/dashboard/ui/views/dashboard-view'
 
 export const Route = createFileRoute('/(countdown)/dashboard/')({
@@ -9,12 +11,11 @@ export const Route = createFileRoute('/(countdown)/dashboard/')({
       },
     ],
   }),
-  // loader: (opts) => {
-  //   opts.context.queryClient.prefetchQuery(
-  //     convexQuery(api.countdowns.getAll, {}),
-  //   )
-  // },
-  ssr: false,
+  loader: (opts) => {
+    opts.context.queryClient.prefetchQuery(
+      convexQuery(api.countdowns.getAll, {}),
+    )
+  },
   component: DashboardRoute,
 })
 
