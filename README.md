@@ -9,12 +9,12 @@ SchoolDaysLeft lets authenticated users create and manage countdowns for school 
 ## Tech stack
 
 - React 19 + Vite 7
-- TanStack Start 1.x
+- TanStack Start RC
 - TanStack React Query 5
 - Convex (real-time DB, serverless functions)
 - Clerk (authentication)
 - Tailwind CSS v4 + shadcn‑ui components
-- TypeScript, Biome (format/lint)
+- TypeScript
 
 ## Local development
 
@@ -62,39 +62,25 @@ Client (must be prefixed with `VITE_`):
 
 Convex auth config expects `VITE_CLERK_FRONTEND_API_URL` available to Convex runtime (see `convex/auth.config.ts`). In Convex dashboard, set an auth provider with your Clerk Frontend API URL and `applicationID: "convex"`.
 
-Example `.env.local` (adjust values):
-
-```bash
-# Server
-CLERK_SECRET_KEY=sk_live_...
-CONVEX_DEPLOYMENT=dev:schooldaysleft
-SERVER_URL=http://localhost:3000
-
-# Client
-VITE_APP_TITLE=SchoolDaysLeft
-VITE_CLERK_PUBLISHABLE_KEY=pk_live_...
-VITE_CLERK_SIGN_IN_URL=/sign-in
-VITE_CLERK_SIGN_UP_URL=/sign-up
-VITE_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL=/dashboard
-VITE_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL=/dashboard
-VITE_CONVEX_URL=https://<your-convex>.convex.cloud
-```
+Copy `.env.example` and create `.env.local` (adjust values)
 
 ## Available scripts
 
 From `package.json`:
 
-- `pnpm dev`: Runs `convex dev --once`, then concurrently starts Vite on `:3000` and Convex dev server.
-- `pnpm dev:web`: Start Vite dev server only.
-- `pnpm dev:convex`: Start Convex dev only.
-- `pnpm build`: Build client app with Vite (TanStack Start plugin targets Vercel by default).
-- `pnpm serve`: Preview built client locally.
-- `pnpm start`: Run the production server output (requires `.output/server/index.mjs`).
-- `pnpm typecheck`: TypeScript type check.
-- `pnpm test`: Run Vitest tests.
-- `pnpm format` / `pnpm format:write`: Biome format.
-- `pnpm lint` / `pnpm lint:fix`: Biome lint.
-- `pnpm check` / `pnpm check:write` / `pnpm check:unsafe`: Biome check variants.
+- `pnpm dev`: start the web dev server and the Convex dev server concurrently.
+- `pnpm dev:web`: start the Vite dev server only.
+- `pnpm dev:convex`: start the Convex dev server only.
+- `pnpm build`: build the client app and run a type check.
+- `pnpm start`: run the production server output.
+- `pnpm preview`: build and preview the production server output locally.
+- `pnpm deploy:convex`: deploy Convex to production.
+- `pnpm format:check`: run Prettier to check files.
+- `pnpm format:write`: run Prettier to format files.
+- `pnpm lint`: run ESLint to lint code.
+- `pnpm lint:fix`: run ESLint with --fix to attempt automatic fixes.
+- `pnpm typecheck`: run the TypeScript type check.
+- `pnpm check`: run linting and type checks.
 
 ## Project structure
 
@@ -127,7 +113,7 @@ pnpx shadcn@latest add button
 
 - TypeScript everywhere; avoid `any`.
 - Keep functions small and descriptive; prefer early returns.
-- Use Biome for formatting and linting before commits.
+- Use Prettier and ESLint for formatting and linting before commits. Run `pnpm format:write` and `pnpm lint` (or `pnpm lint:fix`).
 - Prefer feature modules under `src/modules/*`.
 - Do not commit secrets. Use `.env.local` for local development.
 
