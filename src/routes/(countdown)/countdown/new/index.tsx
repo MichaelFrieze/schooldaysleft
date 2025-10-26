@@ -9,7 +9,6 @@ export const Route = createFileRoute('/(countdown)/countdown/new/')({
       },
     ],
   }),
-  ssr: false,
   component: NewCountdownRoute,
 })
 

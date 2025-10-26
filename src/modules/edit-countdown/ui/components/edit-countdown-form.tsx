@@ -1,8 +1,9 @@
-'use client'
-
 import { useQueryErrorResetBoundary } from '@tanstack/react-query'
 import { Suspense } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
+import { Authenticated, Unauthenticated } from 'convex/react'
+import { Link } from '@tanstack/react-router'
+import { UserCircleIcon } from 'lucide-react'
 import { EditCountdownFormError } from './edit-countdown-form-error'
 import { Form } from '@/components/ui/form'
 import { useCountdownForm } from '@/modules/edit-countdown/hooks/use-countdown-form'
@@ -10,16 +11,44 @@ import { AdditionalDaysOffSection } from '@/modules/edit-countdown/ui/sections/a
 import { FormSummarySection } from '@/modules/edit-countdown/ui/sections/form-summary-section'
 import { NameAndDatesSection } from '@/modules/edit-countdown/ui/sections/name-and-dates-section'
 import { WeeklyDaysOffSection } from '@/modules/edit-countdown/ui/sections/weekly-days-off-section'
+import { cn } from '@/lib/utils'
+import { buttonVariants } from '@/components/ui/button'
 
 export const EditCountdownForm = () => {
   const { reset } = useQueryErrorResetBoundary()
 
   return (
-    <ErrorBoundary FallbackComponent={EditCountdownFormError} onReset={reset}>
-      <Suspense>
-        <EditCountdownFormSuspense />
-      </Suspense>
-    </ErrorBoundary>
+    <>
+      <Authenticated>
+        <ErrorBoundary
+          FallbackComponent={EditCountdownFormError}
+          onReset={reset}
+        >
+          <Suspense>
+            <EditCountdownFormSuspense />
+          </Suspense>
+        </ErrorBoundary>
+      </Authenticated>
+
+      <Unauthenticated>
+        <div className="flex min-h-[300px] flex-col items-center justify-center rounded-lg border border-dashed p-12 text-center">
+          <h3 className="text-lg font-medium">You&apos;re not signed in.</h3>
+          <p className="text-muted-foreground max-w-sm pb-4 text-sm">
+            Please sign in to edit your countdown.
+          </p>
+          <Link
+            to="/sign-in/$"
+            className={cn(
+              buttonVariants({ variant: 'default', size: 'sm' }),
+              'rounded-full',
+            )}
+          >
+            <UserCircleIcon />
+            Sign in
+          </Link>
+        </div>
+      </Unauthenticated>
+    </>
   )
 }
 

@@ -35,11 +35,13 @@ export function CountdownView({ countdownId }: CountdownViewProps) {
           <CountdownDetailsSection countdownId={countdownId} />
         </ErrorBoundary>
       </Authenticated>
+
       <AuthLoading>
         <CountdownHeaderSectionLoading />
         <CountdownMainSectionLoading />
         <CountdownDetailsSectionLoading />
       </AuthLoading>
+
       <Unauthenticated>
         <div className="mt-8 flex min-h-[300px] flex-col items-center justify-center rounded-lg border border-dashed p-12 text-center">
           <h3 className="text-lg font-medium">You&apos;re not signed in.</h3>
