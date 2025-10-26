@@ -4,7 +4,9 @@ import { CountdownLayout } from '@/modules/countdown/ui/layouts/countdown-layout
 
 export const Route = createFileRoute('/(countdown)')({
   loader: (opts) => {
-    opts.context.queryClient.prefetchQuery(countdownsQueryOptions())
+    if (opts.context.isAuthenticated) {
+      opts.context.queryClient.prefetchQuery(countdownsQueryOptions())
+    }
   },
   component: CountdownLayoutRoute,
 })

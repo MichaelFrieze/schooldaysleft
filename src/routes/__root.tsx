@@ -25,15 +25,15 @@ interface MyRouterContext {
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   beforeLoad: async (ctx) => {
-    if (ctx.context.convexQueryClient.serverHttpClient) {
-      const { token } = await fetchClerkAuth()
+    const { token, isAuthenticated } = await fetchClerkAuth()
 
-      // During SSR only (the only time serverHttpClient exists),
-      // set the Clerk auth token to make HTTP queries with.
-      if (token) {
-        ctx.context.convexQueryClient.serverHttpClient.setAuth(token)
-      }
+    // During SSR only (the only time serverHttpClient exists),
+    // set the Clerk auth token to make HTTP queries with.
+    if (token) {
+      ctx.context.convexQueryClient.serverHttpClient?.setAuth(token)
     }
+
+    return { isAuthenticated }
   },
   head: () => {
     return {

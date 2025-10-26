@@ -4,13 +4,13 @@ import { tryCatch } from './try-catch'
 import { env } from '@/env'
 
 export const getAuthConvexClient = async (): Promise<ConvexHttpClient> => {
-  const convex = new ConvexHttpClient(env.VITE_CONVEX_URL)
   const { isAuthenticated, getToken } = await auth()
 
   if (!isAuthenticated) {
-    console.error('User not authenticated')
     throw new Error('User not authenticated')
   }
+
+  const convex = new ConvexHttpClient(env.VITE_CONVEX_URL)
 
   const { data: token, error } = await tryCatch(
     getToken({ template: 'convex' }),

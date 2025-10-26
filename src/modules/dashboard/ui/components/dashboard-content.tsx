@@ -1,37 +1,36 @@
-import { convexQuery } from '@convex-dev/react-query'
 import {
   useQueryErrorResetBoundary,
   useSuspenseQuery,
 } from '@tanstack/react-query'
-import { api } from 'convex/_generated/api'
 import { AlertTriangle, CalendarDays, Plus, UserCircleIcon } from 'lucide-react'
 import { Suspense } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { Link } from '@tanstack/react-router'
-import { AuthLoading, Authenticated, Unauthenticated } from 'convex/react'
+import { SignedIn, SignedOut } from '@clerk/tanstack-react-start'
 import { DashboardCountdownCard } from './dashboard-countdown-card'
+import type { Doc } from 'convex/_generated/dataModel'
 import type { FallbackProps } from 'react-error-boundary'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Card } from '@/components/ui/card'
 import { Button, buttonVariants } from '@/components/ui/button'
+import { countdownsQueryOptions } from '@/modules/countdown/lib/countdowns-query-options'
 import { cn } from '@/lib/utils'
+
+type ConvexCountdownDoc = Doc<'countdowns'>
 
 export function DashboardContent() {
   const { reset } = useQueryErrorResetBoundary()
 
   return (
     <>
-      <Authenticated>
+      <SignedIn>
         <ErrorBoundary FallbackComponent={DashboardError} onReset={reset}>
           <Suspense fallback={<DashboardContentLoading />}>
             <DashboardContentSuspense />
           </Suspense>
         </ErrorBoundary>
-      </Authenticated>
-      <AuthLoading>
-        <DashboardContentLoading />
-      </AuthLoading>
-      <Unauthenticated>
+      </SignedIn>
+      <SignedOut>
         <div className="flex min-h-[300px] flex-col items-center justify-center rounded-lg border border-dashed p-12 text-center">
           <h3 className="text-lg font-medium">You&apos;re not signed in.</h3>
           <p className="text-muted-foreground max-w-sm pb-4 text-sm">
@@ -48,17 +47,21 @@ export function DashboardContent() {
             Sign in
           </Link>
         </div>
-      </Unauthenticated>
+      </SignedOut>
     </>
   )
 }
 
 export function DashboardContentSuspense() {
-  const { data: countdowns } = useSuspenseQuery(
-    convexQuery(api.countdowns.getAll, {}),
-  )
+  const { data: countdowns } = useSuspenseQuery(countdownsQueryOptions())
 
-  if (countdowns.length === 0) {
+  // Server serializes `_id` to string; convert back to Convex `Id` shape
+  const convexCountdowns = countdowns.map((c) => ({
+    ...c,
+    _id: c._id as unknown as ConvexCountdownDoc['_id'],
+  })) as unknown as Array<ConvexCountdownDoc>
+
+  if (convexCountdowns.length === 0) {
     return (
       <div className="flex min-h-[300px] flex-col items-center justify-center rounded-lg border border-dashed p-12 text-center">
         <CalendarDays className="text-muted-foreground mb-4 h-12 w-12" />
@@ -79,9 +82,12 @@ export function DashboardContentSuspense() {
 
   return (
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {countdowns.map((countdown) => {
+      {convexCountdowns.map((countdown) => {
         return (
-          <DashboardCountdownCard key={countdown._id} countdown={countdown} />
+          <DashboardCountdownCard
+            key={String(countdown._id)}
+            countdown={countdown}
+          />
         )
       })}
     </div>
@@ -119,6 +125,7 @@ function DashboardContentLoading() {
 }
 
 function DashboardError({ resetErrorBoundary }: FallbackProps) {
+  console.error("I'm here in the dashboard error")
   return (
     <div
       className="flex min-h-[300px] flex-col items-center justify-center rounded-lg border border-dashed p-12 text-center"

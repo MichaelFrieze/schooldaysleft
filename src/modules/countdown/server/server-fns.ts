@@ -10,7 +10,7 @@ export const getAllCountdowns = createServerFn({ method: 'GET' }).handler(
     )
 
     if (convexClientError) {
-      console.error(convexClientError)
+      console.error({ convexClientError })
       throw new Error('Failed to get authenticated convex client')
     }
 
@@ -19,7 +19,7 @@ export const getAllCountdowns = createServerFn({ method: 'GET' }).handler(
     )
 
     if (countdownsError) {
-      console.error(countdownsError)
+      console.error({ countdownsError })
       throw new Error('Failed to get all countdowns')
     }
 
