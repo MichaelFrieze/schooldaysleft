@@ -16,6 +16,7 @@ import { RootCatchBoundary } from '@/components/errors/root-catch-boundary'
 import { ThemeProvider } from '@/components/providers/theme-provider'
 import { seo } from '@/lib/seo'
 import { fetchClerkAuth } from '@/modules/auth/server/server-fns'
+import { Toaster } from '@/components/ui/sonner'
 
 interface MyRouterContext {
   queryClient: QueryClient
@@ -159,6 +160,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           disableTransitionOnChange
         >
           {children}
+          <Toaster />
         </ThemeProvider>
         {import.meta.env.DEV && <DevtoolsLoader />}
         <Scripts />

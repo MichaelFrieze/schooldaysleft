@@ -211,3 +211,8 @@ code {
     max-width: 1400px;
   }
 }
+
+/* Sonner toast description text color is difficult to read */
+[data-description] {
+  color: var(--muted-foreground) !important;
+}
