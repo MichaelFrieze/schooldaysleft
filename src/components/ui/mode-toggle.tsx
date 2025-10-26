@@ -29,7 +29,7 @@ export function ModeToggleBtn({
   variant = 'outline',
   size = 'icon',
 }: ModeToggleProps) {
-  const mounted = useIsClient()
+  const isClient = useIsClient()
   const { resolvedTheme, setTheme } = useTheme()
 
   const isDark = resolvedTheme === 'dark'
@@ -39,7 +39,7 @@ export function ModeToggleBtn({
     setTheme(newTheme)
   }
 
-  if (!mounted) {
+  if (!isClient) {
     // For ghost variant, use small centered skeleton to match icon size
     if (variant === 'ghost') {
       return (
