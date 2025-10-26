@@ -1,10 +1,11 @@
 import { useQueryErrorResetBoundary } from '@tanstack/react-query'
 import { Suspense } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
-import { Authenticated, Unauthenticated } from 'convex/react'
+import { AuthLoading, Authenticated, Unauthenticated } from 'convex/react'
 import { Link } from '@tanstack/react-router'
 import { UserCircleIcon } from 'lucide-react'
 import { EditCountdownFormError } from './edit-countdown-form-error'
+import { EditCountdownFormLoading } from './edit-countdown-form-loading'
 import { Form } from '@/components/ui/form'
 import { useCountdownForm } from '@/modules/edit-countdown/hooks/use-countdown-form'
 import { AdditionalDaysOffSection } from '@/modules/edit-countdown/ui/sections/additional-days-off-section'
@@ -24,11 +25,15 @@ export const EditCountdownForm = () => {
           FallbackComponent={EditCountdownFormError}
           onReset={reset}
         >
-          <Suspense>
+          <Suspense fallback={<EditCountdownFormLoading />}>
             <EditCountdownFormSuspense />
           </Suspense>
         </ErrorBoundary>
       </Authenticated>
+
+      <AuthLoading>
+        <EditCountdownFormLoading />
+      </AuthLoading>
 
       <Unauthenticated>
         <div className="flex min-h-[300px] flex-col items-center justify-center rounded-lg border border-dashed p-12 text-center">

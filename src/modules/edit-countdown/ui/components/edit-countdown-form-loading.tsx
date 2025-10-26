@@ -10,19 +10,19 @@ const SUMMARY_ITEM_KEYS = ['s1', 's2', 's3', 's4']
 const NameAndDatesSectionSkeleton = () => {
   return (
     <Card>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-7">
         <div className="space-y-2">
-          <Skeleton className="h-4 w-32" />
-          <Skeleton className="h-10 w-full" />
+          <Skeleton className="h-3 w-32" />
+          <Skeleton className="h-9 w-full" />
         </div>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <div className="space-y-2">
-            <Skeleton className="h-4 w-24" />
-            <Skeleton className="h-10 w-full" />
+            <Skeleton className="h-3 w-24" />
+            <Skeleton className="h-9 w-full" />
           </div>
           <div className="space-y-2">
-            <Skeleton className="h-4 w-24" />
-            <Skeleton className="h-10 w-full" />
+            <Skeleton className="h-3 w-24" />
+            <Skeleton className="h-9 w-full" />
           </div>
         </div>
       </CardContent>
@@ -33,17 +33,17 @@ const NameAndDatesSectionSkeleton = () => {
 const WeeklyDaysOffSectionSkeleton = () => {
   return (
     <Card>
-      <CardContent className="space-y-6">
-        <Skeleton className="mx-auto h-4 w-full max-w-sm" />
-        <div className="flex flex-wrap justify-center gap-2">
+      <CardContent className="space-y-6.5">
+        <Skeleton className="mx-auto h-5 w-110" />
+        <div className="flex flex-wrap justify-center gap-2.5">
           {WEEK_KEYS.map((key) => (
-            <Skeleton key={key} className="h-9 w-[60px] rounded-full" />
+            <Skeleton key={key} className="h-8 w-[60px] rounded-full" />
           ))}
         </div>
-        <div className="border-muted bg-muted/50 space-y-2 rounded-lg border p-4">
+        <div className="border-muted bg-muted/50 space-y-3 rounded-lg border p-4.5">
           <div className="flex items-center justify-center gap-2">
-            <Skeleton className="h-2 w-2 rounded-full" />
-            <Skeleton className="h-4 w-24" />
+            <Skeleton className="h-4 w-4 rounded-full" />
+            <Skeleton className="h-4 w-26" />
           </div>
           <Skeleton className="mx-auto h-4 w-48" />
         </div>
@@ -55,7 +55,7 @@ const WeeklyDaysOffSectionSkeleton = () => {
 const AdditionalDaysOffSectionSkeleton = () => {
   return (
     <Card>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-6.5">
         <Skeleton className="h-4 w-full max-w-md" />
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {MONTH_SKELETON_KEYS.map((key) => (
