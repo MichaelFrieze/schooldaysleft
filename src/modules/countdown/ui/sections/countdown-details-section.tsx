@@ -27,7 +27,6 @@ import type { Id } from 'convex/_generated/dataModel'
 import { formatDate } from '@/lib/utils'
 import { DAYS_OF_WEEK } from '@/lib/constants'
 import { Skeleton } from '@/components/ui/skeleton'
-import { Separator } from '@/components/ui/separator'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Calendar } from '@/components/ui/calendar'
 import { Button } from '@/components/ui/button'
@@ -318,36 +317,60 @@ const CountdownDetailsSectionSuspense = ({
 }
 
 export const CountdownDetailsSectionLoading = () => {
+  const WEEK_KEYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
+  const MONTH_SKELETON_KEYS = ['m1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7', 'm8']
+  const DAY_CELL_KEYS = Array.from({ length: 42 }, (_, n) => `day-${n}`)
+
   return (
     <section className="animate-[delayed-fade-in_.5s_ease-out] pb-8 md:pb-12">
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
         {/* Countdown Details Skeleton */}
-        <Card>
+        <Card className="pb-7">
           <CardHeader>
             <CardTitle>
               <Skeleton className="h-5 w-48" />
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div>
-              <Skeleton className="mb-2 h-5 w-24" />
-              <Skeleton className="h-4 w-40" />
-            </div>
-            <Separator />
-            <div>
-              <Skeleton className="mb-2 h-5 w-20" />
-              <Skeleton className="h-4 w-40" />
-            </div>
-            <Separator />
-            <div>
-              <Skeleton className="mb-2 h-5 w-24" />
-              <Skeleton className="h-4 w-40" />
+          <CardContent>
+            <div className="grid grid-cols-2 gap-5">
+              <div>
+                <Skeleton className="mb-2 h-4 w-24" />
+                <Skeleton className="h-4 w-32" />
+              </div>
+              <div>
+                <Skeleton className="mb-2 h-4 w-24" />
+                <Skeleton className="h-4 w-36" />
+              </div>
+              <div>
+                <Skeleton className="mb-2 h-4 w-32" />
+                <Skeleton className="h-4 w-24" />
+              </div>
+              <div>
+                <Skeleton className="mb-2 h-4 w-28" />
+                <Skeleton className="h-4 w-28" />
+              </div>
+              <div>
+                <Skeleton className="mb-2 h-4 w-28" />
+                <Skeleton className="h-4 w-24" />
+              </div>
+              <div>
+                <Skeleton className="mb-2 h-4 w-32" />
+                <Skeleton className="h-4 w-24" />
+              </div>
+              <div>
+                <Skeleton className="mb-2 h-4 w-32" />
+                <Skeleton className="h-4 w-24" />
+              </div>
+              <div>
+                <Skeleton className="mb-2 h-4 w-20" />
+                <Skeleton className="h-4 w-28" />
+              </div>
             </div>
           </CardContent>
         </Card>
 
         {/* Weekly Schedule Skeleton */}
-        <Card>
+        <Card className="pb-7">
           <CardHeader>
             <CardTitle>
               <Skeleton className="h-5 w-56" />
@@ -368,16 +391,48 @@ export const CountdownDetailsSectionLoading = () => {
           </CardContent>
         </Card>
 
-        {/* Additional Days Off Skeleton */}
+        {/* Holidays & Breaks Skeleton */}
         <Card className="md:col-span-2">
           <CardHeader>
-            <CardTitle>
-              <Skeleton className="h-5 w-72" />
-            </CardTitle>
+            <div className="flex items-center justify-between">
+              <CardTitle className="flex items-center gap-2">
+                <Skeleton className="h-5 w-5 rounded" />
+                <Skeleton className="h-5 w-44" />
+              </CardTitle>
+              <Skeleton className="h-8 w-24 rounded-md" />
+            </div>
           </CardHeader>
           <CardContent className="space-y-4">
-            <Skeleton className="h-4 w-lg" />
-            {/* <Skeleton className="mx-auto h-80 w-full max-w-sm rounded-lg" /> */}
+            <div className="flex items-center gap-3 rounded-lg border p-3 text-sm">
+              <Skeleton className="h-5 w-5 rounded-full" />
+              <Skeleton className="h-4 w-[280px] md:w-[360px]" />
+            </div>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {MONTH_SKELETON_KEYS.map((key) => (
+                <div key={key} className="space-y-2">
+                  <div className="flex justify-center rounded-md border p-3">
+                    <div className="w-full space-y-3">
+                      <div className="flex justify-center">
+                        <Skeleton className="h-6 w-28" />
+                      </div>
+                      <div className="grid grid-cols-7 gap-2">
+                        {WEEK_KEYS.map((wk) => (
+                          <Skeleton key={wk} className="h-3 w-5" />
+                        ))}
+                      </div>
+                      <div className="grid grid-cols-7 gap-2">
+                        {DAY_CELL_KEYS.map((dayCellKey) => (
+                          <Skeleton
+                            key={dayCellKey}
+                            className="h-8 w-8 rounded-md"
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </CardContent>
         </Card>
       </div>
