@@ -3,10 +3,8 @@ import { countdownsQueryOptions } from '@/modules/countdown/lib/countdowns-query
 import { CountdownLayout } from '@/modules/countdown/ui/layouts/countdown-layout'
 
 export const Route = createFileRoute('/(countdown)')({
-  loader: (opts) => {
-    if (opts.context.isAuthenticated) {
-      opts.context.queryClient.prefetchQuery(countdownsQueryOptions())
-    }
+  loader: ({ context }) => {
+    context.queryClient.prefetchQuery(countdownsQueryOptions())
   },
   component: CountdownLayoutRoute,
 })

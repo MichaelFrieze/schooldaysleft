@@ -13,13 +13,11 @@ export const Route = createFileRoute('/(countdown)/countdown/$countdownId/')({
     ],
   }),
   loader: ({ context, params }) => {
-    if (context.isAuthenticated) {
-      context.queryClient.prefetchQuery(
-        convexQuery(api.countdowns.getById, {
-          id: params.countdownId as Id<'countdowns'>,
-        }),
-      )
-    }
+    context.queryClient.prefetchQuery(
+      convexQuery(api.countdowns.getById, {
+        id: params.countdownId as Id<'countdowns'>,
+      }),
+    )
   },
   component: CountdownRoute,
 })
