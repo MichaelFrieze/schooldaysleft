@@ -213,6 +213,7 @@ code {
 }
 
 /* Sonner toast description text color is difficult to read */
+/* https://github.com/shadcn-ui/ui/discussions/7032 */
 [data-description] {
   color: var(--muted-foreground) !important;
 }

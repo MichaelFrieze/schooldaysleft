@@ -77,6 +77,10 @@ export const AdditionalDaysOffSection = ({
                             }
                             disableNavigation={true}
                             fixedWeeks={true}
+                            classNames={{
+                              button_next: 'pointer-events-none hidden',
+                              button_previous: 'pointer-events-none hidden',
+                            }}
                           />
                         </div>
                       </div>
