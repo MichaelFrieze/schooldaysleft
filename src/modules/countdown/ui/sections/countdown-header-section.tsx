@@ -55,7 +55,7 @@ function CountdownHeaderSectionSuspense({
   )
 }
 
-function CountdownHeaderSectionLoading() {
+export function CountdownHeaderSectionLoading() {
   return (
     <section className="animate-[delayed-fade-in_.5s_ease-out] py-8 md:py-12">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">

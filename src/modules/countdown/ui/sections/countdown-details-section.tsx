@@ -262,7 +262,7 @@ const CountdownDetailsSectionSuspense = ({
           <CardContent className="space-y-4">
             {nextAdditionalDayOff ? (
               <div className="bg-accent text-accent-foreground flex items-center gap-3 rounded-lg border p-3 text-sm">
-                <Info className="h-5 w-5 flex-shrink-0" />
+                <Info className="h-5 w-5 shrink-0" />
                 <div className="font-medium">
                   {isSameDay(nextAdditionalDayOff, today)
                     ? 'Today is a holiday or break!'
@@ -274,7 +274,7 @@ const CountdownDetailsSectionSuspense = ({
               </div>
             ) : (
               <div className="bg-accent text-accent-foreground flex items-center gap-3 rounded-lg border p-3 text-sm">
-                <Info className="h-5 w-5 flex-shrink-0" />
+                <Info className="h-5 w-5 shrink-0" />
                 <div className="font-medium">
                   No more holidays or breaks scheduled.
                 </div>
@@ -317,9 +317,9 @@ const CountdownDetailsSectionSuspense = ({
   )
 }
 
-const CountdownDetailsSectionLoading = () => {
+export const CountdownDetailsSectionLoading = () => {
   return (
-    <section className="[animation:delayed-fade-in_.5s_ease-out] pb-8 md:pb-12">
+    <section className="animate-[delayed-fade-in_.5s_ease-out] pb-8 md:pb-12">
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
         {/* Countdown Details Skeleton */}
         <Card>

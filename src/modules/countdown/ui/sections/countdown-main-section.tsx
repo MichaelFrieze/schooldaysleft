@@ -67,7 +67,7 @@ function CountdownMainSectionSuspense({
           </div>
 
           <div className="text-center">
-            <div className="from-primary via-primary/80 to-primary bg-gradient-to-r bg-clip-text text-8xl font-extrabold text-transparent tabular-nums">
+            <div className="from-primary via-primary/80 to-primary bg-linear-to-r bg-clip-text text-8xl font-extrabold text-transparent tabular-nums">
               {!hasStarted ? daysUntilStart : daysLeft}
             </div>
             <p className="text-muted-foreground pt-2 text-xl font-medium">
@@ -100,9 +100,9 @@ function CountdownMainSectionSuspense({
   )
 }
 
-function CountdownMainSectionLoading() {
+export function CountdownMainSectionLoading() {
   return (
-    <section className="[animation:delayed-fade-in_.5s_ease-out] pb-8 md:pb-12">
+    <section className="animate-[delayed-fade-in_.5s_ease-out] pb-8 md:pb-12">
       <Card>
         <CardContent className="p-8">
           <div className="pb-8">

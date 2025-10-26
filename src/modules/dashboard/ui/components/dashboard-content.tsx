@@ -125,7 +125,6 @@ function DashboardContentLoading() {
 }
 
 function DashboardError({ resetErrorBoundary }: FallbackProps) {
-  console.error("I'm here in the dashboard error")
   return (
     <div
       className="flex min-h-[300px] flex-col items-center justify-center rounded-lg border border-dashed p-12 text-center"
