@@ -240,8 +240,9 @@ export const getAll = query({
   handler: async (ctx) => {
     const identity = await ctx.auth.getUserIdentity()
 
+    // Handling auth in tanstack start
     if (!identity) {
-      throw new Error('User not authenticated')
+      return null
     }
 
     const userId = identity.subject
@@ -263,6 +264,7 @@ export const getById = query({
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity()
 
+    // Handling auth in tanstack start
     if (!identity) {
       return null
     }
@@ -290,6 +292,7 @@ export const getByName = query({
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity()
 
+    // Handling auth in tanstack start
     if (!identity) {
       return null
     }

@@ -23,6 +23,10 @@ export const getAllCountdowns = createServerFn({ method: 'GET' }).handler(
       throw new Error('Failed to get all countdowns')
     }
 
+    if (!countdowns) {
+      throw new Error('No countdowns found, likely not authenticated')
+    }
+
     const serializedCountdowns = countdowns.map((c) => ({
       ...c,
       _id: String(c._id),
